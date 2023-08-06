@@ -20,11 +20,11 @@ settings
 
 	modes
 	{
-		/*All
+		General
 		{
-			Game Mode Start: Immediately
-
-		}*/
+			//Game Mode Start: Immediately
+			Respawn Time Scalar: 0%
+		}
 
 		/*Control
 		{
@@ -36,7 +36,8 @@ settings
 		{
 			enabled maps
 			{
-				Workshop Island 0
+				Antarctic Peninsula 0
+				//Workshop Island 0
 				//Workshop Expanse 0
 			}
 		}
@@ -130,11 +131,14 @@ settings
 				//Junker Queen
 				Hanzo
 				Kiriko
+				Lifeweaver
 				Lúcio
+				Ramattra
 				//Orisa
 				//Sigma
 				//Sombra
 				//Torbjörn
+				
 			}
 		}
 	}
@@ -282,6 +286,7 @@ variables
 		123: SoldierUAVPlayersAndIcons
 		124: SoldierAllKillStreaks
 		125: SoldierKillStreakTexts
+		126: ReinhardtHudText
 		//114: DVaCooldown
 		//74: BrigitteHealthPoolCapacity
 		//75: BrigitteHealthPool
@@ -315,6 +320,35 @@ subroutines
     0: UseCustomUlt
     1: StopUsingCustomUlt
 	2: CreateMenu
+	3: ResetZenyatta
+	4: ResetBrigitte
+	5: ResetCassidy
+	6: ResetDVa
+	//As of now Doomfist reset seems unnecessary.
+	7: ResetDoomfist
+	8: ResetEcho
+	9: ResetGenji
+	10: ResetJQ
+	11: ResetJunkrat
+	12: ResetMei
+	13: ResetMercy
+	14: ResetMoira
+	15: ResetOrisa
+	16: ResetPharah
+	17: ResetReaper
+	18: ResetReinhardt
+	19: ResetRoadhog
+	20: ResetSigma
+	21: ResetSojourn
+	22: ResetSoldier
+	23: ResetSombra
+	24: ResetSymmetra
+	25: ResetTorb
+	26: ResetTracer
+	27: ResetWidow
+	28: ResetWinston
+	29: ResetWB
+	30: ResetZarya
 }
 
 rule("RESET STUFF WHEN SWITCHING HERO")
@@ -328,17 +362,20 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 
 	conditions
 	{
-		Event Player.CustomUltReadyToUse == True;
-		Event Player.B != Hero Of(Event Player);
 		Event Player.B != Null;
+		Event Player.B != Hero Of(Event Player);
+		//(Event Player.CustomUltReadyToUse == True || Event Player.UsingCustomUlt == True) == True;
+		//Event Player.CustomUltReadyToUse == True;
+		
 	}
 
 	actions
 	{
-		Destroy HUD Text(Event Player.UltReadyText);
+
+		/*Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
 		Set Ultimate Ability Enabled(Event Player, True);
-		Event Player.B = Null;
+		//Event Player.B = Null;
 		Event Player.CustomUltReadyToUse = False;
 		Event Player.UsingCustomUlt = Null;
 		Stop Chasing Player Variable(Event Player, G);
@@ -350,9 +387,27 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		Set Max Health(Event Player, 100);
 		Destroy Effect(Event Player.Y);
 		Event Player.Y = 0;
-		Event Player.G = 0;
-		Stop Camera(Event Player);
+		Stop Camera(Event Player);*/
 		Big Message(Event Player, Custom String("AAAA"));
+
+		//Call Subroutine(StopUsingCustomUlt);
+
+		//Brigitte didn't really need this, because she switches her hero during her ult so the event needs to happen on all players
+		//if(Event Player.B == Hero(Brigitte));
+		//Call Subroutine(ResetBrigitte);
+		If(Event Player.B == Hero(Cassidy));
+		Call Subroutine(ResetCassidy);
+		Else If(Event Player.B == Hero(D.Va));
+		Call Subroutine(ResetDVa);
+		Else If(Event Player.B == Hero(Doomfist));
+		Call Subroutine(ResetDoomfist);
+		Else If(Event Player.B == Hero(Echo));
+		Call Subroutine(ResetEcho);
+		break;
+
+		Event Player.B = Null;
+
+
 	}
 }
 
@@ -437,7 +492,7 @@ rule("ana: set variables for player boosted by ana")
 	{
 		Player Dealt Healing;
 		All;
-		All;
+		Ana;
 	}
 
 	conditions
@@ -726,6 +781,7 @@ rule("Brigitte: Increase shield size when using ultimate")
 {
 	event
 	{
+		//This needs to be on all players, because Brigitte switches hero briefly to Ana during this event
 		Ongoing - Each Player;
 		All;
 		All;
@@ -772,6 +828,8 @@ rule("Brigitte: Increase shield size when using ultimate")
 
 		Press Button(Event Player, Button(Ultimate));
 
+		//Event Player.B = Hero Of(Event Player);
+
 		Wait(0.016, Ignore Condition);
 
 
@@ -784,7 +842,8 @@ rule("Brigitte: Increase shield size when using ultimate")
 
 		//Could use this wait until thing with other heroes too. Could be convenient
 		Wait Until((Is Dead(Event Player) == true || Hero Of(Event Player) != Hero(Brigitte)) == true, 10);
-		Set Ultimate Ability Enabled(Event Player, True);
+		Call Subroutine(ResetBrigitte);
+		/*Set Ultimate Ability Enabled(Event Player, True);
 		Set Ability 1 Enabled(Event Player, True);
 		Set Ability 2 Enabled(Event Player, True);
 		Event Player.BrigitteUltActive = Null;
@@ -793,16 +852,40 @@ rule("Brigitte: Increase shield size when using ultimate")
 		Stop Camera(Event Player);
 		Set Max Health(Event Player, 100);
 		Stop Holding Button(Event Player, Button(Secondary Fire));
-		/*Start Forcing Player To Be Hero(Event Player, Hero(Ana));
-		Start Forcing Player To Be Hero(Event Player, Hero(Brigitte));
-		Stop Forcing Player To Be Hero(Event Player);*/
-		All Players(Opposite Team Of(Team Of(Event Player))).D = Null;
+		//Start Forcing Player To Be Hero(Event Player, Hero(Ana));
+		//Start Forcing Player To Be Hero(Event Player, Hero(Brigitte));
+		//Stop Forcing Player To Be Hero(Event Player);
+		All Players(Opposite Team Of(Team Of(Event Player))).D = Null;*/
 		
 
 
 
 
 	}
+}
+
+rule("Reset everything with brigitte.")
+{
+    event
+    {
+        Subroutine;
+        ResetBrigitte;
+    }
+
+    actions
+    {
+		Set Ultimate Ability Enabled(Event Player, True);
+		Set Ability 1 Enabled(Event Player, True);
+		Set Ability 2 Enabled(Event Player, True);
+		Event Player.BrigitteUltActive = Null;
+		//Stop scaling probably stops all other scaling as well if such a thing might exist at some point
+		//Start Scaling Barriers(Event Player, 1, False);
+		Stop Scaling Barriers(Event Player);
+		Stop Camera(Event Player);
+		Set Max Health(Event Player, 100);
+		Stop Holding Button(Event Player, Button(Secondary Fire));
+		All Players(Opposite Team Of(Team Of(Event Player))).D = Null;
+    }
 }
 
 rule("Brigitte: Force holding shield.")
@@ -989,7 +1072,7 @@ rule("torb: spawn torb turret")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		TorbjöRn;
 	}
 
 	conditions
@@ -1365,6 +1448,7 @@ rule("torb: using ultimate")
 	}
 }*/
 
+//Needs to be set to all players apparently, because otherwise the effects persist after ult is over. The other events seem to work just fine when set to echo only though.
 rule("Echo activate ultimate")
 {
 	event
@@ -1415,7 +1499,30 @@ rule("Echo activate ultimate")
 		//Create HUD Text(Event Player, Event Player.EchoAimRayCast, Null, Null, Top, 0, Color( Yellow), Color(White), Color(White), Visible To and String, Default Visibility);
 		//Create Effect(Event Player, Sphere, Color(Blue), Event Player.EchoAimRayCast, 1, Position and Radius);
 
+		Event Player.B = Hero Of(Event Player);
+
 		Wait Until((Is Dead(Event Player) == true || Is Duplicating(Event Player) == false) == true, 9999);
+		Call Subroutine(ResetEcho);
+		/*Destroy Dummy Bot(Team Of(Event Player), 5);
+		Destroy Dummy Bot(Team Of(Event Player), 6);
+		Destroy Effect(Event Player.EchoEffects);
+		Event Player.EchoEffects = Null;
+		Event Player.EchoDummyBots = Null;
+		Event Player.EchoAimRayCast = Null;
+		Stop Camera(Event Player);*/
+	}
+}
+
+rule("Resets everything with Echo after Ult is over or when changing hero.")
+{
+	event
+	{
+		Subroutine;
+		ResetEcho;
+	}
+
+	actions
+	{
 		Destroy Dummy Bot(Team Of(Event Player), 5);
 		Destroy Dummy Bot(Team Of(Event Player), 6);
 		Destroy Effect(Event Player.EchoEffects);
@@ -1423,6 +1530,7 @@ rule("Echo activate ultimate")
 		Event Player.EchoDummyBots = Null;
 		Event Player.EchoAimRayCast = Null;
 		Stop Camera(Event Player);
+		Event Player.B = Null;
 	}
 }
 
@@ -1432,7 +1540,7 @@ rule("Echo update aim raycast, reset dummy bot position if too far from player."
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Echo;
 	}
 
 	conditions
@@ -1468,7 +1576,7 @@ rule("Echo primary fire")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Echo;
 	}
 
 	conditions
@@ -1494,7 +1602,7 @@ rule("Echo Secondary Fire")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Echo;
 	}
 
 	conditions
@@ -1520,7 +1628,7 @@ rule("Echo Ability 1")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Echo;
 	}
 
 	conditions
@@ -1546,7 +1654,7 @@ rule("Echo Ability 2")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Echo;
 	}
 
 	conditions
@@ -1572,7 +1680,7 @@ rule("Echo melee")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Echo;
 	}
 
 	conditions
@@ -1598,7 +1706,7 @@ rule("Echo Ultimate")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Echo;
 	}
 
 	conditions
@@ -1629,7 +1737,7 @@ rule("Echo jump")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Echo;
 	}
 
 	conditions
@@ -1655,7 +1763,7 @@ rule("Echo Crouch")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Echo;
 	}
 
 	conditions
@@ -1681,7 +1789,7 @@ rule("Echo Reload")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Echo;
 	}
 
 	conditions
@@ -1707,7 +1815,7 @@ rule("Echo interact")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Echo;
 	}
 
 	conditions
@@ -1734,7 +1842,7 @@ rule("Echo say hello")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Echo;
 	}
 
 	conditions
@@ -3574,7 +3682,7 @@ rule("reinhardt: set variables when using ultimate")
 		Event Player.G = Last Created Entity;
 		Event Player.R = 100;
 		Create HUD Text(Event Player, String("Power-up"), Event Player.Y, String("{0} {1}", String("{0} {1} {2}", String("Damage"), String("Dealt"), String("{0}%", Event Player.R)), String("{0} {1} {2}", String("Damage"), String("Defense"), String("{0}%", 100 - Event Player.P))), Right, 0, Color(Yellow), Color(Yellow), Color(White), Visible To and String, Default Visibility);
-		Event Player.B = Last Text ID;
+		Event Player.ReinhardtHudText = Last Text ID;
 		Event Player.S = True;
 		Event Player.P = 100;
 		Destroy HUD Text(Event Player.UltReadyText);
@@ -3623,8 +3731,8 @@ rule("reinhardt: increase buffs in the air")
 		Event Player.G = Null;
 		Set Damage Dealt(Event Player, 100);
 		Event Player.Y = 0;
-		Destroy HUD Text(Event Player.B);
-		Event Player.B = 0;
+		Destroy HUD Text(Event Player.ReinhardtHudText);
+		Event Player.ReinhardtHudText = Null;
 		Clear Status(Event Player, Burning);
 		Set Damage Received(Event Player, 100);
 		Event Player.P = 0;
@@ -3668,8 +3776,8 @@ rule("reinhardt: do stuff when earthshatter has landed")
 		Event Player.Y = 0;
 		Set Ultimate Ability Enabled(Event Player, True);
 		Clear Status(Event Player, Burning);
-		Destroy HUD Text(Event Player.B);
-		Event Player.B = 0;
+		Destroy HUD Text(Event Player.ReinhardtHudText);
+		Event Player.ReinhardtHudText = 0;
 		Set Damage Received(Event Player, 100);
 		Event Player.P = 0;
 		Event Player.M = Null;
@@ -3727,8 +3835,8 @@ rule("Reinhardt disable power up if ult hasn't been used and player is on ground
 		Event Player.Y = 0;
 		Set Ultimate Ability Enabled(Event Player, True);
 		Clear Status(Event Player, Burning);
-		Destroy HUD Text(Event Player.B);
-		Event Player.B = 0;
+		Destroy HUD Text(Event Player.ReinhardtHudText);
+		Event Player.ReinhardtHudText = 0;
 		Set Damage Received(Event Player, 100);
 		Event Player.P = 0;
 	}
@@ -4122,6 +4230,7 @@ disabled rule("sombra: stop players from mysteriously flying upwards")
 	}
 }
 
+//This is apparently triggering constantly even when Sombra never used ult
 rule("sombra: clear stun status after time stop is over and damage players")
 {
 	event
@@ -4549,7 +4658,7 @@ rule("D.VA Has spawned with no upgrades, set hud and initial damage+max health")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		D.Va;
 	}
 
 	conditions
@@ -4579,12 +4688,40 @@ rule("D.VA Has spawned with no upgrades, set hud and initial damage+max health")
 
 		//Wait(0.01, Ignore Condition);
 		//Event Player.CustomUltReadyToUse = True;
-		Wait Until(Hero Of(Event Player) != Hero(D.Va), 9999);
+		/*Wait Until(Hero Of(Event Player) != Hero(D.Va), 9999);
 		Destroy Hud Text(Value In Array(Event Player.DVAVariables, 0));
 		Event Player.DVAVariables = Null;
 		Event Player.Q = Null;
-		Event Player.G = Null;
+		Event Player.G = Null;*/
 		//Big Message(Event Player, Custom String("Initialized D.Va"));
+	}
+}
+
+rule("Remove D.Va stuff when switching hero.")
+{
+	event
+	{
+		Subroutine;
+		ResetDVa;
+	}
+
+	actions
+	{
+		Set Damage Dealt(Event Player, 100);
+		Remove Health Pool From Player(Value In Array(Event Player.DVAVariables, 2));
+		Destroy Hud Text(Value In Array(Event Player.DVAVariables, 0));
+		Event Player.DVAVariables = Null;
+		//Doesn't actually do anything??
+		//Event Player.Q = Null;
+		Event Player.G = Null;
+		
+		//Seems like these are reset automatically???
+		/*Set Ability Cooldown(Event Player, Button(Ability 1), 1);
+
+		Set Ability Cooldown(Event Player, Button(Ability 2), 1);
+
+		Set Ability Cooldown(Event Player, Button(Secondary Fire), 1);*/
+		
 	}
 }
 
@@ -4710,9 +4847,10 @@ rule("D.VA reduce ability 1 and secondary fire cooldown after obtaining cooldown
 		Set Ability Cooldown(Event Player, Button(Ability 1), Ability Cooldown(Event Player, Button(Ability 1)) / Value In Array(Event Player.G, 2));
 		End;
 
-		//If(Ability Cooldown(Event Player, Button(Ability 2)) > 0);
-		//Set Ability Cooldown(Event Player, Button(Ability 2), Ability Cooldown(Event Player, Button(Ability 2)) / Value In Array(Event Player.G, 2));
-		//End;
+		//Doesn't work
+		If(Ability Cooldown(Event Player, Button(Ability 2)) > 0);
+		Set Ability Cooldown(Event Player, Button(Ability 2), Ability Cooldown(Event Player, Button(Ability 2)) / Value In Array(Event Player.G, 2));
+		End;
 
 		If(Ability Cooldown(Event Player, Button(Secondary Fire)) > 0);
 		Set Ability Cooldown(Event Player, Button(Secondary Fire), Ability Cooldown(Event Player, Button(Secondary Fire)) / Value In Array(Event Player.G, 2));
@@ -4725,7 +4863,7 @@ rule("D.VA reduce ability 1 and secondary fire cooldown after obtaining cooldown
 }
 
 //Does not work for whatever reason
-rule("D.VA reduce ability 2 cooldown after obtaining cooldown upgrade")
+/*rule("D.VA reduce ability 2 cooldown after obtaining cooldown upgrade")
 {
 	event
 	{
@@ -4756,7 +4894,7 @@ rule("D.VA reduce ability 2 cooldown after obtaining cooldown upgrade")
 
 
 	}
-}
+}*/
 
 rule("D.VA regen defense matrix when it's upgraded")
 {
@@ -4932,6 +5070,7 @@ rule("Bastion activate ultimate.")
     }
 }
 
+//For some reason reaper can use his regular teleport while it's on cooldown during this ult???
 //Could maybe just do bonus dmg when meleeing enemies with a dealt damage event instead of the damage modification
 rule("Reaper activate ultimate.")
 {
@@ -5967,6 +6106,30 @@ rule("Doomfist team 2")
 	}
 }
 
+rule("Reset Doomfist stuff")
+{
+	event
+	{
+		Subroutine;
+		ResetDoomfist;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.M);
+		Destroy Effect(Event Player.Y);
+		disabled Destroy Effect(Event Player.UsingCustomUlt);
+		Event Player.M = Null;
+		Event Player.Y = Null;
+		Event Player.S = Null;
+		Event Player.G = Null;
+		disabled Event Player.UsingCustomUlt = Null;
+		Destroy HUD Text(Event Player.UltReadyText);
+		Event Player.UltReadyText = Null;
+	}
+}
+
+//Should probably add some conditions here to make sure this doesn't trigger when it doesn't need to.
 rule("Doomfist not using ultimate")
 {
 	event
@@ -5985,16 +6148,7 @@ rule("Doomfist not using ultimate")
 
 	actions
 	{
-		Destroy Effect(Event Player.M);
-		Destroy Effect(Event Player.Y);
-		disabled Destroy Effect(Event Player.UsingCustomUlt);
-		Event Player.M = Null;
-		Event Player.Y = Null;
-		Event Player.S = Null;
-		Event Player.G = Null;
-		disabled Event Player.UsingCustomUlt = Null;
-		Destroy HUD Text(Event Player.UltReadyText);
-		Event Player.UltReadyText = Null;
+		Call Subroutine(ResetDoomfist);
 	}
 }
 
@@ -6019,6 +6173,7 @@ rule("Doomfist using ultimate create HUD description")
 			"While in the air, creates additional meteor strikes at random spots near enemy players. Longer duration."), Null, Null, Top,
 			1, Color(White), Color(White), Color(White), Visible To and String, Default Visibility);
 		Event Player.UltReadyText = Last Text ID;
+		Event Player.B = Hero Of(Event Player);
 	}
 }
 
@@ -6660,6 +6815,7 @@ rule("Sigma set zero grav debuff to null")
 }
 
 //Gotta make sure that setting gravity and move speed here doesn't conflict with any other ultimate, could maybe set exemptions separately for all the other ultimates at some point
+//This is triggering constantly without sigma at play, needs fix
 rule("Sigma disable grav effects if buff and debuff are false")
 {
 	event
@@ -8294,6 +8450,7 @@ rule("If Junker queen lost, teleport enemies back to map and remove her buff.")
 	}
 }
 
+//Set for all players, because it needs to work when switching to other hero.
 rule("If Junker queen dies or switches hero after being buffed, remove buffs.")
 {
     event
@@ -8952,6 +9109,7 @@ rule("Widowmaker in spawn room")
 
 //Could maybe give baptiste orisa's shield ability and make it so that players do more damage from within?
 //Baptiste's current ability could be given to Orisa with the beams that go into nearby allies except instead of making them immortal, have their damage be transported to Orisa, Orisa gains damage resistance/extra health
+/*
 rule("Baptiste activate ultimate")
 {
 	event
@@ -9114,7 +9272,7 @@ rule("Baptiste destroy beam effect on nearby players team 2")
 	{
 		Destroy Effect(Event Player.BapBeam);
 	}
-}
+}*/
 
 rule("McCree enable ult")
 {
@@ -9382,19 +9540,12 @@ rule("If dead disable all damage over time")
 	}
 }
 
-rule("McCree disable when switching hero")
+rule("Reset McCree.")
 {
 	event
 	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.B != Hero Of(Event Player);
-		Event Player.B == Hero(Cassidy);
+		Subroutine;
+		ResetCassidy;
 	}
 
 	actions
@@ -9403,6 +9554,7 @@ rule("McCree disable when switching hero")
 		disabled Set Invisible(Event Player, None);
 		Destroy HUD Text(Event Player.UltDescription);
 		Event Player.B = Null;
+		Clear Status(Event Player, Burning);
 	}
 }
 
@@ -9483,7 +9635,7 @@ rule("Mei activate ultimate")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Mei;
 	}
 
 	conditions
@@ -9508,6 +9660,9 @@ rule("Mei activate ultimate")
 		Event Player.UltEffect = Last Created Entity;
 		Event Player.P = 20;
 		Chase Player Variable At Rate(Event Player, P, 0, 1, Destination and Rate);
+		//Call Subroutine(CustomUltStopTimerMei);
+		//Wait Until((Is Dead(Event Player) == true || Hero Of(Event Player) != Hero(Mei)) == true, Event Player.P);
+		//Call Subroutine(StopUsingCustomUlt);
 		Wait(Event Player.P, Ignore Condition);
 		Destroy Effect(Event Player.UltEffect);
 		Event Player.P = Null;
@@ -9520,6 +9675,30 @@ rule("Mei activate ultimate")
 		Event Player.UltEffect = Null;
 	}
 }
+
+/*rule("Timer to stop Mei's ult, timer will stop early when player dies or switches hero.")
+{
+    event
+    {
+        Subroutine;
+        CustomUltStopTimerMei;
+    }
+
+    actions
+    {
+		Wait Until((Is Dead(Event Player) == true || Hero Of(Event Player) != Hero(Mei)) == true, Event Player.P);
+        Destroy Effect(Event Player.UltEffect);
+		Event Player.P = Null;
+		Event Player.UsingCustomUlt = Null;
+		Event Player.CustomUltReadyToUse = Null;
+		Event Player.B = Null;
+		Destroy HUD Text(Event Player.UltDescription);
+		Set Ultimate Ability Enabled(Event Player, True);
+		Set Ultimate Charge(Event Player, 0);
+		Event Player.UltEffect = Null;
+        
+    }
+}*/
 
 rule("Mei: If player has virus, create virus effect, text and set variables, disable after 10 seconds")
 {
@@ -9679,7 +9858,7 @@ rule("Mei: Check if player died with virus")
 	}
 }
 
-rule("Mei disable when switching hero")
+/*rule("Mei disable when switching hero")
 {
 	event
 	{
@@ -9708,7 +9887,7 @@ rule("Mei disable when switching hero")
 		Set Ultimate Charge(Event Player, 0);
 		Event Player.UltEffect = Null;
 	}
-}
+}*/
 
 /*rule("Orisa: jump around")
 {
@@ -9753,7 +9932,7 @@ rule("Orisa: leap in facing direction")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Orisa;
 	}
 
 	conditions
