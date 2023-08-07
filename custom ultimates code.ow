@@ -219,8 +219,7 @@ variables
         60: SojournRayArray
         61: SojournEyePosArray
         62: SojournLastEyePos
-		//This value is no longer in use
-        63: SojournArrayIndex
+        63: OrisaScale
 		64: JunkratBombOrb
 		65: JunkratTimer
 		66: JunkratTimerAboveHead
@@ -238,7 +237,6 @@ variables
 		78: TorbTurret
 		79: TorbTurretLevelText
 		80: TorbTurretLevel
-		//Some of these torb variables (including the textid above) are for the old ults so can be replaced
 		81: TorbUltPositions
 		82: TorbUltIndex
 		83: EchoDummyBots
@@ -322,20 +320,20 @@ subroutines
     0: UseCustomUlt
     1: StopUsingCustomUlt
 	2: CreateMenu
-	3: ResetZenyatta
+	//3: 
 	4: ResetBrigitte
 	5: ResetCassidy
 	6: ResetDVa
-	//As of now Doomfist reset seems unnecessary.
+	//As of now Doomfist reset seems unnecessary when changing heroes, but should maybe have to make sure. Maybe the additional meteor strike type effects might break if the ult ends abruptly idk.
 	7: ResetDoomfist
 	8: ResetEcho
 	9: ResetGenji
 	10: ResetJQ
 	11: ResetJunkrat
 	12: ResetMei
-	13: ResetMercy
+	//13: ResetMercy
 	14: ResetMoira
-	15: ResetOrisa
+	//15: ResetOrisa
 	16: ResetPharah
 	17: ResetReaper
 	18: ResetReinhardt
@@ -351,6 +349,7 @@ subroutines
 	28: ResetWinston
 	29: ResetWB
 	30: ResetZarya
+	31: ResetZenyatta
 }
 
 rule("RESET STUFF WHEN SWITCHING HERO")
@@ -397,6 +396,13 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		//Brigitte didn't really need this, because she switches her hero during her ult so the event needs to happen on all players
 		//if(Event Player.B == Hero(Brigitte));
 		//Call Subroutine(ResetBrigitte);
+
+		//Could maybe add some wait actions between checks so it's less stuff to check in one frame
+
+		//Supposedly if else checks are "more expensive" than.. I guess checking stuff in conditions?? I'm not sure, but it was mentioned here: https://workshop.codes/wiki/articles/help-my-server-is-crashing-a-guide-on-how-to-improve-server-stability-for-your-codes#too-many-conditions
+
+		//Event player.B is also set in the disable vanilla ult event so don't have to set it separately for every hero
+		//The stopusingcustomult subroutine might do some unnecessary stuff for some heroes so could maybe cut out any fluff from it that isn't necessary for every hero with a custom ult.
 		If(Event Player.B == Hero(Cassidy));
 		Call Subroutine(ResetCassidy);
 		Else If(Event Player.B == Hero(D.Va));
@@ -410,6 +416,13 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		Else If(Event Player.B == Hero(Junker Queen));
 		Call Subroutine(ResetJQ);
 		Else If(Event Player.B == Hero(Mei));
+		Call Subroutine(ResetMei);
+		Else If(Event Player.B == Hero(Moira));
+		Call Subroutine(ResetMoira);
+		Else If(Event Player.B == Hero(Pharah));
+		Call Subroutine(ResetPharah);
+		Else If(Event Player.B == Hero(Reaper));
+		Call Subroutine(ResetReaper);
 		break;
 
 		Event Player.B = Null;
@@ -2143,6 +2156,7 @@ rule("winston: if victim is on ground, they won't receive stun or damage.")
 }
 
 //Maybe add exceptions for certain ultimates when player has extra life. Her regular reviving could also maybe be used to bring players back to junker queen's arena and retain her buffs. Should maybe reset that stuff only when she respawns or switches character.
+//Might not have to disable this upon switching hero since the extra life functionality works for other heroes too
 rule("Mercy give extra life to herself during Ultimate")
 {
 	event
@@ -2163,7 +2177,7 @@ rule("Mercy give extra life to herself during Ultimate")
 	actions
 	{
 		Event Player.ExtraLife = True;
-		Create HUD Text(Event Player, Custom String("Mercy gave you an extra life. Resurrect upon death."), Null, Null, Top, 0, Color( Yellow), Color(White), Color(White), Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, Custom String("You just gained an extra life."), Null, Null, Top, 0, Color( Yellow), Color(White), Color(White), Visible To and String, Default Visibility);
 		Event Player.MercyExtraLifeText = Last Text ID;
 		Create In-World Text(All Players(All Teams), Custom String("Extra life"), Event Player, 1, Clip Against Surfaces,
 			Visible To Position and String, Color(Yellow), Default Visibility);
@@ -2233,20 +2247,48 @@ rule("Mercy: Resurrect player upon death if they have an extra life.")
 	}
 }
 
-//Could maybe make Moira's ult heal too with yellow explosions
-rule("moira: coalescence X 100")
+rule("moira: coalescence X 100 set initial modifications")
 {
 	event
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Moira;
 	}
 
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-		Hero Of(Event Player) == Hero(Moira);
+		//Hero Of(Event Player) == Hero(Moira);
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		Event Player.B = Hero Of(Event Player);
+		Wait(0.5, Ignore Condition);
+		Set Aim Speed(Event Player, 10);
+		Set Status(Event Player, Null, Rooted, 9999);
+		Start Accelerating(Event Player, Backward, 50, 2, To Player, Direction Rate and Max Speed);
+		
+	}
+}
+
+rule("moira: coalescence X 100 loop effects")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Moira;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Has Status(Event Player, Rooted) == True;
+		//Hero Of(Event Player) == Hero(Moira);
 		Is Dummy Bot(Event Player) == false;
 
 	}
@@ -2254,31 +2296,46 @@ rule("moira: coalescence X 100")
 	actions
 	{
 		Wait(0.100, Ignore Condition);
-		Set Aim Speed(Event Player, 10);
-		Set Status(Event Player, Null, Rooted, 9999);
-		Start Accelerating(Event Player, Backward, 50, 2, To Player, Direction Rate and Max Speed);
 		Event Player.M = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(
 			Event Player)) * 30, Y Component Of(Facing Direction Of(Event Player)) * 30 + 2, Z Component Of(Facing Direction Of(
 			Event Player)) * 30), All Players(All Teams), Event Player, True);
 		Play Effect(All Players(All Teams), Bad Explosion, Color(Purple), Event Player.M, 20);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Yellow), Event Player.M, 20);
 		Play Effect(All Players(All Teams), Explosion Sound, Color(Purple), Event Player.M, 2000);
 		Apply Impulse(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
 			Direction Towards(Event Player.M, Position Of(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(
 			Event Player)), Surfaces And Enemy Barriers))), 10, To World, Cancel Contrary Motion);
 		Apply Impulse(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Up,
 			2, To World, Cancel Contrary Motion);
-		disabled Create Effect(All Players(All Teams), Energy Sound, Color(White), Event Player, 100, Visible To Position and Radius);
 		Damage(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
 			Event Player, 50);
+		Heal(Players Within Radius(Event Player.M, 10, Team Of(Event Player), Surfaces),
+			Event Player, 50);	
 		Loop If Condition Is True;
-		Clear Status(Event Player, Rooted);
-		Stop Accelerating(Event Player);
-		Set Aim Speed(Event Player, 100);
-		Destroy Effect(Last Created Entity);
+		Call Subroutine(ResetMoira);
 	}
 }
 
-rule("Moira: sound effect")
+rule("Reset Moira")
+{
+	event
+	{
+		Subroutine;
+		ResetMoira;
+	}
+
+	actions
+	{
+		Clear Status(Event Player, Rooted);
+		Stop Accelerating(Event Player);
+		Set Aim Speed(Event Player, 100);
+		Event Player.M = Null;
+		Event Player.B = Null;
+		//Destroy Effect(Last Created Entity);
+	}
+}
+
+/*rule("Moira: sound effect")
 {
 	event
 	{
@@ -2298,9 +2355,9 @@ rule("Moira: sound effect")
 	{
 		Create Effect(All Players(All Teams), Energy Sound, Color(White), Event Player, 100, Visible To Position and Radius);
 	}
-}
+}*/
 
-disabled rule("moira: SET DAMAGE OVER TIME TO PLAYERS WHEN HIT BY COALESCENCE X 100")
+/*disabled rule("moira: SET DAMAGE OVER TIME TO PLAYERS WHEN HIT BY COALESCENCE X 100")
 {
 	event
 	{
@@ -2320,7 +2377,7 @@ disabled rule("moira: SET DAMAGE OVER TIME TO PLAYERS WHEN HIT BY COALESCENCE X 
 		Abort;
 		Start Damage Over Time(Event Player, Attacker, 2, 400);
 	}
-}
+}*/
 
 //Seems like it kinda breaks when using ult on a nearby enemy and couldn't move the position forward
 rule("zarya: team 1 uses ultimate")
@@ -5078,21 +5135,21 @@ rule("Bastion activate ultimate.")
 }
 
 //For some reason reaper can use his regular teleport while it's on cooldown during this ult???
-//Could maybe just do bonus dmg when meleeing enemies with a dealt damage event instead of the damage modification
+//Fixed the issue above by disabling it manually while cooldown is active
 rule("Reaper activate ultimate.")
 {
     event
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Reaper;
 	}
 
     conditions{
         Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.CustomUltReadyToUse == True;
 		Event Player.UsingCustomUlt == Null;
-		Hero Of(Event Player) == Hero(Reaper);
+		//Hero Of(Event Player) == Hero(Reaper);
 		Has Status(Event Player, Hacked) == False;
     }
 
@@ -5124,13 +5181,30 @@ rule("Reaper activate ultimate.")
 
 
 
-		Wait Until(Is Dead(Event Player) == True || Hero Of(Event Player) != Hero(Reaper), Value In Array(Event Player.ReaperVariables, 1));
+		Wait Until(Is Dead(Event Player) == True, Value In Array(Event Player.ReaperVariables, 1));
 
+		
+
+        
+        Call Subroutine(ResetReaper);
+
+
+    }
+}
+
+rule("Reaper reset stuff.")
+{
+    event
+	{
+		Subroutine;
+		ResetReaper;
+	}
+
+    actions
+    {   
 		Set Primary Fire Enabled(Event Player, True);
-		//Stop Damage Modification(Value In Array(Event Player.ReaperVariables, 0));
 		Destroy Effect(Value In Array(Event Player.ReaperVariables, 0));
 		Destroy Hud Text(Value In Array(Event Player.ReaperVariables, 2));
-		//Destroy Effect(Value In Array(Event Player.ReaperVariables, 5));
 		Set Move Speed(Event Player, 100);
 
 
@@ -5141,8 +5215,6 @@ rule("Reaper activate ultimate.")
 		Event Player.ReaperTPPos = Null;
 
 		Event Player.ReaperVariables = Null;
-
-        
         Call Subroutine(StopUsingCustomUlt);
 
 
@@ -5230,13 +5302,13 @@ rule("Reaper pass through walls in wraith form and set gravity to 0.")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Reaper;
 	}
 
     conditions{
 		Event Player.CustomUltReadyToUse != True;
 		Event Player.UsingCustomUlt != Null;
-		Hero Of(Event Player) == Hero(Reaper);
+		//Hero Of(Event Player) == Hero(Reaper);
 		Is Using Ability 1(Event Player) == True;
     }
 
@@ -5267,13 +5339,13 @@ rule("Reaper reduce cooldown for wraith form.")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Reaper;
 	}
 
     conditions{
 		Event Player.CustomUltReadyToUse != True;
 		Event Player.UsingCustomUlt != Null;
-		Hero Of(Event Player) == Hero(Reaper);
+		//Hero Of(Event Player) == Hero(Reaper);
 		Ability Cooldown(Event Player, Button(Ability 1)) > 0;
     }
 
@@ -5294,13 +5366,13 @@ rule("Reaper reduce cooldown for teleport.")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Reaper;
 	}
 
     conditions{
 		Event Player.CustomUltReadyToUse != True;
 		Event Player.UsingCustomUlt != Null;
-		Hero Of(Event Player) == Hero(Reaper);
+		//Hero Of(Event Player) == Hero(Reaper);
 		Ability Cooldown(Event Player, Button(Ability 2)) > 0;
     }
 
@@ -5321,13 +5393,13 @@ rule("Reaper cause extra damage with melee strikes.")
 	{
 		Player Dealt Damage;
 		All;
-		All;
+		Reaper;
 	}
 
     conditions{
 		Event Player.CustomUltReadyToUse != True;
 		Event Player.UsingCustomUlt != Null;
-		Hero Of(Event Player) == Hero(Reaper);
+		//Hero Of(Event Player) == Hero(Reaper);
 		Event Ability() == Button(Melee);
     }
 
@@ -5355,7 +5427,7 @@ rule("Reaper fly when in wraith form and ultimate is active")
 	{
 		Event Player.CustomUltReadyToUse != True;
 		Event Player.UsingCustomUlt != Null;
-		Hero Of(Event Player) == Hero(Reaper);
+		//Hero Of(Event Player) == Hero(Reaper);
 		Is Using Ability 1(Event Player) == True;
 	}
 
@@ -5365,6 +5437,52 @@ rule("Reaper fly when in wraith form and ultimate is active")
 		
 		Apply Impulse(Event Player, Facing Direction Of(Event Player), 0.100, To World, Incorporate Contrary Motion);
 		Loop If (Ability Cooldown(Event Player, Button(Ability 1)) == 0 && Hero Of(Event Player) == Hero(Reaper) && Is Alive(Event Player) == True);
+	}
+}
+
+//This should work by default without having to do this separately, but it's bugged right now
+rule("Reaper disable teleport ability when it's on cooldown")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Reaper;
+	}
+
+	conditions
+	{
+		Event Player.CustomUltReadyToUse != True;
+		Event Player.UsingCustomUlt != Null;
+		Ability Cooldown(Event Player, Button(Ability 2)) > 0;
+	}
+
+	actions
+	{
+		Set Ability 2 Enabled(Event Player, False);
+	}
+}
+
+rule("Reaper enable teleport ability when it's not on cooldown")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Reaper;
+	}
+
+	conditions
+	{
+		Event Player.CustomUltReadyToUse != True;
+		Event Player.UsingCustomUlt != Null;
+		Has Status(Event Player, Hacked) == False;
+		Ability Cooldown(Event Player, Button(Ability 2)) == 0;
+	}
+
+	actions
+	{
+		Set Ability 2 Enabled(Event Player, True);
 	}
 }
 
@@ -5381,7 +5499,7 @@ rule("Reaper instant teleport activate aim")
 	{
 		Event Player.CustomUltReadyToUse != True;
 		Event Player.UsingCustomUlt != Null;
-		Hero Of(Event Player) == Hero(Reaper);
+		//Hero Of(Event Player) == Hero(Reaper);
 		Has Status(Event Player, Hacked) == False;
 		//Is Using Ability 2(Event Player) == True;
 		Is Button Held(Event Player, Button(Ability 2)) == True;
@@ -5509,6 +5627,7 @@ rule("Reaper execute teleport")
 
 		Teleport(Event Player, Event Player.ReaperTPPos);
 
+		//Can somehow still use regular ability while it's on cooldown
 		Set Ability Cooldown(Event Player, Button(Ability 2), 2);
 
 
@@ -5521,6 +5640,7 @@ rule("Reaper execute teleport")
 
 		Event Player.ReaperTPPos = Null;
 
+		Play Effect(All Players(All Teams), Moira Fade Reappear Sound, null, Event Player, 200);
 
 
 	}
@@ -6356,14 +6476,14 @@ rule("Pharah activate ultimate when button is pressed")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Pharah;
 	}
 
 	conditions
 	{
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.CustomUltReadyToUse == True;
-		Hero Of(Event Player) == Hero(Pharah);
+		//Hero Of(Event Player) == Hero(Pharah);
 		Event Player.UsingCustomUlt != True;
 		Has Status(Event Player, Hacked) == False;
 	}
@@ -6375,7 +6495,7 @@ rule("Pharah activate ultimate when button is pressed")
 		Apply Impulse(Event Player, Up, 10, To World, Cancel Contrary Motion);
 		Set Secondary Fire Enabled(Event Player, False);
 		Set Primary Fire Enabled(Event Player, False);
-		Event Player.R = 25;
+		Event Player.R = 20;
 		Chase Player Variable At Rate(Event Player, R, 0, 1, Destination and Rate);
 		Create HUD Text(Event Player, String("{0} {1}", Custom String("Crouch to drop bombs."), Custom String("
 		Ability 1 to activate tacticool camera.")), String("{0}: {1}", Custom String("Bomb Cooldown: "),
@@ -6384,18 +6504,32 @@ rule("Pharah activate ultimate when button is pressed")
 		Set Damage Dealt(Event Player, 300);
 		Set Projectile Speed(Event Player, 300);
 		Set Ability 1 Enabled(Event Player, False);
-		Disallow Button(Event Player, Button(Jump));
-		Event Player.UsingCustomUlt = True;
+		//Disallow Button(Event Player, Button(Jump));
 		Set Gravity(Event Player, 0);
-		Wait(Event Player.R, Ignore Condition);
+		//Wait(0.1,Ignore Condition);
+		Event Player.UsingCustomUlt = True;
+		Wait Until(Is Dead(Event Player) == True, Event Player.R);
+		Call Subroutine(ResetPharah);
+	}
+}
+
+rule("Reset Pharah stuff.")
+{
+	event
+	{
+		Subroutine;
+		ResetPharah;
+	}
+
+	actions
+	{
 		Event Player.UsingCustomUlt = 0;
 		Event Player.CustomUltReadyToUse = 0;
-		disabled Stop Accelerating(Event Player);
 		Set Gravity(Event Player, 100);
 		Set Ultimate Ability Enabled(Event Player, True);
 		Event Player.B = 0;
 		Set Ability 1 Enabled(Event Player, True);
-		Allow Button(Event Player, Button(Jump));
+		//Allow Button(Event Player, Button(Jump));
 		Set Projectile Speed(Event Player, 100);
 		Set Damage Dealt(Event Player, 100);
 		Destroy HUD Text(Last Text ID);
@@ -6481,28 +6615,7 @@ rule("Pharah move and explode bomb")
 	}
 }
 
-rule("Pharah is in air during ult")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Pharah;
-	}
 
-	conditions
-	{
-		Is In Air(Event Player) == True;
-		Event Player.UsingCustomUlt == True;
-	}
-
-	actions
-	{
-		disabled Event Player.Q = True;
-		Stop Damage Over Time(Last Damage Over Time ID);
-		Clear Status(Event Player, Burning);
-	}
-}
 
 rule("Pharah damage player when hitting ground during ult")
 {
@@ -6515,73 +6628,22 @@ rule("Pharah damage player when hitting ground during ult")
 
 	conditions
 	{
-		Is On Ground(Event Player) == True;
 		Event Player.UsingCustomUlt == True;
+		//Distance Between(Event Player, Nearest Walkable Position(Event Player)) < 0.01;
+		//(Y Component Of(Position Of(Event Player)) - Y Component Of(Nearest Walkable Position(Event Player))) < 1;
+		Distance Between(Event Player, Ray Cast Hit Position(Event Player, Event Player + Down*0.8, Null, Event Player, False)) < Distance Between(Event Player, Event Player + Down*0.8);
 	}
 
 	actions
 	{
-		Wait(0.250, Abort When False);
-		Start Damage Over Time(Event Player, Null, 9999, 130);
-		Set Status(Event Player, Null, Burning, 9999);
-	}
-}
+		Wait(0.2, Abort When False);
+		//Start Damage Over Time(Event Player, Null, 9999, 130);
+		Damage(Event Player, Event Player, 10);
+		//Create Effect(Event Player, Bad Aura, Color(Green), Ray Cast Hit Position(Position Of(Event Player), Position Of(Event Player) + Down/10, Null, Null, False), 20, None);
+		//Create Effect(All Players(All Teams), Sphere, Team Of(Event Player), Event Player, 20, Position and Radius);
 
-rule("Pharah died")
-{
-	event
-	{
-		Player Died;
-		All;
-		Pharah;
-	}
-
-	conditions
-	{
-		Event Player.UsingCustomUlt == True;
-	}
-
-	actions
-	{
-		Event Player.UsingCustomUlt = 0;
-		Event Player.CustomUltReadyToUse = 0;
-		disabled Stop Accelerating(Event Player);
-		Set Gravity(Event Player, 100);
-		Set Ultimate Ability Enabled(Event Player, True);
-		Event Player.B = 0;
-		Set Ability 1 Enabled(Event Player, True);
-		Allow Button(Event Player, Button(Jump));
-		Set Projectile Speed(Event Player, 100);
-		Set Damage Dealt(Event Player, 100);
-		Destroy HUD Text(Last Text ID);
-		Destroy Effect(Event Player.P);
-		Event Player.M = Null;
-		Event Player.G = Null;
-		Event Player.P = Null;
-		Event Player.Y = Null;
-		Event Player.Q = Null;
-		Stop Damage Over Time(Last Damage Over Time ID);
-		Clear Status(Event Player, Burning);
-		Event Player.R = Null;
-		Stop Camera(Event Player);
-		Set Primary Fire Enabled(Event Player, True);
-		Set Secondary Fire Enabled(Event Player, True);
-		Event Player.U = 0;
-	}
-}
-
-disabled rule("Pharah boost when jumping, would have to calculate how much fuel player has.")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Pharah;
-	}
-
-	conditions
-	{
-		disabled Event Player.UsingCustomUlt == True;
+		Set Status(Event Player, Event Player, Burning, 0.2);
+		Loop If Condition Is True;
 	}
 }
 
@@ -6687,10 +6749,186 @@ rule("Pharah shoot machine gun")
 			* 0.500, 0.030);
 		Play Effect(All Players(All Teams), Debuff Impact Sound, Color(White), Event Player, 10000);
 		disabled Play Effect(All Players(All Teams), Bad Explosion, Color(Yellow), Event Player.O, 0.030);
-		Damage(Players Within Radius(Event Player.U, 2, Opposite Team Of(Team Of(Event Player)), Off), Event Player, 30);
+		Damage(Players Within Radius(Event Player.U, 2, Opposite Team Of(Team Of(Event Player)), Off), Event Player, 20);
 		Loop If Condition Is True;
 	}
 }
+
+/*rule("Pharah disable burn when further from ground")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Is In Air(Event Player) == True;
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		//Stop Damage Over Time(Last Damage Over Time ID);
+		Clear Status(Event Player, Burning);
+	}
+}*/
+
+/*rule("Pharah move player up in the air if too close to ground.")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+		Distance Between(Event Player, Nearest Walkable Position(Event Player)) < 0.5;
+		//(Y Component Of(Position Of(Event Player)) - Y Component Of(Nearest Walkable Position)) < 5;
+	}
+
+	actions
+	{
+		Wait(0.2, Abort When False);
+		Apply Impulse(Event Player, Up, 10, To World, Cancel Contrary Motion);
+		
+	}
+}*/
+
+//This is now covered by wait until in the event where the ultimate is first activated
+/*rule("Pharah died")
+{
+	event
+	{
+		Player Died;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		Event Player.UsingCustomUlt = 0;
+		Event Player.CustomUltReadyToUse = 0;
+		disabled Stop Accelerating(Event Player);
+		Set Gravity(Event Player, 100);
+		Set Ultimate Ability Enabled(Event Player, True);
+		Event Player.B = 0;
+		Set Ability 1 Enabled(Event Player, True);
+		Allow Button(Event Player, Button(Jump));
+		Set Projectile Speed(Event Player, 100);
+		Set Damage Dealt(Event Player, 100);
+		Destroy HUD Text(Last Text ID);
+		Destroy Effect(Event Player.P);
+		Event Player.M = Null;
+		Event Player.G = Null;
+		Event Player.P = Null;
+		Event Player.Y = Null;
+		Event Player.Q = Null;
+		Stop Damage Over Time(Last Damage Over Time ID);
+		Clear Status(Event Player, Burning);
+		Event Player.R = Null;
+		Stop Camera(Event Player);
+		Set Primary Fire Enabled(Event Player, True);
+		Set Secondary Fire Enabled(Event Player, True);
+		Event Player.U = 0;
+	}
+}*/
+/*
+disabled rule("Pharah boost when jumping, would have to calculate how much fuel player has.")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		disabled Event Player.UsingCustomUlt == True;
+	}
+}*/
+
+/*rule("Pharah is in air during ult")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Is In Air(Event Player) == True;
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		disabled Event Player.Q = True;
+		Stop Damage Over Time(Last Damage Over Time ID);
+		Clear Status(Event Player, Burning);
+	}
+}*/
+
+/*disabled rule("Pharah disable burn when further from ground")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Is In Air(Event Player) == True;
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		Stop Damage Over Time(Last Damage Over Time ID);
+		Clear Status(Event Player, Burning);
+	}
+}*/
+
+//This doesn't work with 0 gravity turned on.
+/*rule("Pharah damage player when hitting ground during ult")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Is On Ground(Event Player) == True;
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		Wait(0.250, Abort When False);
+		Start Damage Over Time(Event Player, Null, 9999, 130);
+		Set Status(Event Player, Null, Burning, 9999);
+	}
+}*/
+
+
 
 //Maybe make apply the high gravity when getting damaged?
 rule("Sigma zero/high gravity")
@@ -8778,7 +9016,7 @@ rule("Sojourn reset values and destroy beams.")
         Skip if(Event Player.SojournBeamArray == null, 1);
         Destroy Effect(Event Player.SojournBeamArray);
 
-        Event Player.SojournArrayIndex = 0;
+        //Event Player.SojournArrayIndex = 0;
         Event Player.SojournBeamArray = 0;
         Event Player.SojournDamageRay = 0;
         Event Player.SojournEyePosArray = 0;
@@ -9716,7 +9954,7 @@ rule("Reset Ult modifications on Mei.")
     actions
     {
         Destroy Effect(Event Player.UltEffect);
-		Event Player.UltEffect = Null
+		Event Player.UltEffect = Null;
 		Event Player.P = Null;
 		Event Player.UsingCustomUlt = Null;
 		Event Player.CustomUltReadyToUse = Null;
@@ -9724,7 +9962,6 @@ rule("Reset Ult modifications on Mei.")
 		Destroy HUD Text(Event Player.UltDescription);
 		Set Ultimate Ability Enabled(Event Player, True);
 		Set Ultimate Charge(Event Player, 0);
-		Event Player.UltEffect = Null;
         
     }
 }
@@ -9834,7 +10071,6 @@ rule("Mei: Disable virus if player has spawned and had coronavirus before death"
 	conditions
 	{
 		Event Player.Coronavirus == True;
-		disabled Has Spawned(Event Player) == True;
 		Event Player.HasDiedWithCoronaVirus == True;
 		Is Alive(Event Player) == True;
 	}
@@ -9844,16 +10080,9 @@ rule("Mei: Disable virus if player has spawned and had coronavirus before death"
 		Destroy Effect(Event Player.CoronavirusEffect);
 		Event Player.CoronavirusEffect = Null;
 		Stop All Damage Over Time(Event Player);
-		disabled Clear Status(Event Player, Hacked);
 		Destroy HUD Text(Event Player.CoronavirusText);
 		Event Player.CoronavirusText = Null;
 		Event Player.HasDiedWithCoronaVirus = Null;
-		disabled Set Max Health(Event Player, 100);
-		disabled Skip If(Hero Of(Event Player) != Hero(D.Va), 2);
-		disabled Skip If(Event Player.G == Null, 1);
-		disabled Set Max Health(Event Player, Event Player.G);
-		disabled Stop Damage Modification(Event Player.CoronavirusDamageDebuff);
-		disabled Event Player.CoronavirusDamageDebuff = Null;
 		Set Healing Received(Event Player, 100);
 		Event Player.Coronavirus = Null;
 	}
@@ -9966,7 +10195,7 @@ rule("Orisa: leap in facing direction")
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(Orisa);
+		//Hero Of(Event Player) == Hero(Orisa);
 		Is Using Ultimate(Event Player) == True;
 		Is Dummy Bot(Event Player) == false;
 		Is Button Held(Event Player, Button(Jump)) == True;
@@ -9986,6 +10215,62 @@ rule("Orisa: leap in facing direction")
 		//Loop If Condition Is True;
 	}
 }
+
+/*rule("Orisa: set scaling modification")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Orisa;
+	}
+
+	conditions
+	{
+		//Hero Of(Event Player) == Hero(Orisa);
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+		//Is Button Held(Event Player, Button(Jump)) == True;
+		//Is On Ground(Event Player) == True;
+
+	}
+
+	actions
+	{
+		Event Player.OrisaScale = 1;
+        Start Scaling Player(Event Player, Event Player.OrisaScale, True);
+		
+	}
+}
+
+rule("Orisa: loop and increase scale variable")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Orisa;
+	}
+
+	conditions
+	{
+		//Hero Of(Event Player) == Hero(Orisa);
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+		//Is Button Held(Event Player, Button(Jump)) == True;
+		//Is On Ground(Event Player) == True;
+
+	}
+
+	actions
+	{
+		Wait(0.1, Abort When False);
+		Event Player.OrisaScale += 0.1;
+        //Start Scaling Player(Event Player, Event Player.OrisaScale, True);
+		Loop If Condition Is True;
+		
+	}
+}*/
 
 /*rule("Orisa: stop flying")
 {
@@ -10683,7 +10968,7 @@ rule("ChooseMenuFinalizeChoice")
     }
 }
 
-rule("Test dummy")
+disabled rule("Test dummy")
 {
 	event
 	{
