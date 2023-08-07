@@ -130,6 +130,7 @@ settings
 				//Echo
 				//Junker Queen
 				Hanzo
+				Junkrat
 				Kiriko
 				Lifeweaver
 				Lúcio
@@ -287,6 +288,7 @@ variables
 		124: SoldierAllKillStreaks
 		125: SoldierKillStreakTexts
 		126: ReinhardtHudText
+		127: JunkerReadyToTeleport
 		//114: DVaCooldown
 		//74: BrigitteHealthPoolCapacity
 		//75: BrigitteHealthPool
@@ -403,6 +405,11 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		Call Subroutine(ResetDoomfist);
 		Else If(Event Player.B == Hero(Echo));
 		Call Subroutine(ResetEcho);
+		Else If(Event Player.B == Hero(Genji));
+		Call Subroutine(ResetGenji);
+		Else If(Event Player.B == Hero(Junker Queen));
+		Call Subroutine(ResetJQ);
+		Else If(Event Player.B == Hero(Mei));
 		break;
 
 		Event Player.B = Null;
@@ -6126,6 +6133,7 @@ rule("Reset Doomfist stuff")
 		disabled Event Player.UsingCustomUlt = Null;
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
+		Event Player.B = Null;
 	}
 }
 
@@ -6193,6 +6201,7 @@ disabled rule("Show coordinates")
 	}
 }
 
+//When I got hit as Pharah using her ult, I got damaged and stunned for a while, but then it just disabled after the ult was over. Perhaps the disabling of pharah's ult also negates genji's stuff?
 //Stun fails sometimes when used on ulting echo?
 rule("Genji Omae wa mou shindeiru")
 {
@@ -6215,6 +6224,7 @@ rule("Genji Omae wa mou shindeiru")
 		Set Damage Dealt(Event Player, 1);
 		Set Move Speed(Event Player, 150);
 		Event Player.Y = True;
+		Event Player.B = Hero Of(Event Player);
 	}
 }
 
@@ -6247,7 +6257,7 @@ rule("Genji deals damage")
 	}
 }
 
-rule("Genji 3")
+rule("Start damage over time on players that were hit during Genji's ult after his ult is over.")
 {
 	event
 	{
@@ -6267,16 +6277,17 @@ rule("Genji 3")
 	actions
 	{
 		Start Damage Over Time(Event Player, Event Player.V, 9999, 100);
+		Big Message(Event Player, String("{0}: {1}", Hero Icon String(Hero Of(Event Player)), Custom String("Nani???")));
+
 		//Stunned message unfortunately gets in the way of the nani message. Could maybe create a hud text?
 		Set Status(Event Player, Event Player.V, Stunned, 9999);
-		Big Message(Event Player, String("{0}: {1}", Hero Icon String(Hero Of(Event Player)), Custom String("Nani???")));
 		Create Effect(All Players(All Teams), Bad Aura Sound, Color(White), Event Player, 1000, Visible To Position and Radius);
 		disabled Wait(3, Ignore Condition);
 		disabled Event Player.V = Null;
 	}
 }
 
-rule("Genji 4")
+rule("Genji disable modifications after ult is over.")
 {
 	event
 	{
@@ -6293,13 +6304,28 @@ rule("Genji 4")
 
 	actions
 	{
-		Set Move Speed(Event Player, 100);
-		Set Damage Dealt(Event Player, 100);
-		Event Player.Y = 0;
+		Call Subroutine(ResetGenji);
 	}
 }
 
-rule("Stop damage over time on death")
+rule("Reset Genji stuff")
+{
+	event
+	{
+		Subroutine;
+		ResetGenji;
+	}
+
+	actions
+	{
+		Set Move Speed(Event Player, 100);
+		Set Damage Dealt(Event Player, 100);
+		Event Player.Y = 0;
+		Event Player.B = Null;
+	}
+}
+
+rule("Stop damage over time on death on players hit by Genji")
 {
 	event
 	{
@@ -8055,13 +8081,13 @@ rule("Junker queen choose enemies for the arena fight.")
 	{
 		Player Dealt Damage;
 		All;
-		All;
+		Junker Queen;
 	}
 
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-		Hero Of(Event Player) == Hero(Junker Queen);
+		//Hero Of(Event Player) == Hero(Junker Queen);
 		Is Dummy Bot(Event Player) == false;
 		Event Ability() == (Button(Ultimate));
 	}
@@ -8079,6 +8105,31 @@ rule("Junker queen choose enemies for the arena fight.")
 
 		Heal(Victim, Null, Event Damage);
 
+
+	}
+}
+
+rule("Junker queen timer for teleporting to arena after ultimate starts.")
+{
+    event
+	{
+		Ongoing - Each Player;
+		All;
+		Junker Queen;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+	}
+
+	actions
+	{
+		Event Player.B = Hero Of(Event Player);
+		Wait(1.60, Abort When False);
+		Event Player.JunkerReadyToTeleport = True;
+		
 	}
 }
 
@@ -8089,13 +8140,13 @@ rule("Junker queen stop damage from ultimate ability.")
 	{
 		Player Dealt Damage;
 		All;
-		All;
+		Junker Queen;
 	}
 
 	conditions
 	{
 		
-		Hero Of(Event Player) == Hero(Junker Queen);
+		//Hero Of(Event Player) == Hero(Junker Queen);
 		Is Dummy Bot(Event Player) == false;
 		Event Ability() == (Button(Ultimate));
 	}
@@ -8115,13 +8166,14 @@ rule("Junker queen Teleport JQ and chosen enemies.")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Junker Queen;
 	}
 
 	conditions
 	{
-		Is Using Ultimate(Event Player) != True;
-		Hero Of(Event Player) == Hero(Junker Queen);
+		Event Player.JunkerReadyToTeleport == True;
+		//Is Using Ultimate(Event Player) != True;
+		//Hero Of(Event Player) == Hero(Junker Queen);
 		Is Dummy Bot(Event Player) == false;
 		Event Player.JunkerQueenEnemyArray != Null;
 		Event Player.JunkerQueenInArena != true;
@@ -8137,6 +8189,9 @@ rule("Junker queen Teleport JQ and chosen enemies.")
 
 		//Just to make sure that the positions are set correctly into the array
 		Wait(0.01, Abort When False);
+
+		Event Player.JunkerReadyToTeleport = Null;
+
 
 		Teleport(Event Player.JunkerQueenEnemyArray, Position Of(Event Player) + Facing Direction Of(Event Player) * 10 + Up * 150);
 		Teleport(Event Player, Position Of(Event Player) + Up * 150);
@@ -8205,25 +8260,9 @@ rule("Junker queen Teleport JQ and chosen enemies.")
 		Set Ability Cooldown(Event Player, Button(Secondary Fire), 0);
 		Set Projectile Speed(Event Player, 200);
 
-		//Set Knockback Dealt(Event Player, 1);
 		Press Button(Event Player, Button(Ability 1));
 
 		Start Scaling Player(Event Player, (1 + Count Of(Event Player.JunkerRageEffects) / 10), false);
-
-
-		//Can stop the bleed effect, but the respawn might mess with some of the other ultimates
-		//For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerQueenEnemyArray), 1);
-		//Event Player.JunkerPreviousHero = Hero Of(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer));
-		//Start Forcing Player To Be Hero(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Hero(Ana));
-		//Start Forcing Player To Be Hero(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Event Player.JunkerPreviousHero);
-		//Stop Forcing Player To Be Hero(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer));
-		//End;
-		
-
-		//Tried to stop the bleed from her ult somehow
-		//Set Status(Event Player, Null, Phased Out, 2);
-		
-
 		
 	}
 }
@@ -8234,13 +8273,13 @@ rule("Junker queen don't teleport players who died before the ult finished.")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Junker Queen;
 	}
 
 	conditions
 	{
 
-		Hero Of(Event Player) == Hero(Junker Queen);
+		//Hero Of(Event Player) == Hero(Junker Queen);
 		Is Dummy Bot(Event Player) == false;
 		Event Player.JunkerQueenEnemyArray != Null;
 		Event Player.JunkerQueenInArena != true;
@@ -8261,13 +8300,14 @@ rule("Junker queen don't teleport players who died before the ult finished.")
 	}
 }
 
+//Although maybe Tracer should be able to escape it? But then might have to disable some stuff for her separately.
 rule("Push players back to arena if they flew too far. Teleport if too far away like if tracer uses recall.")
 {
     event
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Junker Queen;
 	}
 
 	conditions
@@ -8385,13 +8425,14 @@ rule("Set Secondary Fire cooldown to 50% after use for buffed Junker queen.")
 	}
 }
 
+//Should probably use some global variable for the whole arena thing and if the JQ player leaves the match then all the others should be teleported back.
 rule("If Junker queen lost, teleport enemies back to map and remove her buff.")
 {
     event
 	{
 		Player Died;
 		All;
-		All;
+		Junker Queen;
 	}
 
 	conditions
@@ -8416,48 +8457,23 @@ rule("If Junker queen lost, teleport enemies back to map and remove her buff.")
 		Event Player.JunkerQueenEnemyArray = Null;
 		Set Ultimate Ability Enabled(Event Player, True);
 
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerQueenHealthPools), 1);
-		Remove Health Pool From Player(Value In Array(Event Player.JunkerQueenHealthPools, Event Player.ForLoopIndexPlayer));
-		End;
-		Event Player.JunkerQueenHealthPools = Null;
-
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerDamageMods), 1);
-		Stop Damage Modification(Value In Array(Event Player.JunkerDamageMods, Event Player.ForLoopIndexPlayer));
-		End;
-
-
-		Event Player.JunkerDamageMods = Null;
-
-
 		Destroy Effect(Event Player.JunkerArenaSphere);
 		Event Player.JunkerArenaSphere = Null;
 
-		Destroy Effect(Event Player.JunkerRageEffects);
-		Event Player.JunkerRageEffects = Null;
-
-		Set Knockback Dealt(Event Player, 100);
-
-		Destroy Hud Text(Event Player.JunkerWinCounterText);
-		Event Player.JunkerWinCounterText = Null;
-
-		Event Player.JunkerDamageCounter = Null;
-		Event Player.JunkerWinCounter = Null;
-
-		Stop Scaling Player(Event Player);
-
-		Set Projectile Speed(Event Player, 100);
+		Call Subroutine(ResetJQ);
 
 	}
 }
 
 //Set for all players, because it needs to work when switching to other hero.
-rule("If Junker queen dies or switches hero after being buffed, remove buffs.")
+//Above comment is no longer true as this is now replaced with the new event near the top of this file that checks for all heroes if they've switched character and then calls the correct subroutine.
+rule("If Junker queen dies after being buffed and not in arena, remove buffs.")
 {
     event
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Junker Queen;
 	}
 
 	conditions
@@ -8465,8 +8481,24 @@ rule("If Junker queen dies or switches hero after being buffed, remove buffs.")
 		Event Player.JunkerRageEffects != Null;
 		Event Player.JunkerQueenHealthPools != Null;
 		Event Player.JunkerQueenInArena != true;
-		((Is Dead(Event Player) == True && Event Player.ExtraLife != True)|| Hero Of(Event Player) != Hero(Junker Queen)) == True;
+		//((Is Dead(Event Player) == True && Event Player.ExtraLife != True)|| Hero Of(Event Player) != Hero(Junker Queen)) == True;
+		(Is Dead(Event Player) == True && Event Player.ExtraLife != True) == True;
 		
+	}
+
+	actions
+	{
+		Call Subroutine(ResetJQ);
+	}
+}
+
+//This only resets things that affect the JQ player herself while she's buffed outside the arena and not things that only happen within the arena or the arena itself. Could maybe set those other things to reset here so that they will also be reset when player switches hero, but then again the player shouldn't be able to switch hero when in the arena so it shouldn't really be necessary unless somehow the arena persisted even when Junker Queen already left it, but that shouldn't happen either.
+rule("Reset Junker Queen effects and buffs.")
+{
+    event
+	{
+		Subroutine;
+		ResetJQ;
 	}
 
 	actions
@@ -8505,6 +8537,10 @@ rule("If Junker queen dies or switches hero after being buffed, remove buffs.")
 
 		Set Projectile Speed(Event Player, 100);
 
+		Event Player.JunkerReadyToTeleport = Null;
+
+		//Not sure if this should be set to null when called outside of the event that triggers when character is changed.
+		//Event Player.B = Null;
 
 	}
 }
@@ -8515,7 +8551,7 @@ rule("If enemies lost/JQ won, teleport Junker Queen back to map and keep her buf
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Junker Queen;
 	}
 
 	conditions
@@ -8545,6 +8581,7 @@ rule("If enemies lost/JQ won, teleport Junker Queen back to map and keep her buf
 
 		Set Knockback Dealt(Event Player, 100);
 		
+		Event Player.JunkerReadyToTeleport = Null;
 
 	}
 }
@@ -9558,7 +9595,7 @@ rule("Reset McCree.")
 	}
 }
 
-disabled rule("Ult spam test")
+/*disabled rule("Ult spam test")
 {
 	event
 	{
@@ -9626,7 +9663,7 @@ disabled rule("Mei disable regular ult")
 		Event Player.UltReadyText = Last Text ID;
 		Event Player.B = Hero Of(Event Player);
 	}
-}
+}*/
 
 //Apparently the healing block doesn't always work??
 rule("Mei activate ultimate")
@@ -9664,30 +9701,22 @@ rule("Mei activate ultimate")
 		//Wait Until((Is Dead(Event Player) == true || Hero Of(Event Player) != Hero(Mei)) == true, Event Player.P);
 		//Call Subroutine(StopUsingCustomUlt);
 		Wait(Event Player.P, Ignore Condition);
-		Destroy Effect(Event Player.UltEffect);
-		Event Player.P = Null;
-		Event Player.UsingCustomUlt = Null;
-		Event Player.CustomUltReadyToUse = Null;
-		Event Player.B = Null;
-		Destroy HUD Text(Event Player.UltDescription);
-		Set Ultimate Ability Enabled(Event Player, True);
-		Set Ultimate Charge(Event Player, 0);
-		Event Player.UltEffect = Null;
+		Call Subroutine(ResetMei);
 	}
 }
 
-/*rule("Timer to stop Mei's ult, timer will stop early when player dies or switches hero.")
+rule("Reset Ult modifications on Mei.")
 {
     event
     {
         Subroutine;
-        CustomUltStopTimerMei;
+        ResetMei;
     }
 
     actions
     {
-		Wait Until((Is Dead(Event Player) == true || Hero Of(Event Player) != Hero(Mei)) == true, Event Player.P);
         Destroy Effect(Event Player.UltEffect);
+		Event Player.UltEffect = Null
 		Event Player.P = Null;
 		Event Player.UsingCustomUlt = Null;
 		Event Player.CustomUltReadyToUse = Null;
@@ -9698,7 +9727,7 @@ rule("Mei activate ultimate")
 		Event Player.UltEffect = Null;
         
     }
-}*/
+}
 
 rule("Mei: If player has virus, create virus effect, text and set variables, disable after 10 seconds")
 {
