@@ -1,0 +1,39 @@
+Issues:
+-crashes when swapping player to other team
+-should try to fix mccree being able to interrupt his ult by firing. not sure if his voice line would still play if I just stunned or froze him shortly afterwards. Then again maybe it's okay to leave it as is?
+-if mccree cancels his ult manually, the description text won't be removed, also seems to happen if he just doesn't fire. Though I'll probably make a new way of showing the ult descriptions in the future with a manual button press. edit: apparently the code currently checks for if the enemy players have ulting enemy mccree set when disabling the ult, so if enemy team is empty then the ult text will never be removed, will modify
+-multiple mccrees per team don't apply damage correctly as the code is only designed for one per team
+-roadhog and maybe some other stuns can cancel d.vas freezing when choosing from menu
+-checking for ability 2 cooldown always returns 0 with dva which is why the cooldown for her microrockets isn't changed, could potentially use the hard value from the wiki for the cooldown and then calculate based on that and also do the cooldown reduction a specific number of seconds after she started firing the rockets, but might have to set some extra variables for that or use d.vas array variable, or maybe the devs will fix it eventually who knows
+-sigma code sometimes leaves allies flying, also several sigma rules related to him setting gravity on players executing even when there hasn't been any sigma playing
+-sometimes if doomfists meteor strikes hit multiple enemies they seem to be sent flying in the same direction regardless of where they're standing
+-sombra's time stop doesn't seem to work on players if they spawn during the time stop
+
+
+Stuff to add/change:
+-add visual effect to roadhog reflecting stuff
+-sigma making gravity stronger on enemies when closer seems kinda counterintuitive when he's able to fly, some alternate way of increasing their gravity could be nice
+-maybe somehow stop symmetra from spawning portals out of bounds
+-maybe enable reaper's guns, but just teleport him out of bounds if he stays there while not in wraith form, edit: for some reason I remember having had reaper teleport in bounds after ult ends, but apparently that's not in there.
+-could maybe try using resurrect with brigitte instead of changing hero
+-maybe with zenyatta could create a dummy bot that copies their moves while the actual possessed player is invisible so that the zenyatta can damage their allies, or maybe the zenyatta himself could transform into the enemy hero
+
+
+
+Usingcustomult subroutine, might need to remove some stuff from it that doesn't affect all heroes with custom ults:
+Destroy Effect(Event Player.UltEffect);
+        Event Player.UsingCustomUlt = null;
+        Destroy HUD Text(Event Player.UltReadyText);
+		Event Player.UltReadyText = Null;
+		Set Ultimate Ability Enabled(Event Player, True);
+		Event Player.B = Null;
+		Stop Chasing Player Variable(Event Player, G);
+		Event Player.G = 0;
+		Destroy HUD Text(Last Text ID);
+		Set Primary Fire Enabled(Event Player, True);
+		Set Secondary Fire Enabled(Event Player, True);
+		Set Damage Dealt(Event Player, 100);
+		Set Max Health(Event Player, 100);
+		Destroy Effect(Event Player.Y);
+		Event Player.Y = 0;
+		Stop Camera(Event Player);

@@ -11,8 +11,8 @@ settings
 
 	lobby
 	{
-		Max Team 1 Players: 5
-		Max Team 2 Players: 5
+		Max Team 1 Players: 4
+		Max Team 2 Players: 4
 	}
 
 	
@@ -23,7 +23,7 @@ settings
 		General
 		{
 			//Game Mode Start: Immediately
-			Respawn Time Scalar: 0%
+			Respawn Time Scalar: 50%
 		}
 
 		/*Control
@@ -36,8 +36,8 @@ settings
 		{
 			enabled maps
 			{
-				Antarctic Peninsula 0
-				//Workshop Island 0
+				//Colosseo 0
+				Workshop Island 0
 				//Workshop Expanse 0
 			}
 		}
@@ -149,6 +149,7 @@ settings
 		Spawn More Dummy Bots
 		Buff Status Effects
 		Explosion Sounds
+		Kinetic Explosion Effects
 	}
 }
 
@@ -184,9 +185,9 @@ variables
 		26: BapBeam
 		27: UltEffect
 		28: UltingEnemyMcCree
-		29: McCreeUltBlind
-		30: McCreeDPS
-		31: McCreeUltProxDMG
+		//29: McCreeUltBlind
+		//30:	McCreeDPS
+		//31:	McCreeUltProxDMG
 		32: UltDescription
 		33: UltReadyText
 		34: EnemyMei
@@ -423,6 +424,12 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		Call Subroutine(ResetPharah);
 		Else If(Event Player.B == Hero(Reaper));
 		Call Subroutine(ResetReaper);
+		Else If(Event Player.B == Hero(Reinhardt));
+		Call Subroutine(ResetReinhardt);
+		Else If(Event Player.B == Hero(Roadhog));
+		Call Subroutine(ResetRoadhog);
+		Else If(Event Player.B == Hero(Sigma));
+		Call Subroutine(ResetSigma);
 		break;
 
 		Event Player.B = Null;
@@ -520,7 +527,7 @@ rule("ana: set variables for player boosted by ana")
 		Event Ability() == Button(Ultimate);
 		Is Dummy Bot(Event Player) == false;
 		//Is Using Ultimate(Event Player) == True;
-		Hero Of(Event Player) == Hero(Ana);
+		//Hero Of(Event Player) == Hero(Ana);
 	}
 
 	actions
@@ -529,17 +536,77 @@ rule("ana: set variables for player boosted by ana")
 
         //Event Player.B = Sorted Array(All Living Players(Team Of(Event Player)), Absolute Value(Angle Difference(Horizontal Facing Angle Of(Event Player) + Vertical Facing Angle Of(Event Player), Horizontal Angle From Direction(Direction Towards(Event Player, Current Array Element)) + Vertical Angle From Direction(Direction Towards(Event Player, Current Array Element)))));
 
-		Event Player.B = Healee;
+		//Event Player.B = Healee;
 
-		Event Player.B.A = True;
+		Healee.A = True;
 
 		//Event Player.B = Player Closest To Reticle(Event Player, Team Of(Event Player));
-		//Wait(Absolute Value(8), Ignore Condition);
-		//Event Player.B.A = False;
+		
 	}
 }
 
-rule("ana: when nanoboosted player deals damage, set victim to sleep")
+rule("Disable nanoboost effects after some time or when dead")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.A == True;
+		
+
+	}
+
+	actions
+	{
+		Wait Until(Is Dead(Event Player) == True, 8);
+		Event Player.A = Null;
+
+	}
+}
+
+rule("Set cooldowns to 0 for nanoboosted player")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.A == True;
+		(Ability Cooldown(Event Player, Button(Ability 1)) > 0 || Ability Cooldown(Event Player, Button(Ability 2)) > 0 || Ability Cooldown(Event Player, Button(Secondary Fire)) > 0) == True;
+		
+
+	}
+
+	actions
+	{
+		//Big Message(Event Player, Ability Cooldown(Event Player, Button(Ability 2)));
+
+		If(Ability Cooldown(Event Player, Button(Ability 1)) > 0);
+		Set Ability Cooldown(Event Player, Button(Ability 1), 0);
+		End;
+
+		If(Ability Cooldown(Event Player, Button(Ability 2)) > 0);
+		Set Ability Cooldown(Event Player, Button(Ability 2), 0);
+		End;
+
+		If(Ability Cooldown(Event Player, Button(Secondary Fire)) > 0);
+		Set Ability Cooldown(Event Player, Button(Secondary Fire), 0);
+		End;
+
+
+	}
+}
+
+/*rule("ana: when nanoboosted player deals damage, set victim to sleep")
 {
 	event
 	{
@@ -557,7 +624,7 @@ rule("ana: when nanoboosted player deals damage, set victim to sleep")
 	{
 		Set Status(Victim, Null, Asleep, 1);
 	}
-}
+}*/
 
 //Should probably use that move speed variable
 /*
@@ -586,7 +653,7 @@ rule("ana: set move speed for nanoboosted player")
 }*/
 
 //Couldn't this be in the rule for Ana when they set the A variable to true? Checking this rule on every frame probably increases load
-rule("ana: set small size for nanoboosted player")
+/*rule("ana: set small size for nanoboosted player")
 {
 	event
 	{
@@ -609,9 +676,9 @@ rule("ana: set small size for nanoboosted player")
 		Event Player.A = False;
 
 	}
-}
+}*/
 
-rule("ana: if nanoboosted player dies, effects will end")
+/*rule("ana: if nanoboosted player dies, effects will end")
 {
 	event
 	{
@@ -632,7 +699,7 @@ rule("ana: if nanoboosted player dies, effects will end")
 		Stop Scaling Player(Event Player);
 
 	}
-}
+}*/
 
 //Couldn't get primary fire spam to work
 /*rule("Ashe: Activate ultimate")
@@ -2266,11 +2333,8 @@ rule("moira: coalescence X 100 set initial modifications")
 
 	actions
 	{
-		Event Player.B = Hero Of(Event Player);
 		Wait(0.5, Ignore Condition);
-		Set Aim Speed(Event Player, 10);
-		Set Status(Event Player, Null, Rooted, 9999);
-		Start Accelerating(Event Player, Backward, 50, 2, To Player, Direction Rate and Max Speed);
+		Event Player.B = Hero Of(Event Player);
 		
 	}
 }
@@ -2287,7 +2351,8 @@ rule("moira: coalescence X 100 loop effects")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-		Has Status(Event Player, Rooted) == True;
+		Event Player.B == Hero Of(Event Player);
+		//Has Status(Event Player, Rooted) == True;
 		//Hero Of(Event Player) == Hero(Moira);
 		Is Dummy Bot(Event Player) == false;
 
@@ -2296,6 +2361,13 @@ rule("moira: coalescence X 100 loop effects")
 	actions
 	{
 		Wait(0.100, Ignore Condition);
+		
+		//These are set multiple times in a loop so that they won't get canceled by other effects like Sigma's gravity. Although could also maybe check separately in those others if certain variables are active and such idk
+		Set Aim Speed(Event Player, 10);
+		Set Status(Event Player, Null, Rooted, 0.100);
+		Start Accelerating(Event Player, Backward, 50, 2, To Player, Direction Rate and Max Speed);
+
+
 		Event Player.M = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(
 			Event Player)) * 30, Y Component Of(Facing Direction Of(Event Player)) * 30 + 2, Z Component Of(Facing Direction Of(
 			Event Player)) * 30), All Players(All Teams), Event Player, True);
@@ -3699,7 +3771,7 @@ rule("Rein: ult ready")
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(Reinhardt);
+		//Hero Of(Event Player) == Hero(Reinhardt);
 		Ultimate Charge Percent(Event Player) > 99.900;
 		Is Dummy Bot(Event Player) == false;
 
@@ -3710,6 +3782,7 @@ rule("Rein: ult ready")
 		Event Player.U = True;
 		Create HUD Text(Event Player, Custom String("Jump down from high while using earthshatter to get a buff. Buff duration and effectiveness increased by air time."), Null, Null, Top, 1, Color(Orange), Color(White), Color(Orange), Visible To and String, Default Visibility);
 		Event Player.UltReadyText = Last Text ID;
+		Event Player.B = Hero Of(Event Player);
 	}
 }
 
@@ -3724,7 +3797,7 @@ rule("reinhardt: set variables when using ultimate")
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(Reinhardt);
+		//Hero Of(Event Player) == Hero(Reinhardt);
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.U == True;
 		disabled Global.S != Event Player;
@@ -3762,12 +3835,12 @@ rule("reinhardt: increase buffs in the air")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Reinhardt;
 	}
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(Reinhardt);
+		//Hero Of(Event Player) == Hero(Reinhardt);
 		Is In Air(Event Player) == True;
 		Event Player.S == True;
 		Is Dummy Bot(Event Player) == false;
@@ -3785,7 +3858,22 @@ rule("reinhardt: increase buffs in the air")
 		Set Damage Received(Event Player, Event Player.P);
 		Loop If Condition Is True;
 		Wait(1, Ignore Condition);
-		Skip If(Event Player.M == True, 16);
+		//This is if the ult jump is interrupted somehow I think
+		Skip If(Event Player.M == True, 1);
+		Call Subroutine(ResetReinhardt);
+	}
+}
+
+rule("reinhardt: reset stuff")
+{
+	event
+	{
+		Subroutine;
+		ResetReinhardt;
+	}
+
+	actions
+	{
 		Stop Chasing Player Variable(Event Player, Y);
 		Event Player.R = 0;
 		Event Player.Q = 0;
@@ -3801,6 +3889,9 @@ rule("reinhardt: increase buffs in the air")
 		Set Damage Received(Event Player, 100);
 		Event Player.P = 0;
 		Event Player.S = 0;
+		Set Ultimate Ability Enabled(Event Player, True);
+		Event Player.M = Null;
+		Event Player.B = Null;
 	}
 }
 
@@ -3816,7 +3907,7 @@ rule("reinhardt: do stuff when earthshatter has landed")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-		Hero Of(Event Player) == Hero(Reinhardt);
+		//Hero Of(Event Player) == Hero(Reinhardt);
 		Is Dummy Bot(Event Player) == false;
 
 	}
@@ -3827,24 +3918,8 @@ rule("reinhardt: do stuff when earthshatter has landed")
 		Event Player.M = True;
 		Chase Player Variable At Rate(Event Player, Y, 0, 1, Destination and Rate);
 		Set Ultimate Ability Enabled(Event Player, False);
-		Wait(Event Player.Y, Ignore Condition);
-		Stop Chasing Player Variable(Event Player, Y);
-		Event Player.R = 0;
-		Event Player.Q = 0;
-		Destroy Effect(Event Player.UsingCustomUlt);
-		Event Player.UsingCustomUlt = Null;
-		Destroy Effect(Event Player.G);
-		Event Player.G = Null;
-		Set Damage Dealt(Event Player, 100);
-		disabled Clear Status(Event Player, Invincible);
-		Event Player.Y = 0;
-		Set Ultimate Ability Enabled(Event Player, True);
-		Clear Status(Event Player, Burning);
-		Destroy HUD Text(Event Player.ReinhardtHudText);
-		Event Player.ReinhardtHudText = 0;
-		Set Damage Received(Event Player, 100);
-		Event Player.P = 0;
-		Event Player.M = Null;
+		Wait Until(Is Dead(Event Player) == True, Event Player.Y);
+		Call Subroutine(ResetReinhardt);
 	}
 }
 
@@ -3869,6 +3944,8 @@ rule("Reinhardt: Start burning when power up is over 8 secs")
 	}
 }
 
+		
+//I feel like this might do the same thing as "Skip If(Event Player.M == True, 1);" in the increase buffs in the air event, but keeping this just in case
 rule("Reinhardt disable power up if ult hasn't been used and player is on ground")
 {
 	event
@@ -3888,21 +3965,8 @@ rule("Reinhardt disable power up if ult hasn't been used and player is on ground
 	actions
 	{
 		Wait(0.250, Abort When False);
-		Event Player.S = 0;
-		Event Player.R = 0;
-		Event Player.Q = 0;
-		Destroy Effect(Event Player.UsingCustomUlt);
-		Event Player.UsingCustomUlt = Null;
-		Destroy Effect(Event Player.G);
-		Event Player.G = Null;
-		Set Damage Dealt(Event Player, 100);
-		Event Player.Y = 0;
-		Set Ultimate Ability Enabled(Event Player, True);
-		Clear Status(Event Player, Burning);
-		Destroy HUD Text(Event Player.ReinhardtHudText);
-		Event Player.ReinhardtHudText = 0;
-		Set Damage Received(Event Player, 100);
-		Event Player.P = 0;
+
+		Call Subroutine(ResetReinhardt);
 	}
 }
 
@@ -4194,6 +4258,7 @@ rule("sombra: za warudo")
 		Event Player.CustomUltReadyToUse = False;
 		Create HUD Text(All Players(All Teams), Global.W, Null, Null, Top, 0, Color(White), Color(White), Color(White),
 			Visible To and String, Default Visibility);
+		//Set Slow Motion(0);
 		Wait(Global.W, Ignore Condition);
 		Global.T = False;
 		Event Player.S = 0;
@@ -4699,7 +4764,7 @@ rule("D.Va increase upgrade counter when using ult as baby D.VA, just used so th
 		Is Using Ultimate(Event Player) == True;
 		//Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.DVAVariables != Null;
-		Hero Of(Event Player) == Hero(D.Va);
+		//Hero Of(Event Player) == Hero(D.Va);
 
 	}
 
@@ -4730,7 +4795,7 @@ rule("D.VA Has spawned with no upgrades, set hud and initial damage+max health")
 		Has Spawned(Event Player) == True;
 		Is Dummy Bot(Event Player) == false;
 		Event Player.DVAVariables == Null; 
-		Hero Of(Event Player) == Hero(D.Va);
+		//Hero Of(Event Player) == Hero(D.Va);
 		//|| Value In Array(Event Player.DVAVariables, 2) == Null;
 
 	}
@@ -4803,7 +4868,7 @@ rule("D.VA has spawned a new mech, choose upgrade")
 		Has Spawned(Event Player) == True;
 		//Event Player.CustomUltReadyToUse == True;
 		Is Dummy Bot(Event Player) == false;
-		Hero Of(Event Player) == Hero(D.Va);
+		//Hero Of(Event Player) == Hero(D.Va);
 		Event Player.DVAVariables != Null;
 		Value In Array(Event Player.DVAVariables, 1) > 0;
 		Is In Alternate Form(Event Player) != True;
@@ -4837,7 +4902,7 @@ rule("D.VA has chosen a new upgrade")
 		Has Spawned(Event Player) == True;
 		//Event Player.CustomUltReadyToUse == True;
 		Is Dummy Bot(Event Player) == false;
-		Hero Of(Event Player) == Hero(D.Va);
+		//Hero Of(Event Player) == Hero(D.Va);
 		Event Player.MenuChosenOption != Null;
 		Event Player.DVAVariables != Null;
 
@@ -4898,20 +4963,25 @@ rule("D.VA reduce ability 1 and secondary fire cooldown after obtaining cooldown
 		Has Spawned(Event Player) == True;
 		//Event Player.CustomUltReadyToUse == True;
 		Is Dummy Bot(Event Player) == false;
-		Hero Of(Event Player) == Hero(D.Va);
+		//Hero Of(Event Player) == Hero(D.Va);
 		Event Player.DVAVariables != Null;
 		Value In Array(Event Player.G, 2) >= 2;
 		(Ability Cooldown(Event Player, Button(Ability 1)) > 0 || Ability Cooldown(Event Player, Button(Ability 2)) > 0 || Ability Cooldown(Event Player, Button(Secondary Fire)) > 0) == True;
 		//Ability Cooldown(Event Player, Button(Ability 1)) == True;
+		//Is Using Ability 2(Event Player) == True;
+
 	}
 
 	actions
 	{
+		//Big Message(Event Player, Ability Cooldown(Event Player, Button(Ability 2)));
+
+		//Wait(0.1, Abort When False);
 		If(Ability Cooldown(Event Player, Button(Ability 1)) > 0);
 		Set Ability Cooldown(Event Player, Button(Ability 1), Ability Cooldown(Event Player, Button(Ability 1)) / Value In Array(Event Player.G, 2));
 		End;
 
-		//Doesn't work
+		//Doesn't work, the ability cooldown check returns null always.
 		If(Ability Cooldown(Event Player, Button(Ability 2)) > 0);
 		Set Ability Cooldown(Event Player, Button(Ability 2), Ability Cooldown(Event Player, Button(Ability 2)) / Value In Array(Event Player.G, 2));
 		End;
@@ -4920,7 +4990,9 @@ rule("D.VA reduce ability 1 and secondary fire cooldown after obtaining cooldown
 		Set Ability Cooldown(Event Player, Button(Secondary Fire), Ability Cooldown(Event Player, Button(Secondary Fire)) / Value In Array(Event Player.G, 2));
 		End;
 
-		//Big Message(Event Player, Custom String("333"));
+		
+
+		//Loop If Condition Is True;
 
 
 	}
@@ -4974,7 +5046,7 @@ rule("D.VA regen defense matrix when it's upgraded")
 		Has Spawned(Event Player) == True;
 		//Event Player.CustomUltReadyToUse == True;
 		Is Dummy Bot(Event Player) == false;
-		Hero Of(Event Player) == Hero(D.Va);
+		//Hero Of(Event Player) == Hero(D.Va);
 		Event Player.DVAVariables != Null;
 		Value In Array(Event Player.G, 3) == True;
 		//Ability Resource(Event Player, Button(Secondary Fire)) <= 0;
@@ -5000,7 +5072,7 @@ rule("D.VA reset health and damage when dying and remove upgrades")
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(D.Va);
+		//Hero Of(Event Player) == Hero(D.Va);
 		Is Dead(Event Player) == True;
 		Is Dummy Bot(Event Player) == false;
 		Event Player.DVAVariables != Null;
@@ -5474,8 +5546,8 @@ rule("Reaper enable teleport ability when it's not on cooldown")
 
 	conditions
 	{
-		Event Player.CustomUltReadyToUse != True;
-		Event Player.UsingCustomUlt != Null;
+		//Event Player.CustomUltReadyToUse != True;
+		//Event Player.UsingCustomUlt != Null;
 		Has Status(Event Player, Hacked) == False;
 		Ability Cooldown(Event Player, Button(Ability 2)) == 0;
 	}
@@ -5642,6 +5714,29 @@ rule("Reaper execute teleport")
 
 		Play Effect(All Players(All Teams), Moira Fade Reappear Sound, null, Event Player, 200);
 
+
+	}
+}
+
+//Not a perfect solution, can cause teleporting sometimes when in bounds as well and there are some out of bounds areas where the player can sort of slide without technically being on ground. Could potentially make some kind of convoluted ray cast solution
+rule("Reaper teleport back in bounds if standing out of bounds")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Reaper;
+	}
+
+	conditions
+	{
+		Is On Ground(Event Player) == True;
+		Distance Between(Event Player, Nearest Walkable Position(Position Of(Event Player))) > 1.5;
+	}
+
+	actions
+	{
+		Teleport(Event Player, Nearest Walkable Position(Position Of(Event Player)));
 
 	}
 }
@@ -6139,6 +6234,66 @@ rule("Symmetra teleport player when near team 2 green portal")
 	}
 }*/
 
+rule("Doomfist use ult")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Doomfist;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		Wait(0.016, Ignore Condition);
+		Event Player.S = 8;
+		Event Player.G = Nearest Walkable Position(Random Value In Array(All Living Players(Opposite Team Of(Team Of(Event Player))))
+			+ Vector(Random Real(-15, 15), 0, Random Real(-15, 15)));
+		Create Effect(All Players(All Teams), Ring, Team Of(Event Player), Event Player.G, 7.500, Visible To Position and Radius);
+		Event Player.Y = Last Created Entity;
+		Create Effect(All Players(All Teams), Ring, Team Of(Event Player), Event Player.G, Event Player.S, Visible To Position and Radius);
+		Event Player.M = Last Created Entity;
+		//Chase Player Variable At Rate(Event Player, S, 0, 8, Destination and Rate);
+		Chase Player Variable Over Time(Event Player, S, 0, 1, None);
+		//Chase Player Variable At Rate(Event Player, S, 0, 8, Destination and Rate);
+		
+		Wait(1, Ignore Condition);
+		Destroy Effect(Event Player.M);
+		Destroy Effect(Event Player.Y);
+		Play Effect(All Players(All Teams), Doomfist Meteor Strike Impact Effect, Team Of(Event Player), Event Player.G, 10);
+		Play Effect(All Players(All Teams), Doomfist Meteor Strike Impact Sound, Team Of(Event Player), Event Player.G, 100);
+
+		/*
+		//This is the explosion effect to use without extensions
+		
+		Play Effect(All Players(All Teams), Good Explosion, Color(Team 1), Event Player.G, 10);
+		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player.G, 10000);*/
+
+
+		Damage(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
+			Event Player, 20);
+		Damage(Players Within Radius(Event Player.G, 6, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
+			Event Player, 100);
+		Damage(Players Within Radius(Event Player.G, 2, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
+			Event Player, 180);
+
+		//This seems to apply the same direction to all players. Maybe should do some kind of for loop here for all the players and apply impulse to them separately
+		Apply Impulse(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
+			Direction Towards(Event Player.G, Position Of(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)),
+			Surfaces And Enemy Barriers))) + Up, 10, To World, Cancel Contrary Motion);
+		Loop If Condition Is True;
+	}
+}
+
+//This was before I realized you could just set the event player's team as the color value
+/*
 rule("Doomfist team 1")
 {
 	event
@@ -6161,7 +6316,7 @@ rule("Doomfist team 1")
 		Event Player.S = 8;
 		Event Player.G = Nearest Walkable Position(Random Value In Array(All Living Players(Opposite Team Of(Team Of(Event Player))))
 			+ Vector(Random Real(-15, 15), 0, Random Real(-15, 15)));
-		disabled Event Player.UsingCustomUlt = Last Created Entity;
+
 		Create Effect(All Players(All Teams), Ring, Color(Team 1), Event Player.G, 7.500, Visible To Position and Radius);
 		Event Player.Y = Last Created Entity;
 		Create Effect(All Players(All Teams), Ring, Color(Team 1), Event Player.G, Event Player.S, Visible To Position and Radius);
@@ -6170,9 +6325,10 @@ rule("Doomfist team 1")
 		Wait(1, Ignore Condition);
 		Destroy Effect(Event Player.M);
 		Destroy Effect(Event Player.Y);
-		disabled Destroy Effect(Event Player.UsingCustomUlt);
 		Play Effect(All Players(All Teams), Good Explosion, Color(Team 1), Event Player.G, 10);
 		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player.G, 10000);
+
+
 		Damage(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
 			Event Player, 20);
 		Damage(Players Within Radius(Event Player.G, 6, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
@@ -6184,9 +6340,9 @@ rule("Doomfist team 1")
 			Surfaces And Enemy Barriers))) + Up, 10, To World, Cancel Contrary Motion);
 		Loop If Condition Is True;
 	}
-}
+}*/
 
-rule("Doomfist team 2")
+/*rule("Doomfist team 2")
 {
 	event
 	{
@@ -6231,7 +6387,7 @@ rule("Doomfist team 2")
 			Surfaces And Enemy Barriers))) + Up, 10, To World, Cancel Contrary Motion);
 		Loop If Condition Is True;
 	}
-}
+}*/
 
 rule("Reset Doomfist stuff")
 {
@@ -6937,14 +7093,14 @@ rule("Sigma zero/high gravity")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Sigma;
 	}
 
 	conditions
 	{
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.CustomUltReadyToUse == True;
-		Hero Of(Event Player) == Hero(Sigma);
+		//Hero Of(Event Player) == Hero(Sigma);
 	}
 
 	actions
@@ -6969,7 +7125,21 @@ rule("Sigma zero/high gravity")
 		Modify Player Variable(Event Player, SigmaMaleValues, Append To Array, Last Created Entity);
 
 		Chase Player Variable At Rate(Event Player, SigmaMaleTimer, 0, 1, Destination and Rate);
-		Wait Until(Is Dead(Event Player) == true || Hero Of(Event Player) != Hero(Sigma), Event Player.SigmaMaleTimer);
+		Wait Until(Is Dead(Event Player) == true, Event Player.SigmaMaleTimer);
+		Call Subroutine(ResetSigma);
+	}
+}
+
+rule("Reset Sigma")
+{
+	event
+	{
+		Subroutine;
+		ResetSigma;
+	}
+
+	actions
+	{
 		Destroy HUD Text(Value In Array(Event Player.SigmaMaleValues, 0));
 		Destroy Effect(Value In Array(Event Player.SigmaMaleValues, 1));
 
@@ -6991,7 +7161,7 @@ rule("Sigma set zero grav buff and debuff to true and damage players who are rea
 	conditions
 	{
 		Event Player.UsingCustomUlt == True;
-		Hero Of(Event Player) == Hero(Sigma);
+		//Hero Of(Event Player) == Hero(Sigma);
 	}
 
 	actions
@@ -7006,6 +7176,8 @@ rule("Sigma set zero grav buff and debuff to true and damage players who are rea
 		Loop If Condition Is True;
 	}
 }
+
+//Some of these sigma rules I believe are now sometimes running even when no Sigma has ever been present in the match so should modify the conditions somehow
 
 //So far I think only Moira's ult is another one that uses the acceleration and it applies the acceleration continuously in a loop so stopping acceleration shouldn't be too much of an issue, Zarya does continuous impulses which hopefully aren't effected by stopping acceleration
 rule("Sigma set zero grav buff to false and stop acceleration")
@@ -7629,6 +7801,7 @@ rule("Zenyatta secondary fire")
 	}
 }
 
+/*
 disabled rule("Zenyatta turn possessed player, currently set in possess a player event")
 {
 	event
@@ -7652,7 +7825,7 @@ disabled rule("Zenyatta turn possessed player, currently set in possess a player
 		disabled Loop If Condition Is True;
 		Start Facing(Event Player.P, Facing Direction Of(Event Player), 1000, To World, Direction and Turn Rate);
 	}
-}
+}*/
 
 rule("Zenyatta stop moving when there's no throttle")
 {
@@ -8129,7 +8302,7 @@ rule("Zenyatta acknowledge")
 	}
 }
 
-disabled rule("Roadhog disable vanilla ultimate when charge is full")
+/*disabled rule("Roadhog disable vanilla ultimate when charge is full")
 {
 	event
 	{
@@ -8155,7 +8328,7 @@ disabled rule("Roadhog disable vanilla ultimate when charge is full")
 			Color(White), Visible To and String, Default Visibility);
 		Event Player.UltReadyText = Last Text ID;
 	}
-}
+}*/
 
 //Add some kind of effect that shows when damage and heals are reflected. Could be a permanent connection to other players or something that happens when the damage and heal happens
 rule("Roadhog activate and deactivate ultimate")
@@ -8164,12 +8337,12 @@ rule("Roadhog activate and deactivate ultimate")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Roadhog;
 	}
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(Roadhog);
+		//Hero Of(Event Player) == Hero(Roadhog);
 		Event Player.CustomUltReadyToUse == True;
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.UsingCustomUlt != True;
@@ -8188,8 +8361,24 @@ rule("Roadhog activate and deactivate ultimate")
 		Event Player.RoadhogHUD = Last Text Id;
 		Event Player.UsingCustomUlt = True;
 		Create Effect(Event Player.P, Sphere, Color(White), Event Player, 2, Visible To Position and Radius);
-		Wait(Event Player.Y, Ignore Condition);
-		Skip If(Event Player.CustomUltReadyToUse == Null, 8);
+		//Wait(Event Player.Y, Ignore Condition);
+		Wait Until(Is Dead(Event Player) == True, Event Player.Y);
+		//Not sure what the idea behind this skip was. Would it prevent the ult from being reset if somehow the ult was available again while using the ult? Don't really understand, this is some ancient code. Also I would assume that a subroutine counts as one action, but maybe I should make sure that it doesn't count as multiple based on how many actions are within it.
+		Skip If(Event Player.CustomUltReadyToUse == Null, 1);
+		Call Subroutine(ResetRoadhog);
+	}
+}
+
+rule("Roadhog reset")
+{
+	event
+	{
+		Subroutine;
+		ResetRoadhog;
+	}
+
+	actions
+	{
 		Destroy Effect(Last Created Entity);
 		Event Player.UsingCustomUlt = Null;
 		Event Player.CustomUltReadyToUse = Null;
@@ -8219,7 +8408,6 @@ rule("Roadhog reflect damage")
 
 	actions
 	{
-		disabled Heal(Event Player, Null, Event Damage);
 		Damage(Attacker, Event Player, Event Damage);
 	}
 }
@@ -8240,11 +8428,11 @@ rule("Roadhog reflect healing")
 
 	actions
 	{
-		Heal(Healer, Null, Event Healing);
+		Heal(Healer, Event Player, Event Healing);
 	}
 }
 
-rule("Roadhog died")
+/*rule("Roadhog died")
 {
 	event
 	{
@@ -8269,7 +8457,7 @@ rule("Roadhog died")
 		Event Player.Y = Null;
 		Set Ultimate Charge(Event Player, 0);
 	}
-}
+}*/
 
 //Sometimes could only ult once and then projectile gravity 0 would stay.
 rule("Hanzo")
@@ -9549,6 +9737,7 @@ rule("Baptiste destroy beam effect on nearby players team 2")
 	}
 }*/
 
+//Doesn't support more than 1 player atm
 rule("McCree enable ult")
 {
 	event
@@ -9568,16 +9757,18 @@ rule("McCree enable ult")
 	actions
 	{
 		All Players(Opposite Team Of(Team Of(Event Player))).UltingEnemyMcCree = Event Player;
-		disabled Set Invisible(Event Player, Enemies);
-		Create HUD Text(Event Player, Custom String("Praise the sun. Nearby enemies and enemies who stare directly at you get burned."),
+		//disabled Set Invisible(Event Player, Enemies);
+		Create HUD Text(Event Player, Custom String("It's High Noon! Nearby enemies and enemies who stare directly at you get burned."),
 			Null, Null, Top, 0, Color(Yellow), Color(White), Color(Yellow), Visible To and String, Default Visibility);
 		Event Player.UltDescription = Last Text ID;
 		Event Player.B = Hero Of(Event Player);
 		Set Status(Event Player, Event Player, Burning, 7);
+		Wait Until(Is Dead(Event Player) == True || Is Using Ultimate(Event Player) == false, 7);
+		Call Subroutine(ResetCassidy);
 	}
 }
 
-rule("McCree loop effect")
+rule("McCree loop visual effect that enemies see")
 {
 	event
 	{
@@ -9594,8 +9785,38 @@ rule("McCree loop effect")
 
 	actions
 	{
+		//Could maybe just set this to 0.016 but might be slightly more taxing on performance though 0.023 is pretty fast already as well
 		Wait(0.023, Ignore Condition);
-		Play Effect(All Players(All Teams), Good Explosion, Color(Yellow), Eye Position(Event Player) + Facing Direction Of(Event Player), 7.500);
+		//Play Effect(All Players(All Teams), Good Explosion, Color(Yellow), Eye Position(Event Player) + Facing Direction Of(Event Player), 7.500);
+		//Play Effect(All Players(All Teams), Ashe Dynamite Explosion Effect, Team Of(Event Player), Eye Position(Event Player), 7.500);
+		Play Effect(Remove From Array(All Players(All Teams), Event Player), Ashe Dynamite Explosion Effect, Team Of(Event Player), Eye Position(Event Player), 7.500);
+		//Play Effect(Event Player, Good Explosion, Color(Yellow), Update Every Frame(Eye Position(Event Player) + Facing Direction Of(Event Player)), 7.500);
+		
+		Loop If Condition Is True;
+	}
+}
+
+rule("McCree loop visual effect that mccree sees")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Cassidy;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+	}
+
+	actions
+	{
+		Wait(0.1, Ignore Condition);
+		//Play Effect(All Players(All Teams), Good Explosion, Color(Yellow), Eye Position(Event Player) + Facing Direction Of(Event Player), 7.500);
+		//Play Effect(All Players(All Teams), Ashe Dynamite Explosion Effect, Team Of(Event Player), Eye Position(Event Player), 7.500);
+		Play Effect(Event Player, Ashe Dynamite Explosion Effect, Team Of(Event Player), Eye Position(Event Player) - Facing Direction Of(Event Player), 7.500);
 		//Play Effect(Event Player, Good Explosion, Color(Yellow), Update Every Frame(Eye Position(Event Player) + Facing Direction Of(Event Player)), 7.500);
 		
 		Loop If Condition Is True;
@@ -9614,20 +9835,23 @@ rule("If sees McCree get damaged")
 	conditions
 	{
 		Event Player.UltingEnemyMcCree != Null;
-		Is In View Angle(Event Player, Event Player.UltingEnemyMcCree, 50) == True;
+		Is In View Angle(Event Player, Event Player.UltingEnemyMcCree, 20) == True;
 		Is In Line of Sight(Event Player, Event Player.UltingEnemyMcCree, Barriers Do Not Block LOS) == True;
 	}
 
 	actions
 	{
-		Set Status(Event Player, Event Player.UltingEnemyMcCree, Burning, 2);
-		Event Player.McCreeUltBlind = True;
-		Start Damage Over Time(Event Player, Event Player.UltingEnemyMcCree, 9999, 100);
-		Event Player.McCreeDPS = Last Damage Over Time ID;
+		Wait(0.1, Ignore Condition);
+		Set Status(Event Player, Event Player.UltingEnemyMcCree, Burning, 0.1);
+		//Event Player.McCreeUltBlind = True;
+		Damage(Event Player, Event Player.UltingEnemyMcCree, 5);
+		//Start Damage Over Time(Event Player, Event Player.UltingEnemyMcCree, 9999, 100);
+		//Event Player.McCreeDPS = Last Damage Over Time ID;
+		Loop If Condition Is True;
 	}
 }
 
-rule("If don't see McCree don't get burned or damaged")
+rule("If close to McCree get damaged")
 {
 	event
 	{
@@ -9639,44 +9863,41 @@ rule("If don't see McCree don't get burned or damaged")
 	conditions
 	{
 		Event Player.UltingEnemyMcCree != Null;
-		((Is In View Angle(Event Player, Event Player.UltingEnemyMcCree, 50) == False) || (Is In Line of Sight(Event Player, Event Player.UltingEnemyMcCree, Barriers Do Not Block LOS) == False)) == True;
-		disabled Event Player.McCreeUltBlind == True;
+		Is In Line of Sight(Event Player, Event Player.UltingEnemyMcCree, Barriers Do Not Block LOS) == True;
+		Distance Between(Event Player, Event Player.UltingEnemyMcCree) < 5;
 	}
 
 	actions
 	{
-		Skip If(Distance Between(Event Player, Event Player.UltingEnemyMcCree) < 5, 1);
-		Stop Damage Over Time(Event Player.McCreeDPS);
+		Wait(0.1, Ignore Condition);
+		Set Status(Event Player, Event Player.UltingEnemyMcCree, Burning, 0.1);
+		//Event Player.McCreeUltBlind = True;
+		Damage(Event Player, Event Player.UltingEnemyMcCree, 10);
+		//Start Damage Over Time(Event Player, Event Player.UltingEnemyMcCree, 9999, 100);
+		//Event Player.McCreeDPS = Last Damage Over Time ID;
+		Loop If Condition Is True;
 	}
 }
 
-rule("McCreeDisable statuses when ult is over")
+rule("Reset McCree.")
 {
 	event
 	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.UltingEnemyMcCree == Null;
-		(Event Player.McCreeUltBlind || Event Player.McCreeUltProxDMG) != Null;
+		Subroutine;
+		ResetCassidy;
 	}
 
 	actions
 	{
-		disabled Destroy Effect(Event Player.McCreeUltBlind);
-		disabled Event Player.McCreeUltBlind = Null;
-		disabled Clear Status(Event Player, Burning);
-		Stop Damage Over Time(Event Player.McCreeDPS);
-		Stop Damage Over Time(Event Player.McCreeUltProxDMG);
-		Event Player.McCreeUltProxDMG = Null;
+		All Players(Opposite Team Of(Team Of(Event Player))).UltingEnemyMcCree = Null;
+		Destroy HUD Text(Event Player.UltDescription);
+		Event Player.B = Null;
+		Clear Status(Event Player, Burning);
 	}
 }
 
-rule("McCree disable ult")
+//If mccree player leaves match this might not be run
+/*rule("McCree disable ult")
 {
 	event
 	{
@@ -9699,9 +9920,10 @@ rule("McCree disable ult")
 		Clear Status(Event Player, Burning);
 
 	}
-}
+}*/
 
-rule("If close to McCree get damaged")
+//Old crap using damage over time
+/*rule("If don't see McCree don't get burned or damaged")
 {
 	event
 	{
@@ -9713,19 +9935,41 @@ rule("If close to McCree get damaged")
 	conditions
 	{
 		Event Player.UltingEnemyMcCree != Null;
-		Is In Line of Sight(Event Player, Event Player.UltingEnemyMcCree, Barriers Do Not Block LOS) == True;
-		Distance Between(Event Player, Event Player.UltingEnemyMcCree) < 5;
+		((Is In View Angle(Event Player, Event Player.UltingEnemyMcCree, 50) == False) || (Is In Line of Sight(Event Player, Event Player.UltingEnemyMcCree, Barriers Do Not Block LOS) == False)) == True;
+		disabled Event Player.McCreeUltBlind == True;
 	}
 
 	actions
 	{
-		disabled Set Status(Event Player, Event Player.UltingEnemyMcCree, Burning, 2);
-		Start Damage Over Time(Event Player, Event Player.UltingEnemyMcCree, 9999, 150);
-		Event Player.McCreeUltProxDMG = Last Damage Over Time ID;
+		Skip If(Distance Between(Event Player, Event Player.UltingEnemyMcCree) < 5, 1);
+		Stop Damage Over Time(Event Player.McCreeDPS);
 	}
-}
+}*/
 
-rule("If not close to McCree don't get burned")
+/*rule("McCreeDisable statuses when ult is over")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.UltingEnemyMcCree == Null;
+		(Event Player.McCreeUltBlind || Event Player.McCreeUltProxDMG) != Null;
+	}
+
+	actions
+	{
+		//Stop Damage Over Time(Event Player.McCreeDPS);
+		//Stop Damage Over Time(Event Player.McCreeUltProxDMG);
+		Event Player.McCreeUltProxDMG = Null;
+	}
+}*/
+
+/*rule("If not close to McCree don't get burned")
 {
 	event
 	{
@@ -9749,9 +9993,9 @@ rule("If not close to McCree don't get burned")
 		Stop Damage Over Time(Event Player.McCreeUltProxDMG);
 		Event Player.McCreeUltProxDMG = Null;
 	}
-}
+}*/
 
-rule("If close to McCree get burned")
+/*rule("If close to McCree get burned")
 {
 	event
 	{
@@ -9773,9 +10017,9 @@ rule("If close to McCree get burned")
 		Set Status(Event Player, Event Player.UltingEnemyMcCree, Burning, 1);
 		Loop If Condition Is True;
 	}
-}
+}*/
 
-rule("If sees McCree get burned")
+/*rule("If sees McCree get burned")
 {
 	event
 	{
@@ -9797,8 +10041,13 @@ rule("If sees McCree get burned")
 		Set Status(Event Player, Event Player.UltingEnemyMcCree, Burning, 1);
 		Loop If Condition Is True;
 	}
-}
+}*/
 
+
+
+
+
+//I hope this doesn't interfere with anything
 rule("If dead disable all damage over time")
 {
 	event
@@ -9811,25 +10060,6 @@ rule("If dead disable all damage over time")
 	actions
 	{
 		Stop All Damage Over Time(Event Player);
-		disabled Event Player.McCreeUltBlind = Null;
-	}
-}
-
-rule("Reset McCree.")
-{
-	event
-	{
-		Subroutine;
-		ResetCassidy;
-	}
-
-	actions
-	{
-		All Players(Opposite Team Of(Team Of(Event Player))).UltingEnemyMcCree = Null;
-		disabled Set Invisible(Event Player, None);
-		Destroy HUD Text(Event Player.UltDescription);
-		Event Player.B = Null;
-		Clear Status(Event Player, Burning);
 	}
 }
 
@@ -10968,7 +11198,7 @@ rule("ChooseMenuFinalizeChoice")
     }
 }
 
-disabled rule("Test dummy")
+rule("Test dummy")
 {
 	event
 	{
@@ -10985,9 +11215,10 @@ disabled rule("Test dummy")
 
 	actions
 	{
-		Create Dummy Bot(Remove From Array(All Heroes, Hero(D.Va)), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
-		//Set Ultimate Charge(Last Created Entity, 100);
-		//Start Holding Button(Last Created Entity, Button(Ultimate));
+		//Create Dummy Bot(Remove From Array(All Heroes, Hero(D.Va)), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
+		Create Dummy Bot(Hero(Cassidy), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
+		Set Ultimate Charge(Last Created Entity, 100);
+		Start Holding Button(Last Created Entity, Button(Ultimate));
 		//Start Holding Button(Last Created Entity, Button(Primary Fire));
 	}
 }
