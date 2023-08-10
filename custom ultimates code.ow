@@ -150,6 +150,7 @@ settings
 		Buff Status Effects
 		Explosion Sounds
 		Kinetic Explosion Effects
+		Projectiles
 	}
 }
 
@@ -430,7 +431,9 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		Call Subroutine(ResetRoadhog);
 		Else If(Event Player.B == Hero(Sigma));
 		Call Subroutine(ResetSigma);
-		break;
+		Else If(Event Player.B == Hero(Sojourn));
+		Call Subroutine(ResetSojourn);
+		End;
 
 		Event Player.B = Null;
 
@@ -468,7 +471,7 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 
 
 
-disabled rule("zarya: team 2 gets out of grav")
+/*disabled rule("zarya: team 2 gets out of grav")
 {
 	event
 	{
@@ -512,7 +515,8 @@ disabled rule("zarya: team 1 gets out of grav")
 		disabled Stop Accelerating(Event Player);
 		disabled Clear Status(Event Player, Rooted);
 	}
-}
+}*/
+
 rule("ana: set variables for player boosted by ana")
 {
 	event
@@ -2464,7 +2468,7 @@ rule("zarya: team 1 uses ultimate")
 	conditions
 	{
 		Is Button Held(Event Player, Button(Ultimate)) == True;
-		Team Of(Event Player) == Team 1;
+		//Team Of(Event Player) == Team 1;
 		Event Player.CustomUltReadyToUse == True;
 		Hero Of(Event Player) == Hero(Zarya);
 		Has Status(Event Player, Hacked) == False;
@@ -2480,14 +2484,16 @@ rule("zarya: team 1 uses ultimate")
 		Event Player.UsingCustomUlt = True;
 		Big Message(All Players(All Teams), Hero Icon String(Hero(Zarya)));
 		Event Player.CustomUltReadyToUse = False;
-		disabled Global.A = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
-			* 1000, Y Component Of(Facing Direction Of(Event Player)) * 1000 + 2, Z Component Of(Facing Direction Of(Event Player))
-			* 1000), All Players(All Teams), Event Player, True);
-		Create Effect(All Players(All Teams), Bad Aura, Color(Purple), Global.A, 4, Visible To Position and Radius);
+		//disabled Global.A = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
+		//	* 1000, Y Component Of(Facing Direction Of(Event Player)) * 1000 + 2, Z Component Of(Facing Direction Of(Event Player))
+		//	* 1000), All Players(All Teams), Event Player, True);
+		//Create Effect(All Players(All Teams), Bad Aura, Color(Purple), Global.A, 4, Visible To Position and Radius);
+		//Create Homing Projectile(Zarya Graviton, Event Player, Null, Null, To World, Damage, Remove From Array(All Teams, All Teams), 0, 0, 0, Bad Explosion, Zarya Particle Cannon Explosion Sound, 0, 100, Event Player.S, 0, Global.A, 1);
+		Create Projectile Effect(All Players(All Teams), Zarya Graviton, All Players(Team Of(Event Player)), Global.A, Facing Direction Of(Event Player), 0.5, Visible To Position Direction and Size);
 		Wait(15, Ignore Condition);
 		Event Player.UsingCustomUlt = Null;
 		Destroy Effect(Last Created Entity);
-		Destroy Effect(Last Created Entity);
+		//Destroy Effect(Last Created Entity);
 		Set Ultimate Ability Enabled(Event Player, True);
 		Clear Status(All Players(Opposite Team Of(Team Of(Event Player))), Rooted);
 		Set Ultimate Charge(Event Player, 0);
@@ -2531,7 +2537,8 @@ rule("zarya: team 2 uses ultimate")
 		disabled Global.B = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
 			* 1000, Y Component Of(Facing Direction Of(Event Player)) * 1000 + 2, Z Component Of(Facing Direction Of(Event Player))
 			* 1000), All Players(All Teams), Event Player, True);
-		Create Effect(All Players(All Teams), Bad Aura, Color(Purple), Global.B, 4, Visible To Position and Radius);
+		//Create Effect(All Players(All Teams), Bad Aura, Color(Purple), Global.B, 4, Visible To Position and Radius);
+		Create Projectile Effect(All Players(All Teams), Zarya Graviton, All Players(Team Of(Event Player)), Global.B, Facing Direction Of(Event Player), 1, Visible To Position Direction and Size);
 		Wait(15, Ignore Condition);
 		Destroy Effect(Last Created Entity);
 		Destroy Effect(Last Created Entity);
@@ -2639,14 +2646,14 @@ rule("zarya: team 2 gets pulled into grav")
 	{
 		Global.A != Null;
 		Team Of(Event Player) == Team 2;
-		Distance Between(Event Player, Global.A) <= 10;
+		Distance Between(Event Player, Global.A) <= 7;
 	}
 
 	actions
 	{
 		disabled Start Accelerating(Event Player, Direction Towards(Position Of(Event Player), Global.A), 200, 200, To World,
 			Direction Rate and Max Speed);
-		Set Status(Event Player, Null, Rooted, 1);
+		//Set Status(Event Player, Null, Rooted, 1);
 		Wait(0.016, Ignore Condition);
 		Apply Impulse(Event Player, Vector Towards(Event Player, Global.A), 10, To World, Cancel Contrary Motion);
 		Loop If Condition Is True;
@@ -2666,7 +2673,7 @@ rule("zarya: team 1 gets pulled into grav")
 	{
 		Global.B != Null;
 		Team Of(Event Player) == Team 1;
-		Distance Between(Event Player, Global.B) <= 10;
+		Distance Between(Event Player, Global.B) <= 7;
 	}
 
 	actions
@@ -2674,7 +2681,7 @@ rule("zarya: team 1 gets pulled into grav")
 		disabled Start Accelerating(Event Player, Direction Towards(Position Of(Event Player), Global.B), 200, 200, To World,
 			Direction Rate and Max Speed);
 		disabled Set Status(Event Player, Null, Rooted, 9999);
-		Set Status(Event Player, Null, Rooted, 1);
+		//Set Status(Event Player, Null, Rooted, 1);
 		Wait(0.016, Ignore Condition);
 		Apply Impulse(Event Player, Vector Towards(Event Player, Global.B), 10, To World, Cancel Contrary Motion);
 		Loop If Condition Is True;
@@ -2700,7 +2707,7 @@ rule("Zarya team 1set grav point position")
 		Wait(0.016, Ignore Condition);
 		Global.A = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
 			* Event Player.S, Y Component Of(Facing Direction Of(Event Player)) * Event Player.S + 2, Z Component Of(Facing Direction Of(
-			Event Player)) * Event Player.S), All Players(All Teams), Event Player, True);
+			Event Player)) * Event Player.S), Null, All Players(All Teams), True);
 		Loop If Condition Is True;
 	}
 }
@@ -2724,7 +2731,7 @@ rule("Zarya team 2 set grav point position")
 		Wait(0.016, Ignore Condition);
 		Global.B = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
 			* Event Player.S, Y Component Of(Facing Direction Of(Event Player)) * Event Player.S + 2, Z Component Of(Facing Direction Of(
-			Event Player)) * Event Player.S), All Players(All Teams), Event Player, True);
+			Event Player)) * Event Player.S), Null, All Players(All Teams), True);
 		Loop If Condition Is True;
 	}
 }
@@ -3435,7 +3442,7 @@ rule("soldier 76 AC-130")
 		Set Ability 1 Enabled(Event Player, False);
 		Set Ability 2 Enabled(Event Player, False);
 
-		Value In Array(Event Player.Soldier76Variables, 6) = Position Of(Event Player + Up * 100);
+		Value In Array(Event Player.Soldier76Variables, 6) = Position Of(Event Player + Up * 80);
 
 
 		Create Dummy Bot(Hero(Wrecking Ball), Team Of(Event Player), 8, Value In Array(Event Player.Soldier76Variables, 6), Forward);
@@ -3530,6 +3537,7 @@ rule("soldier 76 AC-130 move in a circle and stop falling")
 	}
 }
 
+//The explosion effect from the projectile can't be seen when too far away.
 rule("soldier 76 AC-130 shoot bombs")
 {
 	event
@@ -3561,10 +3569,15 @@ rule("soldier 76 AC-130 shoot bombs")
 
 		Value In Array(Event Player.Soldier76Variables, 8) = Position Of(Value In Array(Event Player.Soldier76Variables, 7)) + Down + Facing Direction Of(Event Player);
 
-		Create Effect(All Players(All Teams), Orb, Team Of(Event Player),  Value In Array(Event Player.Soldier76Variables, 8), 10, Position And Radius);
+		Create Projectile(Pharah Rocket, Event Player, Value In Array(Event Player.Soldier76Variables, 8), Value In Array(Event Player.Soldier76Variables, 7) + Down + Facing Direction Of(Event Player)*1000, To World, Damage, Opposite Team Of(Team Of(Event Player)), 500, 0.5, 5, Junkrat RIP Tire Explosion Effect, Ashe Dynamite Explosion Sound, 0.1, 100, 10, 10, 0, 0);
+
+		//Old version using effects instead of projectiles
+		/*Create Effect(All Players(All Teams), Orb, Team Of(Event Player),  Value In Array(Event Player.Soldier76Variables, 8), 10, Position And Radius);
 		Value In Array(Event Player.Soldier76Variables, 10) = Last Created Entity;
 
 		Value In Array(Event Player.Soldier76Variables, 9) = Ray Cast Hit Position(Value In Array(Event Player.Soldier76Variables, 7) + Down, Value In Array(Event Player.Soldier76Variables, 7) + Down + Facing Direction Of(Event Player) * 1000, null, Value In Array(Event Player.Soldier76Variables, 7), TRUE);
+		*/
+
 
 		//Create Effect(Event Player, Ring, Team Of(Event Player), Value In Array(Event Player.Soldier76Variables, 9), 10, Position And Radius);
 
@@ -3577,6 +3590,8 @@ rule("soldier 76 AC-130 shoot bombs")
 	}
 }
 
+//Old implementation using effects instead of the new projectiles
+/*
 rule("soldier 76 AC-130 update bomb position and explode when hit")
 {
 	event
@@ -3600,8 +3615,8 @@ rule("soldier 76 AC-130 update bomb position and explode when hit")
 
 	actions
 	{
-		Wait(0.016, Ignore Condition);
-		Value In Array(Event Player.Soldier76Variables, 8) += Update Every Frame(Direction Towards(Value In Array(Event Player.Soldier76Variables, 8), Value In Array(Event Player.Soldier76Variables, 9)));
+		/*Wait(0.016, Ignore Condition);
+		//Value In Array(Event Player.Soldier76Variables, 8) += Update Every Frame(Direction Towards(Value In Array(Event Player.Soldier76Variables, 8), Value In Array(Event Player.Soldier76Variables, 9)));
 		Loop If(Distance Between(Value In Array(Event Player.Soldier76Variables, 8), Value In Array(Event Player.Soldier76Variables, 9)) > 1);
 
 		If(Distance Between(Value In Array(Event Player.Soldier76Variables, 8), Value In Array(Event Player.Soldier76Variables, 9)) <= 1);
@@ -3627,7 +3642,7 @@ rule("soldier 76 AC-130 update bomb position and explode when hit")
 		End;
 
 	}
-}
+}*/
 
 
 
@@ -7557,12 +7572,14 @@ rule("Zenyatta possess a player")
 	{
 		Player Dealt Damage;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
 	{
 		Event Player.UsingCustomUlt == True;
+		Hero Of(Event Player) == Hero(Zenyatta);
+
 	}
 
 	actions
@@ -7571,15 +7588,9 @@ rule("Zenyatta possess a player")
 		Abort If(Is Dead(Victim) == True);
 		Event Player.P = Victim;
 		Start Facing(Event Player.P, Update Every Frame(Facing Direction Of(Event Player)), 1000, To World, Direction and Turn Rate);
-		Start Camera(Event Player, Update Every Frame(Eye Position(Event Player.P)) + Update Every Frame(Facing Direction Of(Event Player.P)), Update Every Frame(Eye Position(Event Player.P))
-			+ Update Every Frame(Facing Direction Of(Event Player.P)) * 2, 0);
-		Set Invisible(Event Player, All);
-		Set Status(Event Player, Null, Phased Out, 9999);
+		
 		Play Effect(All Players(All Teams), Bad Pickup Effect, Color(Purple), Event Player, 3);
-		Set Primary Fire Enabled(Event Player, False);
-		Set Secondary Fire Enabled(Event Player, False);
-		//Could maybe set rooted status instead of changing move speed?
-		Set Move Speed(Event Player, 1);
+		
 		Create HUD Text(Event Player.P, Hero Icon String(Hero(Zenyatta)), Custom String("YOU HAVE BEEN POSSESSED BY ZENYATTA!"), Null, Top,
 			0, Color(Purple), Color(Purple), Color(White), Visible To and String, Default Visibility);
 		Event Player.G = Last Text ID;
@@ -7591,6 +7602,25 @@ rule("Zenyatta possess a player")
 		Disallow Button(Event Player.P, Button(Ability 1));
 		Disallow Button(Event Player.P, Button(Ability 2));
 		Start Throttle In Direction(Event Player.P, Throttle Of(Event Player), 1, To Player, Replace existing throttle, Direction and Magnitude);
+
+		Start Forcing Player To Be Hero(Event Player, Hero Of(Event Player.P));
+		Set Invisible(Event Player.P, All);
+		Disable Movement Collision With Players(Event Player);
+		Set Status(Event Player.P, Null, Phased Out, 30);
+		Set Status(Event Player, Null, Phased Out, 30);
+		Start Damage Modification(Event Player.P, Event Player, 0, None);
+		Start Damage Modification(Event Player, Event Player.P, 0, None);
+		Teleport(Event Player, Position Of(Event Player.P));
+
+		/*Start Camera(Event Player, Update Every Frame(Eye Position(Event Player.P)) + Update Every Frame(Facing Direction Of(Event Player.P)), Update Every Frame(Eye Position(Event Player.P)) + Update Every Frame(Facing Direction Of(Event Player.P)) * 2, 0);
+		Set Invisible(Event Player, All);
+		Set Status(Event Player, Null, Phased Out, 9999);
+		Set Primary Fire Enabled(Event Player, False);
+		Set Secondary Fire Enabled(Event Player, False);
+		//Could maybe set rooted status instead of changing move speed?
+		Set Move Speed(Event Player, 1);*/
+
+
 
         //Crashes server. Switching teams probably respawns the player anyway
         //Move Player To Team(Event Player.P, Opposite Team Of(Team Of(Event Player.P)), -1);
@@ -7605,13 +7635,14 @@ rule("Zenyatta possessed player died")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
 	{
 		Event Player.P != Null;
 		Is Dead(Event Player.P) == True;
+
 	}
 
 	actions
@@ -7645,13 +7676,15 @@ rule("Zenyatta leave possessed player")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
 	{
 		Event Player.P != Null;
 		Is Button Held(Event Player, Button(Interact)) == True;
+		
+
 	}
 
 	actions
@@ -7686,13 +7719,14 @@ rule("Zenyatta move possessed player forward")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
 	{
 		Event Player.P != Null;
 		Z Component Of(Throttle Of(Event Player)) > Null;
+		
 	}
 
 	actions
@@ -7708,7 +7742,7 @@ rule("Zenyatta move possessed player sideways")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -7730,7 +7764,7 @@ rule("Zenyatta move possessed player backwards")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -7753,7 +7787,7 @@ rule("Zenyatta primary fire")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -7780,7 +7814,7 @@ rule("Zenyatta secondary fire")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -7833,7 +7867,7 @@ rule("Zenyatta stop moving when there's no throttle")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -7856,7 +7890,7 @@ rule("Zenyatta enable moving when there's throttle")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -7878,7 +7912,7 @@ rule("Zenyatta jump")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -7905,7 +7939,7 @@ rule("Zenyatta crouch")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -7932,7 +7966,7 @@ rule("Zenyatta ability 1")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -7959,7 +7993,7 @@ rule("Zenyatta ability 2")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -7986,7 +8020,7 @@ rule("Zenyatta ultimate")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -8013,7 +8047,7 @@ rule("Zenyatta voice line up")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -8034,7 +8068,7 @@ rule("Zenyatta voice line right")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -8055,7 +8089,7 @@ rule("Zenyatta voice line left")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -8076,7 +8110,7 @@ rule("Zenyatta voice line down")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -8098,7 +8132,7 @@ rule("Zenyatta emote up")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -8119,7 +8153,7 @@ rule("Zenyatta emote right")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -8140,7 +8174,7 @@ rule("Zenyatta emote left")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -8161,7 +8195,7 @@ rule("Zenyatta emote down")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -8182,7 +8216,7 @@ rule("Zenyatta hello")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -8203,7 +8237,7 @@ rule("Zenyatta ultimate status")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -8224,7 +8258,7 @@ rule("Zenyatta need healing")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -8245,7 +8279,7 @@ rule("Zenyatta group up")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -8266,7 +8300,7 @@ rule("Zenyatta thanks")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -8287,7 +8321,7 @@ rule("Zenyatta acknowledge")
 	{
 		Ongoing - Each Player;
 		All;
-		Zenyatta;
+		All;
 	}
 
 	conditions
@@ -9079,13 +9113,16 @@ rule("Sojourn when using ultimate and firing railgun leave behind damaging beams
 	{
 		Is Using Ultimate(Event Player) == True;
         Is Firing Secondary(Event Player) == true;
-		Hero Of(Event Player) == Hero(Sojourn);
+		//Hero Of(Event Player) == Hero(Sojourn);
 		Is Dummy Bot(Event Player) == false;
 
 	}
 
 	actions
 	{
+		Skip If(Event Player.B == Hero Of(Event Player), 1);
+		Event Player.B = Hero Of(Event Player);
+
 		Create Beam Effect(All Players(All Teams), Bad Beam, Eye Position(Event Player), Event Player.SojournLastRay, Team Of(Event Player), none);
 
         Skip if(Event Player.SojournRayArray != null, 1);
@@ -9109,6 +9146,7 @@ rule("Sojourn when using ultimate and firing railgun leave behind damaging beams
 	}
 }
 
+//The reason why it's updated here is, because when sojourn fires, the weapon slightly kicks upwards which causes the beam to be placed a little bit above where she's actually aiming so the position is taken from the previous frame
 rule("Sojourn update aim raycast")
 {
     event
@@ -9151,7 +9189,7 @@ rule("Sojourn cause damage to enemies when they hit beams.")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-		Hero Of(Event Player) == Hero(Sojourn);
+		//Hero Of(Event Player) == Hero(Sojourn);
         Event Player.SojournBeamArray != null;
 		Is Dummy Bot(Event Player) == false;
 
@@ -9184,7 +9222,6 @@ rule("Sojourn cause damage to enemies when they hit beams.")
 	}
 }
 
-//Could maybe set this in a way that destroys them even when switching hero
 rule("Sojourn reset values and destroy beams.")
 {
     event
@@ -9201,10 +9238,25 @@ rule("Sojourn reset values and destroy beams.")
 
     actions
     {
+        Call Subroutine(ResetSojourn);
+        
+
+    }
+}
+
+rule("Sojourn reset values and destroy beams.")
+{
+    event
+	{
+		Subroutine;
+		ResetSojourn;
+	}
+
+    actions
+    {
         Skip if(Event Player.SojournBeamArray == null, 1);
         Destroy Effect(Event Player.SojournBeamArray);
 
-        //Event Player.SojournArrayIndex = 0;
         Event Player.SojournBeamArray = 0;
         Event Player.SojournDamageRay = 0;
         Event Player.SojournEyePosArray = 0;
@@ -9212,7 +9264,7 @@ rule("Sojourn reset values and destroy beams.")
         Event Player.SojournLastRay = 0;
         Event Player.SojournRayArray = 0;
         
-
+		Event Player.B = Null;
     }
 }
 

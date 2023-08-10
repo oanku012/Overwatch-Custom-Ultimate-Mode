@@ -1,4 +1,4 @@
-Issues:
+Issues/optimization:
 -crashes when swapping player to other team
 -should try to fix mccree being able to interrupt his ult by firing. not sure if his voice line would still play if I just stunned or froze him shortly afterwards. Then again maybe it's okay to leave it as is?
 -if mccree cancels his ult manually, the description text won't be removed, also seems to happen if he just doesn't fire. Though I'll probably make a new way of showing the ult descriptions in the future with a manual button press. edit: apparently the code currently checks for if the enemy players have ulting enemy mccree set when disabling the ult, so if enemy team is empty then the ult text will never be removed, will modify
@@ -8,7 +8,12 @@ Issues:
 -sigma code sometimes leaves allies flying, also several sigma rules related to him setting gravity on players executing even when there hasn't been any sigma playing
 -sometimes if doomfists meteor strikes hit multiple enemies they seem to be sent flying in the same direction regardless of where they're standing
 -sombra's time stop doesn't seem to work on players if they spawn during the time stop
-
+-could maybe remove some unnecessary variables from use like ones used for timers and such
+-soldier can use multiple killstreaks at once if they're unlocked, also can use other streaks when in ac-130 for example
+-seems like sometimes the number of kills counted by the game for soldier's streak is more than the amount counted by the code?
+-nuke increases respawn time for bots? and maybe players?
+-zarya team 2 the graviton surge doesn't move
+-sometimes zarya's graviton effect doesn't get removed after ult ends and just gets placed in the middle of the map
 
 Stuff to add/change:
 -add visual effect to roadhog reflecting stuff
@@ -16,7 +21,16 @@ Stuff to add/change:
 -maybe somehow stop symmetra from spawning portals out of bounds
 -maybe enable reaper's guns, but just teleport him out of bounds if he stays there while not in wraith form, edit: for some reason I remember having had reaper teleport in bounds after ult ends, but apparently that's not in there.
 -could maybe try using resurrect with brigitte instead of changing hero
--maybe with zenyatta could create a dummy bot that copies their moves while the actual possessed player is invisible so that the zenyatta can damage their allies, or maybe the zenyatta himself could transform into the enemy hero
+
+-maybe with zenyatta could create a dummy bot that copies their moves while the actual possessed player is invisible so that the zenyatta can damage their allies, or maybe the zenyatta himself could transform into the enemy hero. Could use force player outline or whatever that is to still make the zen look like an ally.
+-problem with this solution is that the skin might be different for the character between players
+-could maybe do the whole thing in a sort of opposite way where the zenyatta just turns into the enemy hero and instead of zen's camera seeing the enemy's perspective, the enemy sees zen's perspective during the possession and the enemy is invisible and phased out like zen is right now. This way I actually wouldn't even have to replicate the move-set like the code currently does. And this way the zen possessing could damage the enemy's team.
+-maybe a dummy bot would be the best solution so that the zen player won't take all the damage, although maybe that's not necessarily too bad
+
+
+-could potentially use projectiles with widow's ult to get more accurate hits? also maybe for soldier's ac-130 though it works okay without it as well, I'm not sure it currently accounts for how far the player is from the explosion which projectiles could do though it can be coded manually too. The projectiles could maybe break shields and turrets too?
+-could maybe add a secondary fire to the ac-130
+-could maybe come up with something else for Ana. Soldier's care package already sets cooldowns to 0
 
 
 
