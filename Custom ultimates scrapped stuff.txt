@@ -124,6 +124,31 @@ disabled rule("brigitte: clear status when ultimate is over")
 	}
 }*/
 
+/*rule("Brigitte: Enemy angle debug")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.D.BrigitteUltActive == True;
+		Is Button Held(Event Player.D, Button(Secondary Fire)) == True;
+		Event Player.D != Null;
+		
+	}
+
+	actions
+	{
+		Create Hud Text(Event Player.D, Hero Icon String(Hero Of(Event Player)), Horizontal Angle Towards(Event Player.D, Event Player), Null, Left, 0, Color(Yellow), Color(Yellow), Color(Yellow), Visible To And String, Default Visibility);
+
+
+	}
+}*/
+
 
 MERCY:
 
@@ -1145,6 +1170,40 @@ rule("Pharah move and explode bomb")
 	}
 }*/
 
+/*rule("Pharah shoot machine gun")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+		Is Button Held(Event Player, Button(Primary Fire)) == True;
+	}
+
+	actions
+	{
+		Wait(0.050, Ignore Condition);
+		Event Player.U = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(
+			Event Player)) * 150, Y Component Of(Facing Direction Of(Event Player)) * 150 + 0, Z Component Of(Facing Direction Of(
+			Event Player)) * 150), All Players(All Teams), Event Player, True);
+		disabled Event Player.O = Ray Cast Hit Position(Position Of(Event Player), Facing Direction Of(Event Player) * 100, All Players(All Teams),
+			Event Player, True);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Yellow), Event Player.U + Local Vector Of(Left, Event Player, Rotation)
+			* 0.500, 0.030);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Yellow), Event Player.U + Local Vector Of(Right, Event Player, Rotation)
+			* 0.500, 0.030);
+		Play Effect(All Players(All Teams), Debuff Impact Sound, Color(White), Event Player, 10000);
+		disabled Play Effect(All Players(All Teams), Bad Explosion, Color(Yellow), Event Player.O, 0.030);
+		Damage(Players Within Radius(Event Player.U, 2, Opposite Team Of(Team Of(Event Player)), Off), Event Player, 20);
+		Loop If Condition Is True;
+	}
+}*/
+
 
 
 Zenyatta: 
@@ -1375,5 +1434,1418 @@ disabled rule("Ult spam test")
 		Set Status(Event Player, Null, Stunned, 0.016);
 		Set Ultimate Charge(Event Player, 100);
 		Loop;
+	}
+}*/
+
+
+
+
+
+
+
+
+
+Zarya: 
+
+
+/*disabled rule("zarya: team 2 gets out of grav")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		All;
+	}
+
+	conditions
+	{
+		Global.A != Null;
+		Team Of(Event Player) == Team 2;
+		Distance Between(Event Player, Global.A) > 10;
+	}
+
+	actions
+	{
+		disabled Stop Accelerating(Event Player);
+		disabled Clear Status(Event Player, Rooted);
+	}
+}
+
+disabled rule("zarya: team 1 gets out of grav")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		All;
+	}
+
+	conditions
+	{
+		Global.B != Null;
+		Team Of(Event Player) == Team 1;
+		Distance Between(Event Player, Global.B) > 10;
+	}
+
+	actions
+	{
+		disabled Stop Accelerating(Event Player);
+		disabled Clear Status(Event Player, Rooted);
+	}
+}*/
+
+
+
+
+
+
+
+Ana: 
+
+/*rule("ana: when nanoboosted player deals damage, set victim to sleep")
+{
+	event
+	{
+		Player Dealt Damage;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.A == True;
+	}
+
+	actions
+	{
+		Set Status(Victim, Null, Asleep, 1);
+	}
+}*/
+
+//Should probably use that move speed variable
+/*
+rule("ana: set move speed for nanoboosted player")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.A == True;
+		(Hero Of(Event Player) == Hero(Tracer) && Event Player.UsingCustomUlt == true) == false;
+	}
+
+	actions
+	{
+		Set Move Speed(Event Player, 300);
+		Wait(8, Abort When False);
+		Set Move Speed(Event Player, 100);
+		Event Player.A = False;
+	}
+}*/
+
+//Couldn't this be in the rule for Ana when they set the A variable to true? Checking this rule on every frame probably increases load
+/*rule("ana: set small size for nanoboosted player")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.A == True;
+	}
+
+	actions
+	{
+		Start Scaling Player(Event Player, 0.2, false);
+		Wait(8, Abort When False);
+		//Start Scaling Player(Event Player, 1, false);
+		Stop Scaling Player(Event Player);
+		Event Player.A = False;
+
+	}
+}*/
+
+/*rule("ana: if nanoboosted player dies, effects will end")
+{
+	event
+	{
+		Player Died;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.A == True;
+	}
+
+	actions
+	{
+		Event Player.A = False;
+		//Set Move Speed(Event Player, 100);
+		Stop Scaling Player(Event Player);
+
+	}
+}*/
+
+
+
+
+Ashe: 
+
+//Couldn't get primary fire spam to work
+/*rule("Ashe: Activate ultimate")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Ashe);
+		Is Dummy Bot(Event Player) == false;
+		Event Player.CustomUltReadyToUse == True;
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		Has Status(Event Player, Hacked) == False;
+		Event Player.UsingCustomUlt == Null;
+
+		Is Using Ultimate(Event Player) == True;
+		Hero Of(Event Player) == Hero(Ashe);
+		Is Dummy Bot(Event Player) == false;
+		//Is Button Held(Event Player, Button(Primary Fire)) == True;
+	}
+
+	actions
+	{
+		//Wait(0.05, Abort When False);
+
+
+		//Press Button(Event Player, Button(Primary Fire));
+
+		//Cancel Primary Action(Event Player);
+
+		//Press Button(Event Player, Button(Primary Fire));
+
+		//Press Button(Event Player, Button(Primary Fire));
+
+		//Set Status(Event Player, Event Player, Stunned, 0.01);
+
+		//Set Ammo(Event Player, 0, 100);
+		
+		//Loop If Condition Is True;
+		
+		//Start Holding Button(Event Player, Button(Primary Fire));
+
+
+
+
+	}
+}
+
+rule("Ashe: Is Firing Primary")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Ashe);
+		Is Dummy Bot(Event Player) == false;
+		Event Player.CustomUltReadyToUse == True;
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		Has Status(Event Player, Hacked) == False;
+		Event Player.UsingCustomUlt == Null;
+
+		//Is Using Ultimate(Event Player) == True;
+		Hero Of(Event Player) == Hero(Ashe);
+		Is Dummy Bot(Event Player) == false;
+		Is Firing Primary(Event Player) == True;
+		//Is Button Held(Event Player, Button(Primary Fire)) == True;
+	}
+
+	actions
+	{
+		Wait(0.1, Ignore Condition);
+
+		//Set Status(Event Player, Event Player, Stunned, 0.016);
+
+		//Wait(0.016, Ignore Condition);
+
+		Press Button(Event Player, Button(Primary Fire));
+		
+		Start Holding Button(Event Player, Button(Primary Fire));
+		//Cancel Primary Action(Event Player);
+
+		//Press Button(Event Player, Button(Primary Fire));
+
+		//Press Button(Event Player, Button(Primary Fire));
+
+
+		Set Ammo(Event Player, 0, 100);
+		
+		Loop;
+		
+		
+
+
+
+
+	}
+}
+
+rule("Ashe: Is Firing Primary")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Ashe);
+		Is Dummy Bot(Event Player) == false;
+		Event Player.CustomUltReadyToUse == True;
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		Has Status(Event Player, Hacked) == False;
+		Event Player.UsingCustomUlt == Null;
+
+		//Is Using Ultimate(Event Player) == True;
+		Hero Of(Event Player) == Hero(Ashe);
+		Is Dummy Bot(Event Player) == false;
+		//Is Firing Primary(Event Player) == True;
+		Is Button Held(Event Player, Button(Primary Fire)) == True;
+	}
+
+	actions
+	{
+		Wait(0.1, Ignore Condition);
+
+		//Set Status(Event Player, Event Player, Stunned, 0.016);
+
+		//Wait(0.016, Ignore Condition);
+
+		Press Button(Event Player, Button(Primary Fire));
+		
+		Start Holding Button(Event Player, Button(Primary Fire));
+		//Cancel Primary Action(Event Player);
+
+		//Press Button(Event Player, Button(Primary Fire));
+
+		//Press Button(Event Player, Button(Primary Fire));
+
+
+		//Set Ammo(Event Player, 0, 100);
+		
+		Loop;
+		
+		
+
+
+
+
+	}
+}*/
+
+
+
+
+
+
+
+Torbjörn:
+
+/*rule("torb: TORB'S lava roots players and slows down their aim")
+{
+	event
+	{
+		Player Dealt Damage;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Torbjörn);
+		Event Ability() == (Button(Ultimate));
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		//If(Has Status(Victim, Rooted) == false);
+		Set Status(Victim, Attacker, Rooted, 1);
+		Set Aim Speed(Victim, 20);
+		//End;
+		Wait(1, Restart When True);
+		Set Aim Speed(Victim, 100);
+	}
+}*/
+
+//Multiple ult charges, unfortunately the previous pools of lava disappear when you shoot new ones so this isn't that useful
+/*rule("torb: using ultimate")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Torbjörn;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Torbjörn);
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		Skip If(Event Player.TorbUltCharge > 0, 2);
+		Event Player.Y = 15;
+		Create HUD Text(Event Player, String("{0} {1} {2}", Custom String("Use Ultimate Ability ") + Event Player.TorbUltCharge + Custom String(" times."), String("Time"), Event Player.Y), Null, Null, Top, 3, Color(Blue), Color(White), Color(White), Visible To and String, Default Visibility);
+		Event Player.TorbTextID = Last Text Id;
+		Chase Player Variable At Rate(Event Player, Y, 0, 1, Destination and Rate);
+		Set Ultimate Charge(Event Player, 100);
+		Event Player.TorbUltCharge += 1;
+		Skip If(Event Player.TorbUltCharge == 3, 1);
+		Wait(Event Player.Y, Restart When True);
+		Stop Chasing Player Variable(Event Player, Y);
+		Event Player.Y = Null;
+		Destroy HUD Text(Event Player.TorbTextID);
+		Set Ultimate Charge(Event Player, 0);
+		Event Player.TorbUltCharge = Null;
+	}
+}*/
+
+//Was too lazy to make this, but could be neat for the future
+/*rule("torb: spawn scrap when dead")
+{
+	event
+	{
+		Player Died;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Players On Hero(Hero(Torbjörn), All Teams) != Empty Array;
+	}
+
+	actions
+	{
+		
+	}
+}*/
+
+/*rule("torb: activate shrinking ultimate")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Torbjörn);
+		Event Player.CustomUltReadyToUse == True;
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		Has Status(Event Player, Hacked) == False;
+		Event Player.UsingCustomUlt == Null;
+	}
+
+	actions
+	{
+		Call Subroutine(UseCustomUlt);
+		Start Scaling Player(Event Player, 0.2, false);
+		Set Move Speed(Event Player, 150);
+		//Set Ability Cooldown(Event Player, Button(Ability 2), 0);
+		//Set Weapon(Event Player, 2);
+		Wait Until((Is Dead(Event Player) == true || Hero Of(Event Player) != Hero(Torbjörn)) == true, 10);
+		Start Scaling Player(Event Player, 1, false);
+		Set Move Speed(Event Player, 100);
+		Call Subroutine(StopUsingCustomUlt);
+		
+	}
+}*/
+
+//Smoke clould ultimate, neat idea, but didn't think it would really fit torb, could maybe give something like this to Kiriko??
+/*rule("torb: activate ultimate")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Torbjörn;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Torbjörn);
+		Event Player.CustomUltReadyToUse == True;
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		Has Status(Event Player, Hacked) == False;
+		Event Player.UsingCustomUlt == Null;
+	}
+
+	actions
+	{
+		Call Subroutine(UseCustomUlt);
+		Set Primary Fire Enabled(Event Player, False);
+		Set Secondary Fire Enabled(Event Player, False);
+		Set Ability 1 Enabled(Event Player, False);
+		Set Ability 2 Enabled(Event Player, False);
+		Event Player.TorbUltCharge = 5;
+		Create HUD Text(Event Player, Event Player.TorbUltIndex, Null, Null, Top, 0, Color( Yellow), Color(White), Color(White), Visible To and String, Default Visibility);
+	}
+}
+
+rule("torb: spawn clouds")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Torbjörn;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Torbjörn);
+		Event Player.UsingCustomUlt == True;
+		Is Button Held(Event Player, Button(Primary Fire)) == True;
+	}
+
+	actions
+	{
+		Create Effect(All Players(All Teams), Cloud, Team Of(Event Player), Eye Position(Event Player) + Up, 10, None);
+		Play Effect(All Players(All Teams), Bad Explosion, Team Of(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player), 1);
+		Play Effect(All Players(All Teams), Explosion Sound, Team Of(Event Player), Eye Position(Event Player), 100);
+
+		If(Event Player.TorbUltEffects == null);
+		Event Player.TorbUltEffects = Array(Last Created Entity);
+		Else;
+		Modify Player Variable(Event Player, TorbUltEffects, Append To Array, Last Created Entity);
+		//Big Message(Event Player, Custom String("Effect added"));
+		End;
+		
+		If(Event Player.TorbUltPositions == null);
+		Event Player.TorbUltPositions = Array(Eye Position(Event Player) + Up);
+		Else;
+		Modify Player Variable(Event Player, TorbUltPositions, Append To Array, Eye Position(Event Player) + Up);
+		//Big Message(Event Player, Custom String("Position added"));
+		End;
+
+	}
+}
+
+rule("torb: using ultimate")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Torbjörn;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Torbjörn);
+		Event Player.UsingCustomUlt == True;
+		Event Player.TorbUltEffects != Null;
+		Event Player.TorbUltPositions != Null;
+
+	}
+
+	actions
+	{
+		Wait(0.2, Abort When False);
+		//Damage(Players Within Radius(Value In Array(Event Player.TorbUltPositions, Event Player.TorbUltIndex), 10, Opposite Team Of(Team Of(Event Player)), Off), Event Player, 20);
+		//Damage(Players Within Radius(Event Player.TorbUltPositions, 10, Opposite Team Of(Team Of(Event Player)), Off), Event Player, 20);
+		//Start Damage Over Time(Players Within Radius(Value In Array(Event Player.TorbUltPositions, Event Player.TorbUltIndex), Event Player, )
+
+		If(Has Status(Players Within Radius(Value In Array(Event Player.TorbUltPositions, Event Player.TorbUltIndex), 10, Opposite Team Of(Team Of(Event Player)), Off), Asleep) == false);
+		Set Status(Players Within Radius(Value In Array(Event Player.TorbUltPositions, Event Player.TorbUltIndex), 10, Opposite Team Of(Team Of(Event Player)), Off), Event Player, Asleep, 9999);
+		Big Message(Event Player, Custom String("Set sleep"));
+		End;
+
+		Event Player.TorbUltIndex += 1;
+		Skip if(Event Player.TorbUltIndex < Count Of(Event Player.TorbUltPositions), 1);
+		Event Player.TorbUltIndex = 0;
+		
+		
+		Loop If Condition Is True;
+
+	}
+}*/
+
+
+
+
+
+Kiriko: 
+
+//turn people small or something idk. Or maybe ANA could do that??
+/*rule("Kiriko")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Hero Of(Event Player) == Hero(Kiriko);
+		Is Dummy Bot(Event Player) == false;
+	}
+
+	actions
+	{
+		
+
+
+	}
+}*/
+
+
+
+
+Moira:
+
+
+/*rule("Moira: sound effect")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Moira;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		Create Effect(All Players(All Teams), Energy Sound, Color(White), Event Player, 100, Visible To Position and Radius);
+	}
+}*/
+
+/*disabled rule("moira: SET DAMAGE OVER TIME TO PLAYERS WHEN HIT BY COALESCENCE X 100")
+{
+	event
+	{
+		Player Took Damage;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Attacker) == Hero(Moira);
+		Is Using Ultimate(Attacker) == True;
+	}
+
+	actions
+	{
+		Abort;
+		Start Damage Over Time(Event Player, Attacker, 2, 400);
+	}
+}*/
+
+
+
+
+
+
+
+
+Reinhardt: 
+
+/*disabled rule("Reinhardt: Increase stun duration for players hit by earthshatter")
+{
+	event
+	{
+		Player Dealt Damage;
+		All;
+		Reinhardt;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Reinhardt);
+		disabled Global.S == Event Player;
+	}
+
+	actions
+	{
+		disabled Damage(Victim, Event Player, Event Player.R);
+		disabled Set Status(Victim, Event Player, Stunned, Event Player.R);
+		disabled Global.S = Null;
+		disabled Event Player.R = 0;
+		disabled Destroy Effect(Event Player.UsingCustomUlt);
+		disabled Event Player.Q = Null;
+		disabled Event Player.UsingCustomUlt = Null;
+	}
+}*/
+
+
+
+
+
+
+Lucio:
+
+//Can't get this emoting shit to work. Works on dummy bots, but not actual players or AI. Maybe should think of something else.
+//Above bug should be fixed now?
+/*rule("lucio")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Lúcio;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Hero Of(Event Player) == Hero(Lúcio);
+		//Is Dummy Bot(Event Player) == false;
+	}
+
+	actions
+	{
+		Wait(0.1, Ignore Condition);
+		//Could maybe remove the LOS check idk
+		//Event Player.LucioPlayersWithinRadius = Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Surfaces and Barriers);
+		
+		//For Player Variable(Event Player, LucioForLoopI, 0, Count Of(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off)), 1);
+
+		//Communicate(All Players(Opposite Team Of(Team Of(Event Player))), Hello);
+
+
+		If((Is Communicating Any Emote(Value In Array(All Players(Opposite Team Of(Team Of(Event Player))), Event Player.LucioForLoopI)) == false) && (Array Contains(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Value In Array(All Players(Opposite Team Of(Team Of(Event Player))), Event Player.LucioForLoopI)) == True));
+
+		//Big Message(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player.LucioForLoopI), Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player.LucioForLoopI));
+		
+		//Disallow Button()
+		//Communicate(Value In Array(All Players(Opposite Team Of(Team Of(Event Player))), Event Player.LucioForLoopI), Hello);
+
+		If(Random Value In Array(Event Player.LucioEmotesArray) == Custom String("Emote Up"));
+			
+			//Cancel Primary Action(Value In Array(All Players(Opposite Team Of(Team Of(Event Player))), Event Player.LucioForLoopI));
+			Communicate(Value In Array(All Players(Opposite Team Of(Team Of(Event Player))), Event Player.LucioForLoopI), Emote Up);
+			//Big Message(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Custom String("Emote Up"));
+		Else if(Random Value In Array(Event Player.LucioEmotesArray) == Custom String("Emote Right"));
+			//Cancel Primary Action(Value In Array(All Players(Opposite Team Of(Team Of(Event Player))), Event Player.LucioForLoopI));
+			Communicate(Value In Array(All Players(Opposite Team Of(Team Of(Event Player))), Event Player.LucioForLoopI), Emote Right);
+			//Big Message(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Custom String("Emote Right"));
+
+		Else if(Random Value In Array(Event Player.LucioEmotesArray) == Custom String("Emote Left"));
+			//Cancel Primary Action(Value In Array(All Players(Opposite Team Of(Team Of(Event Player))), Event Player.LucioForLoopI));
+			Communicate(Value In Array(All Players(Opposite Team Of(Team Of(Event Player))), Event Player.LucioForLoopI), Emote Left);
+			//Big Message(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Custom String("Emote Left"));
+
+		Else if(Random Value In Array(Event Player.LucioEmotesArray) == Custom String("Emote Down"));
+			//Cancel Primary Action(Value In Array(All Players(Opposite Team Of(Team Of(Event Player))), Event Player.LucioForLoopI));
+			Communicate(Value In Array(All Players(Opposite Team Of(Team Of(Event Player))), Event Player.LucioForLoopI), Emote Down);
+			//Big Message(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Custom String("Emote Down"));
+
+		End;
+
+		Event Player.LucioForLoopI += 1;
+
+		if(Event Player.LucioForLoopI >= Count Of(All Players(Opposite Team Of(Team Of(Event Player)))));
+		Event Player.LucioForLoopI = 0;
+		End;
+
+		Loop If Condition Is True;
+
+
+
+		
+		//Communicate(All Living Players(Opposite Team Of(Team Of(Event Player))), Hello);
+		//Big Message(All Players(All Teams), Hero Icon String(Hero(Lúcio)));
+	}
+}
+
+rule("Lucio 2")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Lúcio;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		//Is Dummy Bot(Event Player) == false;
+		
+	}
+
+	actions
+	{
+		Event Player.LucioEmotesArray = Array(Custom String("Emote Up"), Custom String("Emote Left"), Custom String("Emote Right"), Custom String("Emote Down"));
+		Create HUD Text(Event Player, Event Player.LucioForLoopI, Null, Null, Top, 1, Color(Blue), Color(White), Color(White), Visible To and String, Default Visibility);
+		Event Player.LucioForLoopI = 0;
+		Disallow Button(All Players(Opposite Team Of(Team Of(Event Player))), Button(Primary Fire));
+		Disallow Button(All Players(Opposite Team Of(Team Of(Event Player))), Button(Secondary Fire));
+		Disallow Button(All Players(Opposite Team Of(Team Of(Event Player))), Button(Jump));
+		Disallow Button(All Players(Opposite Team Of(Team Of(Event Player))), Button(Melee));
+		Start Forcing Throttle(All Players(Opposite Team Of(Team Of(Event Player))), 0, 0, 0, 0, 0, 0);
+	}
+}*/
+
+
+
+
+
+
+
+
+
+
+Baptiste: 
+
+//Could maybe give baptiste orisa's shield ability and make it so that players do more damage from within?
+//Baptiste's current ability could be given to Orisa with the beams that go into nearby allies except instead of making them immortal, have their damage be transported to Orisa, Orisa gains damage resistance/extra health
+/*
+rule("Baptiste activate ultimate")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Baptiste);
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		Event Player.CustomUltReadyToUse == True;
+		Event Player.UsingCustomUlt != True;
+		Has Status(Event Player, Hacked) == False;
+	}
+
+	actions
+	{
+		Destroy HUD Text(Event Player.UltReadyText);
+		Event Player.UltReadyText = Null;
+		Skip If(Team Of(Event Player) != Team 1, 1);
+		Global.Team1Bap = Event Player;
+		Skip If(Team Of(Event Player) != Team 2, 1);
+		Global.Team2Bap = Event Player;
+		Event Player.UsingCustomUlt = True;
+		Create HUD Text(Event Player, Event Player.P, Null, Null, Right, 1, Color(Yellow), Color(White), Color(White),
+			Visible To and String, Default Visibility);
+		Create Effect(All Players(All Teams), Ring, Color(Yellow), Event Player, 15, Visible To Position and Radius);
+		Event Player.UltEffect = Last Created Entity;
+		Event Player.P = 20;
+		Chase Player Variable At Rate(Event Player, P, 0, 1, Destination and Rate);
+		Wait(Event Player.P, Ignore Condition);
+		Destroy Effect(Event Player.UltEffect);
+		Event Player.P = Null;
+		Event Player.S = Null;
+		Event Player.UsingCustomUlt = Null;
+		Event Player.CustomUltReadyToUse = Null;
+		Event Player.B = Null;
+		Destroy HUD Text(Last Text ID);
+		Set Ultimate Ability Enabled(Event Player, True);
+		Set Ultimate Charge(Event Player, 0);
+		Skip If(Team Of(Event Player) != Team 1, 1);
+		Global.Team1Bap = Null;
+		Skip If(Team Of(Event Player) != Team 2, 1);
+		Global.Team2Bap = Null;
+		Event Player.UltEffect = Null;
+	}
+}
+
+rule("Baptiste set immortality on nearby players")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Baptiste);
+		Event Player.CustomUltReadyToUse == True;
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		Wait(0.016, Ignore Condition);
+		Event Player.S = Players Within Radius(Event Player, 15, Team Of(Event Player), Surfaces);
+		Event Player.S = Remove From Array(Event Player.S, Event Player);
+		Set Status(Event Player.S, Event Player, Unkillable, 0.200);
+		disabled Create Icon(All Players(All Teams), Event Player, Arrow: Up, Visible To and Position, Color(Yellow), True);
+		Loop If Condition Is True;
+	}
+}
+
+rule("Baptiste set beam effect on nearby players team 1")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		All;
+	}
+
+	conditions
+	{
+		Global.Team1Bap != Null;
+		Distance Between(Event Player, Global.Team1Bap) <= 15;
+	}
+
+	actions
+	{
+		Create Beam Effect(All Players(All Teams), Good Beam, Global.Team1Bap, Event Player, Color(Yellow),
+			Visible To Position and Radius);
+		Event Player.BapBeam = Last Created Entity;
+	}
+}
+
+rule("Baptiste set beam effect on nearby players team 2")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		All;
+	}
+
+	conditions
+	{
+		Global.Team2Bap != Null;
+		Distance Between(Event Player, Global.Team2Bap) <= 15;
+	}
+
+	actions
+	{
+		Create Beam Effect(All Players(All Teams), Good Beam, Global.Team2Bap, Event Player, Color(Yellow),
+			Visible To Position and Radius);
+		Event Player.BapBeam = Last Created Entity;
+	}
+}
+
+rule("Baptiste destroy beam effect on nearby players team 1")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		All;
+	}
+
+	conditions
+	{
+		(Distance Between(Event Player, Global.Team1Bap) > 15 || Global.Team1Bap == Null) == True;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.BapBeam);
+	}
+}
+
+rule("Baptiste destroy beam effect on nearby players team 2")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		All;
+	}
+
+	conditions
+	{
+		(Distance Between(Event Player, Global.Team1Bap) > 15 || Global.Team2Bap == Null) == True;
+	}
+
+	actions
+	{
+		Destroy Effect(Event Player.BapBeam);
+	}
+}*/
+
+
+
+
+Orisa: 
+
+/*rule("Orisa: jump around")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Orisa);
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+		//Is Button Held(Event Player, Button(Jump)) == True;
+
+	}
+
+	actions
+	{
+
+		Apply Impulse(Event Player, Up, 20, To World, Cancel Contrary Motion);
+
+		//Start Forcing Throttle(Event Player, 1, 1, 0, 0, 0, 0);
+
+		//Start Accelerating(Event Player, Facing Direction Of(Event Player), 1000, 1000, To World, DIRECTION RATE AND MAX SPEED);
+
+		//Set Gravity(Event Player, 0);
+
+		//Wait(1, Abort When False);
+		//Stop Accelerating(Event Player);
+		//Start Accelerating(Event Player, Up, 10, 10, To World, DIRECTION RATE AND MAX SPEED);
+
+		//Loop If Condition Is True;
+	}
+}*/
+
+/*rule("Orisa: set scaling modification")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Orisa;
+	}
+
+	conditions
+	{
+		//Hero Of(Event Player) == Hero(Orisa);
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+		//Is Button Held(Event Player, Button(Jump)) == True;
+		//Is On Ground(Event Player) == True;
+
+	}
+
+	actions
+	{
+		Event Player.OrisaScale = 1;
+        Start Scaling Player(Event Player, Event Player.OrisaScale, True);
+		
+	}
+}
+
+rule("Orisa: loop and increase scale variable")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Orisa;
+	}
+
+	conditions
+	{
+		//Hero Of(Event Player) == Hero(Orisa);
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+		//Is Button Held(Event Player, Button(Jump)) == True;
+		//Is On Ground(Event Player) == True;
+
+	}
+
+	actions
+	{
+		Wait(0.1, Abort When False);
+		Event Player.OrisaScale += 0.1;
+        //Start Scaling Player(Event Player, Event Player.OrisaScale, True);
+		Loop If Condition Is True;
+		
+	}
+}*/
+
+/*rule("Orisa: stop flying")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Orisa);
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+		Is Button Held(Event Player, Button(Jump)) == False;
+		Throttle Of(Event Player) == Vector(0, 0, 0);
+
+	}
+
+	actions
+	{
+
+		//Apply Impulse(Event Player, Up, 20, To World, Cancel Contrary Motion);
+
+		//Wait(1, Abort When False);
+		Stop Accelerating(Event Player);
+
+		//Loop If Condition Is True;
+	}
+}*/
+
+/*
+rule("Orisa: Shield ult team 1")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Orisa);
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		Create Effect(All Players(All Teams), Sphere, Color(Team 1), Position Of(Event Player), 7, None);
+		Global.Team1OrisaShield = Last Created Entity;
+		Global.Team1OrisaShieldPosition = Position Of(Event Player);
+	}
+}
+
+rule("Orisa: Shield ult team 2")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Orisa);
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		Create Effect(All Players(All Teams), Sphere, Color(Team 2), Position Of(Event Player), 7, None);
+		Global.Team2OrisaShield = Last Created Entity;
+		Global.Team2OrisaShieldPosition = Position Of(Event Player);
+	}
+}
+
+rule("Orisa: If inside shield take no damage from players outside team 1")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+		Global.Team1OrisaShield != Null;
+	}
+
+	actions
+	{
+		Start Damage Modification(Players Within Radius(Global.Team1OrisaShieldPosition, 7, Team 1, Off), Remove From Array(All Players(
+			Team 2), Players Within Radius(Global.Team1OrisaShieldPosition, 7, Team 2, Off)), 0, Receivers Damagers and Damage Percent);
+	}
+}
+
+rule("Orisa: If inside shield take no damage from players outside team 2")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+		Global.Team2OrisaShield != Null;
+	}
+
+	actions
+	{
+		Start Damage Modification(Players Within Radius(Global.Team2OrisaShieldPosition, 7, Team 1, Off), Remove From Array(All Players(
+			Team 2), Players Within Radius(Global.Team2OrisaShieldPosition, 7, Team 2, Off)), 0, Receivers Damagers and Damage Percent);
+	}
+}
+
+rule("Orisa: Team 1 take damage when outside shield")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		All;
+	}
+
+	conditions
+	{
+		Global.Team1OrisaShield != Null;
+		Distance Between(Event Player, Global.Team1OrisaShieldPosition) >= 7;
+	}
+
+	actions
+	{
+		Stop Damage Modification(Event Player.OrisadamageModOutsideShield);
+	}
+}
+
+rule("Orisa: If outside shield take damage team 2")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		All;
+	}
+
+	conditions
+	{
+		Global.Team2OrisaShield != Null;
+		Distance Between(Event Player, Global.Team2OrisaShieldPosition) >= 7;
+	}
+
+	actions
+	{
+		Stop Damage Modification(Event Player.OrisadamageModOutsideShield);
+	}
+}
+
+rule("Team 1 Orisa disable shield")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Orisa);
+		Is Using Ultimate(Event Player) != True;
+	}
+
+	actions
+	{
+		Destroy Effect(Global.Team1OrisaShield);
+		Global.Team1OrisaShield = Null;
+		Global.Team1OrisaShieldPosition = Null;
+		Stop Damage Modification(Global.Team1OrisaDamageModification);
+		Global.Team1OrisaDamageModification = Null;
+	}
+}
+
+rule("Team 2 Orisa disable shield")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		All;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Orisa);
+		Is Using Ultimate(Event Player) != True;
+	}
+
+	actions
+	{
+		Destroy Effect(Global.Team2OrisaShield);
+		Global.Team2OrisaShield = Null;
+		Global.Team2OrisaShieldPosition = Null;
+		Stop Damage Modification(Global.Team2OrisaDamageModification);
+		Global.Team2OrisaDamageModification = Null;
+	}
+}
+
+rule("Team 1 Orisa shield push enemies away.")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		All;
+	}
+
+	conditions
+	{
+		Global.Team1OrisaShield != Null;
+		Distance Between(Event Player, Global.Team1OrisaShieldPosition) <= 8;
+		Distance Between(Event Player, Global.Team1OrisaShieldPosition) >= 7;
+	}
+
+	actions
+	{
+		Wait(0.050, Ignore Condition);
+		disabled Big Message(All Players(All Teams), Custom String("THEY'RE INSIDE"));
+		Apply Impulse(Event Player, Direction Towards(Global.Team1OrisaShieldPosition, Event Player), 10, To World,
+			Cancel Contrary Motion);
+		Loop If Condition Is True;
+	}
+}
+
+rule("Team 2 Orisa shield push enemies away.")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		All;
+	}
+
+	conditions
+	{
+		Global.Team1OrisaShield != Null;
+		Distance Between(Event Player, Global.Team2OrisaShieldPosition) <= 8;
+		Distance Between(Event Player, Global.Team2OrisaShieldPosition) >= 7;
+	}
+
+	actions
+	{
+		Wait(0.050, Ignore Condition);
+		Apply Impulse(Event Player, Direction Towards(Global.Team2OrisaShieldPosition, Event Player), 10, To World,
+			Cancel Contrary Motion);
+		Loop If Condition Is True;
+	}
+}
+
+rule("Team 1 Orisa shield push enemies inside the shield")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		All;
+	}
+
+	conditions
+	{
+		Global.Team1OrisaShield != Null;
+		Distance Between(Event Player, Global.Team1OrisaShieldPosition) >= 6;
+		Distance Between(Event Player, Global.Team1OrisaShieldPosition) < 7;
+	}
+
+	actions
+	{
+		Wait(0.050, Ignore Condition);
+		disabled Big Message(All Players(All Teams), Custom String("THEY'RE INSIDE"));
+		Apply Impulse(Event Player, Direction Towards(Event Player, Global.Team1OrisaShieldPosition), 10, To World,
+			Cancel Contrary Motion);
+		Loop If Condition Is True;
+	}
+}
+
+rule("Team 2 Orisa shield push enemies inside the shield")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		All;
+	}
+
+	conditions
+	{
+		Global.Team2OrisaShield != Null;
+		Distance Between(Event Player, Global.Team2OrisaShieldPosition) >= 6;
+		Distance Between(Event Player, Global.Team2OrisaShieldPosition) < 7;
+	}
+
+	actions
+	{
+		Wait(0.050, Ignore Condition);
+		disabled Big Message(All Players(All Teams), Custom String("THEY'RE INSIDE"));
+		Apply Impulse(Event Player, Direction Towards(Event Player, Global.Team2OrisaShieldPosition), 10, To World,
+			Cancel Contrary Motion);
+		Loop If Condition Is True;
+	}
+}*/
+
+
+
+
+
+
+
+
+
+Attach test:
+
+/*rule("Attach test")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Melee)) == True;
+		
+	}
+
+	actions
+	{
+		Attach Players(Player Closest To Reticle(Event Player, All Teams), Event Player, Vector(1,2,0));
 	}
 }*/

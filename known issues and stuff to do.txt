@@ -14,6 +14,8 @@ Issues/optimization:
 -nuke increases respawn time for bots? and maybe players?
 -zarya team 2 the graviton surge doesn't move
 -sometimes zarya's graviton effect doesn't get removed after ult ends and just gets placed in the middle of the map
+-torbturret disappears when AI bots are added to the same team, dunno if the same would happen with dummy bots and players, edit: seems like the torb maybe just gets replaced on his slot instead of being moved up a slot. Probably should have to specify a slot that is not used by players or AI.
+-winston's wall stun seems to work most of the time, but sometimes it doesn't, seems like the J variable might not be set correctly sometimes when winston deals damage?
 
 Stuff to add/change:
 -add visual effect to roadhog reflecting stuff
@@ -32,7 +34,7 @@ Stuff to add/change:
 -could maybe add a secondary fire to the ac-130
 -could maybe come up with something else for Ana. Soldier's care package already sets cooldowns to 0
 
--add projectiles to pharah's ult
+-for tracer could maybe speed up projectile speed to make it like made in heaven lol
 
 Usingcustomult subroutine, might need to remove some stuff from it that doesn't affect all heroes with custom ults:
 Destroy Effect(Event Player.UltEffect);
