@@ -1,0 +1,1379 @@
+//Giving this ability to Mercy in some form
+//Players can get stuck if they fall out of bounds with extra life
+/*
+rule("Brigitte: set variables to true when using ultimate and set to false after ult is over")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Hero Of(Event Player) == Hero(Brigitte);
+	}
+
+	actions
+	{
+		All Players(Team Of(Event Player)).D = Event Player;
+		Wait(0.500, Ignore Condition);
+		Loop If Condition Is True;
+		All Players(Team Of(Event Player)).D = Null;
+	}
+}
+
+rule("brigitte: set status if player is in range of a brigitte using ultimate")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.D != Null;
+		Distance Between(Event Player, Event Player.D) < 8;
+		Event Player.ExtraLife != True;
+	}
+
+	actions
+	{
+		disabled Set Status(Event Player, Null, Burning, 9999);
+		disabled Start Damage Over Time(Event Player, Event Player.D, 9999, 100);
+		disabled Skip If(Event Player.ExtraLife == True, 3);
+		Event Player.ExtraLife = True;
+		Create HUD Text(Event Player, Custom String("Brigitte gave you an extra life. Resurrect upon death."), Null, Null, Top, 0, Color(
+			Yellow), Color(White), Color(White), Visible To and String, Default Visibility);
+		Event Player.BrigitteExtraLifeText = Last Text ID;
+		Create In-World Text(All Players(All Teams), Custom String("+1"), Event Player, 1, Clip Against Surfaces,
+			Visible To Position and String, Color(Yellow), Default Visibility);
+		Event Player.ExtraLifeInWorldText = Last Text ID;
+	}
+}
+
+rule("Brigitte: Resurrect player upon death if they have an extra life.")
+{
+	event
+	{
+		Player Died;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.ExtraLife == True;
+	}
+
+	actions
+	{
+		Wait(2, Ignore Condition);
+		Resurrect(Event Player);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Yellow), Event Player, 1);
+		Play Effect(All Players(All Teams), Buff Impact Sound, Color(White), Event Player, 1);
+		Event Player.ExtraLife = Null;
+		Destroy HUD Text(Event Player.BrigitteExtraLifeText);
+		Event Player.BrigitteExtraLifeText = Null;
+		Destroy In-World Text(Event Player.ExtraLifeInWorldText);
+		Event Player.ExtraLifeInWorldText = Null;
+	}
+}
+
+disabled rule("brigitte: clear status when player is out of range")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.D != Null;
+		Distance Between(Event Player, Event Player.D) > 8;
+		disabled Event Player.ExtraLife != True;
+	}
+
+	actions
+	{
+		disabled Clear Status(Event Player, Burning);
+		disabled Stop Damage Over Time(Last Damage Over Time ID);
+		disabled Event Player.ExtraLife = True;
+	}
+}
+
+disabled rule("brigitte: clear status when ultimate is over")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	actions
+	{
+		disabled Clear Status(Event Player, Burning);
+		disabled Stop All Damage Over Time(Event Player);
+	}
+}*/
+
+
+MERCY:
+
+/*
+rule("Mercy when healing using ultimate, add health pools.")
+{
+	event
+	{
+		Player Dealt Healing;
+		All;
+		Mercy;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Healer) == True;
+		Health Percent(Healee) >= 100;
+	}
+
+	actions
+	{
+		If(Healee.MercyHealthPoolCapacity <= null);
+		Healee.MercyHealthPoolCapacity = 1;
+		Add Health Pool To Player(Healee, Armor, Healee.MercyHealthPoolCapacity, true, true);
+		Healee.MercyHealthPool = Last Created Health Pool;
+		Else();
+		Modify Player Variable(Healee, MercyHealthPoolCapacity, Add, 1);
+
+		Wait(0.1, Abort If False);
+		//Add Health Pool To Player(Healee, Health, 50, false, false);
+		Loop If Condition Is True;
+
+	}
+}
+
+rule("Mercy reduce health pool when taking damage.")
+{
+	event
+	{
+		Player Took Damage;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Victim.MercyHealthPoolCapacity >= 0;
+		Victim.MercyHealthPool != Null;
+
+	}
+
+	actions
+	{
+		Modify Player Variable(Victim, MercyHealthPoolCapacity, Subtract, Event Damage);
+
+	}
+}
+
+rule("Mercy remove health pool when capacity is 0 or less.")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		(Event Player.MercyHealthPoolCapacity <= 0 || Is Dead(Event Player) == True) == True;
+		Event Player.MercyHealthPool != Null;
+	}
+
+	actions
+	{
+		Event Player.MercyHealthPoolCapacity = Null;
+		Remove Health Pool From Player(Event Player.MercyHealthPool);
+		Event Player.MercyHealthPool = Null;
+
+	}
+}
+
+/*
+rule("Mercy health regen")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Mercy;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+	}
+
+	actions
+	{
+		Start Heal Over Time(Event Player, Event Player, 15, 100);
+	}
+}
+
+rule("mercy: resurrect allied player when dashing towards them during ultimate")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Mercy;
+	}
+
+	conditions
+	{
+		Is Using Ability 1(Event Player) == True;
+		Is Dead(Player Closest To Reticle(Event Player, Team Of(Event Player))) == True;
+		Is Using Ultimate(Event Player) == True;
+		Hero Of(Event Player) == Hero(Mercy);
+	}
+
+	actions
+	{
+		Resurrect(Player Closest To Reticle(Event Player, Team Of(Event Player)));
+		Create Effect(All Players(All Teams), Good Aura, Color(Yellow), Player Closest To Reticle(Event Player, Team Of(Event Player)), 1,
+			Visible To Position and Radius);
+		Modify Team Score(Opposite Team Of(Team Of(Event Player)), Team Score(Opposite Team Of(Team Of(Event Player))) - 1);
+		Wait(1, Ignore Condition);
+		Destroy Effect(Last Created Entity);
+	}
+}*/
+
+
+
+Soldier:
+//Old implementation using effects instead of the new projectiles
+/*
+rule("soldier 76 AC-130 update bomb position and explode when hit")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Soldier: 76;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Soldier: 76);
+		Is Dummy Bot(Event Player) == false;
+		Event Player.Soldier76Variables != Null;
+
+		Value In Array(Event Player.Soldier76Variables, 8) != Null;
+		
+		Distance Between(Value In Array(Event Player.Soldier76Variables, 8), Value In Array(Event Player.Soldier76Variables, 9)) > 1;
+
+	}
+
+	actions
+	{
+		/*Wait(0.016, Ignore Condition);
+		//Value In Array(Event Player.Soldier76Variables, 8) += Update Every Frame(Direction Towards(Value In Array(Event Player.Soldier76Variables, 8), Value In Array(Event Player.Soldier76Variables, 9)));
+		Loop If(Distance Between(Value In Array(Event Player.Soldier76Variables, 8), Value In Array(Event Player.Soldier76Variables, 9)) > 1);
+
+		If(Distance Between(Value In Array(Event Player.Soldier76Variables, 8), Value In Array(Event Player.Soldier76Variables, 9)) <= 1);
+		//Big Message(Event Player, Custom String("Firing"));
+
+		Destroy Effect(Value In Array(Event Player.Soldier76Variables, 10));
+		Play Effect(All Players(All Teams), Bad Explosion, Team Of(Event Player), Value In Array(Event Player.Soldier76Variables, 9), 10);
+
+		Apply Impulse(Players Within Radius(Value In Array(Event Player.Soldier76Variables, 9), 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Direction Towards(Value In Array(Event Player.Soldier76Variables, 9), Players Within Radius(Value In Array(Event Player.Soldier76Variables, 9), 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers)), 100, To Player, Cancel Contrary Motion);
+
+		Damage(Players Within Radius(Value In Array(Event Player.Soldier76Variables, 9), 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, 500);
+		
+		Play Effect(All Players(All Teams), Ashe Dynamite Explosion Sound, Team Of(Event Player), Value In Array(Event Player.Soldier76Variables, 9), 100);
+
+
+		End;
+
+		If(Value In Array(Event Player.Soldier76Variables, 7) == Null || Value In Array(Event Player.Soldier76Variables, 6) == Null);
+		Value In Array(Event Player.Soldier76Variables, 8) = Null;
+		Value In Array(Event Player.Soldier76Variables, 9) = Null;
+		Value In Array(Event Player.Soldier76Variables, 10) = Null;
+		Value In Array(Event Player.Soldier76Variables, 11) = Null;
+		End;
+
+	}
+}*/
+
+
+
+/*rule("soldier 76: team 1")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		All;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Hero Of(Event Player) == Hero(Soldier: 76);
+		Team Of(Event Player) == Team 1;
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		Global.Team1Soldier = Event Player;
+		Wait(0.100, Ignore Condition);
+		Loop If Condition Is True;
+		Global.Team1Soldier = Null;
+	}
+}
+
+rule("soldier 76: team 2")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		All;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Hero Of(Event Player) == Hero(Soldier: 76);
+		Team Of(Event Player) == Team 2;
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		Wait(0.100, Ignore Condition);
+		Global.Team2Soldier = Event Player;
+		Loop If Condition Is True;
+		Global.Team2Soldier = Null;
+	}
+}
+
+rule("soldier 76: team 2 sets camera")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		All;
+	}
+
+	conditions
+	{
+		Global.Team1Soldier != Null;
+		Team Of(Event Player) == Team 2;
+		Is In View Angle(Global.Team1Soldier, Event Player, 90) == True;
+		Is In Line of Sight(Global.Team1Soldier, Event Player, Barriers Do Not Block LOS) == True;
+	}
+
+	actions
+	{
+		Set Aim Speed(Event Player, 20);
+		Set Status(Event Player, Global.Team1Soldier, Hacked, 0.250);
+		disabled Start Camera(Event Player, Eye Position(Global.Team1Soldier), Event Player, 0);
+		disabled Skip(3);
+		disabled Start Facing(Event Player, Direction Towards(Event Player, Global.Team1Soldier), 1000, To World, Direction and Turn Rate);
+		disabled Start Facing(Event Player, Direction Towards(Event Player, Closest Player To(Event Player, Team Of(Event Player))), 1000, To World,
+			Direction and Turn Rate);
+		disabled Start Holding Button(Event Player, Button(Primary Fire));
+		Wait(0.100, Ignore Condition);
+		Loop If Condition Is True;
+		disabled Stop Facing(Event Player);
+		disabled Stop Holding Button(Event Player, Button(Primary Fire));
+		disabled Stop Camera(Event Player);
+		Set Aim Speed(Event Player, 100);
+	}
+}
+
+rule("soldier 76: team 1 sets camera")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		All;
+	}
+
+	conditions
+	{
+		Global.Team2Soldier != Null;
+		Team Of(Event Player) == Team 1;
+		Is In View Angle(Global.Team2Soldier, Event Player, 90) == True;
+		Is In Line of Sight(Global.Team2Soldier, Event Player, Barriers Do Not Block LOS) == True;
+	}
+
+	actions
+	{
+		Set Aim Speed(Event Player, 20);
+		disabled Start Transforming Throttle(Event Player, X Component Of(Throttle Of(Event Player)) * -1, Y Component Of(Throttle Of(Event Player))
+			* -1, Facing Direction Of(Event Player));
+		Set Status(Event Player, Global.Team2Soldier, Hacked, 0.250);
+		disabled Start Camera(Event Player, Eye Position(Global.Team2Soldier), Event Player, 0);
+		disabled Skip(3);
+		disabled Start Facing(Event Player, Direction Towards(Event Player, Global.Team2Soldier), 1000, To World, Direction and Turn Rate);
+		disabled Start Facing(Event Player, Direction Towards(Event Player, Closest Player To(Event Player, Team Of(Event Player))), 1000, To World,
+			Direction and Turn Rate);
+		disabled Start Holding Button(Event Player, Button(Primary Fire));
+		Wait(0.100, Ignore Condition);
+		Loop If Condition Is True;
+		disabled Stop Facing(Event Player);
+		disabled Stop Holding Button(Event Player, Button(Primary Fire));
+		disabled Stop Camera(Event Player);
+		disabled Stop Transforming Throttle(Event Player);
+		Set Aim Speed(Event Player, 100);
+	}
+}*/
+
+Junkrat:
+
+//Old Junkrat Ult. Something about firing big bombs or whatever
+/*rule("junkrat")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Junkrat;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Junkrat);
+		Is Button Held(Event Player, Button(Primary Fire)) == True;
+	}
+
+	actions
+	{
+		Event Player.P = Eye Position(Event Player);
+		Create Effect(All Players(All Teams), Orb, Color(Red), Event Player.P, 1, Visible To Position and Radius);
+		Event Player.UsingCustomUlt = Last Created Entity;
+	}
+}
+
+rule("junkrat 2")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Junkrat;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Junkrat);
+		Event Player.P != Null;
+		Event Player.UsingCustomUlt != Null;
+	}
+
+	actions
+	{
+		Wait(0.016, Ignore Condition);
+		Skip If(Is Alive(Closest Player To(Event Player.P, Opposite Team Of(Team Of(Event Player)))) == False, 1);
+		Event Player.P += Direction Towards(Event Player.P, Closest Player To(Event Player.P, Opposite Team Of(Team Of(Event Player))))
+			* 1;
+		Skip If(Is Alive(Closest Player To(Event Player.P, Opposite Team Of(Team Of(Event Player)))), 1);
+		Event Player.P += Direction Towards(Event Player.P, Closest Player To(Closest Player To(Event Player.P, Opposite Team Of(Team Of(
+			Event Player))), Opposite Team Of(Team Of(Event Player)))) * 1;
+		Skip If(Distance Between(Ray Cast Hit Position(Event Player.P, Closest Player To(Event Player.P, Opposite Team Of(Team Of(
+			Event Player))), All Players(All Teams), Event Player, True), Event Player.P) > 1, 5);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Red), Event Player.P, 5);
+		Play Effect(All Players(All Teams), Explosion Sound, Color(Red), Event Player.P, 200);
+		Damage(Players Within Radius(Event Player.P, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
+			Event Player, 200);
+		Destroy Effect(Event Player.UsingCustomUlt);
+		Event Player.UsingCustomUlt = Null;
+		Loop If Condition Is True;
+	}
+}
+
+rule("junkrat 3")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Junkrat;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Junkrat);
+		Distance Between(Event Player.P, Closest Player To(Event Player.P, Opposite Team Of(Team Of(Event Player)))) < 0.300;
+		Event Player.P != Null;
+		Event Player.UsingCustomUlt != Null;
+	}
+
+	actions
+	{
+		Play Effect(All Players(All Teams), Good Explosion, Color(Red), Event Player.P, 5);
+		Play Effect(All Players(All Teams), Explosion Sound, Color(Red), Event Player.P, 200);
+		Damage(Players Within Radius(Event Player.P, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
+			Event Player, 200);
+		Destroy Effect(Event Player.UsingCustomUlt);
+		Event Player.UsingCustomUlt = Null;
+	}
+}
+
+rule("junkrat 4")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Junkrat;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Junkrat);
+		Event Player.P != Null;
+		Event Player.UsingCustomUlt != Null;
+	}
+
+	actions
+	{
+		Wait(0.016, Ignore Condition);
+		Event Player.P += Direction Towards(Event Player.P, Closest Player To(Event Player.P, Opposite Team Of(Team Of(Event Player))))
+			* 1;
+		Loop If Condition Is True;
+	}
+}*/
+
+
+
+
+
+
+D.VA:
+
+
+//Could maybe change D.Vas ULT so that you can choose between different upgrades
+/*rule("D.VA RESET DAMAGE AND HEALTH WHEN ULTING")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		D.Va;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(D.Va);
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		disabled Event Player.UsingCustomUlt = True;
+		Set Damage Dealt(Event Player, 100);
+		Set Max Health(Event Player, 100);
+		Destroy Effect(Event Player.Y);
+		Event Player.Y = 0;
+	}
+}*/
+
+/*rule("D.Va reset damage and health when mech lost from damage.")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		D.Va;
+	}
+
+	conditions
+	{
+		Health(Event Player) == 1;
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		Set Damage Dealt(Event Player, 100);
+		Set Max Health(Event Player, 100);
+		Destroy Effect(Event Player.Y);
+		Event Player.Y = 0;
+		disabled Event Player.UsingCustomUlt = True;
+	}
+}*/
+
+//Does not work for whatever reason
+/*rule("D.VA reduce ability 2 cooldown after obtaining cooldown upgrade")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		D.Va;
+	}
+
+	conditions
+	{
+		Has Spawned(Event Player) == True;
+		//Event Player.CustomUltReadyToUse == True;
+		Is Dummy Bot(Event Player) == false;
+		Hero Of(Event Player) == Hero(D.Va);
+		Event Player.DVAVariables != Null;
+		Value In Array(Event Player.G, 2) >= 2;
+		//(Ability Cooldown(Event Player, Button(Ability 1)) > 0 || Ability Cooldown(Event Player, Button(Ability 2)) > 0) == True;
+		Ability Cooldown(Event Player, Button(Ability 2)) > 0;
+	}
+
+	actions
+	{
+		If(Ability Cooldown(Event Player, Button(Ability 2)) > 0);
+		Set Ability Cooldown(Event Player, Button(Ability 2), Ability Cooldown(Event Player, Button(Ability 2)) / Value In Array(Event Player.G, 2));
+		End;
+
+		//Big Message(Event Player, Custom String("2222"));
+
+
+	}
+}*/
+
+
+
+
+
+
+
+Reaper:
+
+//Old ultimate, teleport behind enemies automatically during regular ult
+/*rule("Reaper")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Reaper;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		Set Damage Dealt(Event Player, 150);
+		Event Player.UsingCustomUlt = Random Value In Array(Players Within Radius(Event Player, 50, Opposite Team Of(Team Of(
+			Event Player)), Off));
+		Teleport(Event Player, Event Player.UsingCustomUlt + Facing Direction Of(Event Player.UsingCustomUlt) * -1);
+		Wait(1, Ignore Condition);
+		disabled Teleport(Event Player, Event Player.UsingCustomUlt + Facing Direction Of(Event Player.UsingCustomUlt) * -1);
+		Loop If Condition Is True;
+	}
+}
+
+rule("Reaper 2")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Reaper;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) != True;
+	}
+
+	actions
+	{
+		Set Damage Dealt(Event Player, 100);
+	}
+}*/
+
+
+
+
+Symmetra: 
+
+/*rule("Symmetra sink into blue portal")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Distance Between(Global.P, Event Player) < 2.5;
+		Event Player.K != True;
+		Global.P != Null;
+		Global.Q != Null;
+		disabled Is Button Held(Event Player, Button(Interact)) == True;
+		Global.R != Null;
+		Global.S != Null;
+	}
+
+	actions
+	{
+        Disable Movement Collision With Environment(Event Player, true);
+		Event Player.PortalIntangible = true;
+	}
+}*/
+
+/*rule("Symmetra sink into red portal")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Distance Between(Global.Q, Event Player) < 2.5;
+		Event Player.L != True;
+		Global.Q != Null;
+		Global.P != Null;
+		disabled Is Button Held(Event Player, Button(Interact)) == True;
+		Global.R != Null;
+		Global.S != Null;
+	}
+
+	actions
+	{
+        Disable Movement Collision With Environment(Event Player, true);
+		Event Player.PortalIntangible = true;
+		
+	}
+}*/
+
+//Tried to make the player slightly go through the portal, but results were wonky. I also just realized that the player would fall through the floor even when the portal was on a wall so would have to account for that.
+/*rule("Symmetra disable intangibility")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.PortalIntangible == True;
+		((Distance Between(Event Player, Global.Z) < 2.5 && Global.Z != null) || (Distance Between(Event Player, Global.X) < 2.5 && Global.X != null) || (Distance Between(Event Player, Global.Q) < 2.5 && Global.Q != null) || (Distance Between(Event Player, Global.P) < 2.5 && Global.P != null)) == false;
+	
+		//) || (Global.Z == Null && Global.X == Null && Global.Y == Null && Global.W == Null)
+		
+		
+	}
+
+	actions
+	{
+		Enable Movement Collision With Environment(Event Player);
+		Event Player.PortalIntangible = false;
+	}
+}*/
+
+
+
+Doomfist:
+
+//This was before I realized you could just set the event player's team as the color value
+/*
+rule("Doomfist team 1")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		Doomfist;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		Wait(0.016, Ignore Condition);
+		Event Player.S = 8;
+		Event Player.G = Nearest Walkable Position(Random Value In Array(All Living Players(Opposite Team Of(Team Of(Event Player))))
+			+ Vector(Random Real(-15, 15), 0, Random Real(-15, 15)));
+
+		Create Effect(All Players(All Teams), Ring, Color(Team 1), Event Player.G, 7.500, Visible To Position and Radius);
+		Event Player.Y = Last Created Entity;
+		Create Effect(All Players(All Teams), Ring, Color(Team 1), Event Player.G, Event Player.S, Visible To Position and Radius);
+		Event Player.M = Last Created Entity;
+		Chase Player Variable At Rate(Event Player, S, 0, 10, Destination and Rate);
+		Wait(1, Ignore Condition);
+		Destroy Effect(Event Player.M);
+		Destroy Effect(Event Player.Y);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Team 1), Event Player.G, 10);
+		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player.G, 10000);
+
+
+		Damage(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
+			Event Player, 20);
+		Damage(Players Within Radius(Event Player.G, 6, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
+			Event Player, 180);
+		Damage(Players Within Radius(Event Player.G, 2, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
+			Event Player, 120);
+		Apply Impulse(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
+			Direction Towards(Event Player.G, Position Of(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)),
+			Surfaces And Enemy Barriers))) + Up, 10, To World, Cancel Contrary Motion);
+		Loop If Condition Is True;
+	}
+}*/
+
+/*rule("Doomfist team 2")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		Doomfist;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		Wait(0.016, Ignore Condition);
+		Event Player.S = 8;
+		Event Player.G = Nearest Walkable Position(Random Value In Array(All Living Players(Opposite Team Of(Team Of(Event Player))))
+			+ Vector(Random Real(-15, 15), 0, Random Real(-15, 15)));
+		disabled Event Player.M = Last Created Entity;
+		Create Effect(All Players(All Teams), Ring, Color(Team 2), Event Player.G, 7.500, Visible To Position and Radius);
+		Event Player.Y = Last Created Entity;
+		Create Effect(All Players(All Teams), Ring, Color(Team 2), Event Player.G, Event Player.S, Visible To Position and Radius);
+		Event Player.M = Last Created Entity;
+		Chase Player Variable At Rate(Event Player, S, 0, 10, Destination and Rate);
+		Wait(1, Ignore Condition);
+		Destroy Effect(Event Player.M);
+		Destroy Effect(Event Player.Y);
+		disabled Destroy Effect(Event Player.UsingCustomUlt);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Team 2), Event Player.G, 10);
+		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player.G, 10000);
+		Damage(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
+			Event Player, 20);
+		Damage(Players Within Radius(Event Player.G, 6, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
+			Event Player, 180);
+		Damage(Players Within Radius(Event Player.G, 2, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
+			Event Player, 120);
+		Apply Impulse(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
+			Direction Towards(Event Player.G, Position Of(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)),
+			Surfaces And Enemy Barriers))) + Up, 10, To World, Cancel Contrary Motion);
+		Loop If Condition Is True;
+	}
+}*/
+
+
+
+Pharah:
+
+/*rule("Pharah disable burn when further from ground")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Is In Air(Event Player) == True;
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		//Stop Damage Over Time(Last Damage Over Time ID);
+		Clear Status(Event Player, Burning);
+	}
+}*/
+
+/*rule("Pharah move player up in the air if too close to ground.")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+		Distance Between(Event Player, Nearest Walkable Position(Event Player)) < 0.5;
+		//(Y Component Of(Position Of(Event Player)) - Y Component Of(Nearest Walkable Position)) < 5;
+	}
+
+	actions
+	{
+		Wait(0.2, Abort When False);
+		Apply Impulse(Event Player, Up, 10, To World, Cancel Contrary Motion);
+		
+	}
+}*/
+
+//This is now covered by wait until in the event where the ultimate is first activated
+/*rule("Pharah died")
+{
+	event
+	{
+		Player Died;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		Event Player.UsingCustomUlt = 0;
+		Event Player.CustomUltReadyToUse = 0;
+		disabled Stop Accelerating(Event Player);
+		Set Gravity(Event Player, 100);
+		Set Ultimate Ability Enabled(Event Player, True);
+		Event Player.B = 0;
+		Set Ability 1 Enabled(Event Player, True);
+		Allow Button(Event Player, Button(Jump));
+		Set Projectile Speed(Event Player, 100);
+		Set Damage Dealt(Event Player, 100);
+		Destroy HUD Text(Last Text ID);
+		Destroy Effect(Event Player.P);
+		Event Player.M = Null;
+		Event Player.G = Null;
+		Event Player.P = Null;
+		Event Player.Y = Null;
+		Event Player.Q = Null;
+		Stop Damage Over Time(Last Damage Over Time ID);
+		Clear Status(Event Player, Burning);
+		Event Player.R = Null;
+		Stop Camera(Event Player);
+		Set Primary Fire Enabled(Event Player, True);
+		Set Secondary Fire Enabled(Event Player, True);
+		Event Player.U = 0;
+	}
+}*/
+/*
+disabled rule("Pharah boost when jumping, would have to calculate how much fuel player has.")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		disabled Event Player.UsingCustomUlt == True;
+	}
+}*/
+
+/*rule("Pharah is in air during ult")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Is In Air(Event Player) == True;
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		disabled Event Player.Q = True;
+		Stop Damage Over Time(Last Damage Over Time ID);
+		Clear Status(Event Player, Burning);
+	}
+}*/
+
+/*disabled rule("Pharah disable burn when further from ground")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Is In Air(Event Player) == True;
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		Stop Damage Over Time(Last Damage Over Time ID);
+		Clear Status(Event Player, Burning);
+	}
+}*/
+
+//This doesn't work with 0 gravity turned on.
+/*rule("Pharah damage player when hitting ground during ult")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Is On Ground(Event Player) == True;
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		Wait(0.250, Abort When False);
+		Start Damage Over Time(Event Player, Null, 9999, 130);
+		Set Status(Event Player, Null, Burning, 9999);
+	}
+}*/
+
+//Old bomb implementation
+/*rule("Pharah spawn bomb")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
+		Event Player.Y != True;
+	}
+
+	actions
+	{
+		Wait(0.100, Ignore Condition);
+		Event Player.M = Ray Cast Hit Position(Position Of(Event Player), Position Of(Event Player) + Down * 100, All Players(All Teams),
+			Event Player, True);
+		Event Player.G = Position Of(Event Player);
+		Create Effect(All Players(All Teams), Orb, Color(Red), Event Player.G, 10, Visible To Position and Radius);
+		Event Player.P = Last Created Entity;
+		Event Player.Y = True;
+		Event Player.S = 3;
+		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player, 10000);
+	}
+}
+
+rule("Pharah move and explode bomb")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Event Player.Y == True;
+	}
+
+	actions
+	{
+		Wait(0.016, Ignore Condition);
+		Event Player.G += Down * 0.500;
+		Loop If(Distance Between(Event Player.G, Event Player.M) > 0.500);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Red), Event Player.M, 10);
+		Play Effect(All Players(All Teams), Explosion Sound, Color(Red), Event Player.M, 2000);
+		Damage(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, 400);
+
+		//Sometimes there was a bug that caused pharah to explode herself even if she was far away from the bomb.
+		Skip If(Distance Between(Event Player.M, Event Player) > 7, 1);
+		Damage(Event Player, Event Player, 400);
+		Destroy Effect(Event Player.P);
+		Event Player.M = Null;
+		Event Player.G = Null;
+		Event Player.P = Null;
+		Chase Player Variable At Rate(Event Player, S, 0, 1, Destination and Rate);
+		Wait(Event Player.S, Ignore Condition);
+		Event Player.Y = Null;
+	}
+}*/
+
+
+
+Zenyatta: 
+
+/*
+disabled rule("Zenyatta turn possessed player, currently set in possess a player event")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Zenyatta;
+	}
+
+	conditions
+	{
+		Event Player.P != Null;
+	}
+
+	actions
+	{
+		disabled Wait(0.016, Ignore Condition);
+		disabled Set Facing(Event Player.P, Event Player, To World);
+		disabled Start Facing(Event Player.P, Local Vector Of(Vector Towards(Event Player, Facing Direction Of(Event Player) * 2), Event Player,
+			Rotation), 10000, To World, Direction and Turn Rate);
+		disabled Loop If Condition Is True;
+		Start Facing(Event Player.P, Facing Direction Of(Event Player), 1000, To World, Direction and Turn Rate);
+	}
+}*/
+
+
+
+
+
+McCree:
+
+
+//If mccree player leaves match this might not be run
+/*rule("McCree disable ult")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Cassidy;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == False;
+		Is True For Any(All Players(Opposite Team Of(Team Of(Event Player))), Current Array Element.UltingEnemyMcCree != Null) == True;
+	}
+
+	actions
+	{
+		All Players(Opposite Team Of(Team Of(Event Player))).UltingEnemyMcCree = Null;
+		Destroy HUD Text(Event Player.UltDescription);
+
+		Clear Status(Event Player, Burning);
+
+	}
+}*/
+
+//Old crap using damage over time
+/*rule("If don't see McCree don't get burned or damaged")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.UltingEnemyMcCree != Null;
+		((Is In View Angle(Event Player, Event Player.UltingEnemyMcCree, 50) == False) || (Is In Line of Sight(Event Player, Event Player.UltingEnemyMcCree, Barriers Do Not Block LOS) == False)) == True;
+		disabled Event Player.McCreeUltBlind == True;
+	}
+
+	actions
+	{
+		Skip If(Distance Between(Event Player, Event Player.UltingEnemyMcCree) < 5, 1);
+		Stop Damage Over Time(Event Player.McCreeDPS);
+	}
+}*/
+
+/*rule("McCreeDisable statuses when ult is over")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.UltingEnemyMcCree == Null;
+		(Event Player.McCreeUltBlind || Event Player.McCreeUltProxDMG) != Null;
+	}
+
+	actions
+	{
+		//Stop Damage Over Time(Event Player.McCreeDPS);
+		//Stop Damage Over Time(Event Player.McCreeUltProxDMG);
+		Event Player.McCreeUltProxDMG = Null;
+	}
+}*/
+
+/*rule("If not close to McCree don't get burned")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.UltingEnemyMcCree != Null;
+		Distance Between(Event Player, Event Player.UltingEnemyMcCree) >= 5;
+		Event Player.McCreeUltProxDMG != Null;
+	}
+
+	actions
+	{
+		Skip If(Is In View Angle(Event Player, Event Player.UltingEnemyMcCree, 50) && Is In Line of Sight(Event Player,
+			Event Player.UltingEnemyMcCree, Barriers Do Not Block LOS), 1);
+		disabled Clear Status(Event Player, Burning);
+		Stop Damage Over Time(Event Player.McCreeUltProxDMG);
+		Event Player.McCreeUltProxDMG = Null;
+	}
+}*/
+
+/*rule("If close to McCree get burned")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.UltingEnemyMcCree != Null;
+		Is In Line of Sight(Event Player, Event Player.UltingEnemyMcCree, Barriers Do Not Block LOS) == True;
+		Distance Between(Event Player, Event Player.UltingEnemyMcCree) < 5;
+	}
+
+	actions
+	{
+		Wait(1, Ignore Condition);
+		Set Status(Event Player, Event Player.UltingEnemyMcCree, Burning, 1);
+		Loop If Condition Is True;
+	}
+}*/
+
+/*rule("If sees McCree get burned")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.UltingEnemyMcCree != Null;
+		Is In View Angle(Event Player, Event Player.UltingEnemyMcCree, 50) == True;
+		Is In Line of Sight(Event Player, Event Player.UltingEnemyMcCree, Barriers Do Not Block LOS) == True;
+	}
+
+	actions
+	{
+		Wait(1, Ignore Condition);
+		Set Status(Event Player, Event Player.UltingEnemyMcCree, Burning, 1);
+		Loop If Condition Is True;
+	}
+}*/
+
+
+
+
+
+ULT spam test:
+
+/*disabled rule("Ult spam test")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Cassidy;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+	}
+
+	actions
+	{
+		Start Holding Button(Event Player, Button(Ultimate));
+	}
+}
+
+disabled rule("Ult spam test")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Cassidy;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+	}
+
+	actions
+	{
+		Wait(0.016, Ignore Condition);
+		Set Status(Event Player, Null, Stunned, 0.016);
+		Set Ultimate Charge(Event Player, 100);
+		Loop;
+	}
+}*/

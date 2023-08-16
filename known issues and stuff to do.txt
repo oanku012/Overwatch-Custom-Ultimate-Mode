@@ -32,7 +32,7 @@ Stuff to add/change:
 -could maybe add a secondary fire to the ac-130
 -could maybe come up with something else for Ana. Soldier's care package already sets cooldowns to 0
 
-
+-add projectiles to pharah's ult
 
 Usingcustomult subroutine, might need to remove some stuff from it that doesn't affect all heroes with custom ults:
 Destroy Effect(Event Player.UltEffect);

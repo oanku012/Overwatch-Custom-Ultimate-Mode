@@ -433,6 +433,8 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		Call Subroutine(ResetSigma);
 		Else If(Event Player.B == Hero(Sojourn));
 		Call Subroutine(ResetSojourn);
+		Else If(Event Player.B == Hero(Soldier: 76));
+		Call Subroutine(ResetSoldier);
 		End;
 
 		Event Player.B = Null;
@@ -1181,7 +1183,8 @@ rule("torb: spawn torb turret")
 	{
 
 		Call Subroutine(UseCustomUlt);
-		Create Dummy Bot(Hero(Torbjörn), Team Of(Event Player), 7, Event Player + Facing Direction Of(Event Player), Facing Direction Of(Event Player));
+		//Create Dummy Bot(Hero(Torbjörn), Team Of(Event Player), 7, Event Player + Facing Direction Of(Event Player), Facing Direction Of(Event Player));
+		Create Dummy Bot(Hero(Torbjörn), Team Of(Event Player), -1, Event Player + Facing Direction Of(Event Player), Facing Direction Of(Event Player));
 		Event Player.TorbTurret = Last Created Entity;
 
 		Set Projectile Gravity(Event Player.TorbTurret, 0);
@@ -1199,7 +1202,9 @@ rule("torb: spawn torb turret")
 		Wait Until(Is Dead(Event Player.TorbTurret) == true || Hero Of(Event Player) != Hero(Torbjörn) || (Event Player.CustomUltReadyToUse == True && Is Button Held(Event Player, Button(Ultimate)) == True && Event Player.UsingCustomUlt == Null && Has Status(Event Player, Hacked) == False && Hero Of(Event Player) == Hero(Torbjörn) && (Event Player.TorbTurret == null || Is Button Held(Event Player, Button(Crouch)) == True) == true), 10000);
 		Destroy In-World Text(Event Player.TorbTurret.TorbTurretLevelText);
 		Event Player.TorbTurret.TorbTurretLevelText = Null;
-		Destroy Dummy Bot(Team Of(Event Player), 7);
+		//Destroy Dummy Bot(Team Of(Event Player), 7);
+		Destroy Dummy Bot(Team Of(Event Player), Slot Of(Event Player.TorbTurret));
+
 		Event Player.TorbTurret = Null;
 		
 		Loop If Condition Is True;
@@ -1565,9 +1570,11 @@ rule("Echo activate ultimate")
 		Start Camera(Event Player, Update Every Frame(Eye Position(Event Player) - Facing Direction Of(Event Player) * 2 + Up*0.5), Update Every Frame(Eye Position(Event Player) + Facing Direction Of(Event Player) * 2 + Up*0.5), 0);
 
 		//Could maybe just spawn these to -1 slots as in the first available slot so that you can have multiple echo players in the same team
-		Create Dummy Bot(Hero Being Duplicated(Event Player), Team Of(Event Player), 5, Event Player + Cross Product(Facing Direction Of(Event Player), Up), Direction Towards(Event Player + Cross Product(Facing Direction Of(Event Player), Up), Event Player.EchoAimRayCast));
+		//Create Dummy Bot(Hero Being Duplicated(Event Player), Team Of(Event Player), 5, Event Player + Cross Product(Facing Direction Of(Event Player), Up), Direction Towards(Event Player + Cross Product(Facing Direction Of(Event Player), Up), Event Player.EchoAimRayCast));
+		Create Dummy Bot(Hero Being Duplicated(Event Player), Team Of(Event Player), -1, Event Player + Cross Product(Facing Direction Of(Event Player), Up), Direction Towards(Event Player + Cross Product(Facing Direction Of(Event Player), Up), Event Player.EchoAimRayCast));
 		Event Player.EchoDummyBots = Array(Last Created Entity);
-		Create Dummy Bot(Hero Being Duplicated(Event Player), Team Of(Event Player), 6, Event Player - Cross Product(Facing Direction Of(Event Player), Up), Direction Towards(Event Player - Cross Product(Facing Direction Of(Event Player), Up), Event Player.EchoAimRayCast));
+		//Create Dummy Bot(Hero Being Duplicated(Event Player), Team Of(Event Player), 6, Event Player - Cross Product(Facing Direction Of(Event Player), Up), Direction Towards(Event Player - Cross Product(Facing Direction Of(Event Player), Up), Event Player.EchoAimRayCast));
+		Create Dummy Bot(Hero Being Duplicated(Event Player), Team Of(Event Player), -1, Event Player - Cross Product(Facing Direction Of(Event Player), Up), Direction Towards(Event Player - Cross Product(Facing Direction Of(Event Player), Up), Event Player.EchoAimRayCast));
 		Modify Player Variable(Event Player, EchoDummyBots, Append To Array, Last Created Entity);
 
 		Start Facing(Value In Array(Event Player.EchoDummyBots, 0), Direction Towards(Eye Position(Value In Array(Event Player.EchoDummyBots, 0)), Event Player.EchoAimRayCast), 1000, To World, Direction and Turn Rate);
@@ -1614,8 +1621,10 @@ rule("Resets everything with Echo after Ult is over or when changing hero.")
 
 	actions
 	{
-		Destroy Dummy Bot(Team Of(Event Player), 5);
-		Destroy Dummy Bot(Team Of(Event Player), 6);
+		//Destroy Dummy Bot(Team Of(Event Player), 5);
+		//Destroy Dummy Bot(Team Of(Event Player), 6);
+		Destroy Dummy Bot(Team Of(Event Player), Slot Of(Value In Array(Event Player.EchoDummyBots, 0)));
+		Destroy Dummy Bot(Team Of(Event Player), Slot Of(Value In Array(Event Player.EchoDummyBots, 1)));
 		Destroy Effect(Event Player.EchoEffects);
 		Event Player.EchoEffects = Null;
 		Event Player.EchoDummyBots = Null;
@@ -2843,7 +2852,7 @@ rule("soldier 76 initialize kill streaks and streak counting")
 
 		End;
 
-		
+		Event Player.B = Hero(Soldier: 76);
 
 
 		//Wait Until((Is Dead(Event Player) == True && Event Player.ExtraLife != true) || Hero Of(Event Player) != Hero(Soldier: 76), 9999);
@@ -2857,7 +2866,7 @@ rule("soldier 76 increase streak from kills and create hud texts for streak abil
 {
 	event
 	{
-		Player Dealt Final Blow;
+		Player Earned Elimination;
 		All;
 		Soldier: 76;
 	}
@@ -2940,20 +2949,91 @@ rule("soldier 76 reset streak and abilities when dead")
 	}
 }
 
+rule("soldier 76 reset everything with soldier. Really only used when Soldier switches character.")
+{
+	event
+	{
+		Subroutine;
+		ResetSoldier;
+	}
+
+	actions
+	{
+		//Value In Array(Event Player.Soldier76Variables, 0) = 0;
+
+		
+
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.SoldierKillStreakTexts), 1);
+		Destroy Hud Text(Value In Array(Event Player.SoldierKillStreakTexts, Event Player.ForLoopIndexPlayer));
+		End;
+
+
+		Destroy Hud Text(Value In Array(Event Player.Soldier76Variables, 1));
+
+		//Reset UAV
+
+		If(Value In Array(Event Player.Soldier76Variables, 2) != Null);
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Value In Array(Event Player.Soldier76Variables, 2)), 1);
+		Destroy Icon(Value In Array(Value In Array(Event Player.Soldier76Variables, 2), Event Player.ForLoopIndexPlayer));
+		End;
+		
+		Value In Array(Event Player.Soldier76Variables, 2) = Null;
+
+		End;
+
+		//Reset care package
+		If(Value In Array(Event Player.Soldier76Variables, 5) != Null);
+		Destroy Effect(Value In Array(Event Player.Soldier76Variables, 5));
+		Destroy Effect(Value In Array(Event Player.Soldier76Variables, 4));
+		Event Player.Soldier76CarepackLocation = null;
+		End;
+
+		//Reset AC-130 
+		If(Value In Array(Event Player.Soldier76Variables, 6) != Null);
+
+		Destroy Dummy Bot(Team Of(Event Player), Slot Of(Value In Array(Event Player.Soldier76Variables, 7)));
+		
+
+		Stop Camera(Event Player);
+
+		//Could maybe make a subroutine out of this
+		Set Primary Fire Enabled(Event Player, True);
+		Set Secondary Fire Enabled(Event Player, True);
+		Set Ability 1 Enabled(Event Player, True);
+		Set Ability 2 Enabled(Event Player, True);
+
+		//This might interfere with some other abilities, but ehh whatever.
+		Clear Status(Event Player, rooted);
+
+		Value In Array(Event Player.Soldier76Variables, 6) = Null;
+		Value In Array(Event Player.Soldier76Variables, 7) = Null;
+
+		End;
+
+		//I'm not sure if I actually need to set these to null, but gonna do it just in case.
+		Event Player.Soldier76Variables = Null;
+		Event Player.SoldierAllKillStreaks = Null;
+		Event Player.Soldier76KillStreaksActive = Null;
+		Event Player.SoldierKillStreakTexts = Null;
+		Event Player.Soldier76KillStreaksEquipped = Null;
+	}
+}
+
 //Could maybe later add some easier way to bind the streaks to different amounts of kills
+//Maybe stuff like UAV and care package could persist after death as well since they're not directly tied to soldier himself.
 rule("soldier 76 UAV")
 {
 	event
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Soldier: 76;
 	}
 
 	conditions
 	{
 		Event Player.Soldier76Variables != Null;
-		Hero Of(Event Player) == Hero(Soldier: 76);
+		//Hero Of(Event Player) == Hero(Soldier: 76);
 		Is Dummy Bot(Event Player) == false;
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Value In Array(Event Player.Soldier76KillStreaksActive, Index Of Array Value(Event Player.Soldier76KillStreaksEquipped, Value In Array(Event Player.SoldierAllKillStreaks, 0)) / 2) == True;
@@ -2983,7 +3063,6 @@ rule("soldier 76 UAV")
 
 		//Big Message(Event Player, First Of(Filtered Array(Event Player.SoldierKillStreakTexts, Last Of(Current Array Element) == Custom String("UAV Recon"))));
 
-		//Maybe use wait until switches hero
 		Wait(30, Ignore Condition);
 
 		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Value In Array(Event Player.Soldier76Variables, 2)), 1);
@@ -3002,12 +3081,12 @@ rule("soldier 76 care package")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Soldier: 76;
 	}
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(Soldier: 76);
+		//Hero Of(Event Player) == Hero(Soldier: 76);
 		Is Dummy Bot(Event Player) == false;
 		Event Player.Soldier76Variables != Null;
 		Is Button Held(Event Player, Button(Ultimate)) == True;	
@@ -3080,12 +3159,12 @@ rule("soldier 76 care package set cooldowns to 0")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Soldier: 76;
 	}
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(Soldier: 76);
+		//Hero Of(Event Player) == Hero(Soldier: 76);
 		Is Dummy Bot(Event Player) == false;
 		Event Player.Soldier76Variables != Null;
 		Value In Array(Event Player.Soldier76Variables, 3) == True;
@@ -3127,12 +3206,12 @@ rule("soldier 76 tactical visor")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Soldier: 76;
 	}
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(Soldier: 76);
+		//Hero Of(Event Player) == Hero(Soldier: 76);
 		Is Dummy Bot(Event Player) == false;
 		Event Player.Soldier76Variables != Null;
 		Is Button Held(Event Player, Button(Ultimate)) == True;	
@@ -3158,7 +3237,7 @@ rule("soldier 76 tactical visor")
 
 		Press Button(Event Player, Button(Ultimate));
 
-		Wait(1, Ignore Condition);
+		Wait(0.1, Ignore Condition);
 
 		Set Ultimate Ability Enabled(Event Player, False);
 
@@ -3172,13 +3251,13 @@ rule("soldier 76 nuke")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Soldier: 76;
 	}
 
 	conditions
 	{
 		Global.NukingPlayer == Null;
-		Hero Of(Event Player) == Hero(Soldier: 76);
+		//Hero Of(Event Player) == Hero(Soldier: 76);
 		Is Dummy Bot(Event Player) == false;
 		Event Player.Soldier76Variables != Null;
 		Is Button Held(Event Player, Button(Ultimate)) == True;
@@ -3399,6 +3478,8 @@ rule("soldier 76 blind players in radius of the explosion")
 }
 
 //Probably should try to spawn the ac-130 so that it's kind of on an arc around the player and will circle around his position, that way it should hopefully have a good view of the map
+//I think it's already working like the above??
+
 //Got a couple of crashes after making this. Seemed to happen when I had a full server of dummy bots which might tank performance. Probably need to make sure the conditions don't run unnecessarily on every player.
 rule("soldier 76 AC-130")
 {
@@ -3445,10 +3526,12 @@ rule("soldier 76 AC-130")
 		Value In Array(Event Player.Soldier76Variables, 6) = Position Of(Event Player + Up * 80);
 
 
-		Create Dummy Bot(Hero(Wrecking Ball), Team Of(Event Player), 8, Value In Array(Event Player.Soldier76Variables, 6), Forward);
+		//Create Dummy Bot(Hero(Wrecking Ball), Team Of(Event Player), 8, Value In Array(Event Player.Soldier76Variables, 6), Forward);
+		Create Dummy Bot(Hero(Wrecking Ball), Team Of(Event Player), -1, Value In Array(Event Player.Soldier76Variables, 6), Forward);
 		Value In Array(Event Player.Soldier76Variables, 7) = Last Created Entity;
 
-		
+		//One problem with this is that the Ac-130 might go inside a building and can't actually shoot outside of it
+		Disable Movement Collision With Environment(Value In Array(Event Player.Soldier76Variables, 7), True);
 
 
 		Start Camera(Event Player, Value In Array(Event Player.Soldier76Variables, 7) + Down, Value In Array(Event Player.Soldier76Variables, 7) + Down + Facing Direction Of(Event Player), 0);
@@ -3464,8 +3547,11 @@ rule("soldier 76 AC-130")
 
 		Start Accelerating(Value In Array(Event Player.Soldier76Variables, 7), Facing Direction Of(Value In Array(Event Player.Soldier76Variables, 7)), 10, 10, To Player, DIRECTION RATE AND MAX SPEED);
 
-		Wait Until(Is Dead(Value In Array(Event Player.Soldier76Variables, 7)), 30);
-		Destroy Dummy Bot(Team Of(Event Player), 8);
+		Wait Until(Is Dead(Value In Array(Event Player.Soldier76Variables, 7)) || Is Dead(Event Player), 30);
+		//Could maybe use the array value and get "slot of" or something like that?
+		//Destroy Dummy Bot(Team Of(Event Player), 8);
+		Destroy Dummy Bot(Team Of(Event Player), Slot Of(Value In Array(Event Player.Soldier76Variables, 7)));
+		
 
 		Stop Camera(Event Player);
 
@@ -3474,6 +3560,9 @@ rule("soldier 76 AC-130")
 		Set Secondary Fire Enabled(Event Player, True);
 		Set Ability 1 Enabled(Event Player, True);
 		Set Ability 2 Enabled(Event Player, True);
+
+		//This might interfere with some other abilities, but ehh whatever.
+		Clear Status(Event Player, rooted);
 
 		Value In Array(Event Player.Soldier76Variables, 6) = Null;
 		Value In Array(Event Player.Soldier76Variables, 7) = Null;
@@ -3549,7 +3638,7 @@ rule("soldier 76 AC-130 shoot bombs")
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(Soldier: 76);
+		//Hero Of(Event Player) == Hero(Soldier: 76);
 		Is Dummy Bot(Event Player) == false;
 		Event Player.Soldier76Variables != Null;
 
@@ -3585,195 +3674,9 @@ rule("soldier 76 AC-130 shoot bombs")
 		Value In Array(Event Player.Soldier76Variables, 11) = 5;
 
 		Wait(Value In Array(Event Player.Soldier76Variables, 11), Ignore Condition);
-		
-
 	}
 }
 
-//Old implementation using effects instead of the new projectiles
-/*
-rule("soldier 76 AC-130 update bomb position and explode when hit")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Soldier: 76;
-	}
-
-	conditions
-	{
-		Hero Of(Event Player) == Hero(Soldier: 76);
-		Is Dummy Bot(Event Player) == false;
-		Event Player.Soldier76Variables != Null;
-
-		Value In Array(Event Player.Soldier76Variables, 8) != Null;
-		
-		Distance Between(Value In Array(Event Player.Soldier76Variables, 8), Value In Array(Event Player.Soldier76Variables, 9)) > 1;
-
-	}
-
-	actions
-	{
-		/*Wait(0.016, Ignore Condition);
-		//Value In Array(Event Player.Soldier76Variables, 8) += Update Every Frame(Direction Towards(Value In Array(Event Player.Soldier76Variables, 8), Value In Array(Event Player.Soldier76Variables, 9)));
-		Loop If(Distance Between(Value In Array(Event Player.Soldier76Variables, 8), Value In Array(Event Player.Soldier76Variables, 9)) > 1);
-
-		If(Distance Between(Value In Array(Event Player.Soldier76Variables, 8), Value In Array(Event Player.Soldier76Variables, 9)) <= 1);
-		//Big Message(Event Player, Custom String("Firing"));
-
-		Destroy Effect(Value In Array(Event Player.Soldier76Variables, 10));
-		Play Effect(All Players(All Teams), Bad Explosion, Team Of(Event Player), Value In Array(Event Player.Soldier76Variables, 9), 10);
-
-		Apply Impulse(Players Within Radius(Value In Array(Event Player.Soldier76Variables, 9), 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Direction Towards(Value In Array(Event Player.Soldier76Variables, 9), Players Within Radius(Value In Array(Event Player.Soldier76Variables, 9), 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers)), 100, To Player, Cancel Contrary Motion);
-
-		Damage(Players Within Radius(Value In Array(Event Player.Soldier76Variables, 9), 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, 500);
-		
-		Play Effect(All Players(All Teams), Ashe Dynamite Explosion Sound, Team Of(Event Player), Value In Array(Event Player.Soldier76Variables, 9), 100);
-
-
-		End;
-
-		If(Value In Array(Event Player.Soldier76Variables, 7) == Null || Value In Array(Event Player.Soldier76Variables, 6) == Null);
-		Value In Array(Event Player.Soldier76Variables, 8) = Null;
-		Value In Array(Event Player.Soldier76Variables, 9) = Null;
-		Value In Array(Event Player.Soldier76Variables, 10) = Null;
-		Value In Array(Event Player.Soldier76Variables, 11) = Null;
-		End;
-
-	}
-}*/
-
-
-
-/*rule("soldier 76: team 1")
-{
-	event
-	{
-		Ongoing - Each Player;
-		Team 1;
-		All;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-		Hero Of(Event Player) == Hero(Soldier: 76);
-		Team Of(Event Player) == Team 1;
-		Is Dummy Bot(Event Player) == false;
-
-	}
-
-	actions
-	{
-		Global.Team1Soldier = Event Player;
-		Wait(0.100, Ignore Condition);
-		Loop If Condition Is True;
-		Global.Team1Soldier = Null;
-	}
-}
-
-rule("soldier 76: team 2")
-{
-	event
-	{
-		Ongoing - Each Player;
-		Team 2;
-		All;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-		Hero Of(Event Player) == Hero(Soldier: 76);
-		Team Of(Event Player) == Team 2;
-		Is Dummy Bot(Event Player) == false;
-
-	}
-
-	actions
-	{
-		Wait(0.100, Ignore Condition);
-		Global.Team2Soldier = Event Player;
-		Loop If Condition Is True;
-		Global.Team2Soldier = Null;
-	}
-}
-
-rule("soldier 76: team 2 sets camera")
-{
-	event
-	{
-		Ongoing - Each Player;
-		Team 2;
-		All;
-	}
-
-	conditions
-	{
-		Global.Team1Soldier != Null;
-		Team Of(Event Player) == Team 2;
-		Is In View Angle(Global.Team1Soldier, Event Player, 90) == True;
-		Is In Line of Sight(Global.Team1Soldier, Event Player, Barriers Do Not Block LOS) == True;
-	}
-
-	actions
-	{
-		Set Aim Speed(Event Player, 20);
-		Set Status(Event Player, Global.Team1Soldier, Hacked, 0.250);
-		disabled Start Camera(Event Player, Eye Position(Global.Team1Soldier), Event Player, 0);
-		disabled Skip(3);
-		disabled Start Facing(Event Player, Direction Towards(Event Player, Global.Team1Soldier), 1000, To World, Direction and Turn Rate);
-		disabled Start Facing(Event Player, Direction Towards(Event Player, Closest Player To(Event Player, Team Of(Event Player))), 1000, To World,
-			Direction and Turn Rate);
-		disabled Start Holding Button(Event Player, Button(Primary Fire));
-		Wait(0.100, Ignore Condition);
-		Loop If Condition Is True;
-		disabled Stop Facing(Event Player);
-		disabled Stop Holding Button(Event Player, Button(Primary Fire));
-		disabled Stop Camera(Event Player);
-		Set Aim Speed(Event Player, 100);
-	}
-}
-
-rule("soldier 76: team 1 sets camera")
-{
-	event
-	{
-		Ongoing - Each Player;
-		Team 1;
-		All;
-	}
-
-	conditions
-	{
-		Global.Team2Soldier != Null;
-		Team Of(Event Player) == Team 1;
-		Is In View Angle(Global.Team2Soldier, Event Player, 90) == True;
-		Is In Line of Sight(Global.Team2Soldier, Event Player, Barriers Do Not Block LOS) == True;
-	}
-
-	actions
-	{
-		Set Aim Speed(Event Player, 20);
-		disabled Start Transforming Throttle(Event Player, X Component Of(Throttle Of(Event Player)) * -1, Y Component Of(Throttle Of(Event Player))
-			* -1, Facing Direction Of(Event Player));
-		Set Status(Event Player, Global.Team2Soldier, Hacked, 0.250);
-		disabled Start Camera(Event Player, Eye Position(Global.Team2Soldier), Event Player, 0);
-		disabled Skip(3);
-		disabled Start Facing(Event Player, Direction Towards(Event Player, Global.Team2Soldier), 1000, To World, Direction and Turn Rate);
-		disabled Start Facing(Event Player, Direction Towards(Event Player, Closest Player To(Event Player, Team Of(Event Player))), 1000, To World,
-			Direction and Turn Rate);
-		disabled Start Holding Button(Event Player, Button(Primary Fire));
-		Wait(0.100, Ignore Condition);
-		Loop If Condition Is True;
-		disabled Stop Facing(Event Player);
-		disabled Stop Holding Button(Event Player, Button(Primary Fire));
-		disabled Stop Camera(Event Player);
-		disabled Stop Transforming Throttle(Event Player);
-		Set Aim Speed(Event Player, 100);
-	}
-}*/
 
 rule("Rein: ult ready")
 {
@@ -4013,8 +3916,8 @@ rule("Reinhardt disable power up if ult hasn't been used and player is on ground
 }*/
 
 //Can't get this emoting shit to work. Works on dummy bots, but not actual players or AI. Maybe should think of something else.
-/*
-rule("lucio")
+//Above bug should be fixed now?
+/*rule("lucio")
 {
 	event
 	{
@@ -4153,34 +4056,6 @@ rule("Activate Tracer's super speed ultimate")
 		Stop Forcing Throttle(Event Player);
 		Event Player.UsingCustomUlt = False;
 		Destroy Effect(Last Created Entity);
-	}
-}
-
-disabled rule("Disable Tracer's vanilla ultimate when charge is full")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Tracer;
-	}
-
-	conditions
-	{
-		Hero Of(Event Player) == Hero(Tracer);
-		Ultimate Charge Percent(Event Player) > 99.900;
-		Event Player.CustomUltReadyToUse != True;
-	}
-
-	actions
-	{
-		Event Player.CustomUltReadyToUse = True;
-		Set Ultimate Ability Enabled(Event Player, False);
-		disabled Big Message(Event Player, String("{0} {1}", String("Ultimate Ability"), String("Ready")));
-		Event Player.B = Hero Of(Event Player);
-		Create HUD Text(Event Player, Custom String("ULT READY PRESS Q TO USE ULTIMATE"), Null, Null, Top, 1, Color(Blue), Color(White),
-			Color(White), Visible To and String, Default Visibility);
-		Event Player.UltReadyText = Last Text ID;
 	}
 }
 
@@ -4506,119 +4381,7 @@ rule("sombra: za warudo effect 2")
 	}
 }
 
-//Old Junkrat Ult. Something about firing big bombs or whatever
-/*rule("junkrat")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Junkrat;
-	}
 
-	conditions
-	{
-		Hero Of(Event Player) == Hero(Junkrat);
-		Is Button Held(Event Player, Button(Primary Fire)) == True;
-	}
-
-	actions
-	{
-		Event Player.P = Eye Position(Event Player);
-		Create Effect(All Players(All Teams), Orb, Color(Red), Event Player.P, 1, Visible To Position and Radius);
-		Event Player.UsingCustomUlt = Last Created Entity;
-	}
-}
-
-rule("junkrat 2")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Junkrat;
-	}
-
-	conditions
-	{
-		Hero Of(Event Player) == Hero(Junkrat);
-		Event Player.P != Null;
-		Event Player.UsingCustomUlt != Null;
-	}
-
-	actions
-	{
-		Wait(0.016, Ignore Condition);
-		Skip If(Is Alive(Closest Player To(Event Player.P, Opposite Team Of(Team Of(Event Player)))) == False, 1);
-		Event Player.P += Direction Towards(Event Player.P, Closest Player To(Event Player.P, Opposite Team Of(Team Of(Event Player))))
-			* 1;
-		Skip If(Is Alive(Closest Player To(Event Player.P, Opposite Team Of(Team Of(Event Player)))), 1);
-		Event Player.P += Direction Towards(Event Player.P, Closest Player To(Closest Player To(Event Player.P, Opposite Team Of(Team Of(
-			Event Player))), Opposite Team Of(Team Of(Event Player)))) * 1;
-		Skip If(Distance Between(Ray Cast Hit Position(Event Player.P, Closest Player To(Event Player.P, Opposite Team Of(Team Of(
-			Event Player))), All Players(All Teams), Event Player, True), Event Player.P) > 1, 5);
-		Play Effect(All Players(All Teams), Good Explosion, Color(Red), Event Player.P, 5);
-		Play Effect(All Players(All Teams), Explosion Sound, Color(Red), Event Player.P, 200);
-		Damage(Players Within Radius(Event Player.P, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
-			Event Player, 200);
-		Destroy Effect(Event Player.UsingCustomUlt);
-		Event Player.UsingCustomUlt = Null;
-		Loop If Condition Is True;
-	}
-}
-
-rule("junkrat 3")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Junkrat;
-	}
-
-	conditions
-	{
-		Hero Of(Event Player) == Hero(Junkrat);
-		Distance Between(Event Player.P, Closest Player To(Event Player.P, Opposite Team Of(Team Of(Event Player)))) < 0.300;
-		Event Player.P != Null;
-		Event Player.UsingCustomUlt != Null;
-	}
-
-	actions
-	{
-		Play Effect(All Players(All Teams), Good Explosion, Color(Red), Event Player.P, 5);
-		Play Effect(All Players(All Teams), Explosion Sound, Color(Red), Event Player.P, 200);
-		Damage(Players Within Radius(Event Player.P, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
-			Event Player, 200);
-		Destroy Effect(Event Player.UsingCustomUlt);
-		Event Player.UsingCustomUlt = Null;
-	}
-}
-
-rule("junkrat 4")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Junkrat;
-	}
-
-	conditions
-	{
-		Hero Of(Event Player) == Hero(Junkrat);
-		Event Player.P != Null;
-		Event Player.UsingCustomUlt != Null;
-	}
-
-	actions
-	{
-		Wait(0.016, Ignore Condition);
-		Event Player.P += Direction Towards(Event Player.P, Closest Player To(Event Player.P, Opposite Team Of(Team Of(Event Player))))
-			* 1;
-		Loop If Condition Is True;
-	}
-}*/
 
 //Should add separate team colors
 //Seems like the event gets interrupted when switching hero if a specific hero is set in the event settings. Should maybe despawn the bomb anyway after player switches.
@@ -4704,59 +4467,7 @@ rule("Junkrat drop bomb on death.")
 	}
 }
 
-//Could maybe change D.Vas ULT so that you can choose between different upgrades
-/*rule("D.VA RESET DAMAGE AND HEALTH WHEN ULTING")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		D.Va;
-	}
 
-	conditions
-	{
-		Hero Of(Event Player) == Hero(D.Va);
-		Is Using Ultimate(Event Player) == True;
-		Is Dummy Bot(Event Player) == false;
-
-	}
-
-	actions
-	{
-		disabled Event Player.UsingCustomUlt = True;
-		Set Damage Dealt(Event Player, 100);
-		Set Max Health(Event Player, 100);
-		Destroy Effect(Event Player.Y);
-		Event Player.Y = 0;
-	}
-}*/
-
-/*rule("D.Va reset damage and health when mech lost from damage.")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		D.Va;
-	}
-
-	conditions
-	{
-		Health(Event Player) == 1;
-		Is Dummy Bot(Event Player) == false;
-
-	}
-
-	actions
-	{
-		Set Damage Dealt(Event Player, 100);
-		Set Max Health(Event Player, 100);
-		Destroy Effect(Event Player.Y);
-		Event Player.Y = 0;
-		disabled Event Player.UsingCustomUlt = True;
-	}
-}*/
 
 //ability 2 cooldown needs to be fixed. 
 //Extra life hud text from mercy can mess with the sort order of the menu list 
@@ -5013,39 +4724,7 @@ rule("D.VA reduce ability 1 and secondary fire cooldown after obtaining cooldown
 	}
 }
 
-//Does not work for whatever reason
-/*rule("D.VA reduce ability 2 cooldown after obtaining cooldown upgrade")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		D.Va;
-	}
 
-	conditions
-	{
-		Has Spawned(Event Player) == True;
-		//Event Player.CustomUltReadyToUse == True;
-		Is Dummy Bot(Event Player) == false;
-		Hero Of(Event Player) == Hero(D.Va);
-		Event Player.DVAVariables != Null;
-		Value In Array(Event Player.G, 2) >= 2;
-		//(Ability Cooldown(Event Player, Button(Ability 1)) > 0 || Ability Cooldown(Event Player, Button(Ability 2)) > 0) == True;
-		Ability Cooldown(Event Player, Button(Ability 2)) > 0;
-	}
-
-	actions
-	{
-		If(Ability Cooldown(Event Player, Button(Ability 2)) > 0);
-		Set Ability Cooldown(Event Player, Button(Ability 2), Ability Cooldown(Event Player, Button(Ability 2)) / Value In Array(Event Player.G, 2));
-		End;
-
-		//Big Message(Event Player, Custom String("2222"));
-
-
-	}
-}*/
 
 rule("D.VA regen defense matrix when it's upgraded")
 {
@@ -5756,56 +5435,6 @@ rule("Reaper teleport back in bounds if standing out of bounds")
 	}
 }
 
-
-//Old ultimate, teleport behind enemies automatically during regular ult
-/*rule("Reaper")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Reaper;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-		Is Dummy Bot(Event Player) == false;
-
-	}
-
-	actions
-	{
-		Set Damage Dealt(Event Player, 150);
-		Event Player.UsingCustomUlt = Random Value In Array(Players Within Radius(Event Player, 50, Opposite Team Of(Team Of(
-			Event Player)), Off));
-		Teleport(Event Player, Event Player.UsingCustomUlt + Facing Direction Of(Event Player.UsingCustomUlt) * -1);
-		Wait(1, Ignore Condition);
-		disabled Teleport(Event Player, Event Player.UsingCustomUlt + Facing Direction Of(Event Player.UsingCustomUlt) * -1);
-		Loop If Condition Is True;
-	}
-}
-
-rule("Reaper 2")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Reaper;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) != True;
-	}
-
-	actions
-	{
-		Set Damage Dealt(Event Player, 100);
-	}
-}*/
-
 //Don't think it's necessary to set the normal direction stuff into null
 //Could maybe make the player sink into the portals a bit so it's a bit more like an actual portal instead of a teleport
 //Maybe limit the range on the portal firing so you can't teleport people into the sky out of bounds. Although idk if that's even such a bad thing
@@ -6167,87 +5796,7 @@ rule("Symmetra teleport player when near team 2 green portal")
 	}
 }
 
-/*rule("Symmetra sink into blue portal")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
 
-	conditions
-	{
-		Distance Between(Global.P, Event Player) < 2.5;
-		Event Player.K != True;
-		Global.P != Null;
-		Global.Q != Null;
-		disabled Is Button Held(Event Player, Button(Interact)) == True;
-		Global.R != Null;
-		Global.S != Null;
-	}
-
-	actions
-	{
-        Disable Movement Collision With Environment(Event Player, true);
-		Event Player.PortalIntangible = true;
-	}
-}*/
-
-/*rule("Symmetra sink into red portal")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Distance Between(Global.Q, Event Player) < 2.5;
-		Event Player.L != True;
-		Global.Q != Null;
-		Global.P != Null;
-		disabled Is Button Held(Event Player, Button(Interact)) == True;
-		Global.R != Null;
-		Global.S != Null;
-	}
-
-	actions
-	{
-        Disable Movement Collision With Environment(Event Player, true);
-		Event Player.PortalIntangible = true;
-		
-	}
-}*/
-
-//Tried to make the player slightly go through the portal, but results were wonky. I also just realized that the player would fall through the floor even when the portal was on a wall so would have to account for that.
-/*rule("Symmetra disable intangibility")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.PortalIntangible == True;
-		((Distance Between(Event Player, Global.Z) < 2.5 && Global.Z != null) || (Distance Between(Event Player, Global.X) < 2.5 && Global.X != null) || (Distance Between(Event Player, Global.Q) < 2.5 && Global.Q != null) || (Distance Between(Event Player, Global.P) < 2.5 && Global.P != null)) == false;
-	
-		//) || (Global.Z == Null && Global.X == Null && Global.Y == Null && Global.W == Null)
-		
-		
-	}
-
-	actions
-	{
-		Enable Movement Collision With Environment(Event Player);
-		Event Player.PortalIntangible = false;
-	}
-}*/
 
 rule("Doomfist use ult")
 {
@@ -6306,103 +5855,6 @@ rule("Doomfist use ult")
 		Loop If Condition Is True;
 	}
 }
-
-//This was before I realized you could just set the event player's team as the color value
-/*
-rule("Doomfist team 1")
-{
-	event
-	{
-		Ongoing - Each Player;
-		Team 1;
-		Doomfist;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-		Is Dummy Bot(Event Player) == false;
-
-	}
-
-	actions
-	{
-		Wait(0.016, Ignore Condition);
-		Event Player.S = 8;
-		Event Player.G = Nearest Walkable Position(Random Value In Array(All Living Players(Opposite Team Of(Team Of(Event Player))))
-			+ Vector(Random Real(-15, 15), 0, Random Real(-15, 15)));
-
-		Create Effect(All Players(All Teams), Ring, Color(Team 1), Event Player.G, 7.500, Visible To Position and Radius);
-		Event Player.Y = Last Created Entity;
-		Create Effect(All Players(All Teams), Ring, Color(Team 1), Event Player.G, Event Player.S, Visible To Position and Radius);
-		Event Player.M = Last Created Entity;
-		Chase Player Variable At Rate(Event Player, S, 0, 10, Destination and Rate);
-		Wait(1, Ignore Condition);
-		Destroy Effect(Event Player.M);
-		Destroy Effect(Event Player.Y);
-		Play Effect(All Players(All Teams), Good Explosion, Color(Team 1), Event Player.G, 10);
-		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player.G, 10000);
-
-
-		Damage(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
-			Event Player, 20);
-		Damage(Players Within Radius(Event Player.G, 6, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
-			Event Player, 180);
-		Damage(Players Within Radius(Event Player.G, 2, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
-			Event Player, 120);
-		Apply Impulse(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
-			Direction Towards(Event Player.G, Position Of(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)),
-			Surfaces And Enemy Barriers))) + Up, 10, To World, Cancel Contrary Motion);
-		Loop If Condition Is True;
-	}
-}*/
-
-/*rule("Doomfist team 2")
-{
-	event
-	{
-		Ongoing - Each Player;
-		Team 2;
-		Doomfist;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-		Is Dummy Bot(Event Player) == false;
-
-	}
-
-	actions
-	{
-		Wait(0.016, Ignore Condition);
-		Event Player.S = 8;
-		Event Player.G = Nearest Walkable Position(Random Value In Array(All Living Players(Opposite Team Of(Team Of(Event Player))))
-			+ Vector(Random Real(-15, 15), 0, Random Real(-15, 15)));
-		disabled Event Player.M = Last Created Entity;
-		Create Effect(All Players(All Teams), Ring, Color(Team 2), Event Player.G, 7.500, Visible To Position and Radius);
-		Event Player.Y = Last Created Entity;
-		Create Effect(All Players(All Teams), Ring, Color(Team 2), Event Player.G, Event Player.S, Visible To Position and Radius);
-		Event Player.M = Last Created Entity;
-		Chase Player Variable At Rate(Event Player, S, 0, 10, Destination and Rate);
-		Wait(1, Ignore Condition);
-		Destroy Effect(Event Player.M);
-		Destroy Effect(Event Player.Y);
-		disabled Destroy Effect(Event Player.UsingCustomUlt);
-		Play Effect(All Players(All Teams), Good Explosion, Color(Team 2), Event Player.G, 10);
-		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player.G, 10000);
-		Damage(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
-			Event Player, 20);
-		Damage(Players Within Radius(Event Player.G, 6, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
-			Event Player, 180);
-		Damage(Players Within Radius(Event Player.G, 2, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
-			Event Player, 120);
-		Apply Impulse(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
-			Direction Towards(Event Player.G, Position Of(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)),
-			Surfaces And Enemy Barriers))) + Up, 10, To World, Cancel Contrary Motion);
-		Loop If Condition Is True;
-	}
-}*/
 
 rule("Reset Doomfist stuff")
 {
@@ -6720,7 +6172,7 @@ rule("Reset Pharah stuff.")
 	}
 }
 
-rule("Pharah spawn bomb")
+rule("Pharah drop bomb")
 {
 	event
 	{
@@ -6738,55 +6190,12 @@ rule("Pharah spawn bomb")
 
 	actions
 	{
-		Wait(0.100, Ignore Condition);
-		Event Player.M = Ray Cast Hit Position(Position Of(Event Player), Position Of(Event Player) + Down * 100, All Players(All Teams),
-			Event Player, True);
-		Event Player.G = Position Of(Event Player);
-		Create Effect(All Players(All Teams), Orb, Color(Red), Event Player.G, 10, Visible To Position and Radius);
-		Event Player.P = Last Created Entity;
-		Event Player.Y = True;
-		Event Player.S = 3;
-		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player, 10000);
+		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Position Of(Event Player), Down, To World, Damage, Opposite Team Of(Team Of(Event Player)), 300, 0.5, 5, Bastion Tank Cannon Explosion Effect, Ashe Dynamite Explosion Sound, 0, 0, 10, 10, 0, 100);
+		
+		//Cooldown
+		Wait(3, Ignore Condition);
 	}
 }
-
-rule("Pharah move and explode bomb")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Pharah;
-	}
-
-	conditions
-	{
-		Event Player.Y == True;
-	}
-
-	actions
-	{
-		Wait(0.016, Ignore Condition);
-		Event Player.G += Down * 0.500;
-		Loop If(Distance Between(Event Player.G, Event Player.M) > 0.500);
-		Play Effect(All Players(All Teams), Good Explosion, Color(Red), Event Player.M, 10);
-		Play Effect(All Players(All Teams), Explosion Sound, Color(Red), Event Player.M, 2000);
-		Damage(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, 400);
-
-		//Sometimes there was a bug that caused pharah to explode herself even if she was far away from the bomb.
-		Skip If(Distance Between(Event Player.M, Event Player) > 7, 1);
-		Damage(Event Player, Event Player, 400);
-		Destroy Effect(Event Player.P);
-		Event Player.M = Null;
-		Event Player.G = Null;
-		Event Player.P = Null;
-		Chase Player Variable At Rate(Event Player, S, 0, 1, Destination and Rate);
-		Wait(Event Player.S, Ignore Condition);
-		Event Player.Y = Null;
-	}
-}
-
-
 
 rule("Pharah damage player when hitting ground during ult")
 {
@@ -6908,6 +6317,31 @@ rule("Pharah shoot machine gun")
 
 	actions
 	{
+		Wait(0.025, Ignore Condition);
+		Create Projectile(Mercy Caduceus Blaster, Event Player, Null, Null, To World, Damage, Opposite Team Of(Team Of(Event Player)), 10, 1, 0, Bad Explosion, Explosion Sound, 0, 50, 5, 0, 0, 0);
+		Play Effect(All Players(All Teams), Debuff Impact Sound, Color(White), Event Player, 10000);
+		Loop If Condition Is True;
+	}
+
+}
+
+/*rule("Pharah shoot machine gun")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+		Is Button Held(Event Player, Button(Primary Fire)) == True;
+	}
+
+	actions
+	{
 		Wait(0.050, Ignore Condition);
 		Event Player.U = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(
 			Event Player)) * 150, Y Component Of(Facing Direction Of(Event Player)) * 150 + 0, Z Component Of(Facing Direction Of(
@@ -6923,183 +6357,7 @@ rule("Pharah shoot machine gun")
 		Damage(Players Within Radius(Event Player.U, 2, Opposite Team Of(Team Of(Event Player)), Off), Event Player, 20);
 		Loop If Condition Is True;
 	}
-}
-
-/*rule("Pharah disable burn when further from ground")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Pharah;
-	}
-
-	conditions
-	{
-		Is In Air(Event Player) == True;
-		Event Player.UsingCustomUlt == True;
-	}
-
-	actions
-	{
-		//Stop Damage Over Time(Last Damage Over Time ID);
-		Clear Status(Event Player, Burning);
-	}
 }*/
-
-/*rule("Pharah move player up in the air if too close to ground.")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Pharah;
-	}
-
-	conditions
-	{
-		Event Player.UsingCustomUlt == True;
-		Distance Between(Event Player, Nearest Walkable Position(Event Player)) < 0.5;
-		//(Y Component Of(Position Of(Event Player)) - Y Component Of(Nearest Walkable Position)) < 5;
-	}
-
-	actions
-	{
-		Wait(0.2, Abort When False);
-		Apply Impulse(Event Player, Up, 10, To World, Cancel Contrary Motion);
-		
-	}
-}*/
-
-//This is now covered by wait until in the event where the ultimate is first activated
-/*rule("Pharah died")
-{
-	event
-	{
-		Player Died;
-		All;
-		Pharah;
-	}
-
-	conditions
-	{
-		Event Player.UsingCustomUlt == True;
-	}
-
-	actions
-	{
-		Event Player.UsingCustomUlt = 0;
-		Event Player.CustomUltReadyToUse = 0;
-		disabled Stop Accelerating(Event Player);
-		Set Gravity(Event Player, 100);
-		Set Ultimate Ability Enabled(Event Player, True);
-		Event Player.B = 0;
-		Set Ability 1 Enabled(Event Player, True);
-		Allow Button(Event Player, Button(Jump));
-		Set Projectile Speed(Event Player, 100);
-		Set Damage Dealt(Event Player, 100);
-		Destroy HUD Text(Last Text ID);
-		Destroy Effect(Event Player.P);
-		Event Player.M = Null;
-		Event Player.G = Null;
-		Event Player.P = Null;
-		Event Player.Y = Null;
-		Event Player.Q = Null;
-		Stop Damage Over Time(Last Damage Over Time ID);
-		Clear Status(Event Player, Burning);
-		Event Player.R = Null;
-		Stop Camera(Event Player);
-		Set Primary Fire Enabled(Event Player, True);
-		Set Secondary Fire Enabled(Event Player, True);
-		Event Player.U = 0;
-	}
-}*/
-/*
-disabled rule("Pharah boost when jumping, would have to calculate how much fuel player has.")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Pharah;
-	}
-
-	conditions
-	{
-		disabled Event Player.UsingCustomUlt == True;
-	}
-}*/
-
-/*rule("Pharah is in air during ult")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Pharah;
-	}
-
-	conditions
-	{
-		Is In Air(Event Player) == True;
-		Event Player.UsingCustomUlt == True;
-	}
-
-	actions
-	{
-		disabled Event Player.Q = True;
-		Stop Damage Over Time(Last Damage Over Time ID);
-		Clear Status(Event Player, Burning);
-	}
-}*/
-
-/*disabled rule("Pharah disable burn when further from ground")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Pharah;
-	}
-
-	conditions
-	{
-		Is In Air(Event Player) == True;
-		Event Player.UsingCustomUlt == True;
-	}
-
-	actions
-	{
-		Stop Damage Over Time(Last Damage Over Time ID);
-		Clear Status(Event Player, Burning);
-	}
-}*/
-
-//This doesn't work with 0 gravity turned on.
-/*rule("Pharah damage player when hitting ground during ult")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Pharah;
-	}
-
-	conditions
-	{
-		Is On Ground(Event Player) == True;
-		Event Player.UsingCustomUlt == True;
-	}
-
-	actions
-	{
-		Wait(0.250, Abort When False);
-		Start Damage Over Time(Event Player, Null, 9999, 130);
-		Set Status(Event Player, Null, Burning, 9999);
-	}
-}*/
-
-
 
 //Maybe make apply the high gravity when getting damaged?
 rule("Sigma zero/high gravity")
@@ -7835,31 +7093,7 @@ rule("Zenyatta secondary fire")
 	}
 }
 
-/*
-disabled rule("Zenyatta turn possessed player, currently set in possess a player event")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Zenyatta;
-	}
 
-	conditions
-	{
-		Event Player.P != Null;
-	}
-
-	actions
-	{
-		disabled Wait(0.016, Ignore Condition);
-		disabled Set Facing(Event Player.P, Event Player, To World);
-		disabled Start Facing(Event Player.P, Local Vector Of(Vector Towards(Event Player, Facing Direction Of(Event Player) * 2), Event Player,
-			Rotation), 10000, To World, Direction and Turn Rate);
-		disabled Loop If Condition Is True;
-		Start Facing(Event Player.P, Facing Direction Of(Event Player), 1000, To World, Direction and Turn Rate);
-	}
-}*/
 
 rule("Zenyatta stop moving when there's no throttle")
 {
@@ -8336,34 +7570,6 @@ rule("Zenyatta acknowledge")
 	}
 }
 
-/*disabled rule("Roadhog disable vanilla ultimate when charge is full")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Roadhog;
-	}
-
-	conditions
-	{
-		Hero Of(Event Player) == Hero(Roadhog);
-		Ultimate Charge Percent(Event Player) > 99.900;
-		Event Player.CustomUltReadyToUse != True;
-	}
-
-	actions
-	{
-		Event Player.CustomUltReadyToUse = True;
-		Set Ultimate Ability Enabled(Event Player, False);
-		disabled Big Message(Event Player, String("{0} {1}", String("Ultimate Ability"), String("Ready")));
-		Event Player.B = Hero Of(Event Player);
-		Create HUD Text(Event Player, Custom String("ULT READY PRESS Q TO USE ULTIMATE"), Null, Null, Top, 1, Color(Blue), Color(White),
-			Color(White), Visible To and String, Default Visibility);
-		Event Player.UltReadyText = Last Text ID;
-	}
-}*/
-
 //Add some kind of effect that shows when damage and heals are reflected. Could be a permanent connection to other players or something that happens when the damage and heal happens
 rule("Roadhog activate and deactivate ultimate")
 {
@@ -8465,33 +7671,6 @@ rule("Roadhog reflect healing")
 		Heal(Healer, Event Player, Event Healing);
 	}
 }
-
-/*rule("Roadhog died")
-{
-	event
-	{
-		Player Died;
-		All;
-		Roadhog;
-	}
-
-	conditions
-	{
-		Event Player.UsingCustomUlt == True;
-	}
-
-	actions
-	{
-		Destroy Effect(Last Created Entity);
-		Event Player.UsingCustomUlt = Null;
-		Event Player.CustomUltReadyToUse = Null;
-		Event Player.B = Null;
-		Set Ultimate Ability Enabled(Event Player, True);
-		Destroy HUD Text(Last Text ID);
-		Event Player.Y = Null;
-		Set Ultimate Charge(Event Player, 0);
-	}
-}*/
 
 //Sometimes could only ult once and then projectile gravity 0 would stay.
 rule("Hanzo")
@@ -9948,157 +9127,6 @@ rule("Reset McCree.")
 	}
 }
 
-//If mccree player leaves match this might not be run
-/*rule("McCree disable ult")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Cassidy;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == False;
-		Is True For Any(All Players(Opposite Team Of(Team Of(Event Player))), Current Array Element.UltingEnemyMcCree != Null) == True;
-	}
-
-	actions
-	{
-		All Players(Opposite Team Of(Team Of(Event Player))).UltingEnemyMcCree = Null;
-		Destroy HUD Text(Event Player.UltDescription);
-
-		Clear Status(Event Player, Burning);
-
-	}
-}*/
-
-//Old crap using damage over time
-/*rule("If don't see McCree don't get burned or damaged")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.UltingEnemyMcCree != Null;
-		((Is In View Angle(Event Player, Event Player.UltingEnemyMcCree, 50) == False) || (Is In Line of Sight(Event Player, Event Player.UltingEnemyMcCree, Barriers Do Not Block LOS) == False)) == True;
-		disabled Event Player.McCreeUltBlind == True;
-	}
-
-	actions
-	{
-		Skip If(Distance Between(Event Player, Event Player.UltingEnemyMcCree) < 5, 1);
-		Stop Damage Over Time(Event Player.McCreeDPS);
-	}
-}*/
-
-/*rule("McCreeDisable statuses when ult is over")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.UltingEnemyMcCree == Null;
-		(Event Player.McCreeUltBlind || Event Player.McCreeUltProxDMG) != Null;
-	}
-
-	actions
-	{
-		//Stop Damage Over Time(Event Player.McCreeDPS);
-		//Stop Damage Over Time(Event Player.McCreeUltProxDMG);
-		Event Player.McCreeUltProxDMG = Null;
-	}
-}*/
-
-/*rule("If not close to McCree don't get burned")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.UltingEnemyMcCree != Null;
-		Distance Between(Event Player, Event Player.UltingEnemyMcCree) >= 5;
-		Event Player.McCreeUltProxDMG != Null;
-	}
-
-	actions
-	{
-		Skip If(Is In View Angle(Event Player, Event Player.UltingEnemyMcCree, 50) && Is In Line of Sight(Event Player,
-			Event Player.UltingEnemyMcCree, Barriers Do Not Block LOS), 1);
-		disabled Clear Status(Event Player, Burning);
-		Stop Damage Over Time(Event Player.McCreeUltProxDMG);
-		Event Player.McCreeUltProxDMG = Null;
-	}
-}*/
-
-/*rule("If close to McCree get burned")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.UltingEnemyMcCree != Null;
-		Is In Line of Sight(Event Player, Event Player.UltingEnemyMcCree, Barriers Do Not Block LOS) == True;
-		Distance Between(Event Player, Event Player.UltingEnemyMcCree) < 5;
-	}
-
-	actions
-	{
-		Wait(1, Ignore Condition);
-		Set Status(Event Player, Event Player.UltingEnemyMcCree, Burning, 1);
-		Loop If Condition Is True;
-	}
-}*/
-
-/*rule("If sees McCree get burned")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.UltingEnemyMcCree != Null;
-		Is In View Angle(Event Player, Event Player.UltingEnemyMcCree, 50) == True;
-		Is In Line of Sight(Event Player, Event Player.UltingEnemyMcCree, Barriers Do Not Block LOS) == True;
-	}
-
-	actions
-	{
-		Wait(1, Ignore Condition);
-		Set Status(Event Player, Event Player.UltingEnemyMcCree, Burning, 1);
-		Loop If Condition Is True;
-	}
-}*/
-
-
-
-
-
 //I hope this doesn't interfere with anything
 rule("If dead disable all damage over time")
 {
@@ -10114,76 +9142,6 @@ rule("If dead disable all damage over time")
 		Stop All Damage Over Time(Event Player);
 	}
 }
-
-/*disabled rule("Ult spam test")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Cassidy;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-	}
-
-	actions
-	{
-		Start Holding Button(Event Player, Button(Ultimate));
-	}
-}
-
-disabled rule("Ult spam test")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Cassidy;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-	}
-
-	actions
-	{
-		Wait(0.016, Ignore Condition);
-		Set Status(Event Player, Null, Stunned, 0.016);
-		Set Ultimate Charge(Event Player, 100);
-		Loop;
-	}
-}
-
-disabled rule("Mei disable regular ult")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Mei;
-	}
-
-	conditions
-	{
-		Hero Of(Event Player) == Hero(Mei);
-		Ultimate Charge Percent(Event Player) > 99.800;
-		Event Player.CustomUltReadyToUse != True;
-	}
-
-	actions
-	{
-		Event Player.CustomUltReadyToUse = True;
-		Set Ultimate Ability Enabled(Event Player, False);
-		Create HUD Text(Event Player, Custom String("ULT READY PRESS Q TO USE ULTIMATE"), Null, Null, Top, 1, Color(Blue), Color(White),
-			Color(White), Visible To and String, Default Visibility);
-		Event Player.UltReadyText = Last Text ID;
-		Event Player.B = Hero Of(Event Player);
-	}
-}*/
 
 //Apparently the healing block doesn't always work??
 rule("Mei activate ultimate")
@@ -11303,9 +10261,13 @@ rule("ServerLoad")
 		Ongoing - Global;
 	}
 
+	conditions
+	{
+
+	}
+
 	actions
 	{
-		Create HUD Text(All Players(All Teams), Custom String("Server load: "), Server Load, Null, Right, 0, Color(White), Color(White), Color(White),
-			Visible To and String, Default Visibility);
+		Create HUD Text(All Players(All Teams), Custom String("Server load: "), Server Load, Null, Right, 0, Color(White), Color(White), Color(White), Visible To and String, Default Visibility);
 	}
 }
