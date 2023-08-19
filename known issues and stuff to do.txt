@@ -16,6 +16,8 @@ Issues/optimization:
 -sometimes zarya's graviton effect doesn't get removed after ult ends and just gets placed in the middle of the map
 -torbturret disappears when AI bots are added to the same team, dunno if the same would happen with dummy bots and players, edit: seems like the torb maybe just gets replaced on his slot instead of being moved up a slot. Probably should have to specify a slot that is not used by players or AI.
 -winston's wall stun seems to work most of the time, but sometimes it doesn't, seems like the J variable might not be set correctly sometimes when winston deals damage?
+-for some reason with zarya the enemies are now flying in long circles around the grav when I reworked the code even though functionally I don't see how it should be any different from before
+-moira's ult knockback applies impulse in the direction of players within radius which doesn't really work with multiple players
 
 Stuff to add/change:
 -add visual effect to roadhog reflecting stuff
@@ -35,6 +37,8 @@ Stuff to add/change:
 -could maybe come up with something else for Ana. Soldier's care package already sets cooldowns to 0
 
 -for tracer could maybe speed up projectile speed to make it like made in heaven lol
+
+-maybe add some kind of global array that keeps track of all effects and destroys them if the player leaves the match or something or after a certain amount of time
 
 Usingcustomult subroutine, might need to remove some stuff from it that doesn't affect all heroes with custom ults:
 Destroy Effect(Event Player.UltEffect);

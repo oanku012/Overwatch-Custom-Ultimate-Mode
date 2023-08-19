@@ -63,7 +63,7 @@ settings
 			Ultimate Generation - Passive: 500%
            
 		
-            Spawn With Ultimate Ready: On
+           
            
 		
 		}
@@ -73,7 +73,7 @@ settings
 			Ultimate Generation: 500%
 			Ultimate Generation - Combat: 500%
 			Ultimate Generation - Passive: 500%
-            Spawn With Ultimate Ready: On
+           
 
 		
            
@@ -126,10 +126,11 @@ settings
 			
 			
 				Hanzo
+				Illari
 				Junkrat
 				Kiriko
 				Lifeweaver
-				Lúcio
+			
 				Ramattra
 			
 			
@@ -165,15 +166,12 @@ variables {
     11: P
     12: Q
     13: GreenPortal
-    14: W
-    15: YellowPortalRaycast
-    16: GreenPortalRaycast
-    17: SymmetraBluePNormal
-    18: SymmetraRedPNormal
-    19: SymmetraYellowPNormal
-    20: SymmetraGreenPNormal
-    21: A
-    22: B
+    14: YellowPortalRaycast
+    15: GreenPortalRaycast
+    16: SymmetraBluePNormal
+    17: SymmetraRedPNormal
+    18: SymmetraYellowPNormal
+    19: SymmetraGreenPNormal
 
   player:
     0: B
@@ -285,6 +283,7 @@ variables {
     106: H
     107: WinstonRayCast1
     108: WinstonRayCast2
+    109: ZaryaGravPos
 }
 
 
@@ -314,6 +313,10 @@ subroutines {
     22: ResetTracer
     23: ResetWidow
     24: ResetWinston
+    25: ResetWB
+    26: ResetZarya
+    27: ResetZenyatta
+    28: StopPossessing
 }
 
 
@@ -342,18 +345,20 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 	{
 
 		
-		Big Message(Event Player, Custom String("AAAA"));
-
-	
-
-	
-	
 	
 
 	
 
 	
+	
+	
 
+	
+
+	
+
+	
+	
 	
 	
 		If(Event Player.B == Hero(Cassidy));
@@ -398,6 +403,12 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		Call Subroutine(ResetWidow);
 		Else If(Event Player.B == Hero(Winston));
 		Call Subroutine(ResetWinston);
+		Else If(Event Player.B == Hero(Wrecking Ball));
+		Call Subroutine(ResetWB);
+		Else If(Event Player.B == Hero(Zarya));
+		Call Subroutine(ResetZarya);
+		Else If(Event Player.B == Hero(Zenyatta));
+		Call Subroutine(ResetZenyatta);
 		End;
 
 		Event Player.B = Null;
@@ -511,9 +522,13 @@ rule("Test dummy")
 	actions
 	{
 	
-		Create Dummy Bot(Hero(Cassidy), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
-		Set Ultimate Charge(Last Created Entity, 100);
-		Start Holding Button(Last Created Entity, Button(Ultimate));
+		Create Dummy Bot(Hero(Lúcio), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
+		Set Ultimate Charge(Last Created Entity, 99);
+		
+		Wait(1, Ignore Condition);
+	
+		Press Button(Last Created Entity, Button(Ultimate));
+		
 	
 	}
 }
@@ -875,8 +890,8 @@ rule("Brigitte: Increase shield size when using ultimate")
 
 	conditions
 	{
-		Is Using Ultimate(Event Player) == True;
 		Hero Of(Event Player) == Hero(Brigitte);
+		Is Using Ultimate(Event Player) == True;
 		Is Dummy Bot(Event Player) == false;
 
 	}
@@ -909,6 +924,8 @@ rule("Brigitte: Increase shield size when using ultimate")
 		Start Forcing Player To Be Hero(Event Player, Hero(Ana));
 		Start Forcing Player To Be Hero(Event Player, Hero(Brigitte));
 		Stop Forcing Player To Be Hero(Event Player);
+		
+		
 
 		Start Holding Button(Event Player, Button(Secondary Fire));
 
@@ -928,6 +945,7 @@ rule("Brigitte: Increase shield size when using ultimate")
 
 	
 		Wait Until((Is Dead(Event Player) == true || Hero Of(Event Player) != Hero(Brigitte)) == true, 10);
+	
 		Call Subroutine(ResetBrigitte);
 		
 		
@@ -950,7 +968,7 @@ rule("Reset everything with brigitte.")
 
     actions
     {
-		Set Ultimate Ability Enabled(Event Player, True);
+	
 		Set Ability 1 Enabled(Event Player, True);
 		Set Ability 2 Enabled(Event Player, True);
 		Event Player.BrigitteUltActive = Null;
@@ -2919,6 +2937,80 @@ rule("Junkrat drop bomb on death.")
 
 
 
+rule("Lucio activate ult")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Lúcio;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+	
+	
+	}
+
+	actions
+	{
+	
+
+	}
+}
+
+rule("Lucio activate ult")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Lúcio;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+	
+	
+	}
+
+	actions
+	{
+		Wait(0.5, Abort When False);
+		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
+		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
+		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
+		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
+		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
+		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
+		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
+		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
+		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
+		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
+		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
+		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
+		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
+		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
+	
+		
+		Damage(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off), Event Player, 50);
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off)), 1);
+		
+		Apply Impulse(Value In Array(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer),  Direction Towards(Position Of(Event Player), Value In Array(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer) + Up*2), 20, To World, Cancel Contrary Motion);
+		
+		End;
+	
+		
+		Loop If Condition Is True;
+
+	}
+}
+
+
+
 rule("McCree enable ult")
 {
 
@@ -3585,7 +3677,7 @@ rule("Pharah activate ultimate when button is pressed")
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
 		Apply Impulse(Event Player, Up, 10, To World, Cancel Contrary Motion);
-		Set Secondary Fire Enabled(Event Player, False);
+	
 		Set Primary Fire Enabled(Event Player, False);
 		Event Player.R = 20;
 		Chase Player Variable At Rate(Event Player, R, 0, 1, Destination and Rate);
@@ -3594,6 +3686,7 @@ rule("Pharah activate ultimate when button is pressed")
 		Set Projectile Speed(Event Player, 300);
 		Set Ability 1 Enabled(Event Player, False);
 		Disallow Button(Event Player, Button(Jump));
+		Disallow Button(Event Player, Button(Secondary Fire));
 		Set Gravity(Event Player, 0);
 	
 		Event Player.UsingCustomUlt = True;
@@ -3621,6 +3714,7 @@ rule("Reset Pharah stuff.")
 		Event Player.B = 0;
 		Set Ability 1 Enabled(Event Player, True);
 		Allow Button(Event Player, Button(Jump));
+		Allow Button(Event Player, Button(Secondary Fire));
 		Set Projectile Speed(Event Player, 100);
 		Set Damage Dealt(Event Player, 100);
 		Destroy HUD Text(Last Text ID);
@@ -3633,7 +3727,7 @@ rule("Reset Pharah stuff.")
 		Event Player.R = Null;
 		Stop Camera(Event Player);
 		Set Primary Fire Enabled(Event Player, True);
-		Set Secondary Fire Enabled(Event Player, True);
+	
 		Event Player.U = 0;
 		Stop Damage Over Time(Last Damage Over Time ID);
 		Clear Status(Event Player, Burning);
@@ -7686,7 +7780,7 @@ rule("winston: when winston hits someone, set root status and get direction and 
 	actions
 	{
 
-		Wait(0.1, Ignore Condition);
+		Wait(0.1, Abort When False);
 		
 		Victim.J = Event Player;
 		
@@ -7698,8 +7792,8 @@ rule("winston: when winston hits someone, set root status and get direction and 
 		
 	
 		
-		Create Beam Effect(All Players(All Teams), Good Beam, Eye Position(Victim), Eye Position(Victim) + Victim.I, Color(white), None);
-		Create Beam Effect(All Players(All Teams), Good Beam, Position Of(Victim), Position Of(Victim) + Victim.I, Color(white), None);
+	
+	
 		
 		Set Status(Victim, Event Player, Rooted, 1);
 		Victim.H = Speed Of In Direction(Victim, Victim.I);
@@ -7749,6 +7843,7 @@ rule("winston: check for wall with ray cast.")
 		Event Player.H = 0;
 		
 		Else;
+	
 		Event Player.J = null;
 		Event Player.I = 0;
 		Event Player.H = 0;
@@ -7776,7 +7871,7 @@ rule("Wrecking ball activate ultimate.")
         Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.CustomUltReadyToUse == True;
 		Event Player.UsingCustomUlt == Null;
-		Hero Of(Event Player) == Hero(Wrecking Ball);
+	
 		Has Status(Event Player, Hacked) == False;
 	}
 
@@ -7788,28 +7883,48 @@ rule("Wrecking ball activate ultimate.")
         Skip If(Is In Alternate Form(Event Player) == true, 1);
         Press Button(Event Player, Button(Ability 1));
 
-		Set Ability 1 Enabled(Event Player, False);
+	
+	
 		Set Primary Fire Enabled(Event Player, False);
 		Set Secondary Fire Enabled(Event Player, False);
-       
+        Disallow Button(Event Player, Button(Ability 1));
        
        
        
         Set Damage Received(Event Player, 33);
         Set Knockback Received(Event Player, 33);
-        Wait(15, Ignore Condition);
-        Skip If(Event Player.UsingCustomUlt == Null, 6);
+        Wait Until(Is Dead(Event Player), 15);
+        Skip If(Event Player.UsingCustomUlt == Null, 1);
+        Call Subroutine(ResetWB);
+        
+
+
+    }
+}
+
+
+
+rule("Wrecking ball reset.")
+{
+    
+    event
+	{
+		Subroutine;
+		ResetWB;
+	}
+
+
+    actions
+    {
+        
+       
         Call Subroutine(StopUsingCustomUlt);
         Start Scaling Player(Event Player, 1, false);
 		Set Ability 1 Enabled(Event Player, True);
 		Set Secondary Fire Enabled(Event Player, True);
-       
-       
         Set Damage Received(Event Player, 100);
         Set Knockback Received(Event Player, 100);
 
-
-       
 
 
     }
@@ -7850,38 +7965,6 @@ rule("Wrecking ball kill nearby enemies while using ultimate")
 
 
 
-rule("Wrecking ball disable ULT when dead")
-{
-    event
-	{
-		Ongoing - Each Player;
-		All;
-		Wrecking Ball;
-	}
-
-    conditions
-	{
-		Event Player.UsingCustomUlt == true;
-		Hero Of(Event Player) == Hero(Wrecking Ball);
-        Is Alive(Event Player) == false;
-	}
-
-    actions
-    {
-        Call Subroutine(StopUsingCustomUlt);
-        Start Scaling Player(Event Player, 1, false);
-        Set Ability 1 Enabled(Event Player, True);
-		Set Secondary Fire Enabled(Event Player, True);
-		Set Primary Fire Enabled(Event Player, True);
-
-        Set Damage Received(Event Player, 100);
-        Set Knockback Received(Event Player, 100);
-
-    }
-}
-
-
-
 rule("Auto-transform back to ball if form is reverted by enemy abilities")
 {
     event
@@ -7901,9 +7984,11 @@ rule("Auto-transform back to ball if form is reverted by enemy abilities")
     actions
     {
         Wait(1, Ignore Condition);
-        Set Ability 1 Enabled(Event Player, True);
+       
+        Allow Button(Event Player, Button(Ability 1));
         Press Button(Event Player, Button(Ability 1));
-		Set Ability 1 Enabled(Event Player, False);
+        Disallow Button(Event Player, Button(Ability 1));
+	
         Loop If Condition Is True;
 
     }
@@ -7913,14 +7998,13 @@ rule("Auto-transform back to ball if form is reverted by enemy abilities")
 
 
 
-rule("zarya: team 1 uses ultimate")
+rule("zarya: uses ultimate")
 {
-
 	event
 	{
 		Ongoing - Each Player;
-		Team 1;
 		All;
+		Zarya;
 	}
 
 	conditions
@@ -7928,90 +8012,73 @@ rule("zarya: team 1 uses ultimate")
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 	
 		Event Player.CustomUltReadyToUse == True;
-		Hero Of(Event Player) == Hero(Zarya);
+	
 		Has Status(Event Player, Hacked) == False;
 	}
 
 	actions
 	{
-		Destroy HUD Text(Event Player.UltReadyText);
-		Event Player.UltReadyText = Null;
+		Call Subroutine(UseCustomUlt);
 		Set Primary Fire Enabled(Event Player, False);
 		Set Secondary Fire Enabled(Event Player, False);
 		Event Player.S = 15;
-		Event Player.UsingCustomUlt = True;
-		Big Message(All Players(All Teams), Hero Icon String(Hero(Zarya)));
-		Event Player.CustomUltReadyToUse = False;
 	
 	
 	
 	
 	
-		Create Projectile Effect(All Players(All Teams), Zarya Graviton, All Players(Team Of(Event Player)), Global.A, Facing Direction Of(Event Player), 0.5, Visible To Position Direction and Size);
-		Wait(15, Ignore Condition);
-		Event Player.UsingCustomUlt = Null;
-		Destroy Effect(Last Created Entity);
 	
-		Set Ultimate Ability Enabled(Event Player, True);
-		Clear Status(All Players(Opposite Team Of(Team Of(Event Player))), Rooted);
-		Set Ultimate Charge(Event Player, 0);
-		Event Player.S = Null;
-		Set Primary Fire Enabled(Event Player, True);
-		Set Secondary Fire Enabled(Event Player, True);
-		Wait(0.100, Ignore Condition);
-		Stop Accelerating(All Players(Opposite Team Of(Team Of(Event Player))));
-		Global.A = Null;
+		Create Projectile Effect(All Players(All Teams), Zarya Graviton, All Players(Team Of(Event Player)), Event Player.ZaryaGravPos, Facing Direction Of(Event Player), 0.5, Visible To Position Direction and Size);
+		Wait Until(Is Dead(Event Player), 15);
+		Call Subroutine(ResetZarya);
 	}
 }
 
 
 
-rule("zarya: team 2 uses ultimate")
+rule("zarya: reset")
 {
 	event
 	{
-		Ongoing - Each Player;
-		Team 2;
-		All;
-	}
-
-	conditions
-	{
-		Is Button Held(Event Player, Button(Ultimate)) == True;
-		Team Of(Event Player) == Team 2;
-		Event Player.CustomUltReadyToUse == True;
-		Hero Of(Event Player) == Hero(Zarya);
-		Has Status(Event Player, Hacked) == False;
+		Subroutine;
+		ResetZarya;
 	}
 
 	actions
 	{
-		Destroy HUD Text(Event Player.UltReadyText);
-		Event Player.UltReadyText = Null;
-		Set Primary Fire Enabled(Event Player, False);
-		Set Secondary Fire Enabled(Event Player, False);
-		Event Player.S = 15;
-		Event Player.UsingCustomUlt = True;
-		Big Message(All Players(All Teams), Hero Icon String(Hero(Zarya)));
-		Event Player.UsingCustomUlt = Null;
-		disabled Global.B = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
-			* 1000, Y Component Of(Facing Direction Of(Event Player)) * 1000 + 2, Z Component Of(Facing Direction Of(Event Player))
-			* 1000), All Players(All Teams), Event Player, True);
-	
-		Create Projectile Effect(All Players(All Teams), Zarya Graviton, All Players(Team Of(Event Player)), Global.B, Facing Direction Of(Event Player), 1, Visible To Position Direction and Size);
-		Wait(15, Ignore Condition);
+		Call Subroutine(StopUsingCustomUlt);
 		Destroy Effect(Last Created Entity);
-		Destroy Effect(Last Created Entity);
-		Event Player.CustomUltReadyToUse = False;
-		Set Ultimate Ability Enabled(Event Player, True);
-		Clear Status(All Players(Opposite Team Of(Team Of(Event Player))), Rooted);
 		Set Ultimate Charge(Event Player, 0);
 		Event Player.S = Null;
-		Set Primary Fire Enabled(Event Player, True);
-		Set Secondary Fire Enabled(Event Player, True);
-		Wait(0.100, Ignore Condition);
-		Stop Accelerating(All Players(Opposite Team Of(Team Of(Event Player))));
-		Global.B = Null;
+	
+		Event Player.ZaryaGravPos = Null;
+	}
+}
+
+
+
+rule("Zarya set grav point position")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Zarya;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		Wait(0.016, Ignore Condition);
+		
+		Event Player.ZaryaGravPos = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
+			* Event Player.S, Y Component Of(Facing Direction Of(Event Player)) * Event Player.S + 2, Z Component Of(Facing Direction Of(
+			Event Player)) * Event Player.S), Null, All Players(All Teams), True);
+		Loop If Condition Is True;
 	}
 }
 
@@ -8023,13 +8090,12 @@ rule("Zarya move gravity point forward")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zarya;
 	}
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(Zarya);
-		disabled Event Player.CustomUltReadyToUse == True;
+	
 		Event Player.UsingCustomUlt == True;
 		Is Button Held(Event Player, Button(Primary Fire)) == True;
 	}
@@ -8044,23 +8110,23 @@ rule("Zarya move gravity point forward")
 
 
 
-rule("Zarya move gravity point backward team 1")
+rule("Zarya move gravity point backward")
 {
 
 	event
 	{
 		Ongoing - Each Player;
-		Team 1;
 		All;
+		Zarya;
 	}
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(Zarya);
+	
 		disabled Event Player.CustomUltReadyToUse == True;
 		Event Player.UsingCustomUlt == True;
 		Is Button Held(Event Player, Button(Secondary Fire)) == True;
-		Distance Between(Event Player, Global.A) > 7;
+		Distance Between(Event Player, Event Player.ZaryaGravPos) > 7;
 	}
 
 	actions
@@ -8073,208 +8139,30 @@ rule("Zarya move gravity point backward team 1")
 
 
 
-rule("Zarya move gravity point backward team 2")
+rule("zarya: pull enemies to grav")
 {
 	event
 	{
 		Ongoing - Each Player;
-		Team 2;
 		All;
+		Zarya;
 	}
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(Zarya);
-		disabled Event Player.CustomUltReadyToUse == True;
 		Event Player.UsingCustomUlt == True;
-		Is Button Held(Event Player, Button(Secondary Fire)) == True;
-		Distance Between(Event Player, Global.B) > 7;
+		Distance Between(Event Player.ZaryaGravPos, Closest Player To(Event Player.ZaryaGravPos, Opposite Team Of(Team Of(Event Player)))) <= 10;
 	}
 
 	actions
 	{
 		Wait(0.016, Ignore Condition);
-		Event Player.S -= 0.200;
-		Loop If Condition Is True;
-	}
-}
-
-
-
-rule("zarya: team 2 gets pulled into grav")
-{
-	event
-	{
-		Ongoing - Each Player;
-		Team 2;
-		All;
-	}
-
-	conditions
-	{
-		Global.A != Null;
-		Team Of(Event Player) == Team 2;
-		Distance Between(Event Player, Global.A) <= 7;
-	}
-
-	actions
-	{
-		disabled Start Accelerating(Event Player, Direction Towards(Position Of(Event Player), Global.A), 200, 200, To World,
-			Direction Rate and Max Speed);
 	
-		Wait(0.016, Ignore Condition);
-		Apply Impulse(Event Player, Vector Towards(Event Player, Global.A), 10, To World, Cancel Contrary Motion);
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Players Within Radius(Event Player.ZaryaGravPos, 10, Opposite Team Of(Team Of(Event Player)), Off)), 1);
+		Apply Impulse(Value In Array(Players Within Radius(Event Player.ZaryaGravPos, 10, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Vector Towards(Value In Array(Players Within Radius(Event Player.ZaryaGravPos, 10, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Event Player.ZaryaGravPos), Distance Between(Value In Array(Players Within Radius(Event Player.ZaryaGravPos, 10, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Event Player.ZaryaGravPos), To World, Cancel Contrary Motion);
+		End;
 		Loop If Condition Is True;
-	}
-}
-
-
-
-rule("zarya: team 1 gets pulled into grav")
-{
-	event
-	{
-		Ongoing - Each Player;
-		Team 1;
-		All;
-	}
-
-	conditions
-	{
-		Global.B != Null;
-		Team Of(Event Player) == Team 1;
-		Distance Between(Event Player, Global.B) <= 7;
-	}
-
-	actions
-	{
-		disabled Start Accelerating(Event Player, Direction Towards(Position Of(Event Player), Global.B), 200, 200, To World,
-			Direction Rate and Max Speed);
-		disabled Set Status(Event Player, Null, Rooted, 9999);
-	
-		Wait(0.016, Ignore Condition);
-		Apply Impulse(Event Player, Vector Towards(Event Player, Global.B), 10, To World, Cancel Contrary Motion);
-		Loop If Condition Is True;
-	}
-}
-
-
-
-rule("Zarya team 1set grav point position")
-{
-	event
-	{
-		Ongoing - Each Player;
-		Team 1;
-		Zarya;
-	}
-
-	conditions
-	{
-		Event Player.UsingCustomUlt == True;
-	}
-
-	actions
-	{
-		Wait(0.016, Ignore Condition);
-		Global.A = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
-			* Event Player.S, Y Component Of(Facing Direction Of(Event Player)) * Event Player.S + 2, Z Component Of(Facing Direction Of(
-			Event Player)) * Event Player.S), Null, All Players(All Teams), True);
-		Loop If Condition Is True;
-	}
-}
-
-
-
-rule("Zarya team 2 set grav point position")
-{
-	event
-	{
-		Ongoing - Each Player;
-		Team 2;
-		Zarya;
-	}
-
-	conditions
-	{
-		Event Player.UsingCustomUlt == True;
-	}
-
-	actions
-	{
-		Wait(0.016, Ignore Condition);
-		Global.B = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
-			* Event Player.S, Y Component Of(Facing Direction Of(Event Player)) * Event Player.S + 2, Z Component Of(Facing Direction Of(
-			Event Player)) * Event Player.S), Null, All Players(All Teams), True);
-		Loop If Condition Is True;
-	}
-}
-
-
-
-rule("Zarya team 1 died")
-{
-	event
-	{
-		Player Died;
-		Team 1;
-		Zarya;
-	}
-
-	conditions
-	{
-		Event Player.UsingCustomUlt == True;
-	}
-
-	actions
-	{
-		Event Player.UsingCustomUlt = Null;
-		Destroy Effect(Last Created Entity);
-		Destroy Effect(Last Created Entity);
-		Event Player.CustomUltReadyToUse = False;
-		Set Ultimate Ability Enabled(Event Player, True);
-		Clear Status(All Players(Opposite Team Of(Team Of(Event Player))), Rooted);
-		Set Ultimate Charge(Event Player, 0);
-		Event Player.S = Null;
-		Set Primary Fire Enabled(Event Player, True);
-		Set Secondary Fire Enabled(Event Player, True);
-		Wait(0.100, Ignore Condition);
-		disabled Stop Accelerating(All Players(Opposite Team Of(Team Of(Event Player))));
-		Global.A = Null;
-	}
-}
-
-
-
-rule("Zarya team 2 died")
-{
-	event
-	{
-		Player Died;
-		Team 2;
-		Zarya;
-	}
-
-	conditions
-	{
-		Event Player.UsingCustomUlt == True;
-	}
-
-	actions
-	{
-		Event Player.UsingCustomUlt = Null;
-		Destroy Effect(Last Created Entity);
-		Destroy Effect(Last Created Entity);
-		Event Player.CustomUltReadyToUse = False;
-		Set Ultimate Ability Enabled(Event Player, True);
-		Clear Status(All Players(Opposite Team Of(Team Of(Event Player))), Rooted);
-		Set Ultimate Charge(Event Player, 0);
-		Event Player.S = Null;
-		Set Primary Fire Enabled(Event Player, True);
-		Set Secondary Fire Enabled(Event Player, True);
-		Wait(0.100, Ignore Condition);
-		disabled Stop Accelerating(All Players(Opposite Team Of(Team Of(Event Player))));
-		Global.B = Null;
 	}
 }
 
@@ -8289,12 +8177,12 @@ rule("Zenyatta activate ultimate")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(Zenyatta);
+	
 		Event Player.CustomUltReadyToUse == True;
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.UsingCustomUlt != True;
@@ -8305,6 +8193,7 @@ rule("Zenyatta activate ultimate")
 	{
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
+	
 		Event Player.Y = 30;
 		Chase Player Variable At Rate(Event Player, Y, 0, 1, Destination and Rate);
 		Create HUD Text(Event Player, String("{0} {1}", Custom String("Damage enemy player to possess them!"), Event Player.Y), Null, Null,
@@ -8312,37 +8201,54 @@ rule("Zenyatta activate ultimate")
 		Event Player.M = Last Text ID;
 		Event Player.UsingCustomUlt = True;
 		Wait(Event Player.Y, Ignore Condition);
-		Skip If(Event Player.P == Null, 15);
-		Stop Throttle In Direction(Event Player.P);
-		Stop Facing(Event Player.P);
-		Teleport(Event Player, Event Player.P + Facing Direction Of(Event Player.P) * -1);
-		Allow Button(Event Player.P, Button(Primary Fire));
-		Allow Button(Event Player.P, Button(Secondary Fire));
-		Allow Button(Event Player.P, Button(Ability 1));
-		Allow Button(Event Player.P, Button(Ability 2));
-		Allow Button(Event Player.P, Button(Ultimate));
-		Allow Button(Event Player.P, Button(Jump));
-		Allow Button(Event Player.P, Button(Crouch));
-		Stop Forcing Throttle(Event Player.P);
-		Set Status(Event Player.P, Event Player, Asleep, 6);
-		Stop Camera(Event Player);
-		Event Player.P = 0;
+	
+	
+		Call Subroutine(ResetZenyatta);
+	}
+}
+
+
+
+rule("Zenyatta reset")
+{
+	event
+	{
+		Subroutine;
+		ResetZenyatta;
+	}
+
+	actions
+	{
+		If(Event Player.P != Null);
+		Call Subroutine(StopPossessing);
+		End;
 		Event Player.UsingCustomUlt = 0;
 		Event Player.CustomUltReadyToUse = 0;
 		Event Player.B = 0;
-		Set Move Speed(Event Player, 100);
-		Clear Status(Event Player, Phased Out);
-		Set Invisible(Event Player, None);
-		Set Primary Fire Enabled(Event Player, True);
-		Set Secondary Fire Enabled(Event Player, True);
 		Set Ultimate Ability Enabled(Event Player, True);
 		Set Ultimate Charge(Event Player, 0);
 		Stop Chasing Player Variable(Event Player, Y);
 		Event Player.Y = Null;
-		Destroy HUD Text(Event Player.G);
 		Destroy HUD Text(Event Player.M);
 		Event Player.M = Null;
-		Event Player.G = Null;
+	
+	
+	
+		
+	
+	
+	
+	
+		
+	
+	
+	
+	
+	
+		
+	
+		
+	
 	}
 }
 
@@ -8354,13 +8260,13 @@ rule("Zenyatta possess a player")
 	{
 		Player Dealt Damage;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
 	{
 		Event Player.UsingCustomUlt == True;
-		Hero Of(Event Player) == Hero(Zenyatta);
+	
 
 	}
 
@@ -8385,16 +8291,16 @@ rule("Zenyatta possess a player")
 		Disallow Button(Event Player.P, Button(Ability 2));
 		Start Throttle In Direction(Event Player.P, Throttle Of(Event Player), 1, To Player, Replace existing throttle, Direction and Magnitude);
 
-		Start Forcing Player To Be Hero(Event Player, Hero Of(Event Player.P));
-		Set Invisible(Event Player.P, All);
-		Disable Movement Collision With Players(Event Player);
-		Set Status(Event Player.P, Null, Phased Out, 30);
-		Set Status(Event Player, Null, Phased Out, 30);
-		Start Damage Modification(Event Player.P, Event Player, 0, None);
-		Start Damage Modification(Event Player, Event Player.P, 0, None);
-		Teleport(Event Player, Position Of(Event Player.P));
-
+	
 		
+
+		Start Camera(Event Player, Update Every Frame(Eye Position(Event Player.P)) + Update Every Frame(Facing Direction Of(Event Player.P)), Update Every Frame(Eye Position(Event Player.P)) + Update Every Frame(Facing Direction Of(Event Player.P)) * 2, 0);
+		Set Invisible(Event Player, All);
+		Set Status(Event Player, Null, Phased Out, 9999);
+		Set Primary Fire Enabled(Event Player, False);
+		Set Secondary Fire Enabled(Event Player, False);
+	
+		Set Move Speed(Event Player, 1);
 
 
 
@@ -8407,68 +8313,17 @@ rule("Zenyatta possess a player")
 
 
 
-rule("Zenyatta possessed player died")
+rule("Zenyatta reset")
 {
 	event
 	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.P != Null;
-		Is Dead(Event Player.P) == True;
-
+		Subroutine;
+		StopPossessing;
 	}
 
 	actions
 	{
-		Stop Throttle In Direction(Event Player.P);
-		Stop Facing(Event Player.P);
-		Teleport(Event Player, Event Player.P + Facing Direction Of(Event Player.P) * -1);
-		Stop Forcing Throttle(Event Player.P);
-		Stop Camera(Event Player);
-		Set Move Speed(Event Player, 100);
-		Clear Status(Event Player, Phased Out);
-		Set Invisible(Event Player, None);
-		Set Primary Fire Enabled(Event Player, True);
-		Set Secondary Fire Enabled(Event Player, True);
-		Destroy HUD Text(Event Player.G);
-		Event Player.G = Null;
-		Allow Button(Event Player.P, Button(Primary Fire));
-		Allow Button(Event Player.P, Button(Secondary Fire));
-		Allow Button(Event Player.P, Button(Ability 1));
-		Allow Button(Event Player.P, Button(Ability 2));
-		Allow Button(Event Player.P, Button(Ultimate));
-		Allow Button(Event Player.P, Button(Jump));
-		Allow Button(Event Player.P, Button(Crouch));
-		Event Player.P = 0;
-	}
-}
-
-
-
-rule("Zenyatta leave possessed player")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.P != Null;
-		Is Button Held(Event Player, Button(Interact)) == True;
 		
-
-	}
-
-	actions
-	{
 		Stop Throttle In Direction(Event Player.P);
 		Allow Button(Event Player.P, Button(Primary Fire));
 		Allow Button(Event Player.P, Button(Secondary Fire));
@@ -8479,7 +8334,9 @@ rule("Zenyatta leave possessed player")
 		Allow Button(Event Player.P, Button(Crouch));
 		Stop Facing(Event Player.P);
 		Teleport(Event Player, Event Player.P + Facing Direction Of(Event Player.P) * -1);
+		If(Is Alive(Event Player.P));
 		Set Status(Event Player.P, Event Player, Asleep, 6);
+		End;
 		Stop Forcing Throttle(Event Player.P);
 		Stop Camera(Event Player);
 		Event Player.P = Null;
@@ -8490,6 +8347,31 @@ rule("Zenyatta leave possessed player")
 		Set Secondary Fire Enabled(Event Player, True);
 		Destroy HUD Text(Event Player.G);
 		Event Player.G = Null;
+	}
+}
+
+
+
+rule("Zenyatta leave possessed player when using interact or when possessed player dies")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Zenyatta;
+	}
+
+	conditions
+	{
+		Event Player.P != Null;
+		(Is Button Held(Event Player, Button(Interact)) || Is Dead(Event Player.P))== True;
+		
+
+	}
+
+	actions
+	{
+		Call Subroutine(StopPossessing);
 	}
 }
 
