@@ -40,6 +40,10 @@ Stuff to add/change:
 
 -maybe add some kind of global array that keeps track of all effects and destroys them if the player leaves the match or something or after a certain amount of time
 
+-could maybe use is true for any  to check if any of the enemy players has variable set and then set stuff on the event player
+
+-add dummy bot checks for all ults
+
 Usingcustomult subroutine, might need to remove some stuff from it that doesn't affect all heroes with custom ults:
 Destroy Effect(Event Player.UltEffect);
         Event Player.UsingCustomUlt = null;

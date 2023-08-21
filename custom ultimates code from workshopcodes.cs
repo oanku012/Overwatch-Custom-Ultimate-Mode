@@ -10,7 +10,7 @@ settings
 	{
 		Description: "Overpowered custom-made ultimates for each hero. Currently only supports team-based modes and 1 of each hero per team."
 
-		Mode Name: "Wacky OP ultimates"
+		Mode Name: "Goofy OP ultimates"
 		
 	}
 
@@ -98,6 +98,8 @@ settings
 			{
 				Ultimate Duration: 500%
 			}
+			
+			
 
 			Soldier: 76
 			{
@@ -123,19 +125,11 @@ settings
 				Ashe
 				Baptiste
 				Bastion
-			
-			
 				Hanzo
 				Illari
-				Junkrat
 				Kiriko
 				Lifeweaver
-			
 				Ramattra
-			
-			
-			
-			
 				
 			}
 		}
@@ -181,14 +175,14 @@ variables {
     4: UltEffect
     5: G
     6: Y
-    7: MenuHUDOptions
-    8: MenuOptions
-    9: ForLoopIndexPlayer
-    10: MenuHUDChooseSort
-    11: MenuOpen
-    12: MenuChosenOption
-    13: A
-    14: BastionPos
+    7: UltDescriptionTextObject
+    8: MenuHUDOptions
+    9: MenuOptions
+    10: ForLoopIndexPlayer
+    11: MenuHUDChooseSort
+    12: MenuOpen
+    13: MenuChosenOption
+    14: A
     15: D
     16: BrigitteUltActive
     17: BrigitteKnockedBack
@@ -297,26 +291,27 @@ subroutines {
     6: ResetEcho
     7: ResetGenji
     8: ResetJQ
-    9: ResetCassidy
-    10: ResetMei
-    11: ResetMoira
-    12: ResetPharah
-    13: ResetReaper
-    14: ResetReinhardt
-    15: ResetRoadhog
-    16: ResetSigma
-    17: ResetSojourn
-    18: ResetSoldier
-    19: ResetSombra
-    20: ResetSymmetra
-    21: ResetTorb
-    22: ResetTracer
-    23: ResetWidow
-    24: ResetWinston
-    25: ResetWB
-    26: ResetZarya
-    27: ResetZenyatta
-    28: StopPossessing
+    9: ResetJunkrat
+    10: ResetCassidy
+    11: ResetMei
+    12: ResetMoira
+    13: ResetPharah
+    14: ResetReaper
+    15: ResetReinhardt
+    16: ResetRoadhog
+    17: ResetSigma
+    18: ResetSojourn
+    19: ResetSoldier
+    20: ResetSombra
+    21: ResetSymmetra
+    22: ResetTorb
+    23: ResetTracer
+    24: ResetWidow
+    25: ResetWinston
+    26: ResetWB
+    27: ResetZarya
+    28: ResetZenyatta
+    29: StopPossessing
 }
 
 
@@ -373,6 +368,8 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		Call Subroutine(ResetGenji);
 		Else If(Event Player.B == Hero(Junker Queen));
 		Call Subroutine(ResetJQ);
+		Else If(Event Player.B == Hero(Junkrat));
+		Call Subroutine(ResetJunkrat);
 		Else If(Event Player.B == Hero(Mei));
 		Call Subroutine(ResetMei);
 		Else If(Event Player.B == Hero(Moira));
@@ -501,6 +498,31 @@ rule("Stop Using custom ult")
 
 
 
+
+rule("Ult description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+	
+	conditions
+	{
+		Is Button Held(Event Player, Button(Interact)) == True;
+		Is Button Held(Event Player, Button(Crouch)) == True;
+	}
+
+	actions
+	{
+		If(Hero Of(Event Player) == Ana);
+		
+		
+		Create HUD Text(Event Player, Custom String("Some string"), Null, Null, Left, 0, Color(white), Color(white), Color(white), Visible To And String, Default Visibility);
+		Event Player.UltDescriptionTextObject = Last Text ID;
+	}
+}
 
 
 
@@ -812,65 +834,6 @@ rule("Set cooldowns to 0 for nanoboosted player")
 
 
 
-
-
-
-rule("Bastion activate ultimate.")
-{
-   
-    event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-    conditions{
-        Is Button Held(Event Player, Button(Ultimate)) == True;
-		Event Player.CustomUltReadyToUse == True;
-		Event Player.UsingCustomUlt == Null;
-		Hero Of(Event Player) == Hero(Bastion);
-		Has Status(Event Player, Hacked) == False;
-    }
-
-    actions
-    {
-        Call Subroutine(UseCustomUlt);
-        Event Player.BastionPos = Position Of(Event Player);
-        Disable Movement Collision With Environment(Event Player, false);
-        Set Gravity(Event Player, 0);
-        Set Projectile Speed(Event Player, 500);
-        Set Projectile Gravity(Event Player, 0);
-        Set Knockback Received(Event Player, 0);
-        Start Forcing Player Position(Event Player, Position Of (Event Player) + Up * 50, false);
-        Wait(1, Ignore Condition);
-        Stop Forcing Player Position(Event Player);
-        Start Scaling Player(Event Player, 5.0, false);
-        Set Damage Received(Event Player, 20);
-        Set Damage Dealt(Event Player, 200);
-        Set Ability Cooldown(Event Player, Button(Ability 1), 1);
-        Set Ability Cooldown(Event Player, Button(Ability 2), 1);
-
-       
-		Wait Until(Is Dead(Event Player) == True || Hero Of(Event Player) != Hero(Bastion), 20);
-        Start Forcing Player Position(Event Player, Event Player.BastionPos, false);
-        Wait(1, Ignore Condition);
-        Stop Forcing Player Position(Event Player);
-        Start Scaling Player(Event Player, 1, false);
-        Set Damage Received(Event Player, 100);
-        Set Damage Dealt(Event Player, 100);
-        Set Ability Cooldown(Event Player, Button(Ability 1), 1);
-        Set Ability Cooldown(Event Player, Button(Ability 2), 1);
-        Set Gravity(Event Player, 100);
-        Set Projectile Speed(Event Player, 100);
-        Set Projectile Gravity(Event Player, 100);
-        Set Knockback Received(Event Player, 100);
-        Enable Movement Collision With Environment(Event Player);
-        Call Subroutine(StopUsingCustomUlt);
-
-
-    }
-}
 
 
 
@@ -2207,50 +2170,6 @@ rule("Stop damage over time on death on players hit by Genji")
 
 
 
-rule("Hanzo")
-{
-
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Hanzo;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-		Hero Of(Event Player) == Hero(Hanzo);
-		Is Dummy Bot(Event Player) == false;
-
-	}
-
-	actions
-	{
-		Skip If(Event Player.S > 0, 2);
-		Event Player.Y = 15;
-		Create HUD Text(Event Player, String("{0} {1} {2}", String("Use Ultimate Ability"), String("Time"), Event Player.Y), Null, Null,
-			Top, 3, Color(Blue), Color(White), Color(White), Visible To and String, Default Visibility);
-		Chase Player Variable At Rate(Event Player, Y, 0, 1, Destination and Rate);
-		Set Projectile Speed(Event Player, 0);
-		Set Projectile Gravity(Event Player, 0);
-		Set Ultimate Charge(Event Player, 100);
-		Event Player.S += 1;
-		Skip If(Event Player.S == 5, 1);
-		Wait(Event Player.Y, Restart When True);
-		Stop Chasing Player Variable(Event Player, Y);
-		Event Player.Y = 0;
-		Destroy HUD Text(Last Text ID);
-		Set Ultimate Charge(Event Player, 0);
-		Event Player.S = 0;
-		Wait(1, Ignore Condition);
-		Set Projectile Gravity(Event Player, 100);
-		Set Projectile Speed(Event Player, 100);
-	}
-}
-
-
-
 
 
 rule("Junker queen choose enemies for the arena fight.")
@@ -2853,7 +2772,6 @@ rule("Pull enemy towards JQ with knife.")
 
 rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 {
-   
 	event
 	{
 		Ongoing - Each Player;
@@ -2864,17 +2782,19 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 	conditions
 	{
 		Is Button Held(Event Player, Button(Ultimate)) == True;
-		Hero Of(Event Player) == Hero(junkrat);
+	
 		Event Player.CustomUltReadyToUse == True;
 		Has Status(Event Player, Hacked) == False;
 		Event Player.UsingCustomUlt == Null;
+		Is Dummy Bot(Event Player) == False;
 	}
 
 	actions
 	{
 		Call Subroutine(UseCustomUlt);
 		Event Player.JunkratBombPosition = Event Player;
-		Create Effect(All Players(All Teams), Orb, Team Of(Event Player), Event Player.JunkratBombPosition, 10, Position And Radius);
+	
+		Create Projectile Effect(All Players(All Teams), Bastion A-36 Tactical Grenade, All PLayers(Team Of(Event Player)), Event Player.JunkratBombPosition, Null, 0.5, Visible To Position Direction and Size);
 		Event Player.JunkratBombOrb = Last Created Entity;
 		Event Player.JunkratExplosionRadius = 30;
 		Create Effect(All Players(All Teams), Ring, Team Of(Event Player), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius, Position And Radius);
@@ -2886,10 +2806,32 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 		Event Player.JunkratTimerAboveHead = Last Text Id;
 		Chase Player Variable At Rate(Event Player, JunkratTimer, 0, 1, None);
 		Wait(Event Player.JunkratTimer, Ignore Condition);
-		Play Effect(All Players(All Teams), Bad Explosion, Team Of(Event Player), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
-		Play Effect(All Players(All Teams), Explosion Sound, Team Of(Event Player), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 2);
+		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Event Player.JunkratBombPosition, Down, To World, Damage, Opposite Team Of(Team Of(Event Player)), 800, 0.5, Event Player.JunkratExplosionRadius, Junkrat RIP Tire Explosion Effect, Junkrat RIP Tire Explosion Sound, 1, 100, 1, 30, 0, 100);
+		
+		If(Distance Between(Event Player, Event Player.JunkratBombPosition) < Event Player.JunkratExplosionRadius && Is In Line of Sight(Event Player, Event Player.JunkratBombPosition, All Barriers Block LOS));
+		Damage(Event Player, Event Player, 800);
+		End;
+		
 	
-		Damage(Players Within Radius(Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius, All Teams, Surfaces And Enemy Barriers), Event Player, 800);
+	
+	
+	
+		Call Subroutine(ResetJunkrat);
+	}
+}
+
+
+
+rule("Junkrat reset")
+{
+	event
+	{
+		Subroutine;
+		ResetJunkrat;
+	}
+
+	actions
+	{
 		Destroy Effect(Event Player.JunkratBombOrb);
 		Event Player.JunkratBombOrb = null;
 		Destroy Hud Text(Event Player.JunkratTimerHUD);
@@ -2898,9 +2840,37 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 		Event Player.JunkratTimerAboveHead = Null;
 		Destroy Effect(Event Player.JunkratRadiusRing);
 		Event Player.JunkratRadiusRing = Null;
+	
 		Wait(0.01, Ignore Condition);
 		Skip if(Event Player.UsingCustomUlt != true, 1);
 		Call Subroutine(StopUsingCustomUlt);
+	}
+}
+
+
+
+rule("Junkrat timer sound effect")
+{
+
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Junkrat;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == true;
+		Is Dummy Bot(Event Player) == False;
+		
+	}
+
+	actions
+	{
+		Wait(1, Ignore Condition);
+		Play Effect(All Players(All Teams), Debuff Impact Sound, Team Of(Event Player), Eye Position(Event Player), 200);
+		Loop If Condition Is True;
 	}
 }
 
@@ -2917,15 +2887,17 @@ rule("Junkrat drop bomb on death.")
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(junkrat);
+	
 		Event Player.UsingCustomUlt == true;
-		Is Alive(Event Player) != true;
+		(Is Alive(Event Player) != true || Is Button Held(Event Player, Button(Interact)) == True) == True;
+		Is Dummy Bot(Event Player) == False;
+		
 	}
 
 	actions
 	{
 		Event Player.JunkratBombPosition = Position Of(Event Player);
-		Call Subroutine(StopUsingCustomUlt);
+	
 	}
 }
 
@@ -2936,29 +2908,6 @@ rule("Junkrat drop bomb on death.")
 
 
 
-
-rule("Lucio activate ult")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Lúcio;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-	
-	
-	}
-
-	actions
-	{
-	
-
-	}
-}
 
 rule("Lucio activate ult")
 {
@@ -3002,6 +2951,10 @@ rule("Lucio activate ult")
 		Apply Impulse(Value In Array(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer),  Direction Towards(Position Of(Event Player), Value In Array(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer) + Up*2), 20, To World, Cancel Contrary Motion);
 		
 		End;
+		
+		
+		
+		
 	
 		
 		Loop If Condition Is True;
@@ -6751,7 +6704,7 @@ rule("Symmetra teleport player when near team 1 blue portal")
 
 	
 	
-		Set Facing(Event Player, Direction From Angles(Horizontal Angle From Direction(Global.SymmetraRedPNormal) - (Horizontal Angle From Direction(Global.SymmetraBluePNormal * -1) - Horizontal Angle From Direction(Facing Direction Of(Event Player))), Vertical Angle From Direction(Global.SymmetraRedPNormal) - (Vertical Angle From Direction(Global.SymmetraBluePNormal * -1) - Vertical Angle From Direction(Facing Direction Of(Event Player)))), To World);
+	
 		Apply Impulse(Event Player, Global.SymmetraRedPNormal, Event Player.InPortalSpeed, To World, Cancel Contrary Motion);
 		Wait(1, Restart When True);
 		Event Player.L = Null;
@@ -6790,7 +6743,7 @@ rule("Symmetra teleport player when near team 1 red portal")
 		Wait(0.01, Ignore Condition);
 
 	
-		Set Facing(Event Player, Direction From Angles(Horizontal Angle From Direction(Global.SymmetraBluePNormal) - (Horizontal Angle From Direction(Global.SymmetraRedPNormal * -1) - Horizontal Angle From Direction(Facing Direction Of(Event Player))), Vertical Angle From Direction(Global.SymmetraBluePNormal) - (Vertical Angle From Direction(Global.SymmetraRedPNormal * -1) - Vertical Angle From Direction(Facing Direction Of(Event Player)))), To World);
+	
 		
 	
 		Apply Impulse(Event Player, Global.SymmetraBluePNormal, Event Player.InPortalSpeed, To World, Cancel Contrary Motion);
@@ -6835,7 +6788,7 @@ rule("Symmetra teleport player when near team 2 yellow portal")
 	
 		Wait(0.01, Ignore Condition);
 	
-		Set Facing(Event Player, Direction From Angles(Horizontal Angle From Direction(Global.SymmetraGreenPNormal) - (Horizontal Angle From Direction(Global.SymmetraYellowPNormal * -1) - Horizontal Angle From Direction(Facing Direction Of(Event Player))), Vertical Angle From Direction(Global.SymmetraGreenPNormal) - (Vertical Angle From Direction(Global.SymmetraYellowPNormal * -1) - Vertical Angle From Direction(Facing Direction Of(Event Player)))), To World);
+	
 		Apply Impulse(Event Player, Global.SymmetraGreenPNormal, Event Player.InPortalSpeed, To World, Cancel Contrary Motion);
 		Play Effect(All Players(All Teams), Buff Explosion Sound, Color(White), Event Player, 50);
 		Wait(1, Restart When True);
@@ -6872,7 +6825,7 @@ rule("Symmetra teleport player when near team 2 green portal")
 		Teleport(Event Player, Global.YellowPortalRaycast);
 		Wait(0.01, Ignore Condition);
 	
-		Set Facing(Event Player, Direction From Angles(Horizontal Angle From Direction(Global.SymmetraYellowPNormal) - (Horizontal Angle From Direction(Global.SymmetraGreenPNormal * -1) - Horizontal Angle From Direction(Facing Direction Of(Event Player))), Vertical Angle From Direction(Global.SymmetraYellowPNormal) - (Vertical Angle From Direction(Global.SymmetraGreenPNormal * -1) - Vertical Angle From Direction(Facing Direction Of(Event Player)))), To World);
+	
 		Apply Impulse(Event Player, Global.SymmetraYellowPNormal, Event Player.InPortalSpeed, To World, Cancel Contrary Motion);
 		Play Effect(All Players(All Teams), Buff Explosion Sound, Color(White), Event Player, 50);
 		Wait(1, Restart When True);
@@ -7798,8 +7751,6 @@ rule("winston: when winston hits someone, set root status and get direction and 
 		Set Status(Victim, Event Player, Rooted, 1);
 		Victim.H = Speed Of In Direction(Victim, Victim.I);
 
-
-		
 	}
 }
 
