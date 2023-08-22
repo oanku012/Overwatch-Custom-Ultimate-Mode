@@ -38,10 +38,10 @@ settings
 		{
 			enabled maps
 			{
+				Colosseo 0
 			
 			
 			
-				Workshop Chamber 0
 			}
 		}
 
@@ -176,45 +176,45 @@ variables {
     5: G
     6: Y
     7: UltDescriptionTextObject
-    8: MenuHUDOptions
-    9: MenuOptions
-    10: ForLoopIndexPlayer
-    11: MenuHUDChooseSort
-    12: MenuOpen
-    13: MenuChosenOption
-    14: A
-    15: D
-    16: BrigitteUltActive
-    17: BrigitteKnockedBack
-    18: S
-    19: M
-    20: DVAVariables
-    21: EchoAimRayCast
-    22: EchoDummyBots
-    23: EchoEffects
-    24: V
-    25: JunkerQueenEnemyArray
-    26: JunkerQueenEnemyPositions
-    27: JunkerReadyToTeleport
-    28: JunkerQueenInArena
-    29: JunkerQueenPositions
-    30: JunkerRageEffects
-    31: JunkerDamageCounter
-    32: JunkerDamageMods
-    33: JunkerQueenHealthPools
-    34: JunkerArenaSphere
-    35: JunkerWinCounterText
-    36: JunkerWinCounter
-    37: ExtraLife
-    38: JunkratBombPosition
-    39: JunkratBombOrb
-    40: JunkratExplosionRadius
-    41: JunkratRadiusRing
-    42: JunkratTimer
-    43: JunkratTimerHUD
-    44: JunkratTimerAboveHead
-    45: UltingEnemyMcCree
-    46: UltDescription
+    8: UltDescription
+    9: MenuHUDOptions
+    10: MenuOptions
+    11: ForLoopIndexPlayer
+    12: MenuHUDChooseSort
+    13: MenuOpen
+    14: MenuChosenOption
+    15: A
+    16: D
+    17: BrigitteUltActive
+    18: BrigitteKnockedBack
+    19: S
+    20: M
+    21: DVAVariables
+    22: EchoAimRayCast
+    23: EchoDummyBots
+    24: EchoEffects
+    25: V
+    26: JunkerQueenEnemyArray
+    27: JunkerQueenEnemyPositions
+    28: JunkerReadyToTeleport
+    29: JunkerQueenInArena
+    30: JunkerQueenPositions
+    31: JunkerRageEffects
+    32: JunkerDamageCounter
+    33: JunkerDamageMods
+    34: JunkerQueenHealthPools
+    35: JunkerArenaSphere
+    36: JunkerWinCounterText
+    37: JunkerWinCounter
+    38: ExtraLife
+    39: JunkratBombPosition
+    40: JunkratBombOrb
+    41: JunkratExplosionRadius
+    42: JunkratRadiusRing
+    43: JunkratTimer
+    44: JunkratTimerHUD
+    45: JunkratTimerAboveHead
+    46: UltingEnemyMcCree
     47: EnemyMei
     48: P
     49: Coronavirus
@@ -499,30 +499,36 @@ rule("Stop Using custom ult")
 
 
 
-rule("Ult description")
+rule("Spawn ultimate description")
 {
-	event
+    event
 	{
 		Ongoing - Each Player;
 		All;
 		All;
 	}
-	
+
 	conditions
 	{
 		Is Button Held(Event Player, Button(Interact)) == True;
 		Is Button Held(Event Player, Button(Crouch)) == True;
+
 	}
 
 	actions
 	{
-		If(Hero Of(Event Player) == Ana);
-		
-		
-		Create HUD Text(Event Player, Custom String("Some string"), Null, Null, Left, 0, Color(white), Color(white), Color(white), Visible To And String, Default Visibility);
+		If(Event Player.UltDescriptionTextObject == Null);
+		Create HUD Text(Event Player, Event Player.UltDescription, Null, Null, Top, 1, Color(Blue), Color(White), Color(White), Visible To and String, Default Visibility);
 		Event Player.UltDescriptionTextObject = Last Text ID;
+		Else;
+		Destroy HUD Text(Event Player.UltDescriptionTextObject);
+		Event Player.UltDescriptionTextObject = Null;
+		End;
+		
 	}
 }
+
+
 
 
 
@@ -835,6 +841,31 @@ rule("Set cooldowns to 0 for nanoboosted player")
 
 
 
+rule("Ana description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Ana;
+	}
+
+	conditions
+	{
+	
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Nanoboosted player gains a speed boost, 0 cooldowns, increased ultimate charge and increased jump height.", Null, Null, Null);
+
+	}
+}
+
+
+
 
 
 
@@ -890,13 +921,17 @@ rule("Brigitte: Increase shield size when using ultimate")
 		
 		
 
+		Wait(0.016, Ignore Condition);
+		
+
 		Start Holding Button(Event Player, Button(Secondary Fire));
+		
+		Set Ultimate Charge(Event Player, 100);
 
 		Press Button(Event Player, Button(Ultimate));
 
 	
 
-		Wait(0.016, Ignore Condition);
 
 
 		Start Scaling Barriers(Event Player, 15, False);
@@ -1046,6 +1081,33 @@ rule("Brigitte: Apply shield knockback and damage to players in front of the shi
 
 
 
+rule("Brigitte description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Brigitte;
+	}
+
+	conditions
+	{
+	
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("When using Brigitte's regular ult, gain a massive shield with a lot of health. {0}", Custom String("
+		When shield bashing, the edges of the shield can also damage and knockback enemies. {0}", Custom String("
+		Hitting enemies with the center of the shield does double damage.", Null, Null, Null), Null, Null));
+
+	}
+}
+
+
+
 
 
 rule("Doomfist use ult")
@@ -1155,7 +1217,7 @@ rule("Doomfist not using ultimate")
 
 
 
-rule("Doomfist using ultimate create HUD description")
+rule("Doomfist description")
 {
 	event
 	{
@@ -1166,17 +1228,15 @@ rule("Doomfist using ultimate create HUD description")
 
 	conditions
 	{
-		Hero Of(Event Player) == Hero(Doomfist);
-		Ultimate Charge Percent(Event Player) > 99.900;
+	
+		
+
 	}
 
 	actions
 	{
-		Create HUD Text(Event Player, Custom String(
-			"While in the air, creates additional meteor strikes at random spots near enemy players. Longer duration."), Null, Null, Top,
-			1, Color(White), Color(White), Color(White), Visible To and String, Default Visibility);
-		Event Player.UltReadyText = Last Text ID;
-		Event Player.B = Hero Of(Event Player);
+		Event Player.UltDescription = Custom String("Create additional meteor strikes at random spots near enemy players while aiming the ultimate. Increased duration.", Null, Null, Null);
+
 	}
 }
 
@@ -1560,6 +1620,33 @@ rule("D.Va reset damage and health when in baby form.")
 	}
 }
 
+
+
+
+rule("D.Va description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		D.Va;
+	}
+
+	conditions
+	{
+	
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("After spawning a new mech, you get a choice between 4 different upgrades for your mech. {0}", Custom String("
+		Upgrades will stack and persist for as long as you stay alive. {0}", Custom String("
+		The upgrades will only apply to D.Vas mech and not to her baby form.", Null, Null, Null)));
+
+	}
+}
 
 
 
@@ -2006,6 +2093,31 @@ rule("Echo say hello")
 
 
 
+rule("Echo description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Echo;
+	}
+
+	conditions
+	{
+	
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("When duplicating, spawn 2 copies of the duplicated hero beside you that replicate all your moves.", Null, Null, Null);
+
+	}
+}
+
+
+
 
 
 rule("Genji Omae wa mou shindeiru")
@@ -2163,6 +2275,32 @@ rule("Stop damage over time on death on players hit by Genji")
 		Clear Status(Event Player, Stunned);
 		Event Player.V = Null;
 		Play Effect(All Players(All Teams), Explosion Sound, Color(White), Event Player, 100);
+	}
+}
+
+
+
+rule("Genji description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Genji;
+	}
+
+	conditions
+	{
+	
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Genji cuts his enemies with such precision that they don't even notice they've been cut until the ultimate is over. {0}", Custom String("
+		Only a single strike is enough. Also gain extra movement speed.", Null, Null, Null));
+
 	}
 }
 
@@ -2768,6 +2906,36 @@ rule("Pull enemy towards JQ with knife.")
 
 
 
+rule("Junker Queen description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Junker Queen;
+	}
+
+	conditions
+	{
+	
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("After using her ultimate, every enemy that was hit is teleported alongside Junker Queen into a zero gravity {0}", Custom String("
+		arena above the map. Junker Queen gains a buff for each enemy she has to face. If JQ defeats all of her enemies {0}", Custom String("
+		in the arena, she will be teleported back to the map and keep all her buffs. If she loses then the other players {0}", Custom String(" 
+		will be teleported and she loses the buffs. If JQ gains consecutive wins then she can stack her buffs, but they {0}", Custom String("
+		have diminishing returns for each consecutive win. To become as strong as possible, {0}", Custom String("
+		it's best to hit as many enemies as you can each time you use the ultimate."))))));
+
+	}
+}
+
+
+
 
 
 rule("Junkrat activate ultimate ability. Set up suicide bomb.")
@@ -2869,7 +3037,7 @@ rule("Junkrat timer sound effect")
 	actions
 	{
 		Wait(1, Ignore Condition);
-		Play Effect(All Players(All Teams), Debuff Impact Sound, Team Of(Event Player), Eye Position(Event Player), 200);
+		Play Effect(All Players(All Teams), Debuff Impact Sound, Team Of(Event Player), Event Player.JunkratBombPosition, 200);
 		Loop If Condition Is True;
 	}
 }
@@ -2889,7 +3057,7 @@ rule("Junkrat drop bomb on death.")
 	{
 	
 		Event Player.UsingCustomUlt == true;
-		(Is Alive(Event Player) != true || Is Button Held(Event Player, Button(Interact)) == True) == True;
+		(Is Alive(Event Player) != true || ((Is Button Held(Event Player, Button(Interact)) == True) && Is Button Held(Event Player, Button(Crouch)) == False)) == True;
 		Is Dummy Bot(Event Player) == False;
 		
 	}
@@ -2904,6 +3072,33 @@ rule("Junkrat drop bomb on death.")
 
 
 
+
+
+
+rule("Junkrat description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Junkrat;
+	}
+
+	conditions
+	{
+	
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Spawn and carry a timed bomb that does 800 damage in a 30 meter radius. {0}", Custom String(" 
+		If you die with the bomb or press the interact button the bomb will be dropped on the ground. {0}", Custom String(" 
+		The bomb will kill you if you are in its radius while it explodes.", Null, Null, Null), Null));
+
+	}
+}
 
 
 
@@ -2961,6 +3156,31 @@ rule("Lucio activate ult")
 
 	}
 }
+
+rule("Lucio description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Lúcio;
+	}
+
+	conditions
+	{
+	
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("While using his regular ultimate, Lúcio drops the bass so hard that it creates damaging shockwaves around him.", Null);
+
+	}
+}
+
+
 
 
 
@@ -3130,6 +3350,32 @@ rule("Reset McCree.")
 		Destroy HUD Text(Event Player.UltDescription);
 		Event Player.B = Null;
 		Clear Status(Event Player, Burning);
+	}
+}
+
+
+
+rule("McCree description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Cassidy;
+	}
+
+	conditions
+	{
+	
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("It's literally high noon. While high nooning, {0}", Custom String("
+		 Cassidy turns into a ball of fire that damages and burns enemies that look upon him directly or get too close.", Null));
+
 	}
 }
 
@@ -3366,6 +3612,32 @@ rule("Mei: Check if player died with virus")
 
 
 
+rule("Mei description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Mei;
+	}
+
+	conditions
+	{
+	
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Mei spreads the coronavirus to nearby enemies that does damage over time. {0}", Custom String("
+		The virus will spread from infected enemies to other enemies and also will stay in corpses until they respawn."));
+
+	}
+}
+
+
+
 
 
 rule("Mercy give extra life to herself during Ultimate")
@@ -3566,6 +3838,32 @@ rule("Reset Moira")
 
 
 
+rule("Moira description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Moira;
+	}
+
+	conditions
+	{
+	
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Coalescencex100. Coalescence creates massive explosions that damage enemies and heal allies. {0}", Custom String("
+		The power is so great that it pushes her back and she can't move freely.", Null));
+
+	}
+}
+
+
+
 
 
 rule("Orisa: leap in facing direction")
@@ -3602,6 +3900,31 @@ rule("Orisa: leap in facing direction")
 
 
 
+
+
+
+rule("Orisa description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Orisa;
+	}
+
+	conditions
+	{
+	
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Press jump to jump around during Orisa's ultimate.", Null, Null, Null);
+
+	}
+}
 
 
 
