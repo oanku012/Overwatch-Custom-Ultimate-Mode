@@ -111,7 +111,7 @@ settings
 
             Widowmaker
             {
-                Ultimate Duration: 150%
+                Ultimate Duration: 200%
             }
 
 			Winston
@@ -3957,7 +3957,7 @@ rule("Pharah activate ultimate when button is pressed")
 		Set Primary Fire Enabled(Event Player, False);
 		Event Player.R = 20;
 		Chase Player Variable At Rate(Event Player, R, 0, 1, Destination and Rate);
-		Create HUD Text(Event Player, String("{0} {1}", Custom String("Crouch to drop bombs."), Custom String("Ability 1 to activate tacticool camera.")), String("{0}: {1}", Custom String("Bomb Cooldown: "), Event Player.S), String("{0}: {1}", Custom String("Ultimate Duration: "), Event Player.R), Right, 1, Color(Blue), Color(Blue), Color( White), Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, String("{0} {1}", Custom String("Crouch to drop bombs."), Custom String("Ability 1 to activate top-down camera.")), String("{0}: {1}", Custom String("Bomb Cooldown: "), Event Player.S), String("{0}: {1}", Custom String("Ultimate Duration: "), Event Player.R), Right, 1, Color(Blue), Color(Blue), Color( White), Visible To and String, Default Visibility);
 		Set Damage Dealt(Event Player, 300);
 		Set Projectile Speed(Event Player, 300);
 		Set Ability 1 Enabled(Event Player, False);
@@ -4177,6 +4177,32 @@ rule("Pharah shoot machine gun")
 }
 
 
+
+
+
+rule("Pharah description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Pharah;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Fly around like a jet. Press primary fire to shoot machine gun and crouch to drop bombs. {0}", Custom String("
+		Press ability 1 to switch to top-down camera for bomb aiming. Flying too close to ground causes damage."));
+
+	}
+}
 
 
 
@@ -4687,6 +4713,31 @@ rule("Reaper execute teleport")
 
 
 
+rule("Reaper description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Reaper;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Guns disabled, but melee kills in one hit. Instant teleportation ability. Wraith form flies through walls.");
+
+	}
+}
+
+
+
 
 
 rule("Rein: ult ready")
@@ -4709,8 +4760,8 @@ rule("Rein: ult ready")
 	actions
 	{
 		Event Player.U = True;
-		Create HUD Text(Event Player, Custom String("Jump down from high while using earthshatter to get a buff. Buff duration and effectiveness increased by air time."), Null, Null, Top, 1, Color(Orange), Color(White), Color(Orange), Visible To and String, Default Visibility);
-		Event Player.UltReadyText = Last Text ID;
+	
+	
 		Event Player.B = Hero Of(Event Player);
 	}
 }
@@ -4783,7 +4834,7 @@ rule("reinhardt: increase buffs in the air")
 	actions
 	{
 		Wait(0.200, Ignore Condition);
-		Event Player.P -= 10;
+		Event Player.P /= 1.1;
 		Event Player.Y += 1;
 		Event Player.R += 30;
 		Event Player.Q += 0.300;
@@ -4913,6 +4964,32 @@ rule("Reinhardt disable power up if ult hasn't been used and player is on ground
 
 
 
+rule("Reinhardt description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Reinhardt;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Jump down from high while using earthshatter to get a buff to damage and damage resistance. {0}", Custom String(" 
+		Buff duration and effectiveness increased by air time."));
+
+	}
+}
+
+
+
 
 
 rule("Roadhog activate and deactivate ultimate")
@@ -5025,6 +5102,31 @@ rule("Roadhog reflect healing")
 
 
 
+rule("Roadhog description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Roadhog;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Reflect all damage and healing back to sender.");
+
+	}
+}
+
+
+
 
 
 rule("Sigma zero/high gravity")
@@ -5116,7 +5218,7 @@ rule("Sigma set zero grav buff and debuff to true and damage players who are rea
 		
 		Players Within Radius(Event Player, 20, Team Of(Event Player), Off).SigmaZeroGravBuff = True;
 
-		Damage(Filtered Array(Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Off), (Current Array Element.SigmaZeroGravBuff != true) && (Current Array Element.SigmaHighGravDebuff != null)), Event Player, 10);
+	
 
 		Loop If Condition Is True;
 	}
@@ -5261,11 +5363,10 @@ rule("Sigma high grav debuff effects")
 
 	
 
-		Event Player.SigmaDebuffGravityScale = 0;
+		Event Player.SigmaDebuffGravityScale = 5;
 
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(Remove From Array(Global.UltingSigmas, Team Of(Event Player)), Distance Between(Current Array Element, Event Player) <= 20)), 1);
-		Event Player.SigmaDebuffGravityScale += (20/Distance Between(Event Player, Value In Array(Filtered Array(Remove From Array(Global.UltingSigmas, Team Of(Event Player)), Distance Between(Current Array Element, Event Player) <= 20), Event Player.ForLoopIndexPlayer)));
-		End;
+	
+		
 
 	
 	
@@ -5407,6 +5508,32 @@ rule("Sigma zero grav stop accelerating when not pressing jump or crouch")
 	}
 }
 
+
+
+
+rule("Sigma description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Sigma;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Create a zone around you that lets you and your allies fly in zero gravity. {0}", Custom String("
+		Press crouch to fly down and jump to fly up. Enemies within the zone are slowed down and gain increased gravity."));
+
+	}
+}
 
 
 
@@ -5593,6 +5720,31 @@ rule("Sojourn reset values and destroy beams.")
 
 
 
+rule("Sojourn description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Sojourn;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Firing the rail gun during her ultimate leaves behind trails that damage enemies.");
+
+	}
+}
+
+
+
 
 
 rule("soldier 76 initialize kill streaks and streak counting")
@@ -5623,7 +5775,7 @@ rule("soldier 76 initialize kill streaks and streak counting")
 
 
 
-		Event Player.SoldierAllKillStreaks = Array(Array(3, Custom String("UAV Recon")), Array(5, Custom String("Care Package")), Array(8, Custom String("Tactical Visor")), Array(20, Custom String("Tactical Nuke")), Array(1, Custom String("AC-130")));
+		Event Player.SoldierAllKillStreaks = Array(Array(3, Custom String("UAV Recon")), Array(5, Custom String("Care Package")), Array(8, Custom String("Tactical Visor")), Array(20, Custom String("Tactical Nuke")), Array(13, Custom String("AC-130")));
 
 	
 		Event Player.Soldier76KillStreaksEquipped = Array(Value In Array(Event Player.SoldierAllKillStreaks, 0), Value In Array(Event Player.SoldierAllKillStreaks, 1), Value In Array(Event Player.SoldierAllKillStreaks, 2), Value In Array(Event Player.SoldierAllKillStreaks, 4), Value In Array(Event Player.SoldierAllKillStreaks, 3));
@@ -5801,6 +5953,9 @@ rule("soldier 76 reset everything with soldier. Really only used when Soldier sw
 		Value In Array(Event Player.Soldier76Variables, 7) = Null;
 
 		End;
+
+		Set Ultimate Ability Enabled(Event Player, True);
+		
 
 	
 		Event Player.Soldier76Variables = Null;
@@ -6476,6 +6631,34 @@ rule("soldier 76 AC-130 shoot bombs")
 
 
 
+rule("Soldier description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Soldier: 76;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("You get killstreaks instead of an ultimate. 3 eliminations for UAV. 5 for care package. {0}", Custom String("
+		8 for tactical visor. 13 for Ac-130. 20 for nuke. {0}", Custom String("
+		UAV reveals enemies. Care package resets cooldowns and reloads ammo. {0}", Custom String("
+		Tactical visor is just his regular ult. AC-130 lets you shoot shit from the sky. Nuke is a nuke."))));
+
+	}
+}
+
+
+
 
 
 rule("sombra: za warudo")
@@ -6756,6 +6939,32 @@ rule("sombra: za warudo effect 2")
 
 
 
+
+
+
+rule("Sombra description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Sombra;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Sombra hacks time to a still. Attacks will cause damage after time resumes.{0}", Custom String("
+		Enemy Sombras are immune."));
+
+	}
+}
 
 
 
@@ -7160,6 +7369,31 @@ rule("Symmetra teleport player when near team 2 green portal")
 
 
 
+rule("Symmetra description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Symmetra;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Portal gun. Use primary fire and secondary fire to spawn portals.");
+
+	}
+}
+
+
+
 
 
 rule("torb: spawn torb turret")
@@ -7420,6 +7654,32 @@ rule("torb: torb turret, heal from hammer")
 
 
 
+rule("Torb description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Torbjörn;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Spawn a 'turret'. Heal turret with hammer and ult again to upgrade up to level 3. {0}", Custom String("
+		Press crouch while ulting to place the turret into a new spot, this resets the turret back to level 1.", Null, Null, Null));
+
+	}
+}
+
+
+
 
 
 rule("Activate Tracer's super speed ultimate")
@@ -7498,6 +7758,31 @@ rule("Tracer damage players when running at them")
 			Event Player, 500);
 		Play Effect(All Players(All Teams), Good Explosion, Team Of(Event Player), Position Of(Event Player) + Backward, 1);
 		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("Tracer description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Tracer;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Move around at super speed. Deal 500 damage to enemies you collide with.");
+
 	}
 }
 
@@ -7885,6 +8170,32 @@ rule("Widowmaker in spawn room")
 
 
 
+rule("Widow description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Widowmaker;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Fire at enemies through walls during her ultimate. Casts a laser that warns enemies if they're being aimed at.{0}", Custom String("
+		Headshots cause a jingle sound. Hit detection might not always work properly.", Null, Null, Null));
+
+	}
+}
+
+
+
 
 
 rule("winston: using ultimate")
@@ -8128,6 +8439,32 @@ rule("winston: check for wall with ray cast.")
 
 
 
+rule("Winston description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Winston;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Turn into a giant gorilla. Knocking enemies into walls causes stun and damage.{0}", Custom String("
+		Use secondary fire to grab enemies then throw them in the direction you aim at with primary fire."));
+
+	}
+}
+
+
+
 
 
 rule("Wrecking ball activate ultimate.")
@@ -8266,6 +8603,31 @@ rule("Auto-transform back to ball if form is reverted by enemy abilities")
         Loop If Condition Is True;
 
     }
+}
+
+
+
+rule("Wrecking Ball description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Wrecking Ball;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Turn into a giant ball and roll over enemies.");
+
+	}
 }
 
 
@@ -8442,6 +8804,32 @@ rule("zarya: pull enemies to grav")
 
 
 
+rule("Zarya description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Zarya;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Like her regular ult, but the gravity zone moves where you're aiming.{0}", Custom String("
+		Press Primary Fire to move the ball further and secondary to move closer.", Null, Null, Null));
+
+	}
+}
+
+
+
 
 
 rule("Zenyatta activate ultimate")
@@ -8609,7 +8997,7 @@ rule("Zenyatta reset")
 		Stop Facing(Event Player.P);
 		Teleport(Event Player, Event Player.P + Facing Direction Of(Event Player.P) * -1);
 		If(Is Alive(Event Player.P));
-		Set Status(Event Player.P, Event Player, Asleep, 6);
+		Set Status(Event Player.P, Event Player, Asleep, 8);
 		End;
 		Stop Forcing Throttle(Event Player.P);
 		Stop Camera(Event Player);
@@ -9297,6 +9685,32 @@ rule("Zenyatta acknowledge")
 	actions
 	{
 		Communicate(Event Player.P, Acknowledge);
+	}
+}
+
+
+
+rule("Zen description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Zenyatta;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Possess enemies you damage while the ultimate is active.{0}", Custom String("
+		Press interact to leave their bodies and they will fall asleep.", Null, Null, Null));
+
 	}
 }
 

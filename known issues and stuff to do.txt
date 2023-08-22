@@ -44,6 +44,8 @@ Stuff to add/change:
 
 -add dummy bot checks for all ults
 
+-should maybe set pharah's hud text during ult into a variable so it is deleted correctly
+
 Usingcustomult subroutine, might need to remove some stuff from it that doesn't affect all heroes with custom ults:
 Destroy Effect(Event Player.UltEffect);
         Event Player.UsingCustomUlt = null;
