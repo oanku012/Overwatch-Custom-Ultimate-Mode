@@ -550,12 +550,14 @@ rule("Test dummy")
 	actions
 	{
 	
-		Create Dummy Bot(Hero(Lúcio), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
-		Set Ultimate Charge(Last Created Entity, 99);
+		Create Dummy Bot(Hero(Cassidy), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
 		
 		Wait(1, Ignore Condition);
+		
+		Set Ultimate Charge(Last Created Entity, 100);
+		
+		Start Holding Button(Last Created Entity, Button(Ultimate));
 	
-		Press Button(Last Created Entity, Button(Ultimate));
 		
 	
 	}
@@ -1157,9 +1159,15 @@ rule("Doomfist use ult")
 			Event Player, 180);
 
 	
-		Apply Impulse(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
-			Direction Towards(Event Player.G, Position Of(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)),
-			Surfaces And Enemy Barriers))) + Up, 10, To World, Cancel Contrary Motion);
+	
+		
+		
+			
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off)), 1);
+		
+		Apply Impulse(Value In Array(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player.ForLoopIndexPlayer),  Direction Towards(Position Of(Event Player.G), Value In Array(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player.ForLoopIndexPlayer) + Up), 10, To World, Cancel Contrary Motion);
+		
+		End;
 		Loop If Condition Is True;
 	}
 }
@@ -1377,6 +1385,9 @@ rule("D.VA has spawned a new mech, choose upgrade")
 	
 
 		Event Player.MenuOptions = Array(Custom String("Halved cooldowns"), Custom String("+50% damage"), Custom String("+50% shield health"), Custom String("Infinite defense matrix"));
+		
+		Set Status(Event Player, Event Player, Phased Out, 1);
+		
 
 		Wait(1, Ignore Condition);
 
@@ -1643,7 +1654,8 @@ rule("D.Va description")
 	{
 		Event Player.UltDescription = Custom String("After spawning a new mech, you get a choice between 4 different upgrades for your mech. {0}", Custom String("
 		Upgrades will stack and persist for as long as you stay alive. {0}", Custom String("
-		The upgrades will only apply to D.Vas mech and not to her baby form.", Null, Null, Null)));
+		The upgrades will only apply to D.Vas mech and not to her baby form. {0}", Custom String("
+		Use primary fire and secondary fire to move between options in the menu and jump to confirm."))));
 
 	}
 }
@@ -2454,12 +2466,12 @@ rule("Junker queen Teleport JQ and chosen enemies.")
 		
 	
 		If(Event Player.JunkerDamageCounter == Null);
-		Event Player.JunkerDamageCounter = 100 + (20*Count Of(Event Player.JunkerQueenEnemyArray)) / Count of(Event Player.JunkerRageEffects);
+		Event Player.JunkerDamageCounter = 100 + (50*Count Of(Event Player.JunkerQueenEnemyArray)) / Count of(Event Player.JunkerRageEffects);
 		Else;
-		Modify Player Variable(Event Player, JunkerDamageCounter, Multiply, (100 + (20*Count Of(Event Player.JunkerQueenEnemyArray)) / Count of(Event Player.JunkerRageEffects)) / 100);
+		Modify Player Variable(Event Player, JunkerDamageCounter, Multiply, (100 + (50*Count Of(Event Player.JunkerQueenEnemyArray)) / Count of(Event Player.JunkerRageEffects)) / 100);
 		End;
 
-		Start Damage Modification(All Players(Opposite Team Of(Team Of(Event Player))), Event Player, 100 + (20*Count Of(Event Player.JunkerQueenEnemyArray)) / Count of(Event Player.JunkerRageEffects), None);
+		Start Damage Modification(All Players(Opposite Team Of(Team Of(Event Player))), Event Player, 100 + (50*Count Of(Event Player.JunkerQueenEnemyArray)) / Count of(Event Player.JunkerRageEffects), None);
 
 		If(Event Player.JunkerDamageMods == Null);
 	
@@ -2472,7 +2484,7 @@ rule("Junker queen Teleport JQ and chosen enemies.")
 	
 		End;
 
-		Add Health Pool To Player(Event Player, Health, (50*Count Of(Event Player.JunkerQueenEnemyArray)) /Count of(Event Player.JunkerRageEffects), true, false);
+		Add Health Pool To Player(Event Player, Health, (100*Count Of(Event Player.JunkerQueenEnemyArray)) /Count of(Event Player.JunkerRageEffects), true, false);
 
 
 		If(Event Player.JunkerQueenHealthPools == Null);
@@ -3197,7 +3209,7 @@ rule("McCree enable ult")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-		Is Dummy Bot(Event Player) == false;
+	
 
 	}
 
@@ -3205,9 +3217,9 @@ rule("McCree enable ult")
 	{
 		All Players(Opposite Team Of(Team Of(Event Player))).UltingEnemyMcCree = Event Player;
 	
-		Create HUD Text(Event Player, Custom String("It's High Noon! Nearby enemies and enemies who stare directly at you get burned."),
-			Null, Null, Top, 0, Color(Yellow), Color(White), Color(Yellow), Visible To and String, Default Visibility);
-		Event Player.UltDescription = Last Text ID;
+	
+		
+	
 		Event Player.B = Hero Of(Event Player);
 		Set Status(Event Player, Event Player, Burning, 7);
 		Wait Until(Is Dead(Event Player) == True || Is Using Ultimate(Event Player) == false, 7);
@@ -3229,7 +3241,7 @@ rule("McCree loop visual effect that enemies see")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-		Is Dummy Bot(Event Player) == false;
+	
 	}
 
 	actions
@@ -3259,7 +3271,7 @@ rule("McCree loop visual effect that mccree sees")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-		Is Dummy Bot(Event Player) == false;
+	
 	}
 
 	actions
@@ -3282,22 +3294,32 @@ rule("If sees McCree get damaged")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Cassidy;
 	}
 
 	conditions
 	{
-		Event Player.UltingEnemyMcCree != Null;
-		Is In View Angle(Event Player, Event Player.UltingEnemyMcCree, 20) == True;
-		Is In Line of Sight(Event Player, Event Player.UltingEnemyMcCree, Barriers Do Not Block LOS) == True;
+		Is Using Ultimate(Event Player) == True;
+	
+		Is True For Any(All Players(Opposite Team Of(Team Of(Event Player))), Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block LOS)) == True;
+		
 	}
 
 	actions
 	{
 		Wait(0.1, Ignore Condition);
-		Set Status(Event Player, Event Player.UltingEnemyMcCree, Burning, 0.1);
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player, 20))), 1);
+		
+		Set Status(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player, 20)), Event Player.ForLoopIndexPlayer), Event Player, Burning, 0.1);
+		
+		Damage(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element, Event Player, 20)), Event Player.ForLoopIndexPlayer), Event Player, 5);
+		
+		
+		End;
 	
-		Damage(Event Player, Event Player.UltingEnemyMcCree, 5);
+	
+	
 	
 	
 		Loop If Condition Is True;
@@ -3312,24 +3334,24 @@ rule("If close to McCree get damaged")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Cassidy;
 	}
 
 	conditions
 	{
-		Event Player.UltingEnemyMcCree != Null;
-		Is In Line of Sight(Event Player, Event Player.UltingEnemyMcCree, Barriers Do Not Block LOS) == True;
-		Distance Between(Event Player, Event Player.UltingEnemyMcCree) < 5;
+		Is Using Ultimate(Event Player) == True;
+	
+		Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers) != Empty Array;
 	}
 
 	actions
 	{
 		Wait(0.1, Ignore Condition);
-		Set Status(Event Player, Event Player.UltingEnemyMcCree, Burning, 0.1);
-	
-		Damage(Event Player, Event Player.UltingEnemyMcCree, 10);
-	
-	
+		
+		Set Status(Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, Burning, 0.1);
+		
+		Damage(Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, 10);
+		
 		Loop If Condition Is True;
 	}
 }
@@ -3347,7 +3369,7 @@ rule("Reset McCree.")
 	actions
 	{
 		All Players(Opposite Team Of(Team Of(Event Player))).UltingEnemyMcCree = Null;
-		Destroy HUD Text(Event Player.UltDescription);
+	
 		Event Player.B = Null;
 		Clear Status(Event Player, Burning);
 	}
@@ -3737,6 +3759,32 @@ rule("Mercy: Resurrect player upon death if they have an extra life.")
 
 
 
+rule("Mercy description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Mercy;
+	}
+
+	conditions
+	{
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Grant a bonus life to every hero you heal during Mercy's ult.");
+
+	}
+}
+
+
+
+
+
 rule("moira: coalescence X 100 set initial modifications")
 {
 	event
@@ -3799,11 +3847,16 @@ rule("moira: coalescence X 100 loop effects")
 		Play Effect(All Players(All Teams), Bad Explosion, Color(Purple), Event Player.M, 20);
 		Play Effect(All Players(All Teams), Good Explosion, Color(Yellow), Event Player.M, 20);
 		Play Effect(All Players(All Teams), Explosion Sound, Color(Purple), Event Player.M, 2000);
-		Apply Impulse(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
-			Direction Towards(Event Player.M, Position Of(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(
-			Event Player)), Surfaces And Enemy Barriers))), 10, To World, Cancel Contrary Motion);
-		Apply Impulse(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Up,
-			2, To World, Cancel Contrary Motion);
+		
+	
+		
+			
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Off)), 1);
+		
+		Apply Impulse(Value In Array(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player.ForLoopIndexPlayer),  Direction Towards(Position Of(Event Player.M), Value In Array(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player.ForLoopIndexPlayer) + Up), 10, To World, Cancel Contrary Motion);
+		
+		End;	
+		
 		Damage(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
 			Event Player, 50);
 		Heal(Players Within Radius(Event Player.M, 10, Team Of(Event Player), Surfaces),
@@ -6677,6 +6730,7 @@ rule("sombra: za warudo")
 	
 		Event Player.CustomUltReadyToUse == True;
 		Has Status(Event Player, Hacked) == False;
+		Global.T != True;
 	}
 
 	actions
@@ -6745,6 +6799,7 @@ rule("sombra: stun players and stop horizontal movement")
 	{
 		Global.T == True;
 		Hero Of(Event Player) != Hero(Sombra);
+		Is Alive(Event Player) == True;
 	}
 
 	actions
