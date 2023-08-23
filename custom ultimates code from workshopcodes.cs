@@ -38,10 +38,10 @@ settings
 		{
 			enabled maps
 			{
-				Colosseo 0
 			
 			
 			
+				Workshop Chamber 0
 			}
 		}
 
@@ -123,7 +123,7 @@ settings
 			{
 			
 				Ashe
-				Baptiste
+			
 				Bastion
 				Hanzo
 				Illari
@@ -184,100 +184,101 @@ variables {
     13: MenuOpen
     14: MenuChosenOption
     15: A
-    16: D
-    17: BrigitteUltActive
-    18: BrigitteKnockedBack
-    19: S
-    20: M
-    21: DVAVariables
-    22: EchoAimRayCast
-    23: EchoDummyBots
-    24: EchoEffects
-    25: V
-    26: JunkerQueenEnemyArray
-    27: JunkerQueenEnemyPositions
-    28: JunkerReadyToTeleport
-    29: JunkerQueenInArena
-    30: JunkerQueenPositions
-    31: JunkerRageEffects
-    32: JunkerDamageCounter
-    33: JunkerDamageMods
-    34: JunkerQueenHealthPools
-    35: JunkerArenaSphere
-    36: JunkerWinCounterText
-    37: JunkerWinCounter
-    38: ExtraLife
-    39: JunkratBombPosition
-    40: JunkratBombOrb
-    41: JunkratExplosionRadius
-    42: JunkratRadiusRing
-    43: JunkratTimer
-    44: JunkratTimerHUD
-    45: JunkratTimerAboveHead
-    46: UltingEnemyMcCree
-    47: EnemyMei
-    48: P
-    49: Coronavirus
-    50: CoronavirusDamageDebuff
-    51: CoronavirusText
-    52: CoronavirusEffect
-    53: HasDiedWithCoronaVirus
-    54: MercyExtraLifeText
-    55: ExtraLifeInWorldText
-    56: R
-    57: Q
-    58: U
-    59: ReaperVariables
-    60: ReaperTPPos
-    61: ReinhardtHudText
-    62: RoadhogHUD
-    63: SigmaMaleTimer
-    64: SigmaMaleValues
-    65: SigmaZeroGravBuff
-    66: SigmaHighGravDebuff
-    67: SigmaDebuffGravityScale
-    68: SojournLastRay
-    69: SojournRayArray
-    70: SojournBeamArray
-    71: SojournEyePosArray
-    72: SojournLastEyePos
-    73: SojournDamageRay
-    74: Soldier76Variables
-    75: SoldierAllKillStreaks
-    76: Soldier76KillStreaksEquipped
-    77: SoldierKillStreakTexts
-    78: Soldier76KillStreaksActive
-    79: LocalVariable
-    80: Soldier76CarepackLocation
-    81: SoldierCarePackAmmoIndex
-    82: O
-    83: N
-    84: K
-    85: L
-    86: InPortalSpeed
-    87: TorbTurret
-    88: TorbTurretLevel
-    89: TorbTurretLevelText
-    90: TorbCurrentTarget
-    91: WidowZoomedIn
-    92: WidowPlayersInViewAngleSorted
-    93: WidowRayCastForward
-    94: WidowRayCastStartPos
-    95: WidowRayCastEndPos
-    96: WidowRayCastBackward
-    97: WidowRayCastHeadForward
-    98: WidowRayCastHeadBackward
-    99: WidowFireBeam
-    100: WidowDamage
-    101: WidowAimBeam
-    102: WidowLastFacingDirection
-    103: WinstonGrabbing
-    104: J
-    105: I
-    106: H
-    107: WinstonRayCast1
-    108: WinstonRayCast2
-    109: ZaryaGravPos
+    16: BaptisteShieldBot
+    17: BaptisteShieldPos
+    18: D
+    19: BrigitteUltActive
+    20: BrigitteKnockedBack
+    21: S
+    22: M
+    23: DVAVariables
+    24: EchoAimRayCast
+    25: EchoDummyBots
+    26: EchoEffects
+    27: V
+    28: JunkerQueenEnemyArray
+    29: JunkerQueenEnemyPositions
+    30: JunkerReadyToTeleport
+    31: JunkerQueenInArena
+    32: JunkerQueenPositions
+    33: JunkerRageEffects
+    34: JunkerDamageCounter
+    35: JunkerDamageMods
+    36: JunkerQueenHealthPools
+    37: JunkerArenaSphere
+    38: JunkerWinCounterText
+    39: JunkerWinCounter
+    40: ExtraLife
+    41: JunkratBombPosition
+    42: JunkratBombOrb
+    43: JunkratExplosionRadius
+    44: JunkratRadiusRing
+    45: JunkratTimer
+    46: JunkratTimerHUD
+    47: JunkratTimerAboveHead
+    48: EnemyMei
+    49: P
+    50: Coronavirus
+    51: CoronavirusDamageDebuff
+    52: CoronavirusText
+    53: CoronavirusEffect
+    54: HasDiedWithCoronaVirus
+    55: MercyExtraLifeText
+    56: ExtraLifeInWorldText
+    57: R
+    58: Q
+    59: U
+    60: ReaperVariables
+    61: ReaperTPPos
+    62: ReinhardtHudText
+    63: RoadhogHUD
+    64: SigmaMaleTimer
+    65: SigmaMaleValues
+    66: SigmaZeroGravBuff
+    67: SigmaHighGravDebuff
+    68: SigmaDebuffGravityScale
+    69: SojournLastRay
+    70: SojournRayArray
+    71: SojournBeamArray
+    72: SojournEyePosArray
+    73: SojournLastEyePos
+    74: SojournDamageRay
+    75: Soldier76Variables
+    76: SoldierAllKillStreaks
+    77: Soldier76KillStreaksEquipped
+    78: SoldierKillStreakTexts
+    79: Soldier76KillStreaksActive
+    80: LocalVariable
+    81: Soldier76CarepackLocation
+    82: SoldierCarePackAmmoIndex
+    83: O
+    84: N
+    85: K
+    86: L
+    87: InPortalSpeed
+    88: TorbTurret
+    89: TorbTurretLevel
+    90: TorbTurretLevelText
+    91: TorbCurrentTarget
+    92: WidowZoomedIn
+    93: WidowPlayersInViewAngleSorted
+    94: WidowRayCastForward
+    95: WidowRayCastStartPos
+    96: WidowRayCastEndPos
+    97: WidowRayCastBackward
+    98: WidowRayCastHeadForward
+    99: WidowRayCastHeadBackward
+    100: WidowFireBeam
+    101: WidowDamage
+    102: WidowAimBeam
+    103: WidowLastFacingDirection
+    104: WinstonGrabbing
+    105: J
+    106: I
+    107: H
+    108: WinstonRayCast1
+    109: WinstonRayCast2
+    110: ZaryaGravPos
 }
 
 
@@ -285,33 +286,34 @@ subroutines {
     0: UseCustomUlt
     1: StopUsingCustomUlt
     2: CreateMenu
-    3: ResetBrigitte
-    4: ResetDoomfist
-    5: ResetDVa
-    6: ResetEcho
-    7: ResetGenji
-    8: ResetJQ
-    9: ResetJunkrat
-    10: ResetCassidy
-    11: ResetMei
-    12: ResetMoira
-    13: ResetPharah
-    14: ResetReaper
-    15: ResetReinhardt
-    16: ResetRoadhog
-    17: ResetSigma
-    18: ResetSojourn
-    19: ResetSoldier
-    20: ResetSombra
-    21: ResetSymmetra
-    22: ResetTorb
-    23: ResetTracer
-    24: ResetWidow
-    25: ResetWinston
-    26: ResetWB
-    27: ResetZarya
-    28: ResetZenyatta
-    29: StopPossessing
+    3: ResetBaptiste
+    4: ResetBrigitte
+    5: ResetDoomfist
+    6: ResetDVa
+    7: ResetEcho
+    8: ResetGenji
+    9: ResetJQ
+    10: ResetJunkrat
+    11: ResetCassidy
+    12: ResetMei
+    13: ResetMoira
+    14: ResetPharah
+    15: ResetReaper
+    16: ResetReinhardt
+    17: ResetRoadhog
+    18: ResetSigma
+    19: ResetSojourn
+    20: ResetSoldier
+    21: ResetSombra
+    22: ResetSymmetra
+    23: ResetTorb
+    24: ResetTracer
+    25: ResetWidow
+    26: ResetWinston
+    27: ResetWB
+    28: ResetZarya
+    29: ResetZenyatta
+    30: StopPossessing
 }
 
 
@@ -831,6 +833,7 @@ rule("Set cooldowns to 0 for nanoboosted player")
 
 		If(Ability Cooldown(Event Player, Button(Secondary Fire)) > 0);
 		Set Ability Cooldown(Event Player, Button(Secondary Fire), 0);
+	
 		End;
 
 
@@ -869,6 +872,137 @@ rule("Ana description")
 
 
 
+
+
+
+rule("Each Player Rule")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Baptiste;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		Event Player.CustomUltReadyToUse == True;
+		Has Status(Event Player, Hacked) == False;
+		Event Player.UsingCustomUlt == Null;
+		Is Dummy Bot(Event Player) == False;
+	}
+
+	actions
+	{
+		Call Subroutine(UseCustomUlt);
+		Create Dummy Bot(Hero(Winston), Team Of(Event Player), -1, Event Player, Facing Direction Of(Event Player));
+		Event Player.BaptisteShieldBot = Last Created Entity;
+		Set Invisible(Event Player.BaptisteShieldBot, All);
+		Set Max Health(Event Player.BaptisteShieldBot, 500);
+		Disable Movement Collision With Players(Event Player.BaptisteShieldBot);
+		Wait(0.016, Ignore Condition);
+		Start Scaling Barriers(Event Player.BaptisteShieldBot, 2, False);
+		
+		
+		Set Status(Event Player.BaptisteShieldBot, Null, Stunned, 0.016);
+		Set Status(Event Player.BaptisteShieldBot, Null, Phased Out, 9999);
+		
+		Event Player.BaptisteShieldPos = Position Of(Event Player.BaptisteShieldBot);
+		
+		Wait(0.016, Ignore Condition);
+		
+		Press Button(Event Player.BaptisteShieldBot, Button(Ability 2));
+		
+		
+		Wait(8, Ignore Condition);
+		Call Subroutine(ResetBaptiste);
+	}
+}
+
+rule("Reset everything with brigitte.")
+{
+    event
+    {
+        Subroutine;
+        ResetBaptiste;
+    }
+
+    actions
+    {
+		Call Subroutine(StopUsingCustomUlt);
+		Destroy Dummy Bot(Team Of(Event Player), Slot Of(Event Player.BaptisteShieldBot));
+		
+    }
+}
+
+
+
+rule("Each Player Rule")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Baptiste;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+		Is True For Any(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 11) == True;
+		
+	}
+
+	actions
+	{
+		Wait(0.050, Abort When False);
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 11)), 1);
+		
+		Apply Impulse(Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 11), Event Player.ForLoopIndexPlayer), Direction Towards(Event Player.BaptisteShieldPos, Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 11), Event Player.ForLoopIndexPlayer)), 10, To World, Cancel Contrary Motion);
+	
+		End;
+		
+		
+		Loop If Condition Is True;
+	}
+}
+
+rule("Each Player Rule")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Baptiste;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+	
+		Is True For Any(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 9) == True;
+		
+	}
+
+	actions
+	{
+		Wait(0.050, Abort When False);
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 9)), 1);
+		
+		Apply Impulse(Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 9), Event Player.ForLoopIndexPlayer), Direction Towards(Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 9), Event Player.ForLoopIndexPlayer), Event Player.BaptisteShieldPos), 10, To World, Cancel Contrary Motion);
+		
+	
+		
+		End;
+		
+		
+		
+		Loop If Condition Is True;
+	}
+}
 
 
 
@@ -1158,12 +1292,8 @@ rule("Doomfist use ult")
 		Damage(Players Within Radius(Event Player.G, 2, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
 			Event Player, 180);
 
-	
-	
-		
-		
 			
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off)), 1);
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers)), 1);
 		
 		Apply Impulse(Value In Array(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player.ForLoopIndexPlayer),  Direction Towards(Position Of(Event Player.G), Value In Array(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player.ForLoopIndexPlayer) + Up), 10, To World, Cancel Contrary Motion);
 		
@@ -3209,13 +3339,13 @@ rule("McCree enable ult")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-	
+		Is Dummy Bot(Event Player) == false;
 
 	}
 
 	actions
 	{
-		All Players(Opposite Team Of(Team Of(Event Player))).UltingEnemyMcCree = Event Player;
+	
 	
 	
 		
@@ -3241,7 +3371,7 @@ rule("McCree loop visual effect that enemies see")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-	
+		Is Dummy Bot(Event Player) == false;
 	}
 
 	actions
@@ -3271,7 +3401,7 @@ rule("McCree loop visual effect that mccree sees")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-	
+		Is Dummy Bot(Event Player) == false;
 	}
 
 	actions
@@ -3300,7 +3430,7 @@ rule("If sees McCree get damaged")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-	
+		Is Dummy Bot(Event Player) == False;
 		Is True For Any(All Players(Opposite Team Of(Team Of(Event Player))), Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block LOS)) == True;
 		
 	}
@@ -3317,11 +3447,6 @@ rule("If sees McCree get damaged")
 		
 		
 		End;
-	
-	
-	
-	
-	
 		Loop If Condition Is True;
 	}
 }
@@ -3340,7 +3465,7 @@ rule("If close to McCree get damaged")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-	
+		Is Dummy Bot(Event Player) == false;
 		Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers) != Empty Array;
 	}
 
@@ -3368,7 +3493,7 @@ rule("Reset McCree.")
 
 	actions
 	{
-		All Players(Opposite Team Of(Team Of(Event Player))).UltingEnemyMcCree = Null;
+	
 	
 		Event Player.B = Null;
 		Clear Status(Event Player, Burning);
@@ -3851,7 +3976,7 @@ rule("moira: coalescence X 100 loop effects")
 	
 		
 			
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Off)), 1);
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers)), 1);
 		
 		Apply Impulse(Value In Array(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player.ForLoopIndexPlayer),  Direction Towards(Position Of(Event Player.M), Value In Array(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player.ForLoopIndexPlayer) + Up), 10, To World, Cancel Contrary Motion);
 		
