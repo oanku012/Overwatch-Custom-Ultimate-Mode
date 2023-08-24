@@ -184,101 +184,103 @@ variables {
     13: MenuOpen
     14: MenuChosenOption
     15: A
-    16: BaptisteShieldBot
+    16: BaptisteShieldAimSphere
     17: BaptisteShieldPos
-    18: D
-    19: BrigitteUltActive
-    20: BrigitteKnockedBack
-    21: S
-    22: M
-    23: DVAVariables
-    24: EchoAimRayCast
-    25: EchoDummyBots
-    26: EchoEffects
-    27: V
-    28: JunkerQueenEnemyArray
-    29: JunkerQueenEnemyPositions
-    30: JunkerReadyToTeleport
-    31: JunkerQueenInArena
-    32: JunkerQueenPositions
-    33: JunkerRageEffects
-    34: JunkerDamageCounter
-    35: JunkerDamageMods
-    36: JunkerQueenHealthPools
-    37: JunkerArenaSphere
-    38: JunkerWinCounterText
-    39: JunkerWinCounter
-    40: ExtraLife
-    41: JunkratBombPosition
-    42: JunkratBombOrb
-    43: JunkratExplosionRadius
-    44: JunkratRadiusRing
-    45: JunkratTimer
-    46: JunkratTimerHUD
-    47: JunkratTimerAboveHead
-    48: EnemyMei
-    49: P
-    50: Coronavirus
-    51: CoronavirusDamageDebuff
-    52: CoronavirusText
-    53: CoronavirusEffect
-    54: HasDiedWithCoronaVirus
-    55: MercyExtraLifeText
-    56: ExtraLifeInWorldText
-    57: R
-    58: Q
-    59: U
-    60: ReaperVariables
-    61: ReaperTPPos
-    62: ReinhardtHudText
-    63: RoadhogHUD
-    64: SigmaMaleTimer
-    65: SigmaMaleValues
-    66: SigmaZeroGravBuff
-    67: SigmaHighGravDebuff
-    68: SigmaDebuffGravityScale
-    69: SojournLastRay
-    70: SojournRayArray
-    71: SojournBeamArray
-    72: SojournEyePosArray
-    73: SojournLastEyePos
-    74: SojournDamageRay
-    75: Soldier76Variables
-    76: SoldierAllKillStreaks
-    77: Soldier76KillStreaksEquipped
-    78: SoldierKillStreakTexts
-    79: Soldier76KillStreaksActive
-    80: LocalVariable
-    81: Soldier76CarepackLocation
-    82: SoldierCarePackAmmoIndex
-    83: O
-    84: N
-    85: K
-    86: L
-    87: InPortalSpeed
-    88: TorbTurret
-    89: TorbTurretLevel
-    90: TorbTurretLevelText
-    91: TorbCurrentTarget
-    92: WidowZoomedIn
-    93: WidowPlayersInViewAngleSorted
-    94: WidowRayCastForward
-    95: WidowRayCastStartPos
-    96: WidowRayCastEndPos
-    97: WidowRayCastBackward
-    98: WidowRayCastHeadForward
-    99: WidowRayCastHeadBackward
-    100: WidowFireBeam
-    101: WidowDamage
-    102: WidowAimBeam
-    103: WidowLastFacingDirection
-    104: WinstonGrabbing
-    105: J
-    106: I
-    107: H
-    108: WinstonRayCast1
-    109: WinstonRayCast2
-    110: ZaryaGravPos
+    18: BaptisteShieldReadyToPlant
+    19: BaptisteShieldBot
+    20: D
+    21: BrigitteUltActive
+    22: BrigitteKnockedBack
+    23: S
+    24: M
+    25: DVAVariables
+    26: EchoAimRayCast
+    27: EchoDummyBots
+    28: EchoEffects
+    29: V
+    30: JunkerQueenEnemyArray
+    31: JunkerQueenEnemyPositions
+    32: JunkerReadyToTeleport
+    33: JunkerQueenInArena
+    34: JunkerQueenPositions
+    35: JunkerRageEffects
+    36: JunkerDamageCounter
+    37: JunkerDamageMods
+    38: JunkerQueenHealthPools
+    39: JunkerArenaSphere
+    40: JunkerWinCounterText
+    41: JunkerWinCounter
+    42: ExtraLife
+    43: JunkratBombPosition
+    44: JunkratBombOrb
+    45: JunkratExplosionRadius
+    46: JunkratRadiusRing
+    47: JunkratTimer
+    48: JunkratTimerHUD
+    49: JunkratTimerAboveHead
+    50: EnemyMei
+    51: P
+    52: Coronavirus
+    53: CoronavirusDamageDebuff
+    54: CoronavirusText
+    55: CoronavirusEffect
+    56: HasDiedWithCoronaVirus
+    57: MercyExtraLifeText
+    58: ExtraLifeInWorldText
+    59: R
+    60: Q
+    61: U
+    62: ReaperVariables
+    63: ReaperTPPos
+    64: ReinhardtHudText
+    65: RoadhogHUD
+    66: SigmaMaleTimer
+    67: SigmaMaleValues
+    68: SigmaZeroGravBuff
+    69: SigmaHighGravDebuff
+    70: SigmaDebuffGravityScale
+    71: SojournLastRay
+    72: SojournRayArray
+    73: SojournBeamArray
+    74: SojournEyePosArray
+    75: SojournLastEyePos
+    76: SojournDamageRay
+    77: Soldier76Variables
+    78: SoldierAllKillStreaks
+    79: Soldier76KillStreaksEquipped
+    80: SoldierKillStreakTexts
+    81: Soldier76KillStreaksActive
+    82: LocalVariable
+    83: Soldier76CarepackLocation
+    84: SoldierCarePackAmmoIndex
+    85: O
+    86: N
+    87: K
+    88: L
+    89: InPortalSpeed
+    90: TorbTurret
+    91: TorbTurretLevel
+    92: TorbTurretLevelText
+    93: TorbCurrentTarget
+    94: WidowZoomedIn
+    95: WidowPlayersInViewAngleSorted
+    96: WidowRayCastForward
+    97: WidowRayCastStartPos
+    98: WidowRayCastEndPos
+    99: WidowRayCastBackward
+    100: WidowRayCastHeadForward
+    101: WidowRayCastHeadBackward
+    102: WidowFireBeam
+    103: WidowDamage
+    104: WidowAimBeam
+    105: WidowLastFacingDirection
+    106: WinstonGrabbing
+    107: J
+    108: I
+    109: H
+    110: WinstonRayCast1
+    111: WinstonRayCast2
+    112: ZaryaGravPos
 }
 
 
@@ -358,7 +360,11 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 	
 	
 	
-		If(Event Player.B == Hero(Cassidy));
+		
+		
+		If(Event Player.B == Hero(Baptiste));
+		Call Subroutine(ResetBaptiste);
+		Else If(Event Player.B == Hero(Cassidy));
 		Call Subroutine(ResetCassidy);
 		Else If(Event Player.B == Hero(D.Va));
 		Call Subroutine(ResetDVa);
@@ -613,9 +619,6 @@ rule("CreateMenu")
 	
 
 		Event Player.MenuOpen = True;
-
-
-		
 
 		Set Status(Event Player, Event Player, Frozen, 9999);
 
@@ -875,7 +878,7 @@ rule("Ana description")
 
 
 
-rule("Each Player Rule")
+rule("Start aiming baptiste ult")
 {
 	event
 	{
@@ -891,36 +894,119 @@ rule("Each Player Rule")
 		Has Status(Event Player, Hacked) == False;
 		Event Player.UsingCustomUlt == Null;
 		Is Dummy Bot(Event Player) == False;
+		Event Player.BaptisteShieldAimSphere == Null;
+		
 	}
 
 	actions
 	{
+	
+		
+	
+		
+		Create Effect(Event Player, Sphere, Color(Blue), Event Player.BaptisteShieldPos, 5, Position and Radius);
+		
+		Event Player.BaptisteShieldAimSphere = Last Created Entity;
+		
+		Wait Until(Is Button Held(Event Player, Button(Ultimate)) == False || Is Dead(Event Player) == True, 10);
+		If(Is Alive(Event Player) == True);
+		Event Player.BaptisteShieldReadyToPlant = True;
+		Else;
+		Call Subroutine(ResetBaptiste);
+		End;
+		
+		
+	}
+}
+
+rule("Baptiste plant down shield")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Baptiste;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		Has Status(Event Player, Hacked) == False;
+	
+		Is Dummy Bot(Event Player) == False;
+	
+		
+		Event Player.BaptisteShieldReadyToPlant == True;
+	}
+
+	actions
+	{
+		
+		
 		Call Subroutine(UseCustomUlt);
-		Create Dummy Bot(Hero(Winston), Team Of(Event Player), -1, Event Player, Facing Direction Of(Event Player));
+		
+		
+	
+		
+		Destroy Effect(Event Player.BaptisteShieldAimSphere);
+		
+		Create Dummy Bot(Hero(Winston), Team Of(Event Player), -1, Event Player.BaptisteShieldPos, Facing Direction Of(Event Player));
 		Event Player.BaptisteShieldBot = Last Created Entity;
 		Set Invisible(Event Player.BaptisteShieldBot, All);
 		Set Max Health(Event Player.BaptisteShieldBot, 500);
 		Disable Movement Collision With Players(Event Player.BaptisteShieldBot);
 		Wait(0.016, Ignore Condition);
-		Start Scaling Barriers(Event Player.BaptisteShieldBot, 2, False);
+	
 		
+	
 		
 		Set Status(Event Player.BaptisteShieldBot, Null, Stunned, 0.016);
 		Set Status(Event Player.BaptisteShieldBot, Null, Phased Out, 9999);
 		
-		Event Player.BaptisteShieldPos = Position Of(Event Player.BaptisteShieldBot);
+	
 		
 		Wait(0.016, Ignore Condition);
 		
 		Press Button(Event Player.BaptisteShieldBot, Button(Ability 2));
 		
 		
+		
 		Wait(8, Ignore Condition);
+		
 		Call Subroutine(ResetBaptiste);
 	}
 }
 
-rule("Reset everything with brigitte.")
+rule("Set baptiste's shield aim position to where player is looking")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Baptiste;
+	}
+
+	conditions
+	{
+		Event Player.BaptisteShieldAimSphere != Null;
+	
+	
+		Event Player.BaptisteShieldBot == Null;
+	}
+
+	actions
+	{
+		Wait(0.016, Abort When False);
+		
+		Event Player.BaptisteShieldPos = Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) *50, Empty Array, All Players(All Teams), True);
+		
+		
+		
+		Loop If Condition Is True;
+	}
+}
+
+rule("Reset everything with baptiste.")
 {
     event
     {
@@ -931,14 +1017,21 @@ rule("Reset everything with brigitte.")
     actions
     {
 		Call Subroutine(StopUsingCustomUlt);
-		Destroy Dummy Bot(Team Of(Event Player), Slot Of(Event Player.BaptisteShieldBot));
 		
+		If(Event Player.BaptisteShieldBot != Null);
+		Destroy Dummy Bot(Team Of(Event Player), Slot Of(Event Player.BaptisteShieldBot));
+		Event Player.BaptisteShieldBot = Null;
+		End;
+		
+		Event Player.BaptisteShieldPos = Null;
+		Event Player.BaptisteShieldAimSphere = Null;
+		Event Player.BaptisteShieldReadyToPlant = Null;
     }
 }
 
 
 
-rule("Each Player Rule")
+rule("Baptiste knock people outside of shield")
 {
 	event
 	{
@@ -950,17 +1043,17 @@ rule("Each Player Rule")
 	conditions
 	{
 		Event Player.UsingCustomUlt == True;
-		Is True For Any(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 11) == True;
+		Is True For Any(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 6) == True;
 		
 	}
 
 	actions
 	{
-		Wait(0.050, Abort When False);
+		Wait(0.016, Abort When False);
 		
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 11)), 1);
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 6)), 1);
 		
-		Apply Impulse(Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 11), Event Player.ForLoopIndexPlayer), Direction Towards(Event Player.BaptisteShieldPos, Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 11), Event Player.ForLoopIndexPlayer)), 10, To World, Cancel Contrary Motion);
+		Apply Impulse(Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 6), Event Player.ForLoopIndexPlayer), Direction Towards(Event Player.BaptisteShieldPos, Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 6), Event Player.ForLoopIndexPlayer)), 10, To World, Cancel Contrary Motion);
 	
 		End;
 		
@@ -969,7 +1062,7 @@ rule("Each Player Rule")
 	}
 }
 
-rule("Each Player Rule")
+rule("Baptiste Knock people inside of shield")
 {
 	event
 	{
@@ -981,28 +1074,51 @@ rule("Each Player Rule")
 	conditions
 	{
 		Event Player.UsingCustomUlt == True;
-	
-		Is True For Any(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 9) == True;
+		Is True For Any(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) <= 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 4) == True;
 		
 	}
 
 	actions
 	{
-		Wait(0.050, Abort When False);
+		Wait(0.016, Abort When False);
 		
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 9)), 1);
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) <= 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 4)), 1);
 		
-		Apply Impulse(Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 9), Event Player.ForLoopIndexPlayer), Direction Towards(Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 10 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 9), Event Player.ForLoopIndexPlayer), Event Player.BaptisteShieldPos), 10, To World, Cancel Contrary Motion);
-		
+		Apply Impulse(Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) <= 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 4), Event Player.ForLoopIndexPlayer), Direction Towards(Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) <= 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 4), Event Player.ForLoopIndexPlayer), Event Player.BaptisteShieldPos), 10, To World, Cancel Contrary Motion);
 	
-		
 		End;
-		
 		
 		
 		Loop If Condition Is True;
 	}
 }
+
+rule("Baptiste description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Baptiste;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Spawn a highly durable shield bubble that players can't simply walk through. {0}", Custom String("
+		Can be used to trap enemies or protect your team. {0}", Custom String("
+		Press ultimate button to aim and press again to plant shield.", Null, Null, Null), Null, Null));
+
+	}
+}
+
+
 
 
 
