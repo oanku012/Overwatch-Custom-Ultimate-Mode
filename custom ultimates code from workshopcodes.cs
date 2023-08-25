@@ -3678,9 +3678,6 @@ rule("Mei activate ultimate")
 		Event Player.UltEffect = Last Created Entity;
 		Event Player.P = 20;
 		Chase Player Variable At Rate(Event Player, P, 0, 1, Destination and Rate);
-	
-	
-	
 		Wait(Event Player.P, Ignore Condition);
 		Call Subroutine(ResetMei);
 	}
@@ -3903,7 +3900,7 @@ rule("Mei description")
 
 
 
-rule("Mercy give extra life to herself during Ultimate")
+rule("Mercy give extra life to own team during Ultimate")
 {
    
 	event
@@ -3916,51 +3913,24 @@ rule("Mercy give extra life to herself during Ultimate")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-		Event Player.ExtraLife != True;
+	
 		Is Dummy Bot(Event Player) == false;
 
 	}
 
 	actions
 	{
-		Event Player.ExtraLife = True;
-		Create HUD Text(Event Player, Custom String("You just gained an extra life."), Null, Null, Top, 0, Color( Yellow), Color(White), Color(White), Visible To and String, Default Visibility);
-		Event Player.MercyExtraLifeText = Last Text ID;
-		Create In-World Text(All Players(All Teams), Custom String("Extra life"), Event Player, 1, Clip Against Surfaces,
-			Visible To Position and String, Color(Yellow), Default Visibility);
-		Event Player.ExtraLifeInWorldText = Last Text ID;
-
-	}
-}
-
-
-
-rule("Mercy give extra life if mercy healed them")
-{
-	event
-	{
-		Player Dealt Healing;
-		All;
-		Mercy;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Healer) == True;
-		Healee.ExtraLife != True;
-		Is Dummy Bot(Event Player) == false;
-
-	}
-
-	actions
-	{
-		Healee.ExtraLife = True;
-		Create HUD Text(Healee, Custom String("Mercy gave you an extra life. Resurrect upon death."), Null, Null, Top, 0, Color(
-			Yellow), Color(White), Color(White), Visible To and String, Default Visibility);
-		Healee.MercyExtraLifeText = Last Text ID;
-		Create In-World Text(All Players(All Teams), Custom String("Extra life"), Healee, 1, Clip Against Surfaces,
-			Visible To Position and String, Color(Yellow), Default Visibility);
-		Healee.ExtraLifeInWorldText = Last Text ID;
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(All Players(Team Of(Event Player))), 1);
+		If(Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer).ExtraLife != True);
+		Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer).ExtraLife = True;
+		Create HUD Text(Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer), Custom String("Mercy gave you an extra life. Resurrect upon death."), Null, Null, Top, 0, Color( Yellow), Color(White), Color(White), None, Default Visibility);
+		Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer).MercyExtraLifeText = Last Text ID;
+		Create In-World Text(All Players(All Teams), Custom String("Extra life"), Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer), 1, Clip Against Surfaces, None, Color(Yellow), Default Visibility);
+		Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer).ExtraLifeInWorldText = Last Text ID;
+		End;
+		End;
+		
+		
 
 	}
 }
@@ -4017,7 +3987,7 @@ rule("Mercy description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Grant a bonus life to every hero you heal during Mercy's ult.");
+		Event Player.UltDescription = Custom String("Regular ultimate except everyone in your team also gets an extra life.");
 
 	}
 }
