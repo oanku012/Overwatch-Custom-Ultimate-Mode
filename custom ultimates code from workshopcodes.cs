@@ -177,110 +177,112 @@ variables {
     6: Y
     7: UltDescriptionTextObject
     8: UltDescription
-    9: MenuHUDOptions
-    10: MenuOptions
-    11: ForLoopIndexPlayer
-    12: MenuHUDChooseSort
-    13: MenuOpen
-    14: MenuChosenOption
-    15: A
-    16: BaptisteShieldAimSphere
-    17: BaptisteShieldPos
-    18: BaptisteShieldReadyToPlant
-    19: BaptisteShieldBot
-    20: D
-    21: BrigitteUltActive
-    22: BrigitteKnockedBack
-    23: S
-    24: M
-    25: DVAVariables
-    26: EchoAimRayCast
-    27: EchoDummyBots
-    28: EchoEffects
-    29: V
-    30: JunkerQueenEnemyArray
-    31: JunkerQueenEnemyPositions
-    32: JunkerReadyToTeleport
-    33: JunkerQueenInArena
-    34: JunkerQueenPositions
-    35: JunkerRageEffects
-    36: JunkerDamageCounter
-    37: JunkerDamageMods
-    38: JunkerQueenHealthPools
-    39: JunkerArenaSphere
-    40: JunkerWinCounterText
-    41: JunkerWinCounter
-    42: ExtraLife
-    43: JunkratBombPosition
-    44: JunkratBombOrb
-    45: JunkratExplosionRadius
-    46: JunkratRadiusRing
-    47: JunkratTimer
-    48: JunkratTimerHUD
-    49: JunkratTimerAboveHead
-    50: EnemyMei
-    51: P
-    52: Coronavirus
-    53: CoronavirusDamageDebuff
-    54: CoronavirusText
-    55: CoronavirusEffect
-    56: HasDiedWithCoronaVirus
-    57: MercyExtraLifeText
-    58: ExtraLifeInWorldText
-    59: R
-    60: Q
-    61: U
-    62: ReaperVariables
-    63: ReaperTPPos
-    64: ReinhardtHudText
-    65: RoadhogHUD
-    66: SigmaMaleTimer
-    67: SigmaMaleValues
-    68: SigmaZeroGravBuff
-    69: SigmaHighGravDebuff
-    70: SigmaDebuffGravityScale
-    71: SojournLastRay
-    72: SojournRayArray
-    73: SojournBeamArray
-    74: SojournEyePosArray
-    75: SojournLastEyePos
-    76: SojournDamageRay
-    77: Soldier76Variables
-    78: SoldierAllKillStreaks
-    79: Soldier76KillStreaksEquipped
-    80: SoldierKillStreakTexts
-    81: Soldier76KillStreaksActive
-    82: LocalVariable
-    83: Soldier76CarepackLocation
-    84: SoldierCarePackAmmoIndex
-    85: O
-    86: N
-    87: K
-    88: L
-    89: InPortalSpeed
-    90: TorbTurret
-    91: TorbTurretLevel
-    92: TorbTurretLevelText
-    93: TorbCurrentTarget
-    94: WidowZoomedIn
-    95: WidowPlayersInViewAngleSorted
-    96: WidowRayCastForward
-    97: WidowRayCastStartPos
-    98: WidowRayCastEndPos
-    99: WidowRayCastBackward
-    100: WidowRayCastHeadForward
-    101: WidowRayCastHeadBackward
-    102: WidowFireBeam
-    103: WidowDamage
-    104: WidowAimBeam
-    105: WidowLastFacingDirection
-    106: WinstonGrabbing
-    107: J
-    108: I
-    109: H
-    110: WinstonRayCast1
-    111: WinstonRayCast2
-    112: ZaryaGravPos
+    9: CurrentGravities
+    10: CurrentSpeeds
+    11: MenuHUDOptions
+    12: MenuOptions
+    13: ForLoopIndexPlayer
+    14: MenuHUDChooseSort
+    15: MenuOpen
+    16: MenuChosenOption
+    17: A
+    18: BaptisteShieldAimSphere
+    19: BaptisteShieldPos
+    20: BaptisteShieldReadyToPlant
+    21: BaptisteShieldBot
+    22: D
+    23: BrigitteUltActive
+    24: BrigitteKnockedBack
+    25: S
+    26: M
+    27: DVAVariables
+    28: EchoAimRayCast
+    29: EchoDummyBots
+    30: EchoEffects
+    31: V
+    32: JunkerQueenEnemyArray
+    33: JunkerQueenEnemyPositions
+    34: JunkerReadyToTeleport
+    35: JunkerQueenInArena
+    36: JunkerQueenPositions
+    37: JunkerRageEffects
+    38: JunkerDamageCounter
+    39: JunkerDamageMods
+    40: JunkerQueenHealthPools
+    41: JunkerArenaSphere
+    42: JunkerWinCounterText
+    43: JunkerWinCounter
+    44: ExtraLife
+    45: JunkratBombPosition
+    46: JunkratBombOrb
+    47: JunkratExplosionRadius
+    48: JunkratRadiusRing
+    49: JunkratTimer
+    50: JunkratTimerHUD
+    51: JunkratTimerAboveHead
+    52: EnemyMei
+    53: P
+    54: Coronavirus
+    55: CoronavirusDamageDebuff
+    56: CoronavirusText
+    57: CoronavirusEffect
+    58: HasDiedWithCoronaVirus
+    59: MercyExtraLifeText
+    60: ExtraLifeInWorldText
+    61: R
+    62: Q
+    63: U
+    64: ReaperVariables
+    65: ReaperTPPos
+    66: ReinhardtHudText
+    67: RoadhogHUD
+    68: SigmaMaleTimer
+    69: SigmaMaleValues
+    70: SigmaZeroGravBuff
+    71: SigmaHighGravDebuff
+    72: SojournLastRay
+    73: SojournRayArray
+    74: SojournBeamArray
+    75: SojournEyePosArray
+    76: SojournLastEyePos
+    77: SojournDamageRay
+    78: Soldier76Variables
+    79: SoldierAllKillStreaks
+    80: Soldier76KillStreaksEquipped
+    81: SoldierKillStreakTexts
+    82: Soldier76KillStreaksActive
+    83: LocalVariable
+    84: Soldier76CarepackLocation
+    85: SoldierCarePackAmmoIndex
+    86: TimeStopStunned
+    87: O
+    88: N
+    89: K
+    90: L
+    91: InPortalSpeed
+    92: TorbTurret
+    93: TorbTurretLevel
+    94: TorbTurretLevelText
+    95: TorbCurrentTarget
+    96: WidowZoomedIn
+    97: WidowPlayersInViewAngleSorted
+    98: WidowRayCastForward
+    99: WidowRayCastStartPos
+    100: WidowRayCastEndPos
+    101: WidowRayCastBackward
+    102: WidowRayCastHeadForward
+    103: WidowRayCastHeadBackward
+    104: WidowFireBeam
+    105: WidowDamage
+    106: WidowAimBeam
+    107: WidowLastFacingDirection
+    108: WinstonGrabbing
+    109: J
+    110: I
+    111: H
+    112: WinstonRayCast1
+    113: WinstonRayCast2
+    114: ZaryaGravPos
 }
 
 
@@ -535,6 +537,44 @@ rule("Spawn ultimate description")
 		
 	}
 }
+
+
+
+rule("Set default gravities and speeds for player")
+{
+   
+   
+
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+	
+	
+	}
+
+	actions
+	{
+	
+		
+	
+		Event Player.CurrentGravities = Array(100, 100);
+	
+		Event Player.CurrentSpeeds = Array(100, 100, 100);
+	
+	
+
+	}
+}
+
+
+
+
 
 
 
@@ -2957,9 +2997,14 @@ rule("If Junker queen lost, teleport enemies back to map and remove her buff.")
 	{
 		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerQueenEnemyArray), 1);
 		Teleport(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Event Player.JunkerQueenEnemyPositions, Event Player.ForLoopIndexPlayer));
+		Set Gravity(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer).CurrentGravities, 0));
 		End;
-		Set Gravity(Event Player, 100);
-		Set Gravity(Event Player.JunkerQueenEnemyArray, 100);
+	
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+	
+
+		
+		
 		
 	
 		Set Knockback Dealt(Filtered Array(Event Player.JunkerQueenEnemyArray, Hero Of(Current Array Element) == Hero(Junker Queen)), 100);
@@ -3081,8 +3126,15 @@ rule("If enemies lost/JQ won, teleport Junker Queen back to map and keep her buf
 
 	actions
 	{
-		Set Gravity(Event Player, 100);
-		Set Gravity(Event Player.JunkerQueenEnemyArray, 100);
+	
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+		
+	
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerQueenEnemyArray), 1);
+		Set Gravity(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer).CurrentGravities, 0));
+		End;
+		
 		Teleport(Event Player, Value In Array(Event Player.JunkerQueenPositions, 0));
 	
 		Set Knockback Dealt(Filtered Array(Event Player.JunkerQueenEnemyArray, Hero Of(Current Array Element) == Hero(Junker Queen)), 100);
@@ -3124,7 +3176,7 @@ rule("If enemy died in arena, take them out of the fight.")
 
 	actions
 	{
-		Set Gravity(Event Player, 100);
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
 		
 		Event Player.JunkerQueenInArena = Null;
 	
@@ -3678,6 +3730,9 @@ rule("Mei activate ultimate")
 		Event Player.UltEffect = Last Created Entity;
 		Event Player.P = 20;
 		Chase Player Variable At Rate(Event Player, P, 0, 1, Destination and Rate);
+	
+	
+	
 		Wait(Event Player.P, Ignore Condition);
 		Call Subroutine(ResetMei);
 	}
@@ -3900,7 +3955,7 @@ rule("Mei description")
 
 
 
-rule("Mercy give extra life to own team during Ultimate")
+rule("Mercy give extra life to herself during Ultimate")
 {
    
 	event
@@ -3913,24 +3968,51 @@ rule("Mercy give extra life to own team during Ultimate")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-	
+		Event Player.ExtraLife != True;
 		Is Dummy Bot(Event Player) == false;
 
 	}
 
 	actions
 	{
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(All Players(Team Of(Event Player))), 1);
-		If(Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer).ExtraLife != True);
-		Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer).ExtraLife = True;
-		Create HUD Text(Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer), Custom String("Mercy gave you an extra life. Resurrect upon death."), Null, Null, Top, 0, Color( Yellow), Color(White), Color(White), None, Default Visibility);
-		Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer).MercyExtraLifeText = Last Text ID;
-		Create In-World Text(All Players(All Teams), Custom String("Extra life"), Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer), 1, Clip Against Surfaces, None, Color(Yellow), Default Visibility);
-		Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer).ExtraLifeInWorldText = Last Text ID;
-		End;
-		End;
-		
-		
+		Event Player.ExtraLife = True;
+		Create HUD Text(Event Player, Custom String("You just gained an extra life."), Null, Null, Top, 0, Color( Yellow), Color(White), Color(White), Visible To and String, Default Visibility);
+		Event Player.MercyExtraLifeText = Last Text ID;
+		Create In-World Text(All Players(All Teams), Custom String("Extra life"), Event Player, 1, Clip Against Surfaces,
+			Visible To Position and String, Color(Yellow), Default Visibility);
+		Event Player.ExtraLifeInWorldText = Last Text ID;
+
+	}
+}
+
+
+
+rule("Mercy give extra life if mercy healed them")
+{
+	event
+	{
+		Player Dealt Healing;
+		All;
+		Mercy;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Healer) == True;
+		Healee.ExtraLife != True;
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		Healee.ExtraLife = True;
+		Create HUD Text(Healee, Custom String("Mercy gave you an extra life. Resurrect upon death."), Null, Null, Top, 0, Color(
+			Yellow), Color(White), Color(White), Visible To and String, Default Visibility);
+		Healee.MercyExtraLifeText = Last Text ID;
+		Create In-World Text(All Players(All Teams), Custom String("Extra life"), Healee, 1, Clip Against Surfaces,
+			Visible To Position and String, Color(Yellow), Default Visibility);
+		Healee.ExtraLifeInWorldText = Last Text ID;
 
 	}
 }
@@ -3987,7 +4069,7 @@ rule("Mercy description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Regular ultimate except everyone in your team also gets an extra life.");
+		Event Player.UltDescription = Custom String("Grant a bonus life to every hero you heal during Mercy's ult.");
 
 	}
 }
@@ -4249,7 +4331,8 @@ rule("Reset Pharah stuff.")
 	{
 		Event Player.UsingCustomUlt = 0;
 		Event Player.CustomUltReadyToUse = 0;
-		Set Gravity(Event Player, 100);
+	
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
 		Set Ultimate Ability Enabled(Event Player, True);
 		Event Player.B = 0;
 		Set Ability 1 Enabled(Event Player, True);
@@ -4502,7 +4585,7 @@ rule("Reaper activate ultimate.")
 		Event Player.ReaperVariables = Array(Last Created Entity);
 
 	
-		Modify Player Variable(Event Player, ReaperVariables, Append To Array, 30);
+		Modify Player Variable(Event Player, ReaperVariables, Append To Array, 15);
 
 		Create Hud Text(Event Player, Value In Array(Event Player.ReaperVariables, 1), Null, null, Top, 1, Color(Purple), Color(Purple), Color(Purple), Visible to and string, default Visibility);
 		Modify Player Variable(Event Player, ReaperVariables, Append To Array, Last Text ID);
@@ -4634,7 +4717,7 @@ rule("Reaper pass through walls in wraith form and set gravity to 0.")
 	
 		Wait Until(Ability Cooldown(Event Player, Button(Ability 1)) > 0 || Hero Of(Event Player) != Hero(Reaper) || Is Dead(Event Player) == True, 3);
         Enable Movement Collision With Environment(Event Player);
-		Set Gravity(Event Player, 100);
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
 	
 	
 	
@@ -5414,6 +5497,9 @@ rule("Sigma zero/high gravity")
 	{
 		Call Subroutine(UseCustomUlt);
 
+	
+	
+
 		If(Global.UltingSigmas == Null);
 		Global.UltingSigmas = Array(Event Player);
 	
@@ -5460,7 +5546,7 @@ rule("Reset Sigma")
 
 
 
-rule("Sigma set zero grav buff and debuff to true and damage players who are really close")
+rule("Sigma set zero grav buff and debuff to true")
 {
 	event
 	{
@@ -5529,7 +5615,7 @@ rule("Sigma set zero grav buff to false and stop acceleration")
 
 
 
-rule("Sigma set zero grav debuff to null")
+rule("Sigma set high grav debuff to null and reduce gravity and speed values when away from enemy sigma")
 {
 	event
 	{
@@ -5549,15 +5635,17 @@ rule("Sigma set zero grav debuff to null")
 		
 		Event Player.SigmaHighGravDebuff = null;
 
-	
-	
-	
-	
+		Value In Array(Event Player.CurrentGravities, 0) -= 400;
+		Value In Array(Event Player.CurrentGravities, 1) -= 400;
+		Value In Array(Event Player.CurrentSpeeds, 0) += 80;
+		Value In Array(Event Player.CurrentSpeeds, 2) += 80;
+
+		
 
 	
 	
-		Set Move Speed(Event Player, 100);
-		Set Projectile Speed(Event Player, 100);
+	
+	
 
 	
 
@@ -5588,11 +5676,16 @@ rule("Sigma disable grav effects if buff and debuff are false")
 	
 		Wait(0.1, Abort When False);
 
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+		Set Projectile Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 1));
+		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
+		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
+
 	
 	
-		Set Gravity(Event Player, 100);
-		Set Projectile Gravity(Event Player, 100);
-		Set Move Speed(Event Player, 100);
+	
+	
+	
 	
 	}
 }
@@ -5618,16 +5711,30 @@ rule("Sigma high grav debuff effects")
 
 	actions
 	{
-		Wait(0.1, Abort When False);
+	
        
 
 	
 	
-	
+		
+		
+		Value In Array(Event Player.CurrentGravities, 0) += 400;
+		Value In Array(Event Player.CurrentGravities, 1) += 400;
+		Value In Array(Event Player.CurrentSpeeds, 0) -= 80;
+		Value In Array(Event Player.CurrentSpeeds, 2) -= 80;
+		
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+		Set Projectile Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 1));
+		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
+		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
+		
+		
 
 	
 
-		Event Player.SigmaDebuffGravityScale = 5;
+		
+
+		
 
 	
 		
@@ -5637,23 +5744,13 @@ rule("Sigma high grav debuff effects")
 	
 
 	
+	
+		
+
 		
 
 	
-		If(((100 * Event Player.SigmaDebuffGravityScale) > 100) && (Event Player.SigmaHighGravDebuff != null));
-		Set Gravity(Event Player, 100 * Event Player.SigmaDebuffGravityScale);
-		Set Projectile Gravity(Event Player, 100 * Event Player.SigmaDebuffGravityScale);
-		Set Move Speed(Event Player, 100 / Event Player.SigmaDebuffGravityScale);
-		Set Projectile Speed(Event Player, 100 / Event Player.SigmaDebuffGravityScale);
-
-		Else;
-		Set Gravity(Event Player, 100);
-		Set Projectile Gravity(Event Player, 100);
-		Set Move Speed(Event Player, 100);
-		Set Projectile Speed(Event Player, 100);
-		End;
-
-		Loop If Condition Is True;
+		
 	}
 }
 
@@ -6039,7 +6136,7 @@ rule("soldier 76 initialize kill streaks and streak counting")
 
 
 
-		Event Player.SoldierAllKillStreaks = Array(Array(3, Custom String("UAV Recon")), Array(5, Custom String("Care Package")), Array(8, Custom String("Tactical Visor")), Array(20, Custom String("Tactical Nuke")), Array(13, Custom String("AC-130")));
+		Event Player.SoldierAllKillStreaks = Array(Array(3, Custom String("UAV Recon")), Array(5, Custom String("Care Package")), Array(8, Custom String("Tactical Visor")), Array(20, Custom String("Tactical Nuke")), Array(1, Custom String("AC-130")));
 
 	
 		Event Player.Soldier76KillStreaksEquipped = Array(Value In Array(Event Player.SoldierAllKillStreaks, 0), Value In Array(Event Player.SoldierAllKillStreaks, 1), Value In Array(Event Player.SoldierAllKillStreaks, 2), Value In Array(Event Player.SoldierAllKillStreaks, 4), Value In Array(Event Player.SoldierAllKillStreaks, 3));
@@ -6941,7 +7038,7 @@ rule("sombra: za warudo")
 	
 		Event Player.CustomUltReadyToUse == True;
 		Has Status(Event Player, Hacked) == False;
-		Global.T != True;
+		Global.T == Null;
 	}
 
 	actions
@@ -6952,7 +7049,7 @@ rule("sombra: za warudo")
 		Create Effect(All Players(All Teams), Sphere, Color(Purple), Event Player, Event Player.S, Visible To Position and Radius);
 		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player, 200);
 		Pause Match Time;
-		Global.T = True;
+		Global.T = Event Player;
 		Global.TimeStopTimer = 5;
 		Big Message(All Players(All Teams), Custom String("Sombra has hacked time to a still!"));
 		Event Player.S = 1;
@@ -6960,7 +7057,7 @@ rule("sombra: za warudo")
 		Create HUD Text(All Players(All Teams), Global.TimeStopTimer, Null, Null, Top, 0, Color(White), Color(White), Color(White),
 			Visible To and String, Default Visibility);
 	
-		Wait(Global.TimeStopTimer, Ignore Condition);
+		Wait Until(Global.T == Null, Global.TimeStopTimer);
 		Call Subroutine(ResetSombra);
 	}
 }
@@ -6977,15 +7074,15 @@ rule("sombra: reset")
 
 	actions
 	{
-	
-		Global.T = False;
+		If(Global.T != Null);
+		Global.T = Null;
+		End;
 		Event Player.S = 0;
 		Event Player.Y = False;
 		Unpause Match Time;
 		Set Ultimate Ability Enabled(Event Player, True);
-		Set Projectile Speed(All Players(All Teams), 100);
+	
 		Play Effect(All Players(All Teams), Debuff Impact Sound, Color(White), Event Player, 200);
-		Set Gravity(All Players(All Teams), 100);
 		Destroy HUD Text(Last Text ID);
 		Set Ultimate Charge(Event Player, 0);
 	}
@@ -7008,7 +7105,7 @@ rule("sombra: stun players and stop horizontal movement")
 
 	conditions
 	{
-		Global.T == True;
+		Global.T != Null;
 		Hero Of(Event Player) != Hero(Sombra);
 		Is Alive(Event Player) == True;
 	}
@@ -7031,6 +7128,7 @@ rule("sombra: stun players and stop horizontal movement")
 		Set Status(Event Player, Null, Unkillable, 9999);
 		Event Player.M = Health(Event Player);
 		Disallow Button(Event Player, Button(Ultimate));
+		Event Player.TimeStopStunned = True;
 	}
 }
 
@@ -7047,7 +7145,7 @@ rule("sombra: stop players from falling")
 
 	conditions
 	{
-		Global.T == True;
+		Global.T != Null;
 		Hero Of(Event Player) != Hero(Sombra);
 		Is In Air(Event Player) == True;
 		Speed Of(Event Player) > 0;
@@ -7075,8 +7173,10 @@ rule("sombra: clear stun status after time stop is over and damage players")
 
 	conditions
 	{
-		Global.T == False;
+	
+		Is True For All(All Players(All Teams), Current Array Element != Global.T) == True;
 		Hero Of(Event Player) != Hero(Sombra);
+		Event Player.TimeStopStunned == True;
 	}
 
 	actions
@@ -7084,17 +7184,12 @@ rule("sombra: clear stun status after time stop is over and damage players")
 		Allow Button(Event Player, Button(Ultimate));
 		Clear Status(Event Player, Stunned);
 		Clear Status(Event Player, Unkillable);
-		disabled Clear Status(Event Player, Hacked);
-		disabled Clear Status(Event Player, Rooted);
-		disabled Allow Button(Event Player, Button(Primary Fire));
-		disabled Allow Button(Event Player, Button(Secondary Fire));
-		disabled Allow Button(Event Player, Button(Crouch));
-		disabled Allow Button(Event Player, Button(Interact));
-		disabled Stop Facing(Event Player);
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
+		Event Player.TimeStopStunned = False;
 		Wait(0.016, Ignore Condition);
-		Skip If(Event Player.O == Null, 5);
+		Skip If(Event Player.O == Null, 4);
 		Damage(Event Player, Event Player.O, Event Player.N);
-		disabled Set Ultimate Ability Enabled(Event Player.O, True);
 		Set Ultimate Charge(Event Player.O, 0);
 		Event Player.N = Null;
 		Event Player.O = Null;
@@ -7112,13 +7207,16 @@ rule("sombra: timer")
 
 	conditions
 	{
-		Global.T == True;
+		Global.T != Null;
 	}
 
 	actions
 	{
 		Wait(1, Ignore Condition);
 		Global.TimeStopTimer -= 1;
+		If(Global.TimeStopTimer <= 0);
+		Global.T = Null;
+		End;
 		Loop If Condition Is True;
 	}
 }
@@ -7137,7 +7235,7 @@ rule("sombra: store damage dealt during time stop")
 	conditions
 	{
 	
-		Global.T == True;
+		Global.T != Null;
 	}
 
 	actions
@@ -7226,7 +7324,7 @@ rule("Sombra description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Sombra hacks time to a still. Attacks will cause damage after time resumes.{0}", Custom String("
+		Event Player.UltDescription = Custom String("Sombra hacks time to a still. Attacks during time stop will cause damage after time resumes.{0}", Custom String("
 		Enemy Sombras are immune."));
 
 	}
@@ -7691,11 +7789,21 @@ rule("torb: spawn torb turret")
 		Create Dummy Bot(Hero(Torbjörn), Team Of(Event Player), -1, Event Player + Facing Direction Of(Event Player), Facing Direction Of(Event Player));
 		Event Player.TorbTurret = Last Created Entity;
 
-		Set Projectile Gravity(Event Player.TorbTurret, 0);
-		Set Projectile Speed(Event Player.TorbTurret, 1000);
+	
+	
+		
+	
+		Wait(0.016, Ignore Condition);
+		
+		Event Player.TorbTurret.CurrentGravities = Array(1000, 0);
+		Event Player.TorbTurret.CurrentSpeeds = Array(100, 100, 1000);
+		
+		
+		Set Projectile Gravity(Event Player.TorbTurret, Value In Array(Event Player.TorbTurret.CurrentGravities, 1));
+		Set Projectile Speed(Event Player.TorbTurret, Value In Array(Event Player.TorbTurret.CurrentSpeeds, 2));
 	
 		Set Max Health(Event Player.TorbTurret, 500);
-		Set Gravity(Event Player.TorbTurret, 1000);
+		Set Gravity(Event Player.TorbTurret, Value In Array(Event Player.TorbTurret.CurrentGravities, 0));
 		Set Knockback Received(Event Player.TorbTurret, 0);
 		Event Player.TorbTurret.TorbTurretLevel = 1;
 		Wait(0.5, Ignore Condition);
