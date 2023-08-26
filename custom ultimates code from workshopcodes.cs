@@ -4309,7 +4309,10 @@ rule("Pharah activate ultimate when button is pressed")
 		Set Ability 1 Enabled(Event Player, False);
 		Disallow Button(Event Player, Button(Jump));
 		Disallow Button(Event Player, Button(Secondary Fire));
-		Set Gravity(Event Player, 0);
+		
+		Value In Array(Event Player.CurrentGravities, 0) -= 100;
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+	
 	
 		Event Player.UsingCustomUlt = True;
 		Wait Until(Is Dead(Event Player) == True, Event Player.R);
@@ -4332,6 +4335,7 @@ rule("Reset Pharah stuff.")
 		Event Player.UsingCustomUlt = 0;
 		Event Player.CustomUltReadyToUse = 0;
 	
+		Value In Array(Event Player.CurrentGravities, 0) += 100;
 		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
 		Set Ultimate Ability Enabled(Event Player, True);
 		Event Player.B = 0;
@@ -4713,10 +4717,13 @@ rule("Reaper pass through walls in wraith form and set gravity to 0.")
 	
 	
         Disable Movement Collision With Environment(Event Player, false);
-		Set Gravity(Event Player, 0);
+		Value In Array(Event Player.CurrentGravities, 0) -= 100;
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+	
 	
 		Wait Until(Ability Cooldown(Event Player, Button(Ability 1)) > 0 || Hero Of(Event Player) != Hero(Reaper) || Is Dead(Event Player) == True, 3);
         Enable Movement Collision With Environment(Event Player);
+		Value In Array(Event Player.CurrentGravities, 0) += 100;
 		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
 	
 	
@@ -5564,10 +5571,21 @@ rule("Sigma set zero grav buff and debuff to true")
 	actions
 	{
 		Wait(0.1, Abort When False);
+		
+		
+		
+		
 		Filtered Array(Players Within Radius(Event Player, 20, Opposite Team Of(Team Of(Event Player)), Off), (Current Array Element.SigmaZeroGravBuff != true) && (Current Array Element.SigmaHighGravDebuff == null)).SigmaHighGravDebuff = true;
 		
-		Players Within Radius(Event Player, 20, Team Of(Event Player), Off).SigmaZeroGravBuff = True;
-
+		
+	
+		
+		
+		
+		
+		Filtered Array(Players Within Radius(Event Player, 20, Team Of(Event Player), Off), Current Array Element.SigmaZeroGravBuff != true).SigmaZeroGravBuff = true;
+		
+		
 	
 
 		Loop If Condition Is True;
@@ -5598,13 +5616,14 @@ rule("Sigma set zero grav buff to false and stop acceleration")
 
 	actions
 	{
+		Wait(0.016, Abort When False);
 	
 		Event Player.SigmaZeroGravBuff = false;
 		Stop Accelerating(Event Player);
-	
-	
-	
-	
+		Value In Array(Event Player.CurrentGravities, 0) += 100;
+		Value In Array(Event Player.CurrentGravities, 1) += 100;
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+		Set Projectile Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 1));
 	
 	
 		
@@ -5632,49 +5651,13 @@ rule("Sigma set high grav debuff to null and reduce gravity and speed values whe
 
 	actions
 	{
-		
+		Wait(0.016, Abort When False);
 		Event Player.SigmaHighGravDebuff = null;
 
 		Value In Array(Event Player.CurrentGravities, 0) -= 400;
 		Value In Array(Event Player.CurrentGravities, 1) -= 400;
 		Value In Array(Event Player.CurrentSpeeds, 0) += 80;
 		Value In Array(Event Player.CurrentSpeeds, 2) += 80;
-
-		
-
-	
-	
-	
-	
-
-	
-
-	
-	}
-}
-
-
-
-rule("Sigma disable grav effects if buff and debuff are false")
-{
-    
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.SigmaZeroGravBuff != True;
-		Event Player.SigmaHighGravDebuff != True;
-	}
-
-	actions
-	{
-	
-		Wait(0.1, Abort When False);
 
 		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
 		Set Projectile Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 1));
@@ -5685,11 +5668,12 @@ rule("Sigma disable grav effects if buff and debuff are false")
 	
 	
 	
+
 	
+
 	
 	}
 }
-
 
 
 
@@ -5711,6 +5695,8 @@ rule("Sigma high grav debuff effects")
 
 	actions
 	{
+		Wait(0.016, Abort When False);
+		
 	
        
 
@@ -5772,16 +5758,22 @@ rule("Sigma zero grav buff set gravity")
 
 	actions
 	{
+		Wait(0.016, Abort When False);
 		
+		Value In Array(Event Player.CurrentGravities, 0) -= 100;
+		Value In Array(Event Player.CurrentGravities, 1) -= 100;
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+		Set Projectile Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 1));
+
+	
+	
+
 		
 
 	
-		Wait(0.5, Abort When False);
+	
 
-		Set Gravity(Event Player, 0);
-		Set Projectile Gravity(Event Player, 0);
-
-		Loop If Condition Is True;
+	
 
 	
 
