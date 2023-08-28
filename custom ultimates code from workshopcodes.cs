@@ -5,7 +5,6 @@ settings
 
 
 
-
 	main
 	{
 		Description: "Overpowered custom-made ultimates for each hero. Currently only supports team-based modes and 1 of each hero per team."
@@ -185,104 +184,105 @@ variables {
     14: MenuHUDChooseSort
     15: MenuOpen
     16: MenuChosenOption
-    17: A
-    18: BaptisteShieldAimSphere
-    19: BaptisteShieldPos
-    20: BaptisteShieldReadyToPlant
-    21: BaptisteShieldBot
-    22: D
-    23: BrigitteUltActive
-    24: BrigitteKnockedBack
-    25: S
-    26: M
-    27: DVAVariables
-    28: EchoAimRayCast
-    29: EchoDummyBots
-    30: EchoEffects
-    31: V
-    32: JunkerQueenEnemyArray
-    33: JunkerQueenEnemyPositions
-    34: JunkerReadyToTeleport
-    35: JunkerQueenInArena
-    36: JunkerQueenPositions
-    37: JunkerRageEffects
-    38: JunkerDamageCounter
-    39: JunkerDamageMods
-    40: JunkerQueenHealthPools
-    41: JunkerArenaSphere
-    42: JunkerWinCounterText
-    43: JunkerWinCounter
-    44: ExtraLife
-    45: JunkratBombPosition
-    46: JunkratBombOrb
-    47: JunkratExplosionRadius
-    48: JunkratRadiusRing
-    49: JunkratTimer
-    50: JunkratTimerHUD
-    51: JunkratTimerAboveHead
-    52: EnemyMei
-    53: P
-    54: Coronavirus
-    55: CoronavirusDamageDebuff
-    56: CoronavirusText
-    57: CoronavirusEffect
-    58: HasDiedWithCoronaVirus
-    59: MercyExtraLifeText
-    60: ExtraLifeInWorldText
-    61: R
-    62: Q
-    63: U
-    64: ReaperVariables
-    65: ReaperTPPos
-    66: ReinhardtHudText
-    67: RoadhogHUD
-    68: SigmaMaleTimer
-    69: SigmaMaleValues
-    70: SigmaZeroGravBuff
-    71: SigmaHighGravDebuff
-    72: SojournLastRay
-    73: SojournRayArray
-    74: SojournBeamArray
-    75: SojournEyePosArray
-    76: SojournLastEyePos
-    77: SojournDamageRay
-    78: Soldier76Variables
-    79: SoldierAllKillStreaks
-    80: Soldier76KillStreaksEquipped
-    81: SoldierKillStreakTexts
-    82: Soldier76KillStreaksActive
-    83: LocalVariable
-    84: Soldier76CarepackLocation
-    85: SoldierCarePackAmmoIndex
-    86: TimeStopStunned
-    87: O
-    88: N
-    89: K
-    90: L
-    91: InPortalSpeed
-    92: TorbTurret
-    93: TorbTurretLevel
-    94: TorbTurretLevelText
-    95: TorbCurrentTarget
-    96: WidowZoomedIn
-    97: WidowPlayersInViewAngleSorted
-    98: WidowRayCastForward
-    99: WidowRayCastStartPos
-    100: WidowRayCastEndPos
-    101: WidowRayCastBackward
-    102: WidowRayCastHeadForward
-    103: WidowRayCastHeadBackward
-    104: WidowFireBeam
-    105: WidowDamage
-    106: WidowAimBeam
-    107: WidowLastFacingDirection
-    108: WinstonGrabbing
-    109: J
-    110: I
-    111: H
-    112: WinstonRayCast1
-    113: WinstonRayCast2
-    114: ZaryaGravPos
+    17: Nanoboosted
+    18: AnaHealMod
+    19: BaptisteShieldAimSphere
+    20: BaptisteShieldPos
+    21: BaptisteShieldReadyToPlant
+    22: BaptisteShieldBot
+    23: D
+    24: BrigitteUltActive
+    25: BrigitteKnockedBack
+    26: S
+    27: M
+    28: DVAVariables
+    29: EchoAimRayCast
+    30: EchoDummyBots
+    31: EchoEffects
+    32: V
+    33: JunkerQueenEnemyArray
+    34: JunkerQueenEnemyPositions
+    35: JunkerReadyToTeleport
+    36: JunkerQueenInArena
+    37: JunkerQueenPositions
+    38: JunkerRageEffects
+    39: JunkerDamageCounter
+    40: JunkerDamageMods
+    41: JunkerQueenHealthPools
+    42: JunkerArenaSphere
+    43: JunkerWinCounterText
+    44: JunkerWinCounter
+    45: ExtraLife
+    46: JunkratBombPosition
+    47: JunkratBombOrb
+    48: JunkratExplosionRadius
+    49: JunkratRadiusRing
+    50: JunkratTimer
+    51: JunkratTimerHUD
+    52: JunkratTimerAboveHead
+    53: EnemyMei
+    54: P
+    55: Coronavirus
+    56: CoronavirusDamageDebuff
+    57: CoronavirusText
+    58: CoronavirusEffect
+    59: HasDiedWithCoronaVirus
+    60: MercyExtraLifeText
+    61: ExtraLifeInWorldText
+    62: R
+    63: Q
+    64: U
+    65: ReaperVariables
+    66: ReaperTPPos
+    67: ReinhardtHudText
+    68: RoadhogHUD
+    69: SigmaMaleTimer
+    70: SigmaMaleValues
+    71: SigmaZeroGravBuff
+    72: SigmaHighGravDebuff
+    73: SojournLastRay
+    74: SojournRayArray
+    75: SojournBeamArray
+    76: SojournEyePosArray
+    77: SojournLastEyePos
+    78: SojournDamageRay
+    79: Soldier76Variables
+    80: SoldierAllKillStreaks
+    81: Soldier76KillStreaksEquipped
+    82: SoldierKillStreakTexts
+    83: Soldier76KillStreaksActive
+    84: LocalVariable
+    85: Soldier76CarepackLocation
+    86: SoldierCarePackAmmoIndex
+    87: TimeStopStunned
+    88: O
+    89: N
+    90: K
+    91: L
+    92: InPortalSpeed
+    93: TorbTurret
+    94: TorbTurretLevel
+    95: TorbTurretLevelText
+    96: TorbCurrentTarget
+    97: WidowZoomedIn
+    98: WidowPlayersInViewAngleSorted
+    99: WidowRayCastForward
+    100: WidowRayCastStartPos
+    101: WidowRayCastEndPos
+    102: WidowRayCastBackward
+    103: WidowRayCastHeadForward
+    104: WidowRayCastHeadBackward
+    105: WidowFireBeam
+    106: WidowDamage
+    107: WidowAimBeam
+    108: WidowLastFacingDirection
+    109: WinstonGrabbing
+    110: J
+    111: I
+    112: H
+    113: WinstonRayCast1
+    114: WinstonRayCast2
+    115: ZaryaGravPos
 }
 
 
@@ -598,16 +598,17 @@ rule("Test dummy")
 	actions
 	{
 	
-		Create Dummy Bot(Hero(Cassidy), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
+	
+		Create Dummy Bot(Hero(Mercy), Team Of(Event Player), -1, Event Player, Vector(0, 0, 0));
 		
 		Wait(1, Ignore Condition);
 		
-		Set Ultimate Charge(Last Created Entity, 100);
-		
-		Start Holding Button(Last Created Entity, Button(Ultimate));
 	
 		
 	
+		Start Holding Button(Last Created Entity, Button(Primary Fire));
+	
+		
 	}
 }
 
@@ -810,10 +811,49 @@ rule("ana: set variables for player boosted by ana")
 
 	
 
-		Healee.A = True;
+		Healee.Nanoboosted = True;
+	
+		
+		Value In Array(Healee.CurrentSpeeds, 0) += 200;
+		Value In Array(Healee.CurrentSpeeds, 1) += 200;
+		Set Move Speed(Healee, Value In Array(Healee.CurrentSpeeds, 0));
+		Set Jump Vertical Speed(Healee, Value In Array(Healee.CurrentSpeeds, 1));
+		
+	
+		
+		Stop Healing Modification(Event Player.AnaHealMod);
+		Event Player.AnaHealMod = Null;
 
 	
 		
+	}
+}
+
+
+
+rule("ana: damage all team mates by a very small amount so that they can be healed by Ana's ultimate")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Ana;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+	
+	
+	}
+
+	actions
+	{
+		
+		Damage(All Players(Team Of(Event Player)), Null, 0.016);
+		Start Healing Modification(All Players(Team Of(Event Player)), Remove From Array(All Players(Team Of(Event Player)), Event Player), 0, Receivers Healers And Healing Percent);
+		Event Player.AnaHealMod = Last Healing Modification ID;
 	}
 }
 
@@ -830,7 +870,7 @@ rule("Disable nanoboost effects after some time or when dead")
 
 	conditions
 	{
-		Event Player.A == True;
+		Event Player.Nanoboosted == True;
 		
 
 	}
@@ -838,15 +878,19 @@ rule("Disable nanoboost effects after some time or when dead")
 	actions
 	{
 		Wait Until(Is Dead(Event Player) == True, 8);
-		Event Player.A = Null;
-
+		Event Player.Nanoboosted = Null;
+		Value In Array(Event Player.CurrentSpeeds, 0) -= 150;
+		Value In Array(Event Player.CurrentSpeeds, 1) -= 150;
+		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
+		Set Jump Vertical Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 1));
 	}
 }
 
 
 
-rule("Set cooldowns to 0 for nanoboosted player")
+rule("Set cooldowns to 0 for nanoboosted player on a loop for when checking ability cooldown doesn't work")
 {
+
 	event
 	{
 		Ongoing - Each Player;
@@ -856,8 +900,8 @@ rule("Set cooldowns to 0 for nanoboosted player")
 
 	conditions
 	{
-		Event Player.A == True;
-		(Ability Cooldown(Event Player, Button(Ability 1)) > 0 || Ability Cooldown(Event Player, Button(Ability 2)) > 0 || Ability Cooldown(Event Player, Button(Secondary Fire)) > 0) == True;
+		Event Player.Nanoboosted == True;
+	
 		
 
 	}
@@ -866,20 +910,14 @@ rule("Set cooldowns to 0 for nanoboosted player")
 	{
 	
 
-		If(Ability Cooldown(Event Player, Button(Ability 1)) > 0);
+		Wait(0.1, Abort When False);
 		Set Ability Cooldown(Event Player, Button(Ability 1), 0);
-		End;
-
-		If(Ability Cooldown(Event Player, Button(Ability 2)) > 0);
 		Set Ability Cooldown(Event Player, Button(Ability 2), 0);
-		End;
-
-		If(Ability Cooldown(Event Player, Button(Secondary Fire)) > 0);
 		Set Ability Cooldown(Event Player, Button(Secondary Fire), 0);
-	
-		End;
-
-
+		Set Ability Cooldown(Event Player, Button(Primary Fire), 0);
+		Set Ultimate Charge(Event Player, Ultimate Charge Percent(Event Player) + 1);
+		Loop If Condition Is True;
+		
 	}
 }
 
@@ -907,7 +945,7 @@ rule("Ana description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Nanoboosted player gains a speed boost, 0 cooldowns, increased ultimate charge and increased jump height.", Null, Null, Null);
+		Event Player.UltDescription = Custom String("Nanoboosted player gains a speed boost, increased jump height, 0 cooldowns and ultimate charge generation.", Null, Null, Null);
 
 	}
 }
@@ -2438,7 +2476,7 @@ rule("Genji Omae wa mou shindeiru")
 	actions
 	{
 		Set Damage Dealt(Event Player, 1);
-		Set Move Speed(Event Player, 150);
+	
 		Event Player.Y = True;
 		Event Player.B = Hero Of(Event Player);
 	}
@@ -2542,7 +2580,7 @@ rule("Reset Genji stuff")
 
 	actions
 	{
-		Set Move Speed(Event Player, 100);
+	
 		Set Damage Dealt(Event Player, 100);
 		Event Player.Y = 0;
 		Event Player.B = Null;
@@ -3427,7 +3465,7 @@ rule("Lucio activate ult")
 	{
 		Is Using Ultimate(Event Player) == True;
 	
-	
+		Is Dummy Bot(Event Player) == false;
 	}
 
 	actions
@@ -3611,7 +3649,7 @@ rule("If sees McCree get damaged")
 		
 		Set Status(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player, 20)), Event Player.ForLoopIndexPlayer), Event Player, Burning, 0.1);
 		
-		Damage(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element, Event Player, 20)), Event Player.ForLoopIndexPlayer), Event Player, 5);
+		Damage(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element, Event Player, 20)), Event Player.ForLoopIndexPlayer), Event Player, 10);
 		
 		
 		End;
@@ -3643,7 +3681,7 @@ rule("If close to McCree get damaged")
 		
 		Set Status(Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, Burning, 0.1);
 		
-		Damage(Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, 10);
+		Damage(Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, 20);
 		
 		Loop If Condition Is True;
 	}
@@ -5145,7 +5183,7 @@ rule("reinhardt: set variables when using ultimate")
 
 	actions
 	{
-		Apply Impulse(Event Player, Up, 10, To World, Cancel Contrary Motion);
+	
 	
 		disabled Global.S = Event Player;
 		Event Player.Q = 0;
@@ -5154,7 +5192,12 @@ rule("reinhardt: set variables when using ultimate")
 		Create Effect(All Players(All Teams), Bad Aura Sound, Team Of(Event Player), Event Player, Event Player.Q, Visible To Position and Radius);
 		Event Player.G = Last Created Entity;
 		Event Player.R = 100;
-		Create HUD Text(Event Player, String("Power-up"), Event Player.Y, String("{0} {1}", String("{0} {1} {2}", String("Damage"), String("Dealt"), String("{0}%", Event Player.R)), String("{0} {1} {2}", String("Damage"), String("Defense"), String("{0}%", 100 - Event Player.P))), Right, 0, Color(Yellow), Color(Yellow), Color(White), Visible To and String, Default Visibility);
+		Event Player.Y = 10;
+	
+		Create HUD Text(Event Player, Custom String("Power-up duration: "), Event Player.Y, String("{0} {1}", String("{0} {1} {2}", String("Damage"), String("Dealt"), String("{0}%", Event Player.R)), String("{0} {1} {2}", String("Damage"), Custom String("received: "), String("{0}%", Event Player.P))), Right, 0, Color(Yellow), Color(Yellow), Color(White), Visible To and String, Default Visibility);
+		
+		
+		
 		Event Player.ReinhardtHudText = Last Text ID;
 		Event Player.S = True;
 		Event Player.P = 100;
@@ -5188,11 +5231,22 @@ rule("reinhardt: increase buffs in the air")
 	actions
 	{
 		Wait(0.200, Ignore Condition);
-		Event Player.P /= 1.1;
-		Event Player.Y += 1;
+		
+	
+	
+		
+	
+	
 		Event Player.R += 30;
 		Event Player.Q += 0.300;
 		Set Damage Dealt(Event Player, Event Player.R);
+		
+	
+	
+		Event Player.P -= 12;
+		If(Event Player.P < 0);
+		Event Player.P = 0;
+		End;
 		Set Damage Received(Event Player, Event Player.P);
 		Loop If Condition Is True;
 		Wait(1, Ignore Condition);
@@ -5227,6 +5281,7 @@ rule("reinhardt: reset stuff")
 		Event Player.ReinhardtHudText = Null;
 		Clear Status(Event Player, Burning);
 		Set Damage Received(Event Player, 100);
+	
 		Event Player.P = 0;
 		Event Player.S = 0;
 		Set Ultimate Ability Enabled(Event Player, True);
@@ -5260,6 +5315,8 @@ rule("reinhardt: do stuff when earthshatter has landed")
 		Event Player.M = True;
 		Chase Player Variable At Rate(Event Player, Y, 0, 1, Destination and Rate);
 		Set Ultimate Ability Enabled(Event Player, False);
+	
+	
 		Wait Until(Is Dead(Event Player) == True, Event Player.Y);
 		Call Subroutine(ResetReinhardt);
 	}
@@ -5336,8 +5393,8 @@ rule("Reinhardt description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Jump down from high while using earthshatter to get a buff to damage and damage resistance. {0}", Custom String(" 
-		Buff duration and effectiveness increased by air time."));
+		Event Player.UltDescription = Custom String("Jump down from high while using earthshatter to get increased damage and damage resistance for 10 seconds.{0}", Custom String(" 
+		Buff effectiveness increased by air time."));
 
 	}
 }
@@ -5553,45 +5610,41 @@ rule("Reset Sigma")
 
 
 
-rule("Sigma set zero grav buff and debuff to true")
+rule("Sigma set zero grav buff to true")
 {
 	event
 	{
 		Ongoing - Each Player;
 		All;
-		Sigma;
+		All;
 	}
 
 	conditions
 	{
-		Event Player.UsingCustomUlt == True;
+		Event Player.SigmaZeroGravBuff == Null;
+		(Remove From Array(Global.UltingSigmas, All Players(Opposite Team Of(Team Of(Event Player)))) != Empty Array && Remove From Array(Global.UltingSigmas, Opposite Team Of(Team Of(Event Player))) != Null) == True;
+		Is True For Any(Remove From Array(Global.UltingSigmas, All Players(Opposite Team Of(Team Of(Event Player)))), Distance Between(Current Array Element, Event Player) <= 20) == true;
+
 	
 	}
 
 	actions
 	{
-		Wait(0.1, Abort When False);
+	
+	
+		Event Player.SigmaZeroGravBuff = True;
 		
-		
-		
-		
-		Filtered Array(Players Within Radius(Event Player, 20, Opposite Team Of(Team Of(Event Player)), Off), (Current Array Element.SigmaZeroGravBuff != true) && (Current Array Element.SigmaHighGravDebuff == null)).SigmaHighGravDebuff = true;
-		
-		
+		Value In Array(Event Player.CurrentGravities, 0) -= 100;
+		Value In Array(Event Player.CurrentGravities, 1) -= 100;
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+		Set Projectile Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 1));
+	
 	
 		
-		
-		
-		
-		Filtered Array(Players Within Radius(Event Player, 20, Team Of(Event Player), Off), Current Array Element.SigmaZeroGravBuff != true).SigmaZeroGravBuff = true;
-		
-		
-	
 
-		Loop If Condition Is True;
+	
 	}
 }
-
 
 
 
@@ -5616,7 +5669,7 @@ rule("Sigma set zero grav buff to false and stop acceleration")
 
 	actions
 	{
-		Wait(0.016, Abort When False);
+	
 	
 		Event Player.SigmaZeroGravBuff = false;
 		Stop Accelerating(Event Player);
@@ -5627,6 +5680,50 @@ rule("Sigma set zero grav buff to false and stop acceleration")
 	
 	
 		
+
+	
+	}
+}
+
+
+
+rule("Sigma set high grav debuff to true and increase gravity and speed values when close to enemy sigma")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.SigmaHighGravDebuff == null;
+		(Remove From Array(Global.UltingSigmas, All Players(Team Of(Event Player))) != Empty Array && Remove From Array(Global.UltingSigmas, Team Of(Event Player)) != Null) == True; 
+		Is True For Any(Remove From Array(Global.UltingSigmas, All Players(Team Of(Event Player))), Distance Between(Current Array Element, Event Player) <= 20) == True;
+	}
+
+	actions
+	{
+	
+		Event Player.SigmaHighGravDebuff = True;
+
+		Value In Array(Event Player.CurrentGravities, 0) += 400;
+		Value In Array(Event Player.CurrentGravities, 1) += 400;
+		Value In Array(Event Player.CurrentSpeeds, 0) -= 80;
+		Value In Array(Event Player.CurrentSpeeds, 2) -= 80;
+
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+		Set Projectile Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 1));
+		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
+		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
+
+	
+	
+	
+	
+
+	
 
 	
 	}
@@ -5651,7 +5748,7 @@ rule("Sigma set high grav debuff to null and reduce gravity and speed values whe
 
 	actions
 	{
-		Wait(0.016, Abort When False);
+	
 		Event Player.SigmaHighGravDebuff = null;
 
 		Value In Array(Event Player.CurrentGravities, 0) -= 400;
@@ -5671,115 +5768,6 @@ rule("Sigma set high grav debuff to null and reduce gravity and speed values whe
 
 	
 
-	
-	}
-}
-
-
-
-rule("Sigma high grav debuff effects")
-{
-   
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.SigmaHighGravDebuff != null;
-		Event Player.SigmaZeroGravBuff != True;
-	}
-
-	actions
-	{
-		Wait(0.016, Abort When False);
-		
-	
-       
-
-	
-	
-		
-		
-		Value In Array(Event Player.CurrentGravities, 0) += 400;
-		Value In Array(Event Player.CurrentGravities, 1) += 400;
-		Value In Array(Event Player.CurrentSpeeds, 0) -= 80;
-		Value In Array(Event Player.CurrentSpeeds, 2) -= 80;
-		
-		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
-		Set Projectile Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 1));
-		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
-		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
-		
-		
-
-	
-
-		
-
-		
-
-	
-		
-
-	
-	
-	
-
-	
-	
-		
-
-		
-
-	
-		
-	}
-}
-
-
-
-rule("Sigma zero grav buff set gravity")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.SigmaZeroGravBuff == True;
-	}
-
-	actions
-	{
-		Wait(0.016, Abort When False);
-		
-		Value In Array(Event Player.CurrentGravities, 0) -= 100;
-		Value In Array(Event Player.CurrentGravities, 1) -= 100;
-		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
-		Set Projectile Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 1));
-
-	
-	
-
-		
-
-	
-	
-
-	
-
-	
-
-
-	
-	
 	
 	}
 }
