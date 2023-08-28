@@ -173,27 +173,27 @@ variables {
     3: UsingCustomUlt
     4: UltEffect
     5: G
-    6: Y
-    7: UltDescriptionTextObject
-    8: UltDescription
-    9: CurrentGravities
-    10: CurrentSpeeds
-    11: MenuHUDOptions
-    12: MenuOptions
-    13: ForLoopIndexPlayer
-    14: MenuHUDChooseSort
-    15: MenuOpen
-    16: MenuChosenOption
-    17: Nanoboosted
-    18: AnaHealMod
-    19: BaptisteShieldAimSphere
-    20: BaptisteShieldPos
-    21: BaptisteShieldReadyToPlant
-    22: BaptisteShieldBot
-    23: D
-    24: BrigitteUltActive
-    25: BrigitteKnockedBack
-    26: S
+    6: UltDescriptionTextObject
+    7: UltDescription
+    8: CurrentGravities
+    9: CurrentSpeeds
+    10: MenuHUDOptions
+    11: MenuOptions
+    12: ForLoopIndexPlayer
+    13: MenuHUDChooseSort
+    14: MenuOpen
+    15: MenuChosenOption
+    16: Nanoboosted
+    17: AnaHealMod
+    18: BaptisteShieldAimSphere
+    19: BaptisteShieldPos
+    20: BaptisteShieldReadyToPlant
+    21: BaptisteShieldBot
+    22: D
+    23: BrigitteUltActive
+    24: BrigitteKnockedBack
+    25: S
+    26: Y
     27: M
     28: DVAVariables
     29: EchoAimRayCast
@@ -223,66 +223,65 @@ variables {
     53: EnemyMei
     54: P
     55: Coronavirus
-    56: CoronavirusDamageDebuff
-    57: CoronavirusText
-    58: CoronavirusEffect
-    59: HasDiedWithCoronaVirus
-    60: MercyExtraLifeText
-    61: ExtraLifeInWorldText
-    62: R
-    63: Q
-    64: U
-    65: ReaperVariables
-    66: ReaperTPPos
-    67: ReinhardtHudText
-    68: RoadhogHUD
-    69: SigmaMaleTimer
-    70: SigmaMaleValues
-    71: SigmaZeroGravBuff
-    72: SigmaHighGravDebuff
-    73: SojournLastRay
-    74: SojournRayArray
-    75: SojournBeamArray
-    76: SojournEyePosArray
-    77: SojournLastEyePos
-    78: SojournDamageRay
-    79: Soldier76Variables
-    80: SoldierAllKillStreaks
-    81: Soldier76KillStreaksEquipped
-    82: SoldierKillStreakTexts
-    83: Soldier76KillStreaksActive
-    84: LocalVariable
-    85: Soldier76CarepackLocation
-    86: SoldierCarePackAmmoIndex
-    87: TimeStopStunned
-    88: O
-    89: N
-    90: K
-    91: L
-    92: InPortalSpeed
-    93: TorbTurret
-    94: TorbTurretLevel
-    95: TorbTurretLevelText
-    96: TorbCurrentTarget
-    97: WidowZoomedIn
-    98: WidowPlayersInViewAngleSorted
-    99: WidowRayCastForward
-    100: WidowRayCastStartPos
-    101: WidowRayCastEndPos
-    102: WidowRayCastBackward
-    103: WidowRayCastHeadForward
-    104: WidowRayCastHeadBackward
-    105: WidowFireBeam
-    106: WidowDamage
-    107: WidowAimBeam
-    108: WidowLastFacingDirection
-    109: WinstonGrabbing
-    110: J
-    111: I
-    112: H
-    113: WinstonRayCast1
-    114: WinstonRayCast2
-    115: ZaryaGravPos
+    56: CoronavirusText
+    57: CoronavirusEffect
+    58: HasDiedWithCoronaVirus
+    59: MercyExtraLifeText
+    60: ExtraLifeInWorldText
+    61: R
+    62: Q
+    63: U
+    64: ReaperVariables
+    65: ReaperTPPos
+    66: ReinhardtHudText
+    67: RoadhogHUD
+    68: SigmaMaleTimer
+    69: SigmaMaleValues
+    70: SigmaZeroGravBuff
+    71: SigmaHighGravDebuff
+    72: SojournLastRay
+    73: SojournRayArray
+    74: SojournBeamArray
+    75: SojournEyePosArray
+    76: SojournLastEyePos
+    77: SojournDamageRay
+    78: Soldier76Variables
+    79: SoldierAllKillStreaks
+    80: Soldier76KillStreaksEquipped
+    81: SoldierKillStreakTexts
+    82: Soldier76KillStreaksActive
+    83: LocalVariable
+    84: Soldier76CarepackLocation
+    85: SoldierCarePackAmmoIndex
+    86: TimeStopStunned
+    87: O
+    88: N
+    89: K
+    90: L
+    91: InPortalSpeed
+    92: TorbTurret
+    93: TorbTurretLevel
+    94: TorbTurretLevelText
+    95: TorbCurrentTarget
+    96: WidowZoomedIn
+    97: WidowPlayersInViewAngleSorted
+    98: WidowRayCastForward
+    99: WidowRayCastStartPos
+    100: WidowRayCastEndPos
+    101: WidowRayCastBackward
+    102: WidowRayCastHeadForward
+    103: WidowRayCastHeadBackward
+    104: WidowFireBeam
+    105: WidowDamage
+    106: WidowAimBeam
+    107: WidowLastFacingDirection
+    108: WinstonGrabbing
+    109: J
+    110: I
+    111: H
+    112: WinstonRayCast1
+    113: WinstonRayCast2
+    114: ZaryaGravPos
 }
 
 
@@ -309,15 +308,16 @@ subroutines {
     19: ResetSojourn
     20: ResetSoldier
     21: ResetSombra
-    22: ResetSymmetra
-    23: ResetTorb
-    24: ResetTracer
-    25: ResetWidow
-    26: ResetWinston
-    27: ResetWB
-    28: ResetZarya
-    29: ResetZenyatta
-    30: StopPossessing
+    22: ResetSymmetraTeam1
+    23: ResetSymmetraTeam2
+    24: ResetTorb
+    25: ResetTracer
+    26: ResetWidow
+    27: ResetWinston
+    28: ResetWB
+    29: ResetZarya
+    30: ResetZenyatta
+    31: StopPossessing
 }
 
 
@@ -401,7 +401,11 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		Else If(Event Player.B == Hero(Sombra));
 		Call Subroutine(ResetSombra);
 		Else If(Event Player.B == Hero(Symmetra));
-		Call Subroutine(ResetSymmetra);
+		If(Team Of(Event Player) == Team 1);
+		Call Subroutine(ResetSymmetraTeam1);
+		Else;
+		Call Subroutine(ResetSymmetraTeam2);
+		End;
 		Else If(Event Player.B == Hero(Torbjörn));
 		Call Subroutine(ResetTorb);
 		Else If(Event Player.B == Hero(Tracer));
@@ -497,11 +501,11 @@ rule("Stop Using custom ult")
 		Destroy HUD Text(Last Text ID);
 		Set Primary Fire Enabled(Event Player, True);
 		Set Secondary Fire Enabled(Event Player, True);
-		Set Damage Dealt(Event Player, 100);
-		Set Max Health(Event Player, 100);
-		Destroy Effect(Event Player.Y);
-		Event Player.Y = 0;
-		Stop Camera(Event Player);
+	
+	
+	
+	
+	
         
     }
 }
@@ -859,7 +863,7 @@ rule("ana: damage all team mates by a very small amount so that they can be heal
 
 
 
-rule("Disable nanoboost effects after some time or when dead")
+rule("Ana: Disable nanoboost effects after some time or when dead")
 {
 	event
 	{
@@ -1104,6 +1108,7 @@ rule("Reset everything with baptiste.")
 		Event Player.BaptisteShieldPos = Null;
 		Event Player.BaptisteShieldAimSphere = Null;
 		Event Player.BaptisteShieldReadyToPlant = Null;
+		
     }
 }
 
@@ -1307,6 +1312,7 @@ rule("Reset everything with brigitte.")
 		Set Max Health(Event Player, 100);
 		Stop Holding Button(Event Player, Button(Secondary Fire));
 		All Players(Opposite Team Of(Team Of(Event Player))).D = Null;
+		Event Player.B = Null;
     }
 }
 
@@ -1458,6 +1464,35 @@ rule("Doomfist use ult")
 
 	actions
 	{
+		Event Player.B = Hero Of(Event Player);
+		Set Ultimate Ability Enabled(Event Player, False);
+	
+		Wait Until(Is Dead(Event Player), 20);
+	
+		Call Subroutine(ResetDoomfist);
+	}
+}
+
+
+
+rule("Doomfist loop meteor strikes")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Doomfist;
+	}
+
+	conditions
+	{
+	
+		Is Dummy Bot(Event Player) == false;
+		Event Player.B == Hero Of(Event Player);
+	}
+
+	actions
+	{
 		Wait(0.016, Ignore Condition);
 		Event Player.S = 8;
 		Event Player.G = Nearest Walkable Position(Random Value In Array(All Living Players(Opposite Team Of(Team Of(Event Player))))
@@ -1519,31 +1554,8 @@ rule("Reset Doomfist stuff")
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
 		Event Player.B = Null;
-	}
-}
-
-
-
-rule("Doomfist not using ultimate")
-{
-
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Doomfist;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == False;
-		Is Dummy Bot(Event Player) == false;
-
-	}
-
-	actions
-	{
-		Call Subroutine(ResetDoomfist);
+		Set Ultimate Ability Enabled(Event Player, True);
+		
 	}
 }
 
@@ -1567,7 +1579,7 @@ rule("Doomfist description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Create additional meteor strikes at random spots near enemy players while aiming the ultimate. Increased duration.", Null, Null, Null);
+		Event Player.UltDescription = Custom String("Create additional meteor strikes at random spots near enemy players for 20 seconds after starting the ultimate.", Null, Null, Null);
 
 	}
 }
@@ -1673,6 +1685,7 @@ rule("Remove D.Va stuff when switching hero.")
 	
 	
 		Event Player.G = Null;
+		Event Player.B = Null;
 		
 	
 		
@@ -2476,7 +2489,6 @@ rule("Genji Omae wa mou shindeiru")
 	actions
 	{
 		Set Damage Dealt(Event Player, 1);
-	
 		Event Player.Y = True;
 		Event Player.B = Hero Of(Event Player);
 	}
@@ -2580,7 +2592,6 @@ rule("Reset Genji stuff")
 
 	actions
 	{
-	
 		Set Damage Dealt(Event Player, 100);
 		Event Player.Y = 0;
 		Event Player.B = Null;
@@ -3137,6 +3148,7 @@ rule("Reset Junker Queen effects and buffs.")
 		Set Projectile Speed(Event Player, 100);
 
 		Event Player.JunkerReadyToTeleport = Null;
+		
 
 	
 	
@@ -3757,10 +3769,11 @@ rule("Mei activate ultimate")
 
 	actions
 	{
-		Destroy HUD Text(Event Player.UltReadyText);
-		Event Player.UltReadyText = Null;
+		Call Subroutine(UseCustomUlt);
+	
+	
 		All Players(Opposite Team Of(Team Of(Event Player))).EnemyMei = Event Player;
-		Event Player.UsingCustomUlt = True;
+	
 		Create HUD Text(Event Player, Event Player.P, Null, Null, Top, 1, Color(Green), Color(White), Color(White), Visible To and String,
 			Default Visibility);
 		Event Player.UltDescription = Last Text ID;
@@ -3768,7 +3781,6 @@ rule("Mei activate ultimate")
 		Event Player.UltEffect = Last Created Entity;
 		Event Player.P = 20;
 		Chase Player Variable At Rate(Event Player, P, 0, 1, Destination and Rate);
-	
 	
 	
 		Wait(Event Player.P, Ignore Condition);
@@ -3820,10 +3832,7 @@ rule("Mei: If player has virus, create virus effect, text and set variables, dis
 	actions
 	{
 		Set Healing Received(Event Player, 0);
-		disabled Start Damage Modification(All Players(Opposite Team Of(Team Of(Event Player))), Event Player, 70,
-			Receivers Damagers and Damage Percent);
-		disabled Event Player.CoronavirusDamageDebuff = Last Damage Modification ID;
-		disabled Set Max Health(Event Player, Max Health(Event Player) - 50);
+		
 		Create HUD Text(Event Player, Custom String(
 			"You have coronavirus. You cannot be healed and take damage over time. Spreads to nearby teammates."), Null, Null, Right, 0,
 			Color(Green), Color(Green), Color(White), Visible To and String, Default Visibility);
@@ -3831,18 +3840,12 @@ rule("Mei: If player has virus, create virus effect, text and set variables, dis
 		Start Damage Over Time(Event Player, Null, 10, 20);
 		Create Effect(All Players(All Teams), Cloud, Color(Green), Event Player, 1, Visible To Position and Radius);
 		Event Player.CoronavirusEffect = Last Created Entity;
-		disabled Set Status(Event Player, Null, Hacked, 10);
 		Wait(10, Abort When False);
 		Destroy Effect(Event Player.CoronavirusEffect);
 		Event Player.CoronavirusEffect = Null;
 		Destroy HUD Text(Event Player.CoronavirusText);
 		Event Player.CoronavirusText = Null;
-		disabled Set Max Health(Event Player, 100);
-		disabled Skip If(Hero Of(Event Player) != Hero(D.Va), 2);
-		disabled Skip If(Event Player.G == Null, 1);
-		disabled Set Max Health(Event Player, Event Player.G);
-		disabled Stop Damage Modification(Event Player.CoronavirusDamageDebuff);
-		disabled Event Player.CoronavirusDamageDebuff = Null;
+		
 		Set Healing Received(Event Player, 100);
 		Event Player.Coronavirus = Null;
 	}
@@ -3869,8 +3872,6 @@ rule("Mei: If player has virus, spread to nearby players")
 	{
 		Wait(1, Ignore Condition);
 		Remove From Array(Players Within Radius(Event Player, 7, Team Of(Event Player), Surfaces), Event Player).Coronavirus = True;
-		disabled Skip If(Max Health(Event Player) == 10, 1);
-		disabled Set Max Health(Event Player, Max Health(Event Player) - 10);
 		Loop If Condition Is True;
 	}
 }
@@ -4342,8 +4343,8 @@ rule("Pharah activate ultimate when button is pressed")
 		Event Player.R = 20;
 		Chase Player Variable At Rate(Event Player, R, 0, 1, Destination and Rate);
 		Create HUD Text(Event Player, String("{0} {1}", Custom String("Crouch to drop bombs."), Custom String("Ability 1 to activate top-down camera.")), String("{0}: {1}", Custom String("Bomb Cooldown: "), Event Player.S), String("{0}: {1}", Custom String("Ultimate Duration: "), Event Player.R), Right, 1, Color(Blue), Color(Blue), Color( White), Visible To and String, Default Visibility);
-		Set Damage Dealt(Event Player, 300);
-		Set Projectile Speed(Event Player, 300);
+	
+	
 		Set Ability 1 Enabled(Event Player, False);
 		Disallow Button(Event Player, Button(Jump));
 		Disallow Button(Event Player, Button(Secondary Fire));
@@ -4380,14 +4381,14 @@ rule("Reset Pharah stuff.")
 		Set Ability 1 Enabled(Event Player, True);
 		Allow Button(Event Player, Button(Jump));
 		Allow Button(Event Player, Button(Secondary Fire));
-		Set Projectile Speed(Event Player, 100);
-		Set Damage Dealt(Event Player, 100);
+	
+	
 		Destroy HUD Text(Last Text ID);
 		Destroy Effect(Event Player.P);
 		Event Player.M = Null;
 		Event Player.G = Null;
 		Event Player.P = Null;
-		Event Player.Y = Null;
+	
 		Event Player.Q = Null;
 		Event Player.R = Null;
 		Stop Camera(Event Player);
@@ -4414,7 +4415,7 @@ rule("Pharah drop bomb")
 	{
 		Event Player.UsingCustomUlt == True;
 		Is Button Held(Event Player, Button(Crouch)) == True;
-		Event Player.Y != True;
+	
 	}
 
 	actions
@@ -4621,7 +4622,8 @@ rule("Reaper activate ultimate.")
 		Set Primary Fire Enabled(Event Player, False);
 	
 	
-		Set Move Speed(Event Player, 150);
+		Value In Array(Event Player.CurrentSpeeds, 0) += 50;
+		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
 
 		Create Effect(All Players(All Teams), Bad Aura, Color(Black), Event Player, 1, POSITION AND RADIUS);
 		Event Player.ReaperVariables = Array(Last Created Entity);
@@ -4669,7 +4671,8 @@ rule("Reaper reset stuff.")
 		Set Primary Fire Enabled(Event Player, True);
 		Destroy Effect(Value In Array(Event Player.ReaperVariables, 0));
 		Destroy Hud Text(Value In Array(Event Player.ReaperVariables, 2));
-		Set Move Speed(Event Player, 100);
+		Value In Array(Event Player.CurrentSpeeds, 0) -= 50;
+		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
 
 
 		Destroy Effect(Value In Array(Event Player.ReaperVariables, 3));
@@ -6304,6 +6307,8 @@ rule("soldier 76 reset everything with soldier. Really only used when Soldier sw
 		Event Player.Soldier76KillStreaksActive = Null;
 		Event Player.SoldierKillStreakTexts = Null;
 		Event Player.Soldier76KillStreaksEquipped = Null;
+		
+		
 	}
 }
 
@@ -7023,6 +7028,7 @@ rule("sombra: za warudo")
 
 	actions
 	{
+	
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
 		Set Projectile Speed(All Players(All Teams), 0);
@@ -7065,6 +7071,7 @@ rule("sombra: reset")
 		Play Effect(All Players(All Teams), Debuff Impact Sound, Color(White), Event Player, 200);
 		Destroy HUD Text(Last Text ID);
 		Set Ultimate Charge(Event Player, 0);
+		Event Player.B = Null;
 	}
 }
 
@@ -7335,18 +7342,23 @@ rule("Symmetra ultimate activate and deactivate")
 
 	actions
 	{
-		Destroy HUD Text(Event Player.UltReadyText);
-		Event Player.UltReadyText = Null;
+		Call Subroutine(UseCustomUlt);
+	
+	
 		Event Player.G = 20;
 		Chase Player Variable At Rate(Event Player, G, 0, 1, Destination and Rate);
 		Create HUD Text(Event Player, String("Use Ultimate Ability"), Event Player.G, Null, Top, 3, Color(Blue), Color(White), Color(
 			White), Visible To and String, Default Visibility);
-		Event Player.UsingCustomUlt = True;
+	
 		Set Primary Fire Enabled(Event Player, False);
 		Set Secondary Fire Enabled(Event Player, False);
 		Wait(Event Player.G, Ignore Condition);
-
-		Call Subroutine(ResetSymmetra);
+		If(Team Of(Event Player) == Team 1);
+		Call Subroutine(ResetSymmetraTeam1);
+		Else;
+		Call Subroutine(ResetSymmetraTeam2);
+		End;
+		
 	}
 }
 
@@ -7358,28 +7370,57 @@ rule("Symmetra reset")
 	event
 	{
 		Subroutine;
-		ResetSymmetra;
+		ResetSymmetraTeam1;
 	}
 
 	actions
 	{
 		
 	
-		Destroy HUD Text(Last Text ID);
+	
 		Destroy Effect(Global.R);
 		Destroy Effect(Global.S);
 		Global.P = Null;
 		Global.Q = Null;
+		
+	
+	
+		Set Ultimate Charge(Event Player, 0);
+	
+	
+	
+		Call Subroutine(StopUsingCustomUlt);
+	}
+}
+
+
+
+rule("Symmetra reset")
+{
+    
+	event
+	{
+		Subroutine;
+		ResetSymmetraTeam2;
+	}
+
+	actions
+	{
+		
+	
+	
+		
 		Destroy Effect(Global.GreenPortal);
 		Destroy Effect(Global.W);
 		Global.YellowPortalRaycast = Null;
 		Global.GreenPortalRaycast = Null;
-		Event Player.CustomUltReadyToUse = False;
-		Set Ultimate Ability Enabled(Event Player, True);
+	
+	
 		Set Ultimate Charge(Event Player, 0);
-		Event Player.UsingCustomUlt = Null;
-		Set Primary Fire Enabled(Event Player, True);
-		Set Secondary Fire Enabled(Event Player, True);
+	
+	
+	
+		Call Subroutine(StopUsingCustomUlt);
 	}
 }
 
@@ -7398,7 +7439,7 @@ rule("Symmetra team 1 create blue portal")
 	conditions
 	{
 		Is Button Held(Event Player, Button(Primary Fire)) == True;
-		Event Player.CustomUltReadyToUse == True;
+	
 		Event Player.UsingCustomUlt == True;
 	}
 
@@ -7438,7 +7479,7 @@ rule("Symmetra team 1 create red portal")
 	conditions
 	{
 		Is Button Held(Event Player, Button(Secondary Fire)) == True;
-		Event Player.CustomUltReadyToUse == True;
+	
 		Event Player.UsingCustomUlt == True;
 	}
 
@@ -7478,7 +7519,7 @@ rule("Symmetra team 2 create yellow portal")
 	conditions
 	{
 		Is Button Held(Event Player, Button(Primary Fire)) == True;
-		Event Player.CustomUltReadyToUse == True;
+	
 		Event Player.UsingCustomUlt == True;
 	}
 
@@ -7516,7 +7557,7 @@ rule("Symmetra team 2 create green portal")
 	conditions
 	{
 		Is Button Held(Event Player, Button(Secondary Fire)) == True;
-		Event Player.CustomUltReadyToUse == True;
+	
 		Event Player.UsingCustomUlt == True;
 	}
 
@@ -8058,9 +8099,15 @@ rule("Activate Tracer's super speed ultimate")
 		Event Player.UltReadyText = Null;
 		Create Effect(All Players(All Teams), Energy Sound, Color(White), Event Player, 200, Visible To Position and Radius);
 		Event Player.UsingCustomUlt = True;
-		Start Forcing Throttle(Event Player, 1, 1, 0, 1, 0, 1);
-		Set Move Speed(Event Player, 6000);
-		Wait Until(Is Dead(Event Player), 5);
+		Start Forcing Throttle(Event Player, 1, 1, 0, 0, 0, 1);
+		Set Slow Motion(1);
+	
+		
+		Wait(0.15,Ignore Condition);
+		
+		Value In Array(Event Player.CurrentSpeeds, 0) += 4900;
+		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
+		Wait Until(Is Dead(Event Player), 0.5);
 		Call Subroutine(ResetTracer);
 	}
 }
@@ -8077,13 +8124,44 @@ rule("Tracer reset")
 
 	actions
 	{
-		Set Move Speed(Event Player, 100);
+		Value In Array(Event Player.CurrentSpeeds, 0) -= 4900;
+		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
 		Event Player.CustomUltReadyToUse = False;
 		Set Ultimate Ability Enabled(Event Player, True);
 		Set Ultimate Charge(Event Player, 0);
 		Stop Forcing Throttle(Event Player);
 		Event Player.UsingCustomUlt = False;
 		Destroy Effect(Last Created Entity);
+		Set Slow Motion(100);
+		
+	}
+}
+
+
+
+rule("Tracer play effects while ult is active")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Tracer;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Tracer);
+		Event Player.UsingCustomUlt == True;
+		Event Player.CustomUltReadyToUse == True;
+	}
+
+	actions
+	{
+		Wait(0.016, Ignore Condition);
+	
+	
+		Play Effect(All Players(All Teams), Good Explosion, Team Of(Event Player), Position Of(Event Player) + Backward, 1);
+		Loop If Condition Is True;
 	}
 }
 
@@ -8103,15 +8181,14 @@ rule("Tracer damage players when running at them")
 		Hero Of(Event Player) == Hero(Tracer);
 		Event Player.UsingCustomUlt == True;
 		Event Player.CustomUltReadyToUse == True;
+		Filtered Array(Players Within Radius(Update Every Frame(Eye Position(Event Player)), 1.8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Is Alive(Current Array Element) == True)  != Empty Array;
+	
 	}
 
 	actions
 	{
-		Wait(0.016, Ignore Condition);
-		Damage(Players Within Radius(Event Player, 1.500, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
-			Event Player, 500);
-		Play Effect(All Players(All Teams), Good Explosion, Team Of(Event Player), Position Of(Event Player) + Backward, 1);
-		Loop If Condition Is True;
+		Damage(Filtered Array(Players Within Radius(Update Every Frame(Eye Position(Event Player)), 1.8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Is Alive(Current Array Element) == True), Event Player, 500);
+		
 	}
 }
 
@@ -8135,7 +8212,7 @@ rule("Tracer description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Move around at super speed. Deal 500 damage to enemies you collide with.");
+		Event Player.UltDescription = Custom String("Set slow motion and briefly move forward at super speed. Enemies you collide with take 500 damage.");
 
 	}
 }
@@ -8854,8 +8931,6 @@ rule("Wrecking ball activate ultimate.")
 		Set Secondary Fire Enabled(Event Player, False);
         Disallow Button(Event Player, Button(Ability 1));
        
-       
-       
         Set Damage Received(Event Player, 33);
         Set Knockback Received(Event Player, 33);
         Wait Until(Is Dead(Event Player), 15);
@@ -9247,24 +9322,7 @@ rule("Zenyatta reset")
 		Event Player.Y = Null;
 		Destroy HUD Text(Event Player.M);
 		Event Player.M = Null;
-	
-	
-	
 		
-	
-	
-	
-	
-		
-	
-	
-	
-	
-	
-		
-	
-		
-	
 	}
 }
 
@@ -9356,7 +9414,7 @@ rule("Zenyatta reset")
 		Stop Forcing Throttle(Event Player.P);
 		Stop Camera(Event Player);
 		Event Player.P = Null;
-		Set Move Speed(Event Player, 100);
+		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
 		Clear Status(Event Player, Phased Out);
 		Set Invisible(Event Player, None);
 		Set Primary Fire Enabled(Event Player, True);
