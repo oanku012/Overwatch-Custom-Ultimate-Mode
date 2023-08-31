@@ -2814,10 +2814,10 @@ rule("Junker queen Teleport JQ and chosen enemies and set buffs.")
 		End;
 		
 		If(Event Player.JunkerScaleAndCD == Null);
-		Event Player.JunkerScaleAndCD = 1 + Count Of(Event Player.JunkerQueenEnemyArray) * 0.1;
+		Event Player.JunkerScaleAndCD = 1 + Count Of(Event Player.JunkerQueenEnemyArray) * 0.2;
 		Start Scaling Player(Event Player, Event Player.JunkerScaleAndCD, True);
 		Else;
-		Event Player.JunkerScaleAndCD += Count Of(Event Player.JunkerQueenEnemyArray) * 0.1;
+		Event Player.JunkerScaleAndCD += Count Of(Event Player.JunkerQueenEnemyArray) * 0.2;
 		End;
 		
 		
@@ -2835,7 +2835,7 @@ rule("Junker queen Teleport JQ and chosen enemies and set buffs.")
 		Modify Player Variable(Event Player, JunkerRageEffects, Append To Array, Last Created Entity);
 		End;
 		
-		Big Message(All Players(All Teams), Count Of(Event Player.JunkerRageEffects));
+	
 		
 	
 		
