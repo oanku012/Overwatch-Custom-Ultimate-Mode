@@ -205,83 +205,84 @@ variables {
     35: JunkerReadyToTeleport
     36: JunkerQueenInArena
     37: JunkerQueenPositions
-    38: JunkerRageEffects
-    39: JunkerDamageCounter
-    40: JunkerDamageMods
-    41: JunkerQueenHealthPools
-    42: JunkerArenaSphere
-    43: JunkerWinCounterText
-    44: JunkerWinCounter
-    45: ExtraLife
-    46: JunkratBombPosition
-    47: JunkratBombOrb
-    48: JunkratExplosionRadius
-    49: JunkratRadiusRing
-    50: JunkratTimer
-    51: JunkratTimerHUD
-    52: JunkratTimerAboveHead
-    53: EnemyMei
-    54: P
-    55: Coronavirus
-    56: CoronavirusText
-    57: CoronavirusEffect
-    58: HasDiedWithCoronaVirus
-    59: MercyExtraLifeText
-    60: ExtraLifeInWorldText
-    61: R
-    62: Q
-    63: U
-    64: ReaperVariables
-    65: ReaperTPPos
-    66: ReinhardtHudText
-    67: RoadhogHUD
-    68: SigmaMaleTimer
-    69: SigmaMaleValues
-    70: SigmaZeroGravBuff
-    71: SigmaHighGravDebuff
-    72: SojournLastRay
-    73: SojournRayArray
-    74: SojournBeamArray
-    75: SojournEyePosArray
-    76: SojournLastEyePos
-    77: SojournDamageRay
-    78: Soldier76Variables
-    79: SoldierAllKillStreaks
-    80: Soldier76KillStreaksEquipped
-    81: SoldierKillStreakTexts
-    82: Soldier76KillStreaksActive
-    83: LocalVariable
-    84: Soldier76CarepackLocation
-    85: SoldierCarePackAmmoIndex
-    86: TimeStopStunned
-    87: O
-    88: N
-    89: K
-    90: L
-    91: InPortalSpeed
-    92: TorbTurret
-    93: TorbTurretLevel
-    94: TorbTurretLevelText
-    95: TorbCurrentTarget
-    96: WidowZoomedIn
-    97: WidowPlayersInViewAngleSorted
-    98: WidowRayCastForward
-    99: WidowRayCastStartPos
-    100: WidowRayCastEndPos
-    101: WidowRayCastBackward
-    102: WidowRayCastHeadForward
-    103: WidowRayCastHeadBackward
-    104: WidowFireBeam
-    105: WidowDamage
-    106: WidowAimBeam
-    107: WidowLastFacingDirection
-    108: WinstonGrabbing
-    109: J
-    110: I
-    111: H
-    112: WinstonRayCast1
-    113: WinstonRayCast2
-    114: ZaryaGravPos
+    38: JunkerDamageCounter
+    39: JunkerHealthBonus
+    40: JunkerHealthPool
+    41: JunkerScaleAndCD
+    42: JunkerRageEffects
+    43: JunkerArenaSphere
+    44: JunkerWinCounterText
+    45: JunkerWinCounter
+    46: ExtraLife
+    47: JunkratBombPosition
+    48: JunkratBombOrb
+    49: JunkratExplosionRadius
+    50: JunkratRadiusRing
+    51: JunkratTimer
+    52: JunkratTimerHUD
+    53: JunkratTimerAboveHead
+    54: EnemyMei
+    55: P
+    56: Coronavirus
+    57: CoronavirusText
+    58: CoronavirusEffect
+    59: HasDiedWithCoronaVirus
+    60: MercyExtraLifeText
+    61: ExtraLifeInWorldText
+    62: R
+    63: Q
+    64: U
+    65: ReaperVariables
+    66: ReaperTPPos
+    67: ReinhardtHudText
+    68: RoadhogHUD
+    69: SigmaMaleTimer
+    70: SigmaMaleValues
+    71: SigmaZeroGravBuff
+    72: SigmaHighGravDebuff
+    73: SojournLastRay
+    74: SojournRayArray
+    75: SojournBeamArray
+    76: SojournEyePosArray
+    77: SojournLastEyePos
+    78: SojournDamageRay
+    79: Soldier76Variables
+    80: SoldierAllKillStreaks
+    81: Soldier76KillStreaksEquipped
+    82: SoldierKillStreakTexts
+    83: Soldier76KillStreaksActive
+    84: LocalVariable
+    85: Soldier76CarepackLocation
+    86: SoldierCarePackAmmoIndex
+    87: TimeStopStunned
+    88: O
+    89: N
+    90: K
+    91: L
+    92: InPortalSpeed
+    93: TorbTurret
+    94: TorbTurretLevel
+    95: TorbTurretLevelText
+    96: TorbCurrentTarget
+    97: WidowZoomedIn
+    98: WidowPlayersInViewAngleSorted
+    99: WidowRayCastForward
+    100: WidowRayCastStartPos
+    101: WidowRayCastEndPos
+    102: WidowRayCastBackward
+    103: WidowRayCastHeadForward
+    104: WidowRayCastHeadBackward
+    105: WidowFireBeam
+    106: WidowDamage
+    107: WidowAimBeam
+    108: WidowLastFacingDirection
+    109: WinstonGrabbing
+    110: J
+    111: I
+    112: H
+    113: WinstonRayCast1
+    114: WinstonRayCast2
+    115: ZaryaGravPos
 }
 
 
@@ -2706,6 +2707,7 @@ rule("Junker queen timer for teleporting to arena after ultimate starts.")
 	{
 		Is Using Ultimate(Event Player) == True;
 		Is Dummy Bot(Event Player) == false;
+		Is Alive(Event Player) == True;
 	}
 
 	actions
@@ -2747,7 +2749,7 @@ rule("Junker queen stop damage from ultimate ability.")
 
 
 
-rule("Junker queen Teleport JQ and chosen enemies.")
+rule("Junker queen Teleport JQ and chosen enemies and set buffs.")
 {
 
     event
@@ -2790,45 +2792,53 @@ rule("Junker queen Teleport JQ and chosen enemies.")
 		Event Player.JunkerQueenEnemyArray.JunkerQueenInArena = True;
 
 	
-
-		Create Effect(All Players(All Teams), Winston Primal Rage Effect, Team Of(Event Player), Event Player, 100, None);
-
-		If(Event Player.JunkerRageEffects == Null);
-		Event Player.JunkerRageEffects = Array(Last Created Entity);
+		
+		If(Event Player.JunkerDamageCounter == Null);
+		Event Player.JunkerDamageCounter = 100 + Count Of(Event Player.JunkerQueenEnemyArray) * 50;
 		Else;
+		Event Player.JunkerDamageCounter += Count Of(Event Player.JunkerQueenEnemyArray) * 50;
+		End;
+
+	
+		
+
+		Set Damage Dealt(Event Player, Event Player.JunkerDamageCounter);
+		
+		
+		
+		Event Player.JunkerHealthBonus += Count Of(Event Player.JunkerQueenEnemyArray) * 100;
+		
+		If(Event Player.JunkerHealthPool == Null);
+		Add Health Pool To Player(Event Player, Health, Event Player.JunkerHealthBonus, True, True);
+		Event Player.JunkerHealthPool =  Last Created Health Pool;
+		End;
+		
+		If(Event Player.JunkerScaleAndCD == Null);
+		Event Player.JunkerScaleAndCD = 1 + Count Of(Event Player.JunkerQueenEnemyArray) * 0.1;
+		Start Scaling Player(Event Player, Event Player.JunkerScaleAndCD, True);
+		Else;
+		Event Player.JunkerScaleAndCD += Count Of(Event Player.JunkerQueenEnemyArray) * 0.1;
+		End;
+		
+		
+	
+		
+		
+		If(Event Player.JunkerRageEffects == Null);
+		Event Player.JunkerRageEffects = Empty Array;
+	
+	
+		End;
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerQueenEnemyArray), 1);
+		Create Effect(All Players(All Teams), Winston Primal Rage Effect, Team Of(Event Player), Event Player, 100, None);
 		Modify Player Variable(Event Player, JunkerRageEffects, Append To Array, Last Created Entity);
 		End;
 		
+		Big Message(All Players(All Teams), Count Of(Event Player.JunkerRageEffects));
+		
 	
-		If(Event Player.JunkerDamageCounter == Null);
-		Event Player.JunkerDamageCounter = 100 + (50*Count Of(Event Player.JunkerQueenEnemyArray)) / Count of(Event Player.JunkerRageEffects);
-		Else;
-		Modify Player Variable(Event Player, JunkerDamageCounter, Multiply, (100 + (50*Count Of(Event Player.JunkerQueenEnemyArray)) / Count of(Event Player.JunkerRageEffects)) / 100);
-		End;
-
-		Start Damage Modification(All Players(Opposite Team Of(Team Of(Event Player))), Event Player, 100 + (50*Count Of(Event Player.JunkerQueenEnemyArray)) / Count of(Event Player.JunkerRageEffects), None);
-
-		If(Event Player.JunkerDamageMods == Null);
-	
-		Event Player.JunkerDamageMods = Array(Last Damage Modification ID);
-	
-		Else;
-		Modify Player Variable(Event Player, JunkerDamageMods, Append To Array, Last Damage Modification ID);
-	
-	
-	
-		End;
-
-		Add Health Pool To Player(Event Player, Health, (100*Count Of(Event Player.JunkerQueenEnemyArray)) /Count of(Event Player.JunkerRageEffects), true, false);
-
-
-		If(Event Player.JunkerQueenHealthPools == Null);
-
-		Event Player.JunkerQueenHealthPools = Array(Last Created Health Pool);
-		Else;
-
-		Modify Player Variable(Event Player, JunkerQueenHealthPools, Append To Array, Last Created Health Pool);
-		End;
+		
 
 
 		Modify Player Variable(Event Player, JunkerQueenPositions, Append To Array, Position Of(Event Player));
@@ -2850,8 +2860,60 @@ rule("Junker queen Teleport JQ and chosen enemies.")
 
 		Press Button(Event Player, Button(Ability 1));
 
-		Start Scaling Player(Event Player, (1 + Count Of(Event Player.JunkerRageEffects) / 10), false);
+	
 		
+	}
+}
+
+
+
+rule("Junker Decay buffs over time")
+{
+    event
+	{
+		Ongoing - Each Player;
+		All;
+		Junker Queen;
+	}
+
+	conditions
+	{
+		Event Player.JunkerDamageCounter > Null;
+		Event Player.JunkerHealthBonus > Null;
+		Event Player.JunkerQueenInArena != true;
+	}
+
+	actions
+	{
+		Wait(3, Abort When False);
+		Event Player.JunkerDamageCounter -= 0.1 * (Event Player.JunkerDamageCounter - 100);
+		
+		If(Event Player.JunkerDamageCounter < 100.1);
+		Event Player.JunkerDamageCounter = 0;
+		Set Damage Dealt(Event Player, 100);
+		Event Player.JunkerHealthBonus = Null;
+		Remove Health Pool From Player(Event Player.JunkerHealthPool);
+		Event Player.JunkerHealthPool = Null;
+		Stop Scaling Player(Event Player);
+		Event Player.JunkerScaleAndCD = Null;
+		Destroy Effect(Event Player.JunkerRageEffects);
+		Event Player.JunkerRageEffects = Null;
+		Else;
+		
+		Set Damage Dealt(Event Player, Event Player.JunkerDamageCounter);
+		Event Player.JunkerHealthBonus -= 0.1 * Event Player.JunkerHealthBonus;
+		Event Player.JunkerScaleAndCD -= 0.1 * (Event Player.JunkerScaleAndCD - 1);
+	
+		
+		If(Event Player.JunkerDamageCounter-50 <= Count Of(Event Player.JunkerRageEffects) * 50);
+		Destroy Effect(Last Of(Event Player.JunkerRageEffects));
+		Event Player.JunkerRageEffects = Remove From Array(Event Player.JunkerRageEffects, Last Of(Event Player.JunkerRageEffects));
+	
+		End;
+		
+		End;
+		
+		Loop If Condition Is True;
 	}
 }
 
@@ -2937,7 +2999,7 @@ rule("Push players back to arena if they flew too far. Teleport if too far away 
 
 
 
-rule("Set ability 1 cooldown to 50% after use for buffed Junker queen.")
+rule("Reduce ability 1 cooldown after use for buffed Junker queen.")
 {
     event
 	{
@@ -2949,7 +3011,9 @@ rule("Set ability 1 cooldown to 50% after use for buffed Junker queen.")
 	conditions
 	{
 		Event Player.JunkerRageEffects != Null;
-		Event Player.JunkerQueenHealthPools != Null;
+        Event Player.JunkerDamageCounter > Null;
+		Event Player.JunkerHealthBonus > Null;
+	
 	
 	
 	
@@ -2958,14 +3022,14 @@ rule("Set ability 1 cooldown to 50% after use for buffed Junker queen.")
 
 	actions
 	{
-		Set Ability Cooldown(Event Player, Button(Ability 1), 7.5);
+		Set Ability Cooldown(Event Player, Button(Ability 1), 14 / Event Player.JunkerScaleAndCD);
 
 	}
 }
 
 
 
-rule("Set ability 2 cooldown to 50% after use for buffed Junker queen.")
+rule("Reduce ability 2 cooldown after use for buffed Junker queen.")
 {
     event
 	{
@@ -2978,7 +3042,9 @@ rule("Set ability 2 cooldown to 50% after use for buffed Junker queen.")
 	conditions
 	{
 		Event Player.JunkerRageEffects != Null;
-		Event Player.JunkerQueenHealthPools != Null;
+		Event Player.JunkerDamageCounter > Null;
+		Event Player.JunkerHealthBonus > Null;
+	
 	
 	
 	
@@ -2988,7 +3054,7 @@ rule("Set ability 2 cooldown to 50% after use for buffed Junker queen.")
 
 	actions
 	{
-		Set Ability Cooldown(Event Player, Button(Ability 2), 4);
+		Set Ability Cooldown(Event Player, Button(Ability 2), 8 / Event Player.JunkerScaleAndCD);
 
 	}
 }
@@ -2997,6 +3063,7 @@ rule("Set ability 2 cooldown to 50% after use for buffed Junker queen.")
 
 rule("Set Secondary Fire cooldown to 50% after use for buffed Junker queen.")
 {
+
     event
 	{
 		Ongoing - Each Player;
@@ -3008,7 +3075,8 @@ rule("Set Secondary Fire cooldown to 50% after use for buffed Junker queen.")
 	conditions
 	{
 		Event Player.JunkerRageEffects != Null;
-		Event Player.JunkerQueenHealthPools != Null;
+		Event Player.JunkerDamageCounter > Null;
+		Event Player.JunkerHealthBonus > Null;
 	
 	
 	
@@ -3018,7 +3086,7 @@ rule("Set Secondary Fire cooldown to 50% after use for buffed Junker queen.")
 
 	actions
 	{
-		Set Ability Cooldown(Event Player, Button(Secondary Fire), 3);
+		Set Ability Cooldown(Event Player, Button(Secondary Fire), 6 / Event Player.JunkerScaleAndCD);
 
 	}
 }
@@ -3085,8 +3153,10 @@ rule("If Junker queen dies after being buffed and not in arena, remove buffs.")
 
 	conditions
 	{
-		Event Player.JunkerRageEffects != Null;
-		Event Player.JunkerQueenHealthPools != Null;
+		Event Player.JunkerDamageCounter != Null;
+		Event Player.JunkerHealthBonus != Null;
+	
+	
 		Event Player.JunkerQueenInArena != true;
 	
 		(Is Dead(Event Player) == True && Event Player.ExtraLife != True) == True;
@@ -3117,19 +3187,16 @@ rule("Reset Junker Queen effects and buffs.")
 
 		Destroy Effect(Event Player.JunkerRageEffects);
 		Event Player.JunkerRageEffects = Null;
-
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerQueenHealthPools), 1);
-		Remove Health Pool From Player(Value In Array(Event Player.JunkerQueenHealthPools, Event Player.ForLoopIndexPlayer));
-		End;
 		
-		Event Player.JunkerQueenHealthPools = Null;
+		
+		Set Damage Dealt(Event Player, 100);
 
+		Remove Health Pool From Player(Event Player.JunkerHealthPool);
+		
+		Event Player.JunkerHealthBonus = Null;
+		Event Player.JunkerHealthPool = Null;
 
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerDamageMods), 1);
-		Stop Damage Modification(Value In Array(Event Player.JunkerDamageMods, Event Player.ForLoopIndexPlayer));
-		End;
-
-		Event Player.JunkerDamageMods = Null;
+		
 
 		Destroy Hud Text(Event Player.JunkerWinCounterText);
 		Event Player.JunkerWinCounterText = Null;
@@ -3143,9 +3210,10 @@ rule("Reset Junker Queen effects and buffs.")
 		Event Player.JunkerDamageCounter = Null;
 		Event Player.JunkerWinCounter = Null;
 
+		Event Player.JunkerScaleAndCD = Null;
 		Stop Scaling Player(Event Player);
 
-		Set Projectile Speed(Event Player, 100);
+		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
 
 		Event Player.JunkerReadyToTeleport = Null;
 		
@@ -3221,6 +3289,7 @@ rule("If enemy died in arena, take them out of the fight.")
 	{
 		Event Player.JunkerQueenInArena == true;
 		Event Player.JunkerQueenEnemyArray == Null;
+	
 		Event Player.ExtraLife != True;
 	}
 
@@ -3284,11 +3353,13 @@ rule("Junker Queen description")
 
 	actions
 	{
+		
+		
 		Event Player.UltDescription = Custom String("After using her ultimate, every enemy that was hit is teleported alongside Junker Queen into a zero gravity {0}", Custom String("
 		arena above the map. Junker Queen gains a buff for each enemy she has to face. If JQ defeats all of her enemies {0}", Custom String("
 		in the arena, she will be teleported back to the map and keep all her buffs. If she loses then the other players {0}", Custom String(" 
-		will be teleported and she loses the buffs. If JQ gains consecutive wins then she can stack her buffs, but they {0}", Custom String("
-		have diminishing returns for each consecutive win. To become as strong as possible, {0}", Custom String("
+		will be teleported and she loses the buffs. The buffs will passively decay over time outside the arena,{0}", Custom String("
+		but she can stack buffs from winning consecutively. To become as strong as possible, {0}", Custom String("
 		it's best to hit as many enemies as you can each time you use the ultimate."))))));
 
 	}
