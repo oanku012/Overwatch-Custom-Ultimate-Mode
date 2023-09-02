@@ -39,8 +39,8 @@ settings
 			{
 			
 			
+				Workshop Expanse 0
 			
-				Workshop Chamber 0
 			}
 		}
 
@@ -145,26 +145,31 @@ settings
 }
 variables {
   global:
-    0: S
-    1: UltingSigmas
-    2: NukingPlayer
-    3: NukeTimer
-    4: NukeText
-    5: ForLoopIndexGlobal
-    6: NukePosition
-    7: NukeRadius
-    8: T
-    9: TimeStopTimer
-    10: R
-    11: P
-    12: Q
-    13: GreenPortal
-    14: YellowPortalRaycast
-    15: GreenPortalRaycast
-    16: SymmetraBluePNormal
-    17: SymmetraRedPNormal
-    18: SymmetraYellowPNormal
-    19: SymmetraGreenPNormal
+    0: JunkerArenaTimer
+    1: JunkerArenaSphere
+    2: JunkerArenaPositions
+    3: JunkerArenaTimerText
+    4: S
+    5: UltingSigmas
+    6: NukingPlayer
+    7: NukeTimer
+    8: NukeText
+    9: ForLoopIndexGlobal
+    10: NukePosition
+    11: NukeRadius
+    12: T
+    13: TimeStopTimer
+    14: R
+    15: P
+    16: Q
+    17: GreenPortal
+    18: W
+    19: YellowPortalRaycast
+    20: GreenPortalRaycast
+    21: SymmetraBluePNormal
+    22: SymmetraRedPNormal
+    23: SymmetraYellowPNormal
+    24: SymmetraGreenPNormal
 
   player:
     0: B
@@ -200,89 +205,90 @@ variables {
     30: EchoDummyBots
     31: EchoEffects
     32: V
-    33: JunkerQueenEnemyArray
-    34: JunkerQueenEnemyPositions
-    35: JunkerReadyToTeleport
-    36: JunkerQueenInArena
-    37: JunkerQueenPositions
-    38: JunkerDamageCounter
-    39: JunkerHealthBonus
-    40: JunkerHealthPool
-    41: JunkerScaleAndCD
-    42: JunkerRageEffects
-    43: JunkerArenaSphere
+    33: JunkerQueenInArena
+    34: JunkerQueenEnemyArray
+    35: JunkerQueenEnemyPositions
+    36: JunkerTeleportPos
+    37: JunkerReadyToTeleport
+    38: JunkerQueenPositions
+    39: JunkerDamageCounter
+    40: JunkerHealthBonus
+    41: JunkerHealthPool
+    42: JunkerScaleAndCD
+    43: JunkerRageEffects
     44: JunkerWinCounterText
     45: JunkerWinCounter
-    46: ExtraLife
-    47: JunkratBombPosition
-    48: JunkratBombOrb
-    49: JunkratExplosionRadius
-    50: JunkratRadiusRing
-    51: JunkratTimer
-    52: JunkratTimerHUD
-    53: JunkratTimerAboveHead
-    54: EnemyMei
-    55: P
-    56: Coronavirus
-    57: CoronavirusText
-    58: CoronavirusEffect
-    59: HasDiedWithCoronaVirus
-    60: MercyExtraLifeText
-    61: ExtraLifeInWorldText
-    62: R
-    63: Q
-    64: U
-    65: ReaperVariables
-    66: ReaperTPPos
-    67: ReinhardtHudText
-    68: RoadhogHUD
-    69: SigmaMaleTimer
-    70: SigmaMaleValues
-    71: SigmaZeroGravBuff
-    72: SigmaHighGravDebuff
-    73: SojournLastRay
-    74: SojournRayArray
-    75: SojournBeamArray
-    76: SojournEyePosArray
-    77: SojournLastEyePos
-    78: SojournDamageRay
-    79: Soldier76Variables
-    80: SoldierAllKillStreaks
-    81: Soldier76KillStreaksEquipped
-    82: SoldierKillStreakTexts
-    83: Soldier76KillStreaksActive
-    84: LocalVariable
-    85: Soldier76CarepackLocation
-    86: SoldierCarePackAmmoIndex
-    87: TimeStopStunned
-    88: O
-    89: N
-    90: K
-    91: L
-    92: InPortalSpeed
-    93: TorbTurret
-    94: TorbTurretLevel
-    95: TorbTurretLevelText
-    96: TorbCurrentTarget
-    97: WidowZoomedIn
-    98: WidowPlayersInViewAngleSorted
-    99: WidowRayCastForward
-    100: WidowRayCastStartPos
-    101: WidowRayCastEndPos
-    102: WidowRayCastBackward
-    103: WidowRayCastHeadForward
-    104: WidowRayCastHeadBackward
-    105: WidowFireBeam
-    106: WidowDamage
-    107: WidowAimBeam
-    108: WidowLastFacingDirection
-    109: WinstonGrabbing
-    110: J
-    111: I
-    112: H
-    113: WinstonRayCast1
-    114: WinstonRayCast2
-    115: ZaryaGravPos
+    46: JunkerArenaSphere
+    47: ExtraLife
+    48: JunkratBombPosition
+    49: JunkratBombOrb
+    50: JunkratExplosionRadius
+    51: JunkratRadiusRing
+    52: JunkratTimer
+    53: JunkratTimerHUD
+    54: JunkratTimerAboveHead
+    55: EnemyMei
+    56: P
+    57: Coronavirus
+    58: CoronavirusText
+    59: CoronavirusEffect
+    60: HasDiedWithCoronaVirus
+    61: MercyExtraLifeText
+    62: ExtraLifeInWorldText
+    63: R
+    64: Q
+    65: U
+    66: ReaperVariables
+    67: ReaperTPPos
+    68: ReinhardtHudText
+    69: RoadhogHUD
+    70: SigmaMaleTimer
+    71: SigmaMaleValues
+    72: SigmaZeroGravBuff
+    73: SigmaHighGravDebuff
+    74: SojournLastRay
+    75: SojournRayArray
+    76: SojournBeamArray
+    77: SojournEyePosArray
+    78: SojournLastEyePos
+    79: SojournDamageRay
+    80: Soldier76Variables
+    81: SoldierAllKillStreaks
+    82: Soldier76KillStreaksEquipped
+    83: SoldierKillStreakTexts
+    84: Soldier76KillStreaksActive
+    85: LocalVariable
+    86: Soldier76CarepackLocation
+    87: SoldierCarePackAmmoIndex
+    88: TimeStopStunned
+    89: O
+    90: N
+    91: K
+    92: L
+    93: InPortalSpeed
+    94: TorbTurret
+    95: TorbTurretLevel
+    96: TorbTurretLevelText
+    97: TorbCurrentTarget
+    98: WidowZoomedIn
+    99: WidowPlayersInViewAngleSorted
+    100: WidowRayCastForward
+    101: WidowRayCastStartPos
+    102: WidowRayCastEndPos
+    103: WidowRayCastBackward
+    104: WidowRayCastHeadForward
+    105: WidowRayCastHeadBackward
+    106: WidowFireBeam
+    107: WidowDamage
+    108: WidowAimBeam
+    109: WidowLastFacingDirection
+    110: WinstonGrabbing
+    111: J
+    112: I
+    113: H
+    114: WinstonRayCast1
+    115: WinstonRayCast2
+    116: ZaryaGravPos
 }
 
 
@@ -582,40 +588,6 @@ rule("Set default gravities and speeds for player")
 
 
 
-
-
-
-rule("Test dummy")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Is Button Held(Event Player, Button(Interact)) == True;
-	
-	}
-
-	actions
-	{
-	
-	
-		Create Dummy Bot(Hero(Mercy), Team Of(Event Player), -1, Event Player, Vector(0, 0, 0));
-		
-		Wait(1, Ignore Condition);
-		
-	
-		
-	
-		Start Holding Button(Last Created Entity, Button(Primary Fire));
-	
-		
-	}
-}
 
 
 
@@ -2669,15 +2641,18 @@ rule("Junker queen choose enemies for the arena fight.")
 
 	conditions
 	{
+	
+		Event Player.JunkerQueenInArena == Null;
 		Is Using Ultimate(Event Player) == True;
 	
 		Is Dummy Bot(Event Player) == false;
-		Event Ability() == (Button(Ultimate));
+		Event Ability == (Button(Ultimate));
+		Array Contains(Event Player.JunkerQueenEnemyArray, Victim) == false;
 	}
 
 	actions
 	{
-		
+	
 		If(Event Player.JunkerQueenEnemyArray == Null);
 		Event Player.JunkerQueenEnemyArray = Array(Victim);
 		Event Player.JunkerQueenEnemyPositions = Array(Position Of(Victim));
@@ -2687,7 +2662,11 @@ rule("Junker queen choose enemies for the arena fight.")
 		End;
 
 		Heal(Victim, Null, Event Damage);
-
+		
+		If(Victim.JunkerTeleportPos == Null);
+		Victim.JunkerTeleportPos = Position Of(Victim);
+		End;
+	
 
 	}
 }
@@ -2776,22 +2755,15 @@ rule("Junker queen Teleport JQ and chosen enemies and set buffs.")
 
 		Event Player.JunkerQueenPositions = Array(Position Of(Event Player));
 
-
+	
+		Global.JunkerArenaTimer = 30;
+		
+		
 	
 		Wait(0.01, Abort When False);
 
+
 		Event Player.JunkerReadyToTeleport = Null;
-
-
-		Teleport(Event Player.JunkerQueenEnemyArray, Position Of(Event Player) + Facing Direction Of(Event Player) * 10 + Up * 150);
-		Teleport(Event Player, Position Of(Event Player) + Up * 150);
-		Set Gravity(Event Player, 0);
-		Set Gravity(Event Player.JunkerQueenEnemyArray, 0);
-		Set Ultimate Ability Enabled(Event Player, False);
-		Event Player.JunkerQueenInArena = true;
-		Event Player.JunkerQueenEnemyArray.JunkerQueenInArena = True;
-
-	
 		
 		If(Event Player.JunkerDamageCounter == Null);
 		Event Player.JunkerDamageCounter = 100 + Count Of(Event Player.JunkerQueenEnemyArray) * 50;
@@ -2835,22 +2807,15 @@ rule("Junker queen Teleport JQ and chosen enemies and set buffs.")
 		Modify Player Variable(Event Player, JunkerRageEffects, Append To Array, Last Created Entity);
 		End;
 		
-	
+		Set Gravity(Event Player, 0);
+		Set Gravity(Event Player.JunkerQueenEnemyArray, 0);
+		Set Ultimate Ability Enabled(Event Player, False);
 		
-	
-		
-
-
-		Modify Player Variable(Event Player, JunkerQueenPositions, Append To Array, Position Of(Event Player));
-
-		Create Effect(All Players(All Teams), Sphere, Team Of(Event Player), Value In Array(Event Player.JunkerQueenPositions, 1), 20, None);
-		Event Player.JunkerArenaSphere = Last Created Entity;
-
 		If(Event Player.JunkerWinCounterText == null);
 		Create HUD Text(Event Player, String("{0} {1} {2}", Custom String("Win streak: "), Event Player.JunkerWinCounter, String("{0} {1}", Custom String("Damage bonus: "), String("{0}%", Event Player.JunkerDamageCounter))), Null, Null, Left, 1, Color(Blue), Color(White), Color(White), Visible To and String, Default Visibility);
 		Event Player.JunkerWinCounterText = Last Text Id;
 		End;		
-
+		
 		Set Player Health(Event Player, 10000);
 		Set Player Health(Event Player.JunkerQueenEnemyArray, 10000);
 		Set Ability Cooldown(Event Player, Button(Ability 1), 0);
@@ -2858,8 +2823,54 @@ rule("Junker queen Teleport JQ and chosen enemies and set buffs.")
 		Set Ability Cooldown(Event Player, Button(Secondary Fire), 0);
 		Set Projectile Speed(Event Player, 200);
 
-		Press Button(Event Player, Button(Ability 1));
+		If(Global.JunkerArenaSphere == Null);
+		
+		Teleport(Event Player.JunkerQueenEnemyArray, Position Of(Event Player) + Facing Direction Of(Event Player) * 10 + Up * 150);
+		Teleport(Event Player, Position Of(Event Player) + Up * 150);
 
+		Modify Player Variable(Event Player, JunkerQueenPositions, Append To Array, Position Of(Event Player));
+
+		Create Effect(All Players(All Teams), Sphere, Team Of(Event Player), Value In Array(Event Player.JunkerQueenPositions, 1), 20, None);
+		Event Player.JunkerArenaSphere = Last Created Entity;
+
+		
+	
+		Global.JunkerArenaSphere = Event Player.JunkerArenaSphere;
+		
+		Global.JunkerArenaPositions = Event Player.JunkerQueenPositions;
+		Else;
+		
+	
+		Event Player.JunkerArenaSphere = Global.JunkerArenaSphere;
+		
+		Teleport(Event Player.JunkerQueenEnemyArray, Value In Array(Global.JunkerArenaPositions, 0) + Facing Direction Of(Event Player) * 10 + Up * 150);
+		Teleport(Event Player, Value In Array(Global.JunkerArenaPositions, 0) + Up * 150);
+		
+		End;
+		
+		Event Player.JunkerQueenInArena = true;
+		Event Player.JunkerQueenEnemyArray.JunkerQueenInArena = True;
+		
+		Press Button(Event Player, Button(Ability 1));
+		
+		
+		Wait Until((Is Dead(Event Player) && Event Player.ExtraLife != True) || Event Player.JunkerQueenInArena != True, Global.JunkerArenaTimer);
+		
+	
+		
+	
+	
+		
+		If(Is Alive(Event Player) && Event Player.JunkerQueenInArena == True);
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+		Set Ultimate Ability Enabled(Event Player, True);
+		
+		Teleport(Event Player, Value In Array(Event Player.JunkerQueenPositions, 0));
+		Event Player.JunkerQueenInArena = Null;
+		
+		Call Subroutine(ResetJQ);
+		End;
+		
 	
 		
 	}
@@ -2968,7 +2979,7 @@ rule("Push players back to arena if they flew too far. Teleport if too far away 
 	{
 		Event Player.JunkerQueenInArena == true;
 		Event Player.JunkerQueenEnemyArray != Null;
-		((Is True For Any(Event Player.JunkerQueenEnemyArray, Distance Between(Current Array Element, Value In Array(Event Player.JunkerQueenPositions, 1)) > 20 && Is Alive(Current Array Element) == true) == True) || (Distance Between(Value In Array(Event Player.JunkerQueenPositions, 1), Event Player) > 20 && Is Alive(Event Player) == true)  == True) == True;
+		((Is True For Any(Event Player.JunkerQueenEnemyArray, Distance Between(Current Array Element, Value In Array(Global.JunkerArenaPositions, 1)) > 20 && Is Alive(Current Array Element) == true) == True) || (Distance Between(Value In Array(Global.JunkerArenaPositions, 1), Event Player) > 20 && Is Alive(Event Player) == true)  == True) == True;
 	}
 
 	actions
@@ -2976,20 +2987,20 @@ rule("Push players back to arena if they flew too far. Teleport if too far away 
 		Wait(0.1, Abort When False);
 
 		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(Event Player.JunkerQueenEnemyArray, Current Array Element.JunkerQueenInArena == True)), 1);
-		If(Distance Between(Value In Array(Event Player.JunkerQueenPositions, 1), Value In Array(Filtered Array(Event Player.JunkerQueenEnemyArray, Current Array Element.JunkerQueenInArena == True), Event Player.ForLoopIndexPlayer)) > 20);
-		Apply Impulse( Value In Array(Filtered Array(Event Player.JunkerQueenEnemyArray, Current Array Element.JunkerQueenInArena == True), Event Player.ForLoopIndexPlayer), Direction Towards(Value In Array(Filtered Array(Event Player.JunkerQueenEnemyArray, Current Array Element.JunkerQueenInArena == True), Event Player.ForLoopIndexPlayer), Value In Array(Event Player.JunkerQueenPositions, 1)), 20, To World, Cancel Contrary Motion);
+		If(Distance Between(Value In Array(Global.JunkerArenaPositions, 1), Value In Array(Filtered Array(Event Player.JunkerQueenEnemyArray, Current Array Element.JunkerQueenInArena == True), Event Player.ForLoopIndexPlayer)) > 20);
+		Apply Impulse( Value In Array(Filtered Array(Event Player.JunkerQueenEnemyArray, Current Array Element.JunkerQueenInArena == True), Event Player.ForLoopIndexPlayer), Direction Towards(Value In Array(Filtered Array(Event Player.JunkerQueenEnemyArray, Current Array Element.JunkerQueenInArena == True), Event Player.ForLoopIndexPlayer), Value In Array(Global.JunkerArenaPositions, 1)), 20, To World, Cancel Contrary Motion);
 		End;
-		If(Distance Between(Value In Array(Event Player.JunkerQueenPositions, 1), Value In Array(Filtered Array(Event Player.JunkerQueenEnemyArray, Current Array Element.JunkerQueenInArena == True), Event Player.ForLoopIndexPlayer)) > 30);
-		Teleport( Value In Array(Filtered Array(Event Player.JunkerQueenEnemyArray, Current Array Element.JunkerQueenInArena == True), Event Player.ForLoopIndexPlayer), Value In Array(Event Player.JunkerQueenPositions, 1));
+		If(Distance Between(Value In Array(Global.JunkerArenaPositions, 1), Value In Array(Filtered Array(Event Player.JunkerQueenEnemyArray, Current Array Element.JunkerQueenInArena == True), Event Player.ForLoopIndexPlayer)) > 30);
+		Teleport( Value In Array(Filtered Array(Event Player.JunkerQueenEnemyArray, Current Array Element.JunkerQueenInArena == True), Event Player.ForLoopIndexPlayer), Value In Array(Global.JunkerArenaPositions, 1));
 		End;
-		End;
-
-		If(Distance Between(Value In Array(Event Player.JunkerQueenPositions, 1), Event Player) > 20);
-		Apply Impulse( Event Player, Direction Towards(Event Player, Value In Array(Event Player.JunkerQueenPositions, 1)), 20, To World, Cancel Contrary Motion);
 		End;
 
-		If(Distance Between(Value In Array(Event Player.JunkerQueenPositions, 1), Event Player) > 30);
-		Teleport( Event Player, Value In Array(Event Player.JunkerQueenPositions, 1));
+		If(Distance Between(Value In Array(Global.JunkerArenaPositions, 1), Event Player) > 20);
+		Apply Impulse( Event Player, Direction Towards(Event Player, Value In Array(Global.JunkerArenaPositions, 1)), 20, To World, Cancel Contrary Motion);
+		End;
+
+		If(Distance Between(Value In Array(Global.JunkerArenaPositions, 1), Event Player) > 30);
+		Teleport( Event Player, Value In Array(Global.JunkerArenaPositions, 1));
 		End;
 
 		Loop If Condition Is True;
@@ -3093,7 +3104,7 @@ rule("Set Secondary Fire cooldown to 50% after use for buffed Junker queen.")
 
 
 
-rule("If Junker queen lost, teleport enemies back to map and remove her buff.")
+rule("If Junker queen died in arena, teleport enemies back to map and remove her buff.")
 {
 
     event
@@ -3114,24 +3125,30 @@ rule("If Junker queen lost, teleport enemies back to map and remove her buff.")
 	{
 		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerQueenEnemyArray), 1);
 		Teleport(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Event Player.JunkerQueenEnemyPositions, Event Player.ForLoopIndexPlayer));
-		Set Gravity(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer).CurrentGravities, 0));
+		Set Gravity(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer).CurrentGravities, 0));	
 		End;
 	
 		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
 	
 
+		Set Ultimate Ability Enabled(Event Player, True);
 		
 		
 		
 	
 		Set Knockback Dealt(Filtered Array(Event Player.JunkerQueenEnemyArray, Hero Of(Current Array Element) == Hero(Junker Queen)), 100);
 		Event Player.JunkerQueenEnemyArray.JunkerQueenInArena = Null;
+		Event Player.JunkerQueenEnemyArray.JunkerTeleportPos = Null;
 		Event Player.JunkerQueenInArena = Null;
 		Event Player.JunkerQueenEnemyArray = Null;
-		Set Ultimate Ability Enabled(Event Player, True);
 
-		Destroy Effect(Event Player.JunkerArenaSphere);
+	
 		Event Player.JunkerArenaSphere = Null;
+		
+	
+	
+	
+	
 
 		Call Subroutine(ResetJQ);
 
@@ -3184,7 +3201,6 @@ rule("Reset Junker Queen effects and buffs.")
 	actions
 	{
 
-
 		Destroy Effect(Event Player.JunkerRageEffects);
 		Event Player.JunkerRageEffects = Null;
 		
@@ -3195,6 +3211,10 @@ rule("Reset Junker Queen effects and buffs.")
 		
 		Event Player.JunkerHealthBonus = Null;
 		Event Player.JunkerHealthPool = Null;
+		
+		Event Player.JunkerTeleportPos = Null;
+		
+		Set Ultimate Ability Enabled(Event Player, True);
 
 		
 
@@ -3260,7 +3280,6 @@ rule("If enemies lost/JQ won, teleport Junker Queen back to map and keep her buf
 		Event Player.JunkerQueenInArena = Null;
 		Event Player.JunkerQueenEnemyArray = Null;
 		Set Ultimate Ability Enabled(Event Player, True);
-		Destroy Effect(Event Player.JunkerArenaSphere);
 
 		Event Player.JunkerArenaSphere = Null;
 		Set Knockback Dealt(Event Player, 100);
@@ -3270,7 +3289,16 @@ rule("If enemies lost/JQ won, teleport Junker Queen back to map and keep her buf
 		Set Knockback Dealt(Event Player, 100);
 		
 		Event Player.JunkerReadyToTeleport = Null;
+		
+		Event Player.JunkerTeleportPos = Null;
+		
+	
+		
+	
+	
+	
 
+		
 	}
 }
 
@@ -3303,11 +3331,84 @@ rule("If enemy died in arena, take them out of the fight.")
 		Set Knockback Dealt(Event Player, 100);
 		End;
 
+		Event Player.JunkerTeleportPos = Null;
+	}
+}
+
+
+
+rule("Teleport players out of the arena after timer runs out.")
+{
+    event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.JunkerQueenInArena == True;
+		Event Player.JunkerQueenEnemyArray == Null;
+		Global.JunkerArenaTimer == Null;
+	}
+
+	actions
+	{
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+		
+	
+		If(Hero Of(Event Player) == Hero(Junker Queen));
+		Set Knockback Dealt(Event Player, 100);
+		End;
+		
+		Teleport(Event Player, Event Player.JunkerTeleportPos);
+		
+	
+		
+		
+		Event Player.JunkerTeleportPos = Null;
+		Event Player.JunkerQueenInArena = Null;
+	
+		
 
 	}
 }
 
 
+
+rule("Destroy arena after some time.")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+		Global.JunkerArenaSphere != Null;
+	}
+
+	actions
+	{
+	
+		Create HUD Text(Filtered Array(All Players(All Teams), Current Array Element.JunkerQueenInArena != Null), Global.JunkerArenaTimer, Null, Null, Top, 0, Color(Orange), Color(white), Color(white), Visible To And String, Default Visibility);
+		Global.JunkerArenaTimerText = Last Text ID;
+		Chase Global Variable At Rate(JunkerArenaTimer, 0, 1, None);
+		Wait(Global.JunkerArenaTimer, Abort When False);
+		
+	
+		
+		
+		Stop Chasing Global Variable(JunkerArenaTimer);
+		
+		Global.JunkerArenaTimer = Null;
+		Destroy HUD Text(Global.JunkerArenaTimerText);
+		Global.JunkerArenaTimerText = Null;
+		Destroy Effect(Global.JunkerArenaSphere);
+		Global.JunkerArenaSphere = Null;
+	}
+}
 
 rule("Pull enemy towards JQ with knife.")
 {
@@ -8991,20 +9092,27 @@ rule("Wrecking ball activate ultimate.")
     actions
     {
         Call Subroutine(UseCustomUlt);
-        Start Scaling Player(Event Player, 3, false);
+        Start Scaling Player(Event Player, 0, false);
        
         Skip If(Is In Alternate Form(Event Player) == true, 1);
-        Press Button(Event Player, Button(Ability 1));
+       
 
 	
 	
-		Set Primary Fire Enabled(Event Player, False);
-		Set Secondary Fire Enabled(Event Player, False);
-        Disallow Button(Event Player, Button(Ability 1));
+	
+	
        
-        Set Damage Received(Event Player, 33);
-        Set Knockback Received(Event Player, 33);
-        Wait Until(Is Dead(Event Player), 15);
+       
+       
+       
+		
+		
+	
+	
+	
+		
+        Wait Until(Is Dead(Event Player), 150);
+		
         Skip If(Event Player.UsingCustomUlt == Null, 1);
         Call Subroutine(ResetWB);
         
@@ -9032,9 +9140,6 @@ rule("Wrecking ball reset.")
         Call Subroutine(StopUsingCustomUlt);
         Start Scaling Player(Event Player, 1, false);
 		Set Ability 1 Enabled(Event Player, True);
-		Set Secondary Fire Enabled(Event Player, True);
-        Set Damage Received(Event Player, 100);
-        Set Knockback Received(Event Player, 100);
 
 
 
@@ -9056,78 +9161,16 @@ rule("Wrecking ball kill nearby enemies while using ultimate")
 	{
 		Event Player.UsingCustomUlt == true;
 		Hero Of(Event Player) == Hero(Wrecking Ball);
-        Players Within Radius(Event Player, 10, Opposite Team of(Team Of(Event Player)), Surfaces) != null;
-        Is True For Any(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces), Is Alive(current array element)) == true;
-        Is Moving(Event Player) == true;
        
        
 	}
 
     actions
     {
-       
-       
-       
-        Damage(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces), Event Player, 400);
-        Apply Impulse(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces), Position Of(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces)) - Event Player, 50, To World, Cancel Contrary Motion);
-       
+        Wait(0.016, Ignore Condition);
+		Set Ability Cooldown(Event Player, Button(Secondary Fire), 0);
+		Loop If Condition Is True;
     }
-}
-
-
-
-rule("Auto-transform back to ball if form is reverted by enemy abilities")
-{
-    event
-	{
-		Ongoing - Each Player;
-		All;
-		Wrecking Ball;
-	}
-
-    conditions
-	{
-		Event Player.UsingCustomUlt == true;
-		Hero Of(Event Player) == Hero(Wrecking Ball);
-        Is In Alternate Form(Event Player) == false;
-	}
-
-    actions
-    {
-        Wait(1, Ignore Condition);
-       
-        Allow Button(Event Player, Button(Ability 1));
-        Press Button(Event Player, Button(Ability 1));
-        Disallow Button(Event Player, Button(Ability 1));
-	
-        Loop If Condition Is True;
-
-    }
-}
-
-
-
-rule("Wrecking Ball description")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Wrecking Ball;
-	}
-
-	conditions
-	{
-		
-		
-
-	}
-
-	actions
-	{
-		Event Player.UltDescription = Custom String("Turn into a giant ball and roll over enemies.");
-
-	}
 }
 
 

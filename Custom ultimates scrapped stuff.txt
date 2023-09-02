@@ -2821,7 +2821,46 @@ rule("Team 2 Orisa shield push enemies inside the shield")
 
 
 
+JUNKER QUEEN:
+//Old system with buffs that had diminishin returns for each win. Didn't really like how the system punished you for having a longer streak.
+		/*Create Effect(All Players(All Teams), Winston Primal Rage Effect, Team Of(Event Player), Event Player, 100, None);
 
+		If(Event Player.JunkerRageEffects == Null);
+		Event Player.JunkerRageEffects = Array(Last Created Entity);
+		Else;
+		Modify Player Variable(Event Player, JunkerRageEffects, Append To Array, Last Created Entity);
+		End;
+		
+		//Buffs have diminishing returns, divided by number of wins. INSTEAD OF DIMINISHING RETURNS, MAYBE COULD DO SOME KIND OF SYSTEM WHERE THE BUFF DECAYS OVER TIME??
+		If(Event Player.JunkerDamageCounter == Null);
+		Event Player.JunkerDamageCounter = 100 + (50*Count Of(Event Player.JunkerQueenEnemyArray)) / Count of(Event Player.JunkerRageEffects);
+		Else;
+		Modify Player Variable(Event Player, JunkerDamageCounter, Multiply, (100 + (50*Count Of(Event Player.JunkerQueenEnemyArray)) / Count of(Event Player.JunkerRageEffects)) / 100);
+		End;
+
+		Start Damage Modification(All Players(Opposite Team Of(Team Of(Event Player))), Event Player, 100 + (50*Count Of(Event Player.JunkerQueenEnemyArray)) / Count of(Event Player.JunkerRageEffects), None);
+
+		If(Event Player.JunkerDamageMods == Null);
+		//Start Damage Modification(All Players(Opposite Team Of(Team Of(Event Player))), Event Player, 100 + 10*Count Of(Event Player.JunkerQueenEnemyArray), None);
+		Event Player.JunkerDamageMods = Array(Last Damage Modification ID);
+		//Event Player.JunkerDamageMod = Last Damage Modification ID;
+		Else;
+		Modify Player Variable(Event Player, JunkerDamageMods, Append To Array, Last Damage Modification ID);
+		//Stop Damage Modification(Event Player.JunkerDamageMod);
+		//Start Damage Modification(All Players(Opposite Team Of(Team Of(Event Player))), Event Player, 100 + 10*Count Of(Event Player.JunkerQueenEnemyArray), None);
+		//Event Player.JunkerDamageMod = Last Damage Modification ID;
+		End;
+
+		Add Health Pool To Player(Event Player, Health, (100*Count Of(Event Player.JunkerQueenEnemyArray)) /Count of(Event Player.JunkerRageEffects), true, false);
+
+
+		If(Event Player.JunkerQueenHealthPools == Null);
+
+		Event Player.JunkerQueenHealthPools = Array(Last Created Health Pool);
+		Else;
+
+		Modify Player Variable(Event Player, JunkerQueenHealthPools, Append To Array, Last Created Health Pool);
+		End;*/
 
 
 
