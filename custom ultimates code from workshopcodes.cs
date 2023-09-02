@@ -37,9 +37,9 @@ settings
 		{
 			enabled maps
 			{
+				Colosseo 0
 			
 			
-				Workshop Expanse 0
 			
 			}
 		}
@@ -173,122 +173,125 @@ variables {
 
   player:
     0: B
-    1: CustomUltReadyToUse
-    2: UltReadyText
-    3: UsingCustomUlt
-    4: UltEffect
-    5: G
-    6: UltDescriptionTextObject
-    7: UltDescription
-    8: CurrentGravities
-    9: CurrentSpeeds
-    10: MenuHUDOptions
-    11: MenuOptions
-    12: ForLoopIndexPlayer
-    13: MenuHUDChooseSort
-    14: MenuOpen
-    15: MenuChosenOption
-    16: Nanoboosted
-    17: AnaHealMod
-    18: BaptisteShieldAimSphere
-    19: BaptisteShieldPos
-    20: BaptisteShieldReadyToPlant
-    21: BaptisteShieldBot
-    22: D
-    23: BrigitteUltActive
-    24: BrigitteKnockedBack
-    25: S
-    26: Y
-    27: M
-    28: DVAVariables
-    29: EchoAimRayCast
-    30: EchoDummyBots
-    31: EchoEffects
-    32: V
-    33: JunkerQueenInArena
-    34: JunkerQueenEnemyArray
-    35: JunkerQueenEnemyPositions
-    36: JunkerTeleportPos
-    37: JunkerReadyToTeleport
-    38: JunkerQueenPositions
-    39: JunkerDamageCounter
-    40: JunkerHealthBonus
-    41: JunkerHealthPool
-    42: JunkerScaleAndCD
-    43: JunkerRageEffects
-    44: JunkerWinCounterText
-    45: JunkerWinCounter
-    46: JunkerArenaSphere
-    47: ExtraLife
-    48: JunkratBombPosition
-    49: JunkratBombOrb
-    50: JunkratExplosionRadius
-    51: JunkratRadiusRing
-    52: JunkratTimer
-    53: JunkratTimerHUD
-    54: JunkratTimerAboveHead
-    55: EnemyMei
-    56: P
-    57: Coronavirus
-    58: CoronavirusText
-    59: CoronavirusEffect
-    60: HasDiedWithCoronaVirus
-    61: MercyExtraLifeText
-    62: ExtraLifeInWorldText
-    63: R
-    64: Q
-    65: U
-    66: ReaperVariables
-    67: ReaperTPPos
-    68: ReinhardtHudText
-    69: RoadhogHUD
-    70: SigmaMaleTimer
-    71: SigmaMaleValues
-    72: SigmaZeroGravBuff
-    73: SigmaHighGravDebuff
-    74: SojournLastRay
-    75: SojournRayArray
-    76: SojournBeamArray
-    77: SojournEyePosArray
-    78: SojournLastEyePos
-    79: SojournDamageRay
-    80: Soldier76Variables
-    81: SoldierAllKillStreaks
-    82: Soldier76KillStreaksEquipped
-    83: SoldierKillStreakTexts
-    84: Soldier76KillStreaksActive
-    85: LocalVariable
-    86: Soldier76CarepackLocation
-    87: SoldierCarePackAmmoIndex
-    88: TimeStopStunned
-    89: O
-    90: N
-    91: K
-    92: L
-    93: InPortalSpeed
-    94: TorbTurret
-    95: TorbTurretLevel
-    96: TorbTurretLevelText
-    97: TorbCurrentTarget
-    98: WidowZoomedIn
-    99: WidowPlayersInViewAngleSorted
-    100: WidowRayCastForward
-    101: WidowRayCastStartPos
-    102: WidowRayCastEndPos
-    103: WidowRayCastBackward
-    104: WidowRayCastHeadForward
-    105: WidowRayCastHeadBackward
-    106: WidowFireBeam
-    107: WidowDamage
-    108: WidowAimBeam
-    109: WidowLastFacingDirection
-    110: WinstonGrabbing
-    111: J
-    112: I
-    113: H
-    114: WinstonRayCast1
-    115: WinstonRayCast2
-    116: ZaryaGravPos
+    1: EquippedEmotes
+    2: CustomUltReadyToUse
+    3: UltReadyText
+    4: UsingCustomUlt
+    5: UltEffect
+    6: G
+    7: UltDescriptionTextObject
+    8: UltDescription
+    9: CurrentGravities
+    10: CurrentSpeeds
+    11: MenuHUDOptions
+    12: MenuOptions
+    13: ForLoopIndexPlayer
+    14: MenuHUDChooseSort
+    15: MenuOpen
+    16: MenuChosenOption
+    17: Nanoboosted
+    18: AnaHealMod
+    19: BaptisteShieldAimSphere
+    20: BaptisteShieldPos
+    21: BaptisteShieldReadyToPlant
+    22: BaptisteShieldBot
+    23: D
+    24: BrigitteUltActive
+    25: BrigitteKnockedBack
+    26: S
+    27: Y
+    28: M
+    29: DVAVariables
+    30: EchoAimRayCast
+    31: EchoDummyBots
+    32: EchoEffects
+    33: V
+    34: JunkerQueenInArena
+    35: JunkerQueenEnemyArray
+    36: JunkerQueenEnemyPositions
+    37: JunkerTeleportPos
+    38: JunkerReadyToTeleport
+    39: JunkerQueenPositions
+    40: JunkerDamageCounter
+    41: JunkerHealthBonus
+    42: JunkerHealthPool
+    43: JunkerScaleAndCD
+    44: JunkerRageEffects
+    45: JunkerWinCounterText
+    46: JunkerWinCounter
+    47: JunkerArenaSphere
+    48: ExtraLife
+    49: JunkratBombPosition
+    50: JunkratBombOrb
+    51: JunkratExplosionRadius
+    52: JunkratRadiusRing
+    53: JunkratTimer
+    54: JunkratTimerHUD
+    55: JunkratTimerAboveHead
+    56: LucioEmotesArray
+    57: LucioRandomEmote
+    58: EnemyMei
+    59: P
+    60: Coronavirus
+    61: CoronavirusText
+    62: CoronavirusEffect
+    63: HasDiedWithCoronaVirus
+    64: MercyExtraLifeText
+    65: ExtraLifeInWorldText
+    66: R
+    67: Q
+    68: U
+    69: ReaperVariables
+    70: ReaperTPPos
+    71: ReinhardtHudText
+    72: RoadhogHUD
+    73: SigmaMaleTimer
+    74: SigmaMaleValues
+    75: SigmaZeroGravBuff
+    76: SigmaHighGravDebuff
+    77: SojournLastRay
+    78: SojournRayArray
+    79: SojournBeamArray
+    80: SojournEyePosArray
+    81: SojournLastEyePos
+    82: SojournDamageRay
+    83: Soldier76Variables
+    84: SoldierAllKillStreaks
+    85: Soldier76KillStreaksEquipped
+    86: SoldierKillStreakTexts
+    87: Soldier76KillStreaksActive
+    88: LocalVariable
+    89: Soldier76CarepackLocation
+    90: SoldierCarePackAmmoIndex
+    91: TimeStopStunned
+    92: O
+    93: N
+    94: K
+    95: L
+    96: InPortalSpeed
+    97: TorbTurret
+    98: TorbTurretLevel
+    99: TorbTurretLevelText
+    100: TorbCurrentTarget
+    101: WidowZoomedIn
+    102: WidowPlayersInViewAngleSorted
+    103: WidowRayCastForward
+    104: WidowRayCastStartPos
+    105: WidowRayCastEndPos
+    106: WidowRayCastBackward
+    107: WidowRayCastHeadForward
+    108: WidowRayCastHeadBackward
+    109: WidowFireBeam
+    110: WidowDamage
+    111: WidowAimBeam
+    112: WidowLastFacingDirection
+    113: WinstonGrabbing
+    114: J
+    115: I
+    116: H
+    117: WinstonRayCast1
+    118: WinstonRayCast2
+    119: ZaryaGravPos
 }
 
 
@@ -429,8 +432,13 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		Call Subroutine(ResetZenyatta);
 		End;
 
-		Event Player.B = Null;
-
+		
+		Event Player.B = Hero Of(Event Player);
+		
+		
+		Event Player.EquippedEmotes = Null;
+	
+		
 
 	}
 }
@@ -462,7 +470,7 @@ rule("Disable vanilla ultimate when charge is full")
 		Set Ultimate Ability Enabled(Event Player, False);
 		Create HUD Text(Event Player, Custom String("ULT READY PRESS Q TO USE ULTIMATE"), Null, Null, Top, 1, Color(Blue), Color(White), Color(White), Visible To and String, Default Visibility);
 		Event Player.UltReadyText = Last Text ID;
-		Event Player.B = Hero Of(Event Player);
+	
 	}
 }
 
@@ -497,14 +505,26 @@ rule("Stop Using custom ult")
 
     actions
     {
+		If(Event Player.UltEffect != Null);
         Destroy Effect(Event Player.UltEffect);
+		Event Player.UltEffect = Null;
+		End;
+		
+		Event Player.CustomUltReadyToUse = Null;
         Event Player.UsingCustomUlt = null;
+		If(Event Player.UltReadyText != Null);
         Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
+		End;
+		
 		Set Ultimate Ability Enabled(Event Player, True);
-		Event Player.B = Null;
+		Set Ultimate Charge(Event Player, 0);
+	
+		If(Event Player.G != Null);
 		Stop Chasing Player Variable(Event Player, G);
 		Event Player.G = 0;
+		End;
+		
 		Destroy HUD Text(Last Text ID);
 		Set Primary Fire Enabled(Event Player, True);
 		Set Secondary Fire Enabled(Event Player, True);
@@ -588,6 +608,65 @@ rule("Set default gravities and speeds for player")
 
 
 
+
+rule("Set current hero to B variable")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Has Spawned(Event Player) == True;
+	
+
+	}
+
+	actions
+	{
+		Event Player.B = Hero Of(Event Player);
+	
+	}
+}
+
+
+
+
+
+rule("Test dummy")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Interact)) == True;
+	
+	}
+
+	actions
+	{
+	
+		Create Dummy Bot(Hero(Lúcio), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
+	
+		
+		Wait(1, Ignore Condition);
+		
+		Set Ultimate Charge(Last Created Entity, 100);
+		
+		Start Holding Button(Last Created Entity, Button(Ultimate));
+	
+	
+		
+	}
+}
 
 
 
@@ -782,11 +861,7 @@ rule("ana: set variables for player boosted by ana")
 
 	actions
 	{
-	
-
-       
-
-	
+		
 
 		Healee.Nanoboosted = True;
 	
@@ -801,7 +876,6 @@ rule("ana: set variables for player boosted by ana")
 		Stop Healing Modification(Event Player.AnaHealMod);
 		Event Player.AnaHealMod = Null;
 
-	
 		
 	}
 }
@@ -1238,7 +1312,6 @@ rule("Brigitte: Increase shield size when using ultimate")
 
 		Press Button(Event Player, Button(Ultimate));
 
-	
 
 
 
@@ -1285,7 +1358,7 @@ rule("Reset everything with brigitte.")
 		Set Max Health(Event Player, 100);
 		Stop Holding Button(Event Player, Button(Secondary Fire));
 		All Players(Opposite Team Of(Team Of(Event Player))).D = Null;
-		Event Player.B = Null;
+	
     }
 }
 
@@ -1437,9 +1510,9 @@ rule("Doomfist use ult")
 
 	actions
 	{
-		Event Player.B = Hero Of(Event Player);
-		Set Ultimate Ability Enabled(Event Player, False);
 	
+		Set Ultimate Ability Enabled(Event Player, False);
+		Event Player.UsingCustomUlt = True;
 		Wait Until(Is Dead(Event Player), 20);
 	
 		Call Subroutine(ResetDoomfist);
@@ -1461,7 +1534,7 @@ rule("Doomfist loop meteor strikes")
 	{
 	
 		Is Dummy Bot(Event Player) == false;
-		Event Player.B == Hero Of(Event Player);
+		Event Player.UsingCustomUlt == True;
 	}
 
 	actions
@@ -1526,8 +1599,9 @@ rule("Reset Doomfist stuff")
 		disabled Event Player.UsingCustomUlt = Null;
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
-		Event Player.B = Null;
+	
 		Set Ultimate Ability Enabled(Event Player, True);
+		Event Player.UsingCustomUlt = Null;
 		
 	}
 }
@@ -1627,7 +1701,7 @@ rule("D.VA Has spawned with no upgrades, set hud and initial damage+max health")
 		Modify Player Variable(Event Player, DVAVariables, Append To Array, 0);
 	
 		Event Player.G = Array(100, 0, 1, false);
-		Event Player.B = Hero Of(Event Player);
+	
 		
 	
 
@@ -1658,7 +1732,7 @@ rule("Remove D.Va stuff when switching hero.")
 	
 	
 		Event Player.G = Null;
-		Event Player.B = Null;
+	
 		
 	
 		
@@ -2027,7 +2101,7 @@ rule("Echo activate ultimate")
 	
 	
 
-		Event Player.B = Hero Of(Event Player);
+	
 
 		Wait Until((Is Dead(Event Player) == true || Is Duplicating(Event Player) == false) == true, 9999);
 		Call Subroutine(ResetEcho);
@@ -2056,7 +2130,7 @@ rule("Resets everything with Echo after Ult is over or when changing hero.")
 		Event Player.EchoDummyBots = Null;
 		Event Player.EchoAimRayCast = Null;
 		Stop Camera(Event Player);
-		Event Player.B = Null;
+	
 	}
 }
 
@@ -2463,7 +2537,7 @@ rule("Genji Omae wa mou shindeiru")
 	{
 		Set Damage Dealt(Event Player, 1);
 		Event Player.Y = True;
-		Event Player.B = Hero Of(Event Player);
+	
 	}
 }
 
@@ -2567,7 +2641,7 @@ rule("Reset Genji stuff")
 	{
 		Set Damage Dealt(Event Player, 100);
 		Event Player.Y = 0;
-		Event Player.B = Null;
+	
 	}
 }
 
@@ -2691,7 +2765,7 @@ rule("Junker queen timer for teleporting to arena after ultimate starts.")
 
 	actions
 	{
-		Event Player.B = Hero Of(Event Player);
+	
 		Wait(1.60, Abort When False);
 		Event Player.JunkerReadyToTeleport = True;
 		
@@ -2958,6 +3032,7 @@ rule("Junker queen don't teleport players who died before the ult finished.")
 		
 		If(Is True For All(Event Player.JunkerQueenEnemyArray, Is Dead(Current Array Element) == True) == True);
 		Event Player.JunkerQueenEnemyArray = Null;
+		Event Player.JunkerReadyToTeleport = Null;
 		End;
 		
 	}
@@ -3104,7 +3179,7 @@ rule("Set Secondary Fire cooldown to 50% after use for buffed Junker queen.")
 
 
 
-rule("If Junker queen died in arena, teleport enemies back to map and remove her buff.")
+rule("If Junker queen lost, teleport enemies back to map and remove her buff.")
 {
 
     event
@@ -3304,39 +3379,6 @@ rule("If enemies lost/JQ won, teleport Junker Queen back to map and keep her buf
 
 
 
-rule("If enemy died in arena, take them out of the fight.")
-{
-    event
-	{
-		Player Died;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.JunkerQueenInArena == true;
-		Event Player.JunkerQueenEnemyArray == Null;
-	
-		Event Player.ExtraLife != True;
-	}
-
-	actions
-	{
-		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
-		
-		Event Player.JunkerQueenInArena = Null;
-	
-		If(Hero Of(Event Player) == Hero(Junker Queen));
-		Set Knockback Dealt(Event Player, 100);
-		End;
-
-		Event Player.JunkerTeleportPos = Null;
-	}
-}
-
-
-
 rule("Teleport players out of the arena after timer runs out.")
 {
     event
@@ -3376,7 +3418,6 @@ rule("Teleport players out of the arena after timer runs out.")
 }
 
 
-
 rule("Destroy arena after some time.")
 {
 	event
@@ -3409,6 +3450,40 @@ rule("Destroy arena after some time.")
 		Global.JunkerArenaSphere = Null;
 	}
 }
+
+
+rule("If enemy died in arena, take them out of the fight.")
+{
+    event
+	{
+		Player Died;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.JunkerQueenInArena == true;
+		Event Player.JunkerQueenEnemyArray == Null;
+	
+		Event Player.ExtraLife != True;
+	}
+
+	actions
+	{
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+		
+		Event Player.JunkerQueenInArena = Null;
+	
+		If(Hero Of(Event Player) == Hero(Junker Queen));
+		Set Knockback Dealt(Event Player, 100);
+		End;
+
+		Event Player.JunkerTeleportPos = Null;
+	}
+}
+
+
 
 rule("Pull enemy towards JQ with knife.")
 {
@@ -3647,9 +3722,11 @@ rule("Lucio activate ult")
 
 	conditions
 	{
-		Is Using Ultimate(Event Player) == True;
 	
-		Is Dummy Bot(Event Player) == false;
+		Is Using Ultimate(Event Player) == True;
+		
+	
+	
 	}
 
 	actions
@@ -3671,13 +3748,9 @@ rule("Lucio activate ult")
 		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
 	
 		
-		Damage(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off), Event Player, 50);
+	
 		
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off)), 1);
 		
-		Apply Impulse(Value In Array(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer),  Direction Towards(Position Of(Event Player), Value In Array(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer) + Up*2), 20, To World, Cancel Contrary Motion);
-		
-		End;
 		
 		
 		
@@ -3686,6 +3759,139 @@ rule("Lucio activate ult")
 		
 		Loop If Condition Is True;
 
+	}
+}
+
+rule("Lucio activate ult")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Lúcio;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+	
+	
+	}
+
+	actions
+	{
+	
+	
+	
+	
+		
+		Wait(0.5, Ignore Condition);
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off)), 1);
+
+		
+
+	
+		If(Is Communicating Any Emote(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer)) == false);
+
+		Cancel Primary Action(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer));
+		
+		If(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes == Null);
+		
+		Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes = Event Player.LucioEmotesArray;
+		
+	
+		
+	
+		
+	
+		
+		End;
+		
+		Event Player.LucioRandomEmote = Random Value In Array(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes);
+		
+			
+		If(Event Player.LucioRandomEmote == Custom String("Emote Up"));
+			
+		
+		
+			Communicate(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Emote Up);
+		
+			Wait(1, Ignore Condition);
+			If(Is Communicating Any Emote(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer)) == false);
+			Modify Player Variable(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), EquippedEmotes, Remove From Array By Value, Custom String("Emote Up"));
+			Event Player.LucioRandomEmote = Random Value In Array(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes);
+			
+			End;
+		End;
+		If(Event Player.LucioRandomEmote == Custom String("Emote Right"));
+			Communicate(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Emote Right);
+		
+			Wait(1, Ignore Condition);
+			If(Is Communicating Any Emote(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer)) == false);
+			Modify Player Variable(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), EquippedEmotes, Remove From Array By Value, Custom String("Emote Right"));
+			Event Player.LucioRandomEmote = Random Value In Array(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes);
+			
+			End;
+			
+		End;
+		If(Event Player.LucioRandomEmote == Custom String("Emote Left"));
+			Communicate(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Emote Left);
+		
+			Wait(1, Ignore Condition);
+			If(Is Communicating Any Emote(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer)) == false);
+			Modify Player Variable(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), EquippedEmotes, Remove From Array By Value, Custom String("Emote Left"));
+			Event Player.LucioRandomEmote = Random Value In Array(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes);
+			
+			End;
+		End;
+		If(Event Player.LucioRandomEmote == Custom String("Emote Down"));
+			Communicate(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Emote Down);
+			Wait(1, Ignore Condition);
+			If(Is Communicating Any Emote(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer)) == false);
+			Modify Player Variable(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), EquippedEmotes, Remove From Array By Value, Custom String("Emote Down"));
+			Event Player.LucioRandomEmote = Random Value In Array(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes);
+			
+			End;
+		End;
+
+		
+		End;
+		
+		If(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes == Empty Array);
+		Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes = Null;
+		End;
+		
+		End;
+
+		Loop If Condition Is True;
+
+	}
+}
+
+rule("Lucio 2")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Lúcio;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+	
+		
+	}
+
+	actions
+	{
+		Event Player.LucioEmotesArray = Array(Custom String("Emote Up"), Custom String("Emote Left"), Custom String("Emote Right"), Custom String("Emote Down"));
+	
+	
+		
+		
+	
 	}
 }
 
@@ -3740,7 +3946,7 @@ rule("McCree enable ult")
 	
 		
 	
-		Event Player.B = Hero Of(Event Player);
+	
 		Set Status(Event Player, Event Player, Burning, 7);
 		Wait Until(Is Dead(Event Player) == True || Is Using Ultimate(Event Player) == false, 7);
 		Call Subroutine(ResetCassidy);
@@ -3885,7 +4091,7 @@ rule("Reset McCree.")
 	{
 	
 	
-		Event Player.B = Null;
+	
 		Clear Status(Event Player, Burning);
 	}
 }
@@ -3972,16 +4178,13 @@ rule("Reset Ult modifications on Mei.")
 
     actions
     {
-        Destroy Effect(Event Player.UltEffect);
-		Event Player.UltEffect = Null;
-		Event Player.P = Null;
-		Event Player.UsingCustomUlt = Null;
-		Event Player.CustomUltReadyToUse = Null;
-		Event Player.B = Null;
-		Destroy HUD Text(Event Player.UltDescription);
-		Set Ultimate Ability Enabled(Event Player, True);
-		Set Ultimate Charge(Event Player, 0);
         
+		Event Player.P = Null;
+	
+		Destroy HUD Text(Event Player.UltDescription);
+        
+		
+		Call Subroutine(StopUsingCustomUlt);
     }
 }
 
@@ -4309,8 +4512,8 @@ rule("moira: coalescence X 100 set initial modifications")
 	actions
 	{
 		Wait(0.5, Ignore Condition);
-		Event Player.B = Hero Of(Event Player);
-		
+	
+		Event Player.UsingCustomUlt = True;
 	}
 }
 
@@ -4328,7 +4531,7 @@ rule("moira: coalescence X 100 loop effects")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-		Event Player.B == Hero Of(Event Player);
+		Event Player.UsingCustomUlt == True;
 	
 	
 		Is Dummy Bot(Event Player) == false;
@@ -4386,7 +4589,7 @@ rule("Reset Moira")
 		Stop Accelerating(Event Player);
 		Set Aim Speed(Event Player, 100);
 		Event Player.M = Null;
-		Event Player.B = Null;
+		Event Player.UsingCustomUlt = Null;
 	
 	}
 }
@@ -4549,7 +4752,7 @@ rule("Reset Pharah stuff.")
 		Value In Array(Event Player.CurrentGravities, 0) += 100;
 		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
 		Set Ultimate Ability Enabled(Event Player, True);
-		Event Player.B = 0;
+	
 		Set Ability 1 Enabled(Event Player, True);
 		Allow Button(Event Player, Button(Jump));
 		Allow Button(Event Player, Button(Secondary Fire));
@@ -4569,6 +4772,9 @@ rule("Reset Pharah stuff.")
 		Event Player.U = 0;
 		Stop Damage Over Time(Last Damage Over Time ID);
 		Clear Status(Event Player, Burning);
+		
+		Destroy HUD Text(Event Player.UltReadyText);
+		Event Player.UltReadyText = Null;
 	}
 }
 
@@ -5329,7 +5535,7 @@ rule("Rein: ult ready")
 		Event Player.U = True;
 	
 	
-		Event Player.B = Hero Of(Event Player);
+	
 	}
 }
 
@@ -5461,7 +5667,7 @@ rule("reinhardt: reset stuff")
 		Event Player.S = 0;
 		Set Ultimate Ability Enabled(Event Player, True);
 		Event Player.M = Null;
-		Event Player.B = Null;
+	
 	}
 }
 
@@ -5632,13 +5838,16 @@ rule("Roadhog reset")
 		Destroy Effect(Last Created Entity);
 		Event Player.UsingCustomUlt = Null;
 		Event Player.CustomUltReadyToUse = Null;
-		Event Player.B = Null;
+	
 		Set Ultimate Ability Enabled(Event Player, True);
 		Set Ultimate Charge(Event Player, 0);
 		Destroy HUD Text(Event Player.RoadhogHUD);
 		Event Player.RoadhogHUD = Null;
 		Event Player.Y = Null;
 		Event Player.P = Null;
+		
+		Destroy HUD Text(Event Player.UltReadyText);
+		Event Player.UltReadyText = Null;
 	}
 }
 
@@ -6075,8 +6284,8 @@ rule("Sojourn when using ultimate and firing railgun leave behind damaging beams
 
 	actions
 	{
-		Skip If(Event Player.B == Hero Of(Event Player), 1);
-		Event Player.B = Hero Of(Event Player);
+	
+	
 
 		Create Beam Effect(All Players(All Teams), Bad Beam, Eye Position(Event Player), Event Player.SojournLastRay, Team Of(Event Player), none);
 
@@ -6228,7 +6437,7 @@ rule("Sojourn reset values and destroy beams.")
         Event Player.SojournLastRay = 0;
         Event Player.SojournRayArray = 0;
         
-		Event Player.B = Null;
+	
     }
 }
 
@@ -6306,7 +6515,7 @@ rule("soldier 76 initialize kill streaks and streak counting")
 
 		End;
 
-		Event Player.B = Hero(Soldier: 76);
+	
 
 
 	
@@ -7243,7 +7452,7 @@ rule("sombra: reset")
 		Play Effect(All Players(All Teams), Debuff Impact Sound, Color(White), Event Player, 200);
 		Destroy HUD Text(Last Text ID);
 		Set Ultimate Charge(Event Player, 0);
-		Event Player.B = Null;
+	
 	}
 }
 
@@ -8004,7 +8213,7 @@ rule("torb: spawn torb turret")
 		Event Player.TorbTurret.TorbTurretLevelText = Last Text Id;
 	
 		Call Subroutine(StopUsingCustomUlt);
-		Event Player.B = Hero(Torbjörn);
+	
 		
 	
 		Wait Until(Is Dead(Event Player.TorbTurret) == true || (Event Player.CustomUltReadyToUse == True && Is Button Held(Event Player, Button(Ultimate)) == True && Event Player.UsingCustomUlt == Null && Has Status(Event Player, Hacked) == False && Hero Of(Event Player) == Hero(Torbjörn) && (Event Player.TorbTurret == null || Is Button Held(Event Player, Button(Crouch)) == True) == true), 10000);
@@ -8822,7 +9031,6 @@ rule("winston: using ultimate")
 	{
 	
 	
-		Event Player.B = Hero(Winston);
 		Start Scaling Player(Event Player, 2, false);
 		Wait Until(Is Using Ultimate(Event Player) != true || Is Dead(Event Player) == true, 50);
 		Call Subroutine(ResetWinston);
@@ -8847,7 +9055,7 @@ rule("winston: reset")
 		Stop Scaling Player(Event Player);
 		Detach Players(Event Player.WinstonGrabbing);
 		Event Player.WinstonGrabbing = Null;
-		Event Player.B = Null;
+	
 
 	}
 }
@@ -9092,27 +9300,20 @@ rule("Wrecking ball activate ultimate.")
     actions
     {
         Call Subroutine(UseCustomUlt);
-        Start Scaling Player(Event Player, 0, false);
+        Start Scaling Player(Event Player, 3, false);
        
         Skip If(Is In Alternate Form(Event Player) == true, 1);
-       
+        Press Button(Event Player, Button(Ability 1));
 
 	
 	
-	
-	
+		Set Primary Fire Enabled(Event Player, False);
+		Set Secondary Fire Enabled(Event Player, False);
+        Disallow Button(Event Player, Button(Ability 1));
        
-       
-       
-       
-		
-		
-	
-	
-	
-		
-        Wait Until(Is Dead(Event Player), 150);
-		
+        Set Damage Received(Event Player, 33);
+        Set Knockback Received(Event Player, 33);
+        Wait Until(Is Dead(Event Player), 15);
         Skip If(Event Player.UsingCustomUlt == Null, 1);
         Call Subroutine(ResetWB);
         
@@ -9140,6 +9341,9 @@ rule("Wrecking ball reset.")
         Call Subroutine(StopUsingCustomUlt);
         Start Scaling Player(Event Player, 1, false);
 		Set Ability 1 Enabled(Event Player, True);
+		Set Secondary Fire Enabled(Event Player, True);
+        Set Damage Received(Event Player, 100);
+        Set Knockback Received(Event Player, 100);
 
 
 
@@ -9161,16 +9365,78 @@ rule("Wrecking ball kill nearby enemies while using ultimate")
 	{
 		Event Player.UsingCustomUlt == true;
 		Hero Of(Event Player) == Hero(Wrecking Ball);
+        Players Within Radius(Event Player, 10, Opposite Team of(Team Of(Event Player)), Surfaces) != null;
+        Is True For Any(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces), Is Alive(current array element)) == true;
+        Is Moving(Event Player) == true;
        
        
 	}
 
     actions
     {
-        Wait(0.016, Ignore Condition);
-		Set Ability Cooldown(Event Player, Button(Secondary Fire), 0);
-		Loop If Condition Is True;
+       
+       
+       
+        Damage(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces), Event Player, 400);
+        Apply Impulse(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces), Position Of(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces)) - Event Player, 50, To World, Cancel Contrary Motion);
+       
     }
+}
+
+
+
+rule("Auto-transform back to ball if form is reverted by enemy abilities")
+{
+    event
+	{
+		Ongoing - Each Player;
+		All;
+		Wrecking Ball;
+	}
+
+    conditions
+	{
+		Event Player.UsingCustomUlt == true;
+		Hero Of(Event Player) == Hero(Wrecking Ball);
+        Is In Alternate Form(Event Player) == false;
+	}
+
+    actions
+    {
+        Wait(1, Ignore Condition);
+       
+        Allow Button(Event Player, Button(Ability 1));
+        Press Button(Event Player, Button(Ability 1));
+        Disallow Button(Event Player, Button(Ability 1));
+	
+        Loop If Condition Is True;
+
+    }
+}
+
+
+
+rule("Wrecking Ball description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Wrecking Ball;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Turn into a giant ball and roll over enemies.");
+
+	}
 }
 
 
@@ -9429,7 +9695,7 @@ rule("Zenyatta reset")
 		End;
 		Event Player.UsingCustomUlt = 0;
 		Event Player.CustomUltReadyToUse = 0;
-		Event Player.B = 0;
+	
 		Set Ultimate Ability Enabled(Event Player, True);
 		Set Ultimate Charge(Event Player, 0);
 		Stop Chasing Player Variable(Event Player, Y);

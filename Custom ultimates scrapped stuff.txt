@@ -2234,6 +2234,47 @@ rule("Lucio 2")
 
 
 
+/*If(Event Player.LucioRandomEmote == Custom String("Emote Up"));
+			
+			//Cancel Primary Action(Value In Array(All Players(Opposite Team Of(Team Of(Event Player))), Event Player.ForLoopIndexPlayer));
+			//Communicate(Value In Array(All Players(Opposite Team Of(Team Of(Event Player))), Event Player.ForLoopIndexPlayer), Emote Up);
+			Communicate(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Emote Up);
+			//Big Message(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Custom String("Emote Up"));
+			/*Wait(0.05, Ignore Condition);
+			If(Is Communicating Any Emote(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer)) == false);
+			Event Player.LucioRandomEmote = Random Value In Array(Remove From Array(Event Player.LucioEmotesArray, Custom String("Emote Up")));
+			End;*/
+		End;
+		If(Event Player.LucioRandomEmote == Custom String("Emote Right"));
+			Communicate(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Emote Right);
+			//Big Message(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Custom String("Emote Right"));
+			/*Wait(0.05, Ignore Condition);
+			If(Is Communicating Any Emote(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer)) == false);
+			Event Player.LucioRandomEmote = Random Value In Array(Remove From Array(Event Player.LucioEmotesArray, Custom String("Emote Right")));
+			End;*/
+			
+		End;
+		If(Event Player.LucioRandomEmote == Custom String("Emote Left"));
+			Communicate(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Emote Left);
+			//Big Message(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Custom String("Emote Left"));
+			/*Wait(0.05, Ignore Condition);
+			If(Is Communicating Any Emote(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer)) == false);
+			Event Player.LucioRandomEmote = Random Value In Array(Remove From Array(Event Player.LucioEmotesArray, Custom String("Emote Left")));
+			//Big Message(All Players(All Teams), Custom String("Some string"));
+			End;*/
+		End;
+		If(Event Player.LucioRandomEmote == Custom String("Emote Down"));
+			Communicate(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Emote Down);
+			//Big Message(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Custom String("Emote Down"));
+
+		End;*/
+
+		/*Event Player.ForLoopIndexPlayer += 1;
+
+		If(Event Player.ForLoopIndexPlayer >= Count Of(All Players(Opposite Team Of(Team Of(Event Player)))));
+		Event Player.ForLoopIndexPlayer = 0;
+		End;*/
+
 
 
 
