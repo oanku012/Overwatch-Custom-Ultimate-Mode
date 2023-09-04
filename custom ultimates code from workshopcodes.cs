@@ -215,21 +215,21 @@ variables {
     40: JunkerDamageCounter
     41: JunkerHealthBonus
     42: JunkerHealthPool
-    43: JunkerScaleAndCD
-    44: JunkerRageEffects
-    45: JunkerWinCounterText
-    46: JunkerWinCounter
-    47: JunkerArenaSphere
-    48: ExtraLife
-    49: JunkratBombPosition
-    50: JunkratBombOrb
-    51: JunkratExplosionRadius
-    52: JunkratRadiusRing
-    53: JunkratTimer
-    54: JunkratTimerHUD
-    55: JunkratTimerAboveHead
-    56: LucioEmotesArray
-    57: LucioRandomEmote
+    43: JunkerScale
+    44: JunkerCDReduction
+    45: JunkerRageEffects
+    46: JunkerWinCounterText
+    47: JunkerWinCounter
+    48: JunkerArenaSphere
+    49: ExtraLife
+    50: JunkerKnifeThrowCD
+    51: JunkratBombPosition
+    52: JunkratBombOrb
+    53: JunkratExplosionRadius
+    54: JunkratRadiusRing
+    55: JunkratTimer
+    56: JunkratTimerHUD
+    57: JunkratTimerAboveHead
     58: EnemyMei
     59: P
     60: Coronavirus
@@ -657,7 +657,7 @@ rule("Test dummy")
 		Create Dummy Bot(Hero(Lúcio), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
 	
 		
-		Wait(1, Ignore Condition);
+	
 		
 		Set Ultimate Charge(Last Created Entity, 100);
 		
@@ -930,8 +930,8 @@ rule("Ana: Disable nanoboost effects after some time or when dead")
 	{
 		Wait Until(Is Dead(Event Player) == True, 8);
 		Event Player.Nanoboosted = Null;
-		Value In Array(Event Player.CurrentSpeeds, 0) -= 150;
-		Value In Array(Event Player.CurrentSpeeds, 1) -= 150;
+		Value In Array(Event Player.CurrentSpeeds, 0) -= 200;
+		Value In Array(Event Player.CurrentSpeeds, 1) -= 200;
 		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
 		Set Jump Vertical Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 1));
 	}
@@ -2852,22 +2852,26 @@ rule("Junker queen Teleport JQ and chosen enemies and set buffs.")
 		
 		
 		
-		Event Player.JunkerHealthBonus += Count Of(Event Player.JunkerQueenEnemyArray) * 100;
+		Event Player.JunkerHealthBonus += Count Of(Event Player.JunkerQueenEnemyArray) * 150;
 		
 		If(Event Player.JunkerHealthPool == Null);
 		Add Health Pool To Player(Event Player, Health, Event Player.JunkerHealthBonus, True, True);
 		Event Player.JunkerHealthPool =  Last Created Health Pool;
 		End;
 		
-		If(Event Player.JunkerScaleAndCD == Null);
-		Event Player.JunkerScaleAndCD = 1 + Count Of(Event Player.JunkerQueenEnemyArray) * 0.2;
-		Start Scaling Player(Event Player, Event Player.JunkerScaleAndCD, True);
+		If(Event Player.JunkerScale == Null);
+		Event Player.JunkerScale = 1 + Count Of(Event Player.JunkerQueenEnemyArray) * 0.2;
+		Start Scaling Player(Event Player, Event Player.JunkerScale, True);
 		Else;
-		Event Player.JunkerScaleAndCD += Count Of(Event Player.JunkerQueenEnemyArray) * 0.2;
+		Event Player.JunkerScale += Count Of(Event Player.JunkerQueenEnemyArray) * 0.2;
 		End;
 		
 		
-	
+		If(Event Player.JunkerCDReduction == Null);
+		Event Player.JunkerCDReduction = 1 + Count Of(Event Player.JunkerQueenEnemyArray) * 0.5;
+		Else;
+		Event Player.JunkerCDReduction += Count Of(Event Player.JunkerQueenEnemyArray) * 0.5;
+		End;
 		
 		
 		If(Event Player.JunkerRageEffects == Null);
@@ -2980,15 +2984,16 @@ rule("Junker Decay buffs over time")
 		Remove Health Pool From Player(Event Player.JunkerHealthPool);
 		Event Player.JunkerHealthPool = Null;
 		Stop Scaling Player(Event Player);
-		Event Player.JunkerScaleAndCD = Null;
+		Event Player.JunkerScale = Null;
 		Destroy Effect(Event Player.JunkerRageEffects);
 		Event Player.JunkerRageEffects = Null;
+		Event Player.JunkerCDReduction = Null;
 		Else;
 		
 		Set Damage Dealt(Event Player, Event Player.JunkerDamageCounter);
 		Event Player.JunkerHealthBonus -= 0.1 * Event Player.JunkerHealthBonus;
-		Event Player.JunkerScaleAndCD -= 0.1 * (Event Player.JunkerScaleAndCD - 1);
-	
+		Event Player.JunkerScale -= 0.1 * (Event Player.JunkerScale - 1);
+		Event Player.JunkerCDReduction -=  0.1 * (Event Player.JunkerCDReduction - 1);
 		
 		If(Event Player.JunkerDamageCounter-50 <= Count Of(Event Player.JunkerRageEffects) * 50);
 		Destroy Effect(Last Of(Event Player.JunkerRageEffects));
@@ -3108,7 +3113,7 @@ rule("Reduce ability 1 cooldown after use for buffed Junker queen.")
 
 	actions
 	{
-		Set Ability Cooldown(Event Player, Button(Ability 1), 14 / Event Player.JunkerScaleAndCD);
+		Set Ability Cooldown(Event Player, Button(Ability 1), 14 / Event Player.JunkerCDReduction);
 
 	}
 }
@@ -3140,14 +3145,14 @@ rule("Reduce ability 2 cooldown after use for buffed Junker queen.")
 
 	actions
 	{
-		Set Ability Cooldown(Event Player, Button(Ability 2), 8 / Event Player.JunkerScaleAndCD);
+		Set Ability Cooldown(Event Player, Button(Ability 2), 8 / Event Player.JunkerCDReduction);
 
 	}
 }
 
 
 
-rule("Set Secondary Fire cooldown to 50% after use for buffed Junker queen.")
+rule("Reduce secondary fire cooldown after use for buffed Junker queen.")
 {
 
     event
@@ -3165,14 +3170,31 @@ rule("Set Secondary Fire cooldown to 50% after use for buffed Junker queen.")
 		Event Player.JunkerHealthBonus > Null;
 	
 	
+		Is Firing Secondary(Event Player) == True;
 	
-		Ability Cooldown(Event Player, Button(Secondary Fire)) > 0;
+	
+	
 
 	}
 
 	actions
 	{
-		Set Ability Cooldown(Event Player, Button(Secondary Fire), 6 / Event Player.JunkerScaleAndCD);
+	
+		Event Player.JunkerKnifeThrowCD = 6 / Event Player.JunkerCDReduction;
+		Chase Player Variable At Rate(Event Player, JunkerKnifeThrowCD, 0, 1, Destination And Rate);
+	
+		
+		Wait(0.37, Ignore Condition);
+		
+		Wait Until(Is Button Held(Event Player, Button(Secondary Fire)) == True, 2.63);
+	
+		Stop Chasing Player Variable(Event Player, JunkerKnifeThrowCD);
+		Set Ability Cooldown(Event Player, Button(Secondary Fire), Event Player.JunkerKnifeThrowCD);
+	
+		
+		
+		
+	
 
 	}
 }
@@ -3288,6 +3310,8 @@ rule("Reset Junker Queen effects and buffs.")
 		Event Player.JunkerHealthPool = Null;
 		
 		Event Player.JunkerTeleportPos = Null;
+		Event Player.JunkerScale = Null;
+		Event Player.JunkerCDReduction = Null;
 		
 		Set Ultimate Ability Enabled(Event Player, True);
 
@@ -3305,7 +3329,6 @@ rule("Reset Junker Queen effects and buffs.")
 		Event Player.JunkerDamageCounter = Null;
 		Event Player.JunkerWinCounter = Null;
 
-		Event Player.JunkerScaleAndCD = Null;
 		Stop Scaling Player(Event Player);
 
 		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
@@ -3367,7 +3390,8 @@ rule("If enemies lost/JQ won, teleport Junker Queen back to map and keep her buf
 		
 		Event Player.JunkerTeleportPos = Null;
 		
-	
+		
+		Set Player Health(Event Player, 10000);
 		
 	
 	
@@ -3726,7 +3750,7 @@ rule("Lucio activate ult")
 		Is Using Ultimate(Event Player) == True;
 		
 	
-	
+		Is Dummy Bot(Event Player) == false;
 	}
 
 	actions
@@ -3748,9 +3772,13 @@ rule("Lucio activate ult")
 		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
 	
 		
-	
+		Damage(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off), Event Player, 50);
 		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off)), 1);
 		
+		Apply Impulse(Value In Array(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer),  Direction Towards(Position Of(Event Player), Value In Array(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer) + Up*2), 20, To World, Cancel Contrary Motion);
+		
+		End;
 		
 		
 		
@@ -3759,139 +3787,6 @@ rule("Lucio activate ult")
 		
 		Loop If Condition Is True;
 
-	}
-}
-
-rule("Lucio activate ult")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Lúcio;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-	
-	
-	}
-
-	actions
-	{
-	
-	
-	
-	
-		
-		Wait(0.5, Ignore Condition);
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off)), 1);
-
-		
-
-	
-		If(Is Communicating Any Emote(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer)) == false);
-
-		Cancel Primary Action(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer));
-		
-		If(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes == Null);
-		
-		Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes = Event Player.LucioEmotesArray;
-		
-	
-		
-	
-		
-	
-		
-		End;
-		
-		Event Player.LucioRandomEmote = Random Value In Array(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes);
-		
-			
-		If(Event Player.LucioRandomEmote == Custom String("Emote Up"));
-			
-		
-		
-			Communicate(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Emote Up);
-		
-			Wait(1, Ignore Condition);
-			If(Is Communicating Any Emote(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer)) == false);
-			Modify Player Variable(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), EquippedEmotes, Remove From Array By Value, Custom String("Emote Up"));
-			Event Player.LucioRandomEmote = Random Value In Array(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes);
-			
-			End;
-		End;
-		If(Event Player.LucioRandomEmote == Custom String("Emote Right"));
-			Communicate(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Emote Right);
-		
-			Wait(1, Ignore Condition);
-			If(Is Communicating Any Emote(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer)) == false);
-			Modify Player Variable(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), EquippedEmotes, Remove From Array By Value, Custom String("Emote Right"));
-			Event Player.LucioRandomEmote = Random Value In Array(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes);
-			
-			End;
-			
-		End;
-		If(Event Player.LucioRandomEmote == Custom String("Emote Left"));
-			Communicate(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Emote Left);
-		
-			Wait(1, Ignore Condition);
-			If(Is Communicating Any Emote(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer)) == false);
-			Modify Player Variable(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), EquippedEmotes, Remove From Array By Value, Custom String("Emote Left"));
-			Event Player.LucioRandomEmote = Random Value In Array(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes);
-			
-			End;
-		End;
-		If(Event Player.LucioRandomEmote == Custom String("Emote Down"));
-			Communicate(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Emote Down);
-			Wait(1, Ignore Condition);
-			If(Is Communicating Any Emote(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer)) == false);
-			Modify Player Variable(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), EquippedEmotes, Remove From Array By Value, Custom String("Emote Down"));
-			Event Player.LucioRandomEmote = Random Value In Array(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes);
-			
-			End;
-		End;
-
-		
-		End;
-		
-		If(Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes == Empty Array);
-		Value In Array(Players Within Radius(Event Player, 30, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer).EquippedEmotes = Null;
-		End;
-		
-		End;
-
-		Loop If Condition Is True;
-
-	}
-}
-
-rule("Lucio 2")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Lúcio;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-	
-		
-	}
-
-	actions
-	{
-		Event Player.LucioEmotesArray = Array(Custom String("Emote Up"), Custom String("Emote Left"), Custom String("Emote Right"), Custom String("Emote Down"));
-	
-	
-		
-		
-	
 	}
 }
 
