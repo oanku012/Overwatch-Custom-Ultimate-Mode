@@ -37,10 +37,10 @@ settings
 		{
 			enabled maps
 			{
+				Colosseo 0
 			
 			
 			
-				Workshop Chamber 0
 			}
 		}
 
@@ -62,7 +62,7 @@ settings
 			Ultimate Generation - Passive: 500%
            
 		
-            Spawn With Ultimate Ready: On
+           
            
 		
 		}
@@ -149,28 +149,27 @@ variables {
     1: JunkerArenaSphere
     2: JunkerArenaPositions
     3: JunkerArenaTimerText
-    4: T
-    5: TimeStopHealMod
-    6: TimeStopTimer
-    7: S
-    8: UltingSigmas
-    9: NukingPlayer
-    10: NukeTimer
-    11: NukeText
-    12: ForLoopIndexGlobal
-    13: NukePosition
-    14: NukeRadius
-    15: R
-    16: P
-    17: Q
-    18: GreenPortal
-    19: W
-    20: YellowPortalRaycast
-    21: GreenPortalRaycast
-    22: SymmetraBluePNormal
-    23: SymmetraRedPNormal
-    24: SymmetraYellowPNormal
-    25: SymmetraGreenPNormal
+    4: S
+    5: UltingSigmas
+    6: NukingPlayer
+    7: NukeTimer
+    8: NukeText
+    9: ForLoopIndexGlobal
+    10: NukePosition
+    11: NukeRadius
+    12: T
+    13: TimeStopTimer
+    14: R
+    15: P
+    16: Q
+    17: GreenPortal
+    18: W
+    19: YellowPortalRaycast
+    20: GreenPortalRaycast
+    21: SymmetraBluePNormal
+    22: SymmetraRedPNormal
+    23: SymmetraYellowPNormal
+    24: SymmetraGreenPNormal
 
   player:
     0: B
@@ -231,72 +230,68 @@ variables {
     55: JunkratTimer
     56: JunkratTimerHUD
     57: JunkratTimerAboveHead
-    58: MeiZaWarudoSphere
-    59: MeiIcicleEffects
-    60: MeiIciclePositions
-    61: MeiIcicleDirections
-    62: TimeStopStunned
-    63: O
-    64: N
-    65: MercyExtraLifeText
-    66: ExtraLifeInWorldText
-    67: R
-    68: P
-    69: Q
-    70: U
-    71: ReaperVariables
-    72: ReaperTPPos
-    73: ReinhardtHudText
-    74: RoadhogHUD
-    75: SigmaMaleTimer
-    76: SigmaMaleValues
-    77: SigmaZeroGravBuff
-    78: SigmaHighGravDebuff
-    79: SojournLastRay
-    80: SojournRayArray
-    81: SojournBeamArray
-    82: SojournEyePosArray
-    83: SojournLastEyePos
-    84: SojournDamageRay
-    85: Soldier76Variables
-    86: SoldierAllKillStreaks
-    87: Soldier76KillStreaksEquipped
-    88: SoldierKillStreakTexts
-    89: Soldier76KillStreaksActive
-    90: LocalVariable
-    91: Soldier76CarepackLocation
-    92: SoldierCarePackAmmoIndex
-    93: EnemySombra
-    94: Virus
-    95: VirusText
-    96: VirusEffect
-    97: HasDiedWithVirus
-    98: K
-    99: L
-    100: InPortalSpeed
-    101: TorbTurret
-    102: TorbTurretLevel
-    103: TorbTurretLevelText
-    104: TorbCurrentTarget
-    105: WidowZoomedIn
-    106: WidowPlayersInViewAngleSorted
-    107: WidowRayCastForward
-    108: WidowRayCastStartPos
-    109: WidowRayCastEndPos
-    110: WidowRayCastBackward
-    111: WidowRayCastHeadForward
-    112: WidowRayCastHeadBackward
-    113: WidowFireBeam
-    114: WidowDamage
-    115: WidowAimBeam
-    116: WidowLastFacingDirection
-    117: WinstonGrabbing
-    118: J
-    119: I
-    120: H
-    121: WinstonRayCast1
-    122: WinstonRayCast2
-    123: ZaryaGravPos
+    58: EnemyMei
+    59: P
+    60: Coronavirus
+    61: CoronavirusText
+    62: CoronavirusEffect
+    63: HasDiedWithCoronaVirus
+    64: MercyExtraLifeText
+    65: ExtraLifeInWorldText
+    66: R
+    67: Q
+    68: U
+    69: ReaperVariables
+    70: ReaperTPPos
+    71: ReinhardtHudText
+    72: RoadhogHUD
+    73: SigmaMaleTimer
+    74: SigmaMaleValues
+    75: SigmaZeroGravBuff
+    76: SigmaHighGravDebuff
+    77: SojournLastRay
+    78: SojournRayArray
+    79: SojournBeamArray
+    80: SojournEyePosArray
+    81: SojournLastEyePos
+    82: SojournDamageRay
+    83: Soldier76Variables
+    84: SoldierAllKillStreaks
+    85: Soldier76KillStreaksEquipped
+    86: SoldierKillStreakTexts
+    87: Soldier76KillStreaksActive
+    88: LocalVariable
+    89: Soldier76CarepackLocation
+    90: SoldierCarePackAmmoIndex
+    91: TimeStopStunned
+    92: O
+    93: N
+    94: K
+    95: L
+    96: InPortalSpeed
+    97: TorbTurret
+    98: TorbTurretLevel
+    99: TorbTurretLevelText
+    100: TorbCurrentTarget
+    101: WidowZoomedIn
+    102: WidowPlayersInViewAngleSorted
+    103: WidowRayCastForward
+    104: WidowRayCastStartPos
+    105: WidowRayCastEndPos
+    106: WidowRayCastBackward
+    107: WidowRayCastHeadForward
+    108: WidowRayCastHeadBackward
+    109: WidowFireBeam
+    110: WidowDamage
+    111: WidowAimBeam
+    112: WidowLastFacingDirection
+    113: WinstonGrabbing
+    114: J
+    115: I
+    116: H
+    117: WinstonRayCast1
+    118: WinstonRayCast2
+    119: ZaryaGravPos
 }
 
 
@@ -4026,9 +4021,9 @@ rule("McCree description")
 
 
 
-rule("Mei: za warudo")
+rule("Mei activate ultimate")
 {
-		
+
 	event
 	{
 		Ongoing - Each Player;
@@ -4038,140 +4033,59 @@ rule("Mei: za warudo")
 
 	conditions
 	{
+		Hero Of(Event Player) == Hero(Mei);
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.CustomUltReadyToUse == True;
+		Event Player.UsingCustomUlt != True;
 		Has Status(Event Player, Hacked) == False;
-		Global.T == Null;
 	}
 
 	actions
 	{
+		Call Subroutine(UseCustomUlt);
 	
-		Destroy HUD Text(Event Player.UltReadyText);
-		Event Player.UltReadyText = Null;
 	
-		Create Effect(All Players(All Teams), Sphere, Color(Aqua), Event Player, Event Player.S, Visible To Position and Radius);
-		Event Player.MeiZaWarudoSphere = Last Created Entity;
-		
-		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player, 200);
-		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player, 200);
-		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player, 200);
-		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player, 200);
-		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player, 200);
-		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player, 200);
-		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player, 200);
+		All Players(Opposite Team Of(Team Of(Event Player))).EnemyMei = Event Player;
 	
-		Start Healing Modification(All Players(All Teams), Remove From Array(All Players(All Teams), Players On Hero(Hero(Mei), All Teams)), 0, Receivers Healers And Healing Percent);
-		Global.TimeStopHealMod = Last Healing Modification ID;
-		Pause Match Time;
-		Global.T = Event Player;
-		Global.TimeStopTimer = 5;
-		Big Message(All Players(All Teams), Custom String("Mei has frozen time!"));
-		Event Player.S = 1;
-		Event Player.CustomUltReadyToUse = False;
-		Create HUD Text(All Players(All Teams), Global.TimeStopTimer, Null, Null, Top, 0, Color(White), Color(White), Color(White),
-			Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, Event Player.P, Null, Null, Top, 1, Color(Green), Color(White), Color(White), Visible To and String,
+			Default Visibility);
+		Event Player.UltDescription = Last Text ID;
+		Create Effect(All Players(All Teams), Bad Aura, Color(Green), Event Player, 1, Visible To Position and Radius);
+		Event Player.UltEffect = Last Created Entity;
+		Event Player.P = 20;
+		Chase Player Variable At Rate(Event Player, P, 0, 1, Destination and Rate);
 	
-		Event Player.MeiIcicleEffects = Empty Array;
-		Event Player.MeiIciclePositions = Empty Array;
-		Event Player.MeiIcicleDirections = Empty Array;
-		
 	
-		Wait Until(Global.T == Null, Global.TimeStopTimer);
+		Wait(Event Player.P, Ignore Condition);
 		Call Subroutine(ResetMei);
 	}
 }
 
 
 
-rule("Mei: create icicle effects in the air")
+rule("Reset Ult modifications on Mei.")
 {
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Mei;
-	}
+    event
+    {
+        Subroutine;
+        ResetMei;
+    }
 
-	conditions
-	{
-		Is Firing Secondary(Event Player) == True;
+    actions
+    {
+        
+		Event Player.P = Null;
 	
-		Global.T != Null;
-	}
-
-	actions
-	{
-		Wait(0.32, Ignore Condition);
-		Abort If(Global.T == Null);
-		Cancel Primary Action(Event Player);
-	
-		Create Projectile Effect(All Players(All Teams), Mei Icicle, All Players(Team Of(Event Player)), Eye Position(Event Player), Facing Direction Of(Event Player), 0, None);
-	
-		Modify Player Variable(Event Player, MeiIcicleEffects, Append To Array, Last Created Entity);
-		Modify Player Variable(Event Player, MeiIciclePositions, Append To Array, Eye Position(Event Player));
-		Modify Player Variable(Event Player, MeiIcicleDirections, Append To Array, Facing Direction Of(Event Player));
-		Wait(0.4, Ignore Condition);
-		Cancel Primary Action(Event Player);
+		Destroy HUD Text(Event Player.UltDescription);
+        
 		
-	}
+		Call Subroutine(StopUsingCustomUlt);
+    }
 }
 
 
 
-rule("Mei reset")
-{
-	event
-	{
-		Subroutine;
-		ResetMei;
-	}
-
-	actions
-	{
-		If(Global.T != Null);
-		Global.T = Null;
-		End;
-		Event Player.S = 0;
-		Event Player.Y = False;
-		Unpause Match Time;
-		Set Ultimate Ability Enabled(Event Player, True);
-		
-		Destroy Effect(Event Player.MeiZaWarudoSphere);
-		
-		Event Player.MeiZaWarudoSphere = Null;
-		
-	
-		Play Effect(All Players(All Teams), Debuff Impact Sound, Color(White), Event Player, 200);
-		Destroy HUD Text(Last Text ID);
-		Set Ultimate Charge(Event Player, 0);
-	
-		
-	
-		
-		If(Event Player.MeiIcicleEffects != Empty Array);
-		Destroy Effect(Event Player.MeiIcicleEffects);
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.MeiIciclePositions), 1);
-		Create Projectile(Mei Icicle, Event Player, Value In Array(Event Player.MeiIciclePositions, Event Player.ForLoopIndexPlayer), Value In Array(Event Player.MeiIcicleDirections, Event Player.ForLoopIndexPlayer), To World, Damage, Opposite Team Of(Team Of(Event Player)), 75, 2, 0, Bad Explosion, Explosion Sound, 0, 115, 5, 0, 0, 0);
-		
-		End;
-		End;
-		
-		
-		Event Player.MeiIcicleEffects = Null;
-		Event Player.MeiIciclePositions = Null;
-		Event Player.MeiIcicleDirections = Null;
-		
-		
-	}
-}
-
-
-
-
-
-
-rule("Mei: freeze players and stop horizontal movement")
+rule("Mei: If player has virus, create virus effect, text and set variables, disable after 10 seconds")
 {
 	event
 	{
@@ -4182,36 +4096,34 @@ rule("Mei: freeze players and stop horizontal movement")
 
 	conditions
 	{
-		Global.T != Null;
-		Hero Of(Event Player) != Hero(Mei);
-		Is Alive(Event Player) == True;
+		Event Player.Coronavirus == True;
 	}
 
 	actions
 	{
-		Set Gravity(Event Player, 10);
-		Set Status(Event Player, Null, Frozen, 9999);
-		disabled Set Status(Event Player, Null, Rooted, 9999);
-		disabled Set Status(Event Player, Null, Hacked, 9999);
-		disabled Disallow Button(Event Player, Button(Primary Fire));
-		disabled Disallow Button(Event Player, Button(Secondary Fire));
-		disabled Start Facing(Event Player, Facing Direction Of(Event Player), 10000, To World, None);
-		disabled Disallow Button(Event Player, Button(Interact));
-		disabled Disallow Button(Event Player, Button(Crouch));
-		Apply Impulse(Event Player, Backward, 0.001, To World, Cancel Contrary Motion);
-		Apply Impulse(Event Player, Right, 0.001, To World, Cancel Contrary Motion);
-		Apply Impulse(Event Player, Left, 0.001, To World, Cancel Contrary Motion);
-		Apply Impulse(Event Player, Forward, 0.001, To World, Cancel Contrary Motion);
-		Set Status(Event Player, Null, Unkillable, 9999);
-		Event Player.M = Health(Event Player);
-		Disallow Button(Event Player, Button(Ultimate));
-		Event Player.TimeStopStunned = True;
+		Set Healing Received(Event Player, 0);
+		
+		Create HUD Text(Event Player, Custom String(
+			"You have coronavirus. You cannot be healed and take damage over time. Spreads to nearby teammates."), Null, Null, Right, 0,
+			Color(Green), Color(Green), Color(White), Visible To and String, Default Visibility);
+		Event Player.CoronavirusText = Last Text ID;
+		Start Damage Over Time(Event Player, Null, 10, 20);
+		Create Effect(All Players(All Teams), Cloud, Color(Green), Event Player, 1, Visible To Position and Radius);
+		Event Player.CoronavirusEffect = Last Created Entity;
+		Wait(10, Abort When False);
+		Destroy Effect(Event Player.CoronavirusEffect);
+		Event Player.CoronavirusEffect = Null;
+		Destroy HUD Text(Event Player.CoronavirusText);
+		Event Player.CoronavirusText = Null;
+		
+		Set Healing Received(Event Player, 100);
+		Event Player.Coronavirus = Null;
 	}
 }
 
 
 
-rule("Mei: stop players from falling")
+rule("Mei: If player has virus, spread to nearby players")
 {
 	event
 	{
@@ -4222,112 +4134,21 @@ rule("Mei: stop players from falling")
 
 	conditions
 	{
-		Global.T != Null;
-		Hero Of(Event Player) != Hero(Mei);
-		Is In Air(Event Player) == True;
-		Speed Of(Event Player) > 0;
-	}
-
-	actions
-	{
-		Wait(0.001, Ignore Condition);
-		Apply Impulse(Event Player, Up, 0.001, To Player, Cancel Contrary Motion);
-		Loop If Condition Is True;
-	}
-}
-
-
-
-rule("Mei: clear frozen status after time stop is over and damage players")
-{
-
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-	
-		Is True For All(All Players(All Teams), Current Array Element != Global.T) == True;
-		Hero Of(Event Player) != Hero(Mei);
-		Event Player.TimeStopStunned == True;
-	}
-
-	actions
-	{
-		Allow Button(Event Player, Button(Ultimate));
-		Clear Status(Event Player, Frozen);
-		Clear Status(Event Player, Unkillable);
-		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
-		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
-		Event Player.TimeStopStunned = False;
-		Stop Healing Modification(Global.TimeStopHealMod);
-		Global.TimeStopHealMod = Null;
-		Wait(0.016, Ignore Condition);
-		Skip If(Event Player.O == Null, 4);
-		Damage(Event Player, Event Player.O, Event Player.N);
-		Set Ultimate Charge(Event Player.O, 0);
-		Event Player.N = Null;
-		Event Player.O = Null;
-	}
-}
-
-
-
-rule("Mei: global time stop timer")
-{
-	event
-	{
-		Ongoing - Global;
-	}
-
-	conditions
-	{
-		Global.T != Null;
+		Event Player.Coronavirus == True;
+		Is In Spawn Room(Event Player) == False;
 	}
 
 	actions
 	{
 		Wait(1, Ignore Condition);
-		Global.TimeStopTimer -= 1;
-		If(Global.TimeStopTimer <= 0);
-		Global.T = Null;
-		End;
+		Remove From Array(Players Within Radius(Event Player, 7, Team Of(Event Player), Surfaces), Event Player).Coronavirus = True;
 		Loop If Condition Is True;
 	}
 }
 
 
 
-rule("Mei: store damage dealt during time stop")
-{
-	event
-	{
-		Player Dealt Damage;
-		All;
-		Mei;
-	}
-
-	conditions
-	{
-	
-		Global.T != Null;
-	}
-
-	actions
-	{
-		Victim.N += Event Damage;
-		Heal(Victim, Null, Event Damage);
-		Victim.O = Event Player;
-	}
-}
-
-
-
-rule("Mei: za warudo effect")
+rule("Mei spread virus to nearby enemies")
 {
 	event
 	{
@@ -4338,47 +4159,78 @@ rule("Mei: za warudo effect")
 
 	conditions
 	{
-		Event Player.S > 0;
-		Event Player.S < 100;
-		Event Player.Y != True;
+		Event Player.UsingCustomUlt == True;
+		disabled Distance Between(Event Player, Closest Player To(Event Player, Opposite Team Of(Team Of(Event Player)))) <= 5;
 	}
 
 	actions
 	{
-		Wait(0.016, Ignore Condition);
-		Event Player.S += 2;
+		Wait(1, Ignore Condition);
+		Players Within Radius(Event Player, 10, Opposite Team Of(Team Of(Event Player)), Surfaces).Coronavirus = True;
 		Loop If Condition Is True;
 	}
 }
 
 
 
-rule("Mei: za warudo effect 2")
+rule("Mei: Disable virus if player has spawned and had coronavirus before death")
 {
 	event
 	{
 		Ongoing - Each Player;
 		All;
-		Mei;
+		All;
 	}
 
 	conditions
 	{
-		Event Player.S > 100;
+		Event Player.Coronavirus == True;
+		Event Player.HasDiedWithCoronaVirus == True;
+		Is Alive(Event Player) == True;
 	}
 
 	actions
 	{
-		Event Player.Y = True;
-		Wait(0.016, Ignore Condition);
-		Event Player.S -= 2;
-		Loop If(Event Player.S > 0);
-		Destroy Effect(Event Player.MeiZaWarudoSphere);
-		Event Player.MeiZaWarudoSphere = Null;
-		
+		Destroy Effect(Event Player.CoronavirusEffect);
+		Event Player.CoronavirusEffect = Null;
+		Stop All Damage Over Time(Event Player);
+		Destroy HUD Text(Event Player.CoronavirusText);
+		Event Player.CoronavirusText = Null;
+		Event Player.HasDiedWithCoronaVirus = Null;
+		Set Healing Received(Event Player, 100);
+		Event Player.Coronavirus = Null;
 	}
 }
 
+
+
+rule("Mei: Check if player died with virus")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.Coronavirus == True;
+		Is Dead(Event Player) == True;
+	}
+
+	actions
+	{
+		disabled Event Player.Coronavirus = Null;
+		disabled Destroy Effect(Event Player.CoronavirusEffect);
+		disabled Event Player.CoronavirusEffect = Null;
+		disabled Stop All Damage Over Time(Event Player);
+		disabled Clear Status(Event Player, Hacked);
+		disabled Destroy HUD Text(Event Player.CoronavirusText);
+		disabled Event Player.CoronavirusText = Null;
+		Event Player.HasDiedWithCoronaVirus = True;
+	}
+}
 
 
 
@@ -4395,15 +4247,15 @@ rule("Mei description")
 
 	conditions
 	{
-		
+	
 		
 
 	}
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Mei freezes time to a still. Attacks during time stop will cause damage after time resumes.{0}", Custom String("
-		Icicles will be frozen in air until the time stop ends. Enemy Meis are immune."));
+		Event Player.UltDescription = Custom String("Mei spreads the coronavirus to nearby enemies that does damage over time. {0}", Custom String("
+		The virus will spread from infected enemies to other enemies and also will stay in corpses until they respawn."));
 
 	}
 }
@@ -4979,8 +4831,8 @@ rule("Pharah shoot machine gun")
 	actions
 	{
 		Wait(0.050, Ignore Condition);
-		Create Projectile(Mercy Caduceus Blaster, Event Player, Eye Position(Event Player) + Left*0.5, Null, To World, Damage, Opposite Team Of(Team Of(Event Player)), 10, 2, 0, Bad Explosion, Explosion Sound, 0, 50, 5, 0, 0, 0);
-		Create Projectile(Mercy Caduceus Blaster, Event Player, Eye Position(Event Player) + Right*0.5, Null, To World, Damage, Opposite Team Of(Team Of(Event Player)), 10, 2, 0, Bad Explosion, Explosion Sound, 0, 50, 5, 0, 0, 0);
+		Create Projectile(Mercy Caduceus Blaster, Event Player, Eye Position(Event Player) + Left*0.5, Null, To World, Damage, Opposite Team Of(Team Of(Event Player)), 10, 1, 0, Bad Explosion, Explosion Sound, 0, 50, 5, 0, 0, 0);
+		Create Projectile(Mercy Caduceus Blaster, Event Player, Eye Position(Event Player) + Right*0.5, Null, To World, Damage, Opposite Team Of(Team Of(Event Player)), 10, 1, 0, Bad Explosion, Explosion Sound, 0, 50, 5, 0, 0, 0);
 		Play Effect(All Players(All Teams), Debuff Impact Sound, Color(White), Event Player, 10000);
 		Loop If Condition Is True;
 	}
@@ -7431,9 +7283,9 @@ rule("Soldier description")
 
 
 
-rule("Sombra activate ultimate")
+rule("sombra: za warudo")
 {
-
+		
 	event
 	{
 		Ongoing - Each Player;
@@ -7443,59 +7295,109 @@ rule("Sombra activate ultimate")
 
 	conditions
 	{
-	
 		Is Button Held(Event Player, Button(Ultimate)) == True;
+	
 		Event Player.CustomUltReadyToUse == True;
-		Event Player.UsingCustomUlt != True;
 		Has Status(Event Player, Hacked) == False;
+		Global.T == Null;
 	}
 
 	actions
 	{
-		Call Subroutine(UseCustomUlt);
 	
+		Destroy HUD Text(Event Player.UltReadyText);
+		Event Player.UltReadyText = Null;
+		Set Projectile Speed(All Players(All Teams), 0);
+		Create Effect(All Players(All Teams), Sphere, Color(Purple), Event Player, Event Player.S, Visible To Position and Radius);
+		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Event Player, 200);
+		Pause Match Time;
+		Global.T = Event Player;
+		Global.TimeStopTimer = 5;
+		Big Message(All Players(All Teams), Custom String("Sombra has hacked time to a still!"));
+		Event Player.S = 1;
+		Event Player.CustomUltReadyToUse = False;
+		Create HUD Text(All Players(All Teams), Global.TimeStopTimer, Null, Null, Top, 0, Color(White), Color(White), Color(White),
+			Visible To and String, Default Visibility);
 	
-		All Players(Opposite Team Of(Team Of(Event Player))).EnemySombra = Event Player;
-	
-		Create HUD Text(Event Player, Event Player.P, Null, Null, Top, 1, Color(Green), Color(White), Color(White), Visible To and String,
-			Default Visibility);
-		Event Player.UltDescription = Last Text ID;
-		Create Effect(All Players(All Teams), Bad Aura, Color(Green), Event Player, 1, Visible To Position and Radius);
-		Event Player.UltEffect = Last Created Entity;
-		Event Player.P = 20;
-		Chase Player Variable At Rate(Event Player, P, 0, 1, Destination and Rate);
-	
-	
-		Wait(Event Player.P, Ignore Condition);
+		Wait Until(Global.T == Null, Global.TimeStopTimer);
 		Call Subroutine(ResetSombra);
 	}
 }
 
 
 
-rule("Reset Ult modifications on Sombra.")
+rule("sombra: reset")
 {
-    event
-    {
-        Subroutine;
-        ResetSombra;
-    }
+	event
+	{
+		Subroutine;
+		ResetSombra;
+	}
 
-    actions
-    {
-        
-		Event Player.P = Null;
+	actions
+	{
+		If(Global.T != Null);
+		Global.T = Null;
+		End;
+		Event Player.S = 0;
+		Event Player.Y = False;
+		Unpause Match Time;
+		Set Ultimate Ability Enabled(Event Player, True);
 	
-		Destroy HUD Text(Event Player.UltDescription);
-        
-		
-		Call Subroutine(StopUsingCustomUlt);
-    }
+		Play Effect(All Players(All Teams), Debuff Impact Sound, Color(White), Event Player, 200);
+		Destroy HUD Text(Last Text ID);
+		Set Ultimate Charge(Event Player, 0);
+	
+	}
 }
 
 
 
-rule("Sombra: If player has virus, create virus effect, text and set variables, disable after 10 seconds")
+
+
+
+rule("sombra: stun players and stop horizontal movement")
+{
+
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Global.T != Null;
+		Hero Of(Event Player) != Hero(Sombra);
+		Is Alive(Event Player) == True;
+	}
+
+	actions
+	{
+		Set Gravity(Event Player, 10);
+		Set Status(Event Player, Null, Stunned, 9999);
+		disabled Set Status(Event Player, Null, Rooted, 9999);
+		disabled Set Status(Event Player, Null, Hacked, 9999);
+		disabled Disallow Button(Event Player, Button(Primary Fire));
+		disabled Disallow Button(Event Player, Button(Secondary Fire));
+		disabled Start Facing(Event Player, Facing Direction Of(Event Player), 10000, To World, None);
+		disabled Disallow Button(Event Player, Button(Interact));
+		disabled Disallow Button(Event Player, Button(Crouch));
+		Apply Impulse(Event Player, Backward, 0.001, To World, Cancel Contrary Motion);
+		Apply Impulse(Event Player, Right, 0.001, To World, Cancel Contrary Motion);
+		Apply Impulse(Event Player, Left, 0.001, To World, Cancel Contrary Motion);
+		Apply Impulse(Event Player, Forward, 0.001, To World, Cancel Contrary Motion);
+		Set Status(Event Player, Null, Unkillable, 9999);
+		Event Player.M = Health(Event Player);
+		Disallow Button(Event Player, Button(Ultimate));
+		Event Player.TimeStopStunned = True;
+	}
+}
+
+
+
+rule("sombra: stop players from falling")
 {
 	event
 	{
@@ -7506,59 +7408,111 @@ rule("Sombra: If player has virus, create virus effect, text and set variables, 
 
 	conditions
 	{
-		Event Player.Virus == True;
+		Global.T != Null;
+		Hero Of(Event Player) != Hero(Sombra);
+		Is In Air(Event Player) == True;
+		Speed Of(Event Player) > 0;
 	}
 
 	actions
 	{
-	
-		
-		Create HUD Text(Event Player, Custom String(
-			"You have a computer virus. You cannot be healed and take damage over time. Spreads to nearby teammates."), Null, Null, Right, 0,
-			Color(Green), Color(Green), Color(White), Visible To and String, Default Visibility);
-		Event Player.VirusText = Last Text ID;
-		Start Damage Over Time(Event Player, Null, 10, 20);
-		Create Effect(All Players(All Teams), Cloud, Color(Green), Event Player, 1, Visible To Position and Radius);
-		Event Player.VirusEffect = Last Created Entity;
-		Wait(10, Abort When False);
-		Destroy Effect(Event Player.VirusEffect);
-		Event Player.VirusEffect = Null;
-		Destroy HUD Text(Event Player.VirusText);
-		Event Player.VirusText = Null;
-		
-	
-		Event Player.Virus = Null;
-	}
-}
-
-
-
-rule("Sombra: If player has virus, spread to nearby players")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.Virus == True;
-		Is In Spawn Room(Event Player) == False;
-	}
-
-	actions
-	{
-		Wait(1, Ignore Condition);
-		Remove From Array(Players Within Radius(Event Player, 7, Team Of(Event Player), Surfaces), Event Player).Virus = True;
+		Wait(0.001, Ignore Condition);
+		Apply Impulse(Event Player, Up, 0.001, To Player, Cancel Contrary Motion);
 		Loop If Condition Is True;
 	}
 }
 
 
 
-rule("Sombra spread virus to nearby enemies")
+rule("sombra: clear stun status after time stop is over and damage players")
+{
+
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+	
+		Is True For All(All Players(All Teams), Current Array Element != Global.T) == True;
+		Hero Of(Event Player) != Hero(Sombra);
+		Event Player.TimeStopStunned == True;
+	}
+
+	actions
+	{
+		Allow Button(Event Player, Button(Ultimate));
+		Clear Status(Event Player, Stunned);
+		Clear Status(Event Player, Unkillable);
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
+		Event Player.TimeStopStunned = False;
+		Wait(0.016, Ignore Condition);
+		Skip If(Event Player.O == Null, 4);
+		Damage(Event Player, Event Player.O, Event Player.N);
+		Set Ultimate Charge(Event Player.O, 0);
+		Event Player.N = Null;
+		Event Player.O = Null;
+	}
+}
+
+
+
+rule("sombra: timer")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+		Global.T != Null;
+	}
+
+	actions
+	{
+		Wait(1, Ignore Condition);
+		Global.TimeStopTimer -= 1;
+		If(Global.TimeStopTimer <= 0);
+		Global.T = Null;
+		End;
+		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("sombra: store damage dealt during time stop")
+{
+	event
+	{
+		Player Dealt Damage;
+		All;
+		Sombra;
+	}
+
+	conditions
+	{
+	
+		Global.T != Null;
+	}
+
+	actions
+	{
+		disabled Wait(0.016, Ignore Condition);
+		Victim.N += Event Damage;
+		Heal(Victim, Null, Event Damage);
+		Victim.O = Event Player;
+	}
+}
+
+
+
+rule("sombra: za warudo effect")
 {
 	event
 	{
@@ -7569,78 +7523,47 @@ rule("Sombra spread virus to nearby enemies")
 
 	conditions
 	{
-		Event Player.UsingCustomUlt == True;
-		disabled Distance Between(Event Player, Closest Player To(Event Player, Opposite Team Of(Team Of(Event Player)))) <= 5;
+		Event Player.S > 0;
+	
+		Event Player.S < 100;
+		Event Player.Y != True;
 	}
 
 	actions
 	{
-		Wait(1, Ignore Condition);
-		Players Within Radius(Event Player, 10, Opposite Team Of(Team Of(Event Player)), Surfaces).Virus = True;
+		Wait(0.016, Ignore Condition);
+		Event Player.S += 2;
 		Loop If Condition Is True;
 	}
 }
 
 
 
-rule("Sombra: Disable virus if player has spawned and had virus before death")
+rule("sombra: za warudo effect 2")
 {
 	event
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Sombra;
 	}
 
 	conditions
 	{
-		Event Player.Virus == True;
-		Event Player.HasDiedWithVirus == True;
-		Is Alive(Event Player) == True;
+	
+		Event Player.S > 100;
 	}
 
 	actions
 	{
-		Destroy Effect(Event Player.VirusEffect);
-		Event Player.VirusEffect = Null;
-		Stop All Damage Over Time(Event Player);
-		Destroy HUD Text(Event Player.VirusText);
-		Event Player.VirusText = Null;
-		Event Player.HasDiedWithVirus = Null;
-		Set Healing Received(Event Player, 100);
-		Event Player.Virus = Null;
+		Event Player.Y = True;
+		Wait(0.016, Ignore Condition);
+		Event Player.S -= 2;
+		Loop If(Event Player.S > 0);
+		Destroy Effect(Last Created Entity);
 	}
 }
 
-
-
-rule("Sombra: Check if player died with virus")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.Virus == True;
-		Is Dead(Event Player) == True;
-	}
-
-	actions
-	{
-		disabled Event Player.Virus = Null;
-		disabled Destroy Effect(Event Player.VirusEffect);
-		disabled Event Player.VirusEffect = Null;
-		disabled Stop All Damage Over Time(Event Player);
-		disabled Clear Status(Event Player, Hacked);
-		disabled Destroy HUD Text(Event Player.VirusText);
-		disabled Event Player.VirusText = Null;
-		Event Player.HasDiedWithVirus = True;
-	}
-}
 
 
 
@@ -7657,15 +7580,15 @@ rule("Sombra description")
 
 	conditions
 	{
-	
+		
 		
 
 	}
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Sombra spreads a computer virus to nearby enemies that does damage over time. {0}", Custom String("
-		The virus will spread from infected enemies to other enemies and also will stay in corpses until they respawn."));
+		Event Player.UltDescription = Custom String("Sombra hacks time to a still. Attacks during time stop will cause damage after time resumes.{0}", Custom String("
+		Enemy Sombras are immune."));
 
 	}
 }
