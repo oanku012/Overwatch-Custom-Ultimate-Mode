@@ -467,7 +467,7 @@ rule("Disable vanilla ultimate when charge is full")
 		(Hero Of(Event Player) == Hero(Mei) || Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Bastion) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)) == true;
 		Ultimate Charge Percent(Event Player) > 99.800;
 		Event Player.CustomUltReadyToUse != True;
-	
+		Is Dummy Bot(Event Player) == false;
 
 	}
 
@@ -661,14 +661,16 @@ rule("Test dummy")
 	actions
 	{
 	
-		Create Dummy Bot(Hero(Sombra), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
+		Create Dummy Bot(All Heroes, Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
+	
 	
 		
-		Wait(1, Ignore Condition);
+	
+	
 		
-		Set Ultimate Charge(Last Created Entity, 100);
+	
 		
-		Start Holding Button(Last Created Entity, Button(Ultimate));
+	
 	
 	
 		
@@ -1087,12 +1089,32 @@ rule("Baptiste plant down shield")
 		
 		Destroy Effect(Event Player.BaptisteShieldAimSphere);
 		
+		
+		If(Number of Players(Team Of(Event Player)) >= Number of Slots(Team Of(Event Player)));
 		Create Dummy Bot(Hero(Winston), Team Of(Event Player), -1, Event Player.BaptisteShieldPos, Facing Direction Of(Event Player));
+		
+		Else If(Number of Players(Team Of(Event Player)) < Number of Slots(Team Of(Event Player)));
+		For Player Variable(Event Player, ForLoopIndexPlayer, Number of Slots(Team Of(Event Player)), 11, 1);
+		If(Players In Slot(Event Player.ForLoopIndexPlayer, Team Of(Event Player)) == Null);
+		Create Dummy Bot(Hero(Winston), Team Of(Event Player), Event Player.ForLoopIndexPlayer, Event Player.BaptisteShieldPos, Facing Direction Of(Event Player));
+		
+		Break;
+		End;
+		End;
+		End;
+		
+		
+		
 		Event Player.BaptisteShieldBot = Last Created Entity;
+		
+		
+		
 		Set Invisible(Event Player.BaptisteShieldBot, All);
 		Set Max Health(Event Player.BaptisteShieldBot, 500);
 		Disable Movement Collision With Players(Event Player.BaptisteShieldBot);
-		Wait(0.016, Ignore Condition);
+		
+		Wait(0.1, Ignore Condition);
+		
 	
 		
 	
@@ -1181,7 +1203,7 @@ rule("Baptiste knock people outside of shield")
 	conditions
 	{
 		Event Player.UsingCustomUlt == True;
-		Is True For Any(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 6) == True;
+		Is True For Any(All Players(Opposite Team Of(Team Of(Event Player))), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 6) == True;
 		
 	}
 
@@ -1189,9 +1211,9 @@ rule("Baptiste knock people outside of shield")
 	{
 		Wait(0.016, Abort When False);
 		
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 6)), 1);
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 6)), 1);
 		
-		Apply Impulse(Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 6), Event Player.ForLoopIndexPlayer), Direction Towards(Event Player.BaptisteShieldPos, Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 6), Event Player.ForLoopIndexPlayer)), 10, To World, Cancel Contrary Motion);
+		Apply Impulse(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 6), Event Player.ForLoopIndexPlayer), Direction Towards(Event Player.BaptisteShieldPos, Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) < 6), Event Player.ForLoopIndexPlayer)), 10, To World, Cancel Contrary Motion);
 	
 		End;
 		
@@ -1212,7 +1234,7 @@ rule("Baptiste Knock people inside of shield")
 	conditions
 	{
 		Event Player.UsingCustomUlt == True;
-		Is True For Any(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) <= 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 4) == True;
+		Is True For Any(All Players(Opposite Team Of(Team Of(Event Player))), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) <= 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 4) == True;
 		
 	}
 
@@ -1220,9 +1242,9 @@ rule("Baptiste Knock people inside of shield")
 	{
 		Wait(0.016, Abort When False);
 		
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) <= 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 4)), 1);
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) <= 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 4)), 1);
 		
-		Apply Impulse(Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) <= 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 4), Event Player.ForLoopIndexPlayer), Direction Towards(Value In Array(Filtered Array(All Players(All Teams), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) <= 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 4), Event Player.ForLoopIndexPlayer), Event Player.BaptisteShieldPos), 10, To World, Cancel Contrary Motion);
+		Apply Impulse(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) <= 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 4), Event Player.ForLoopIndexPlayer), Direction Towards(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Distance Between(Current Array Element, Event Player.BaptisteShieldPos) <= 5 && Distance Between(Current Array Element, Event Player.BaptisteShieldPos) > 4), Event Player.ForLoopIndexPlayer), Event Player.BaptisteShieldPos), 10, To World, Cancel Contrary Motion);
 	
 		End;
 		
@@ -1249,7 +1271,7 @@ rule("Baptiste description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Spawn a highly durable shield bubble that players can't simply walk through. {0}", Custom String("
+		Event Player.UltDescription = Custom String("Spawn a highly durable shield bubble that enemy players can't walk through. {0}", Custom String("
 		Can be used to trap enemies or protect your team. {0}", Custom String("
 		Press ultimate button to aim and press again to plant shield.", Null, Null, Null), Null, Null));
 
@@ -2070,7 +2092,7 @@ rule("Echo activate ultimate")
 	
 		Is Duplicating(Event Player) == True;
 		Is Dummy Bot(Event Player) == false;
-
+		
 	}
 
 	actions
@@ -2081,13 +2103,32 @@ rule("Echo activate ultimate")
 
 	
 	
-	
-	
+		If(Number of Players(Team Of(Event Player)) >= Number of Slots(Team Of(Event Player)));
 		Create Dummy Bot(Hero Being Duplicated(Event Player), Team Of(Event Player), -1, Event Player + Cross Product(Facing Direction Of(Event Player), Up), Direction Towards(Event Player + Cross Product(Facing Direction Of(Event Player), Up), Event Player.EchoAimRayCast));
 		Event Player.EchoDummyBots = Array(Last Created Entity);
-	
 		Create Dummy Bot(Hero Being Duplicated(Event Player), Team Of(Event Player), -1, Event Player - Cross Product(Facing Direction Of(Event Player), Up), Direction Towards(Event Player - Cross Product(Facing Direction Of(Event Player), Up), Event Player.EchoAimRayCast));
 		Modify Player Variable(Event Player, EchoDummyBots, Append To Array, Last Created Entity);
+		Else If(Number of Players(Team Of(Event Player)) < Number of Slots(Team Of(Event Player)));
+		For Player Variable(Event Player, ForLoopIndexPlayer, Number of Slots(Team Of(Event Player)), 11, 1);
+		
+		If(Players In Slot(Event Player.ForLoopIndexPlayer, Team Of(Event Player)) == Null);
+		
+		If(Event Player.EchoDummyBots == Null);
+		Create Dummy Bot(Hero Being Duplicated(Event Player), Team Of(Event Player), Event Player.ForLoopIndexPlayer, Event Player + Cross Product(Facing Direction Of(Event Player), Up), Direction Towards(Event Player + Cross Product(Facing Direction Of(Event Player), Up), Event Player.EchoAimRayCast));
+		Event Player.EchoDummyBots = Array(Last Created Entity);
+		Else;
+		Create Dummy Bot(Hero Being Duplicated(Event Player), Team Of(Event Player), Event Player.ForLoopIndexPlayer, Event Player - Cross Product(Facing Direction Of(Event Player), Up), Direction Towards(Event Player - Cross Product(Facing Direction Of(Event Player), Up), Event Player.EchoAimRayCast));
+		
+		Modify Player Variable(Event Player, EchoDummyBots, Append To Array, Last Created Entity);
+		Break;
+		End;
+		
+		End;
+		End;
+		End;
+	
+		
+	
 	
 		
 
@@ -4050,6 +4091,7 @@ rule("Mei: za warudo")
 		Has Status(Event Player, Hacked) == False;
 		Global.T == Null;
 		Is Alive(Event Player) == True;
+		Is Dummy Bot(Event Player) == False;
 		
 	}
 
@@ -4759,6 +4801,7 @@ rule("Pharah activate ultimate when button is pressed")
 		Event Player.UsingCustomUlt != True;
 		Has Status(Event Player, Hacked) == False;
 		Is Alive(Event Player) == True;
+		Is Dummy Bot(Event Player) == False;
 		
 	}
 
@@ -5047,6 +5090,7 @@ rule("Reaper activate ultimate.")
 	
 		Has Status(Event Player, Hacked) == False;
 		Is Alive(Event Player) == True;
+		Is Dummy Bot(Event Player) == False;
 		
     }
 
@@ -7273,7 +7317,19 @@ rule("soldier 76 AC-130")
 
 
 	
+		
+		
+		If(Number of Players(Team Of(Event Player)) >= Number of Slots(Team Of(Event Player)));
 		Create Dummy Bot(Hero(Wrecking Ball), Team Of(Event Player), -1, Value In Array(Event Player.Soldier76Variables, 6), Forward);
+		Else If(Number of Players(Team Of(Event Player)) < Number of Slots(Team Of(Event Player)));
+		For Player Variable(Event Player, ForLoopIndexPlayer, Number of Slots(Team Of(Event Player)), 11, 1);
+		If(Players In Slot(Event Player.ForLoopIndexPlayer, Team Of(Event Player)) == Null);
+		Create Dummy Bot(Hero(Wrecking Ball), Team Of(Event Player), Event Player.ForLoopIndexPlayer, Value In Array(Event Player.Soldier76Variables, 6), Forward);
+		Break;
+		End;
+		End;
+		End;
+		
 		Value In Array(Event Player.Soldier76Variables, 7) = Last Created Entity;
 
 	
@@ -8192,15 +8248,28 @@ rule("torb: spawn torb turret")
 	{
 
 		Call Subroutine(UseCustomUlt);
-		Create Dummy Bot(Hero(Torbjörn), Team Of(Event Player), 7, Event Player + Facing Direction Of(Event Player), Facing Direction Of(Event Player));
 	
+	
+		
+		If(Number of Players(Team Of(Event Player)) >= Number of Slots(Team Of(Event Player)));
+		Create Dummy Bot(Hero(Torbjörn), Team Of(Event Player), -1, Event Player + Facing Direction Of(Event Player), Facing Direction Of(Event Player));
+		
+		Else If(Number of Players(Team Of(Event Player)) < Number of Slots(Team Of(Event Player)));
+		For Player Variable(Event Player, ForLoopIndexPlayer, Number of Slots(Team Of(Event Player)), 11, 1);
+		If(Players In Slot(Event Player.ForLoopIndexPlayer, Team Of(Event Player)) == Null);
+		Create Dummy Bot(Hero(Torbjörn), Team Of(Event Player), Event Player.ForLoopIndexPlayer, Event Player + Facing Direction Of(Event Player), Facing Direction Of(Event Player));
+		Break;
+		End;
+		End;
+		End;
 		Event Player.TorbTurret = Last Created Entity;
-
+		
 	
 	
 		
 	
 		Wait(0.016, Ignore Condition);
+		
 		
 		Event Player.TorbTurret.CurrentGravities = Array(1000, 0);
 		Event Player.TorbTurret.CurrentSpeeds = Array(100, 100, 1000);
@@ -8214,6 +8283,7 @@ rule("torb: spawn torb turret")
 		Set Knockback Received(Event Player.TorbTurret, 0);
 		Event Player.TorbTurret.TorbTurretLevel = 1;
 		Wait(0.5, Ignore Condition);
+		
 		Create In-World Text(All Players(All Teams), Custom String("Turretbjörn Lvl 1"), Event Player.TorbTurret + Up*2, 1, Clip Against Surfaces, Visible to and String, Team Of(Event Player), Default Visibility);
 		Event Player.TorbTurret.TorbTurretLevelText = Last Text Id;
 	
