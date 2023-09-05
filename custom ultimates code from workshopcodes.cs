@@ -39,8 +39,8 @@ settings
 			{
 			
 			
+				Workshop Expanse 0
 			
-				Workshop Chamber 0
 			}
 		}
 
@@ -124,7 +124,7 @@ settings
 				Ashe
 			
 				Bastion
-				Hanzo
+			
 				Illari
 				Kiriko
 				Lifeweaver
@@ -209,96 +209,99 @@ variables {
     31: EchoDummyBots
     32: EchoEffects
     33: V
-    34: JunkerQueenInArena
-    35: JunkerQueenEnemyArray
-    36: JunkerQueenEnemyPositions
-    37: JunkerTeleportPos
-    38: JunkerReadyToTeleport
-    39: JunkerQueenPositions
-    40: JunkerDamageCounter
-    41: JunkerHealthBonus
-    42: JunkerHealthPool
-    43: JunkerScale
-    44: JunkerCDReduction
-    45: JunkerRageEffects
-    46: JunkerWinCounterText
-    47: JunkerWinCounter
-    48: JunkerArenaSphere
-    49: ExtraLife
-    50: JunkerKnifeThrowCD
-    51: JunkratBombPosition
-    52: JunkratBombOrb
-    53: JunkratExplosionRadius
-    54: JunkratRadiusRing
-    55: JunkratTimer
-    56: JunkratTimerHUD
-    57: JunkratTimerAboveHead
-    58: MeiZaWarudoSphere
-    59: MeiIcicleEffects
-    60: MeiIciclePositions
-    61: MeiIcicleDirections
-    62: TimeStopStunned
-    63: O
-    64: N
-    65: MercyExtraLifeText
-    66: ExtraLifeInWorldText
-    67: R
-    68: P
-    69: Q
-    70: U
-    71: ReaperVariables
-    72: ReaperTPPos
-    73: ReinhardtHudText
-    74: RoadhogHUD
-    75: SigmaMaleTimer
-    76: SigmaMaleValues
-    77: SigmaZeroGravBuff
-    78: SigmaHighGravDebuff
-    79: SojournLastRay
-    80: SojournRayArray
-    81: SojournBeamArray
-    82: SojournEyePosArray
-    83: SojournLastEyePos
-    84: SojournDamageRay
-    85: Soldier76Variables
-    86: SoldierAllKillStreaks
-    87: Soldier76KillStreaksEquipped
-    88: SoldierKillStreakTexts
-    89: Soldier76KillStreaksActive
-    90: LocalVariable
-    91: Soldier76CarepackLocation
-    92: SoldierCarePackAmmoIndex
-    93: EnemySombra
-    94: Virus
-    95: VirusText
-    96: VirusEffects
-    97: HasDiedWithVirus
-    98: K
-    99: L
-    100: InPortalSpeed
-    101: TorbTurret
-    102: TorbTurretLevel
-    103: TorbTurretLevelText
-    104: TorbCurrentTarget
-    105: WidowZoomedIn
-    106: WidowPlayersInViewAngleSorted
-    107: WidowRayCastForward
-    108: WidowRayCastStartPos
-    109: WidowRayCastEndPos
-    110: WidowRayCastBackward
-    111: WidowRayCastHeadForward
-    112: WidowRayCastHeadBackward
-    113: WidowFireBeam
-    114: WidowDamage
-    115: WidowAimBeam
-    116: WidowLastFacingDirection
-    117: WinstonGrabbing
-    118: J
-    119: I
-    120: H
-    121: WinstonRayCast1
-    122: WinstonRayCast2
-    123: ZaryaGravPos
+    34: HanzoDragonPos
+    35: HanzoUltimateAmmo
+    36: HanzoDragonTargetPos
+    37: JunkerQueenInArena
+    38: JunkerQueenEnemyArray
+    39: JunkerQueenEnemyPositions
+    40: JunkerTeleportPos
+    41: JunkerReadyToTeleport
+    42: JunkerQueenPositions
+    43: JunkerDamageCounter
+    44: JunkerHealthBonus
+    45: JunkerHealthPool
+    46: JunkerScale
+    47: JunkerCDReduction
+    48: JunkerRageEffects
+    49: JunkerWinCounterText
+    50: JunkerWinCounter
+    51: JunkerArenaSphere
+    52: ExtraLife
+    53: JunkerKnifeThrowCD
+    54: JunkratBombPosition
+    55: JunkratBombOrb
+    56: JunkratExplosionRadius
+    57: JunkratRadiusRing
+    58: JunkratTimer
+    59: JunkratTimerHUD
+    60: JunkratTimerAboveHead
+    61: MeiZaWarudoSphere
+    62: MeiIcicleEffects
+    63: MeiIciclePositions
+    64: MeiIcicleDirections
+    65: TimeStopStunned
+    66: O
+    67: N
+    68: MercyExtraLifeText
+    69: ExtraLifeInWorldText
+    70: R
+    71: P
+    72: Q
+    73: U
+    74: ReaperVariables
+    75: ReaperTPPos
+    76: ReinhardtHudText
+    77: RoadhogHUD
+    78: SigmaMaleTimer
+    79: SigmaMaleValues
+    80: SigmaZeroGravBuff
+    81: SigmaHighGravDebuff
+    82: SojournLastRay
+    83: SojournRayArray
+    84: SojournBeamArray
+    85: SojournEyePosArray
+    86: SojournLastEyePos
+    87: SojournDamageRay
+    88: Soldier76Variables
+    89: SoldierAllKillStreaks
+    90: Soldier76KillStreaksEquipped
+    91: SoldierKillStreakTexts
+    92: Soldier76KillStreaksActive
+    93: LocalVariable
+    94: Soldier76CarepackLocation
+    95: SoldierCarePackAmmoIndex
+    96: EnemySombra
+    97: Virus
+    98: VirusText
+    99: VirusEffects
+    100: HasDiedWithVirus
+    101: K
+    102: L
+    103: InPortalSpeed
+    104: TorbTurret
+    105: TorbTurretLevel
+    106: TorbTurretLevelText
+    107: TorbCurrentTarget
+    108: WidowZoomedIn
+    109: WidowPlayersInViewAngleSorted
+    110: WidowRayCastForward
+    111: WidowRayCastStartPos
+    112: WidowRayCastEndPos
+    113: WidowRayCastBackward
+    114: WidowRayCastHeadForward
+    115: WidowRayCastHeadBackward
+    116: WidowFireBeam
+    117: WidowDamage
+    118: WidowAimBeam
+    119: WidowLastFacingDirection
+    120: WinstonGrabbing
+    121: J
+    122: I
+    123: H
+    124: WinstonRayCast1
+    125: WinstonRayCast2
+    126: ZaryaGravPos
 }
 
 
@@ -312,29 +315,30 @@ subroutines {
     6: ResetDVa
     7: ResetEcho
     8: ResetGenji
-    9: ResetJQ
-    10: ResetJunkrat
-    11: ResetCassidy
-    12: ResetMei
-    13: ResetMoira
-    14: ResetPharah
-    15: ResetReaper
-    16: ResetReinhardt
-    17: ResetRoadhog
-    18: ResetSigma
-    19: ResetSojourn
-    20: ResetSoldier
-    21: ResetSombra
-    22: ResetSymmetraTeam1
-    23: ResetSymmetraTeam2
-    24: ResetTorb
-    25: ResetTracer
-    26: ResetWidow
-    27: ResetWinston
-    28: ResetWB
-    29: ResetZarya
-    30: ResetZenyatta
-    31: StopPossessing
+    9: ResetHanzo
+    10: ResetJQ
+    11: ResetJunkrat
+    12: ResetCassidy
+    13: ResetMei
+    14: ResetMoira
+    15: ResetPharah
+    16: ResetReaper
+    17: ResetReinhardt
+    18: ResetRoadhog
+    19: ResetSigma
+    20: ResetSojourn
+    21: ResetSoldier
+    22: ResetSombra
+    23: ResetSymmetraTeam1
+    24: ResetSymmetraTeam2
+    25: ResetTorb
+    26: ResetTracer
+    27: ResetWidow
+    28: ResetWinston
+    29: ResetWB
+    30: ResetZarya
+    31: ResetZenyatta
+    32: StopPossessing
 }
 
 
@@ -393,6 +397,8 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		Call Subroutine(ResetEcho);
 		Else If(Event Player.B == Hero(Genji));
 		Call Subroutine(ResetGenji);
+		Else If(Event Player.B == Hero(Hanzo));
+		Call Subroutine(ResetHanzo);
 		Else If(Event Player.B == Hero(Junker Queen));
 		Call Subroutine(ResetJQ);
 		Else If(Event Player.B == Hero(Junkrat));
@@ -2750,6 +2756,192 @@ rule("Genji description")
 }
 
 
+
+
+
+rule("Hanzo activate ult for the first time")
+{
+
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Hanzo;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Event Player.HanzoDragonPos == Null;
+	
+		Is Dummy Bot(Event Player) == false;
+		
+	}
+
+	actions
+	{
+	
+		Value In Array(Event Player.CurrentSpeeds, 2) += 400;
+		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
+		Event Player.HanzoUltimateAmmo = 3;
+		Wait Until((Event Player.HanzoUltimateAmmo == Null && Event Player.HanzoDragonTargetPos ==Null) || Is Dead(Event Player), 60);
+		Call Subroutine(ResetHanzo);
+	
+	}
+}
+
+
+
+rule("Hanzo ride dragon")
+{
+
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Hanzo;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+	
+		Is Dummy Bot(Event Player) == false;
+		
+	}
+
+	actions
+	{
+		Wait(0.91, Abort When False);
+	
+	
+		Disable Movement Collision With Environment(Event Player, True);
+		Disable Movement Collision With Players(Event Player);
+		Event Player.HanzoDragonPos = Eye Position(Event Player) + Facing Direction Of(Event Player) * 5;
+		Event Player.HanzoDragonTargetPos = Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000;
+		
+		Start Forcing Player Position(Event Player, Event Player.HanzoDragonPos, True);
+		
+		Chase Player Variable At Rate(Event Player, HanzoDragonPos, Event Player.HanzoDragonTargetPos, 12, Destination And Rate);
+		Event Player.HanzoUltimateAmmo -= 1;
+		
+		Disallow Button(Event Player, Button(Jump));
+		
+	
+		
+		Wait(0.1, Ignore Condition);
+		If(Event Player.HanzoUltimateAmmo >0);
+		Set Ultimate Charge(Event Player, 100);
+		End;
+		
+		
+	}
+}
+
+
+
+rule("Hanzo ride dragon")
+{
+
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Hanzo;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+	
+		Is Dummy Bot(Event Player) == false;
+		Event Player.HanzoDragonTargetPos != Null;
+	}
+
+	actions
+	{
+		
+		Wait Until(Event Player.HanzoDragonTargetPos == Null, 20);
+		Abort If(Event Player.HanzoDragonTargetPos == Null);
+		Stop Chasing Player Variable(Event Player, HanzoDragonPos);
+		Stop Forcing Player Position(Event Player);
+	
+	
+		Event Player.HanzoDragonTargetPos = Null;
+		
+		Enable Movement Collision With Environment(Event Player);
+		Enable Movement Collision With Players(Event Player);
+		Allow Button(Event Player, Button(Jump));
+		
+		
+		
+	}
+}
+
+
+
+rule("Hanzo")
+{
+
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Hanzo;
+	}
+
+	conditions
+	{
+		Event Player.HanzoDragonTargetPos != Null;
+		Is Dummy Bot(Event Player) == false;
+		Is Button Held(Event Player, Button(Jump)) == True;
+	}
+
+	actions
+	{
+		Apply Impulse(Event Player, Up, 20, To World, Cancel Contrary Motion);
+		Stop Chasing Player Variable(Event Player, HanzoDragonPos);
+		Stop Forcing Player Position(Event Player);
+	
+	
+		Event Player.HanzoDragonTargetPos = Null;
+		
+		Enable Movement Collision With Environment(Event Player);
+		Enable Movement Collision With Players(Event Player);
+		Allow Button(Event Player, Button(Jump));
+		
+	}
+}
+
+
+
+rule("Reset Hanzo.")
+{
+    event
+	{
+		Subroutine;
+		ResetHanzo;
+	}
+
+	actions
+	{
+		Stop Chasing Player Variable(Event Player, HanzoDragonPos);
+		Stop Forcing Player Position(Event Player);
+		
+		Event Player.HanzoDragonTargetPos = Null;
+		Event Player.HanzoDragonPos = Null;
+		
+		Value In Array(Event Player.CurrentSpeeds, 2) -= 400;
+		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
+		Event Player.HanzoUltimateAmmo = Null;	
+		Allow Button(Event Player, Button(Jump));
+		Set Ultimate Charge(Event Player, 0);
+		Enable Movement Collision With Environment(Event Player);
+		Enable Movement Collision With Players(Event Player);
+		
+
+	}
+}
 
 
 
