@@ -138,9 +138,11 @@ settings
 	{
 		Spawn More Dummy Bots
 		Buff Status Effects
+	
 		Explosion Sounds
 		Kinetic Explosion Effects
 		Projectiles
+		Buff and Debuff Sounds
 	}
 }
 variables {
@@ -269,7 +271,7 @@ variables {
     93: EnemySombra
     94: Virus
     95: VirusText
-    96: VirusEffect
+    96: VirusEffects
     97: HasDiedWithVirus
     98: K
     99: L
@@ -465,7 +467,7 @@ rule("Disable vanilla ultimate when charge is full")
 		(Hero Of(Event Player) == Hero(Mei) || Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Bastion) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)) == true;
 		Ultimate Charge Percent(Event Player) > 99.800;
 		Event Player.CustomUltReadyToUse != True;
-		Is Dummy Bot(Event Player) == false;
+	
 
 	}
 
@@ -659,10 +661,10 @@ rule("Test dummy")
 	actions
 	{
 	
-		Create Dummy Bot(Hero(Lúcio), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
+		Create Dummy Bot(Hero(Sombra), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
 	
 		
-	
+		Wait(1, Ignore Condition);
 		
 		Set Ultimate Charge(Last Created Entity, 100);
 		
@@ -1029,6 +1031,7 @@ rule("Start aiming baptiste ult")
 		Event Player.UsingCustomUlt == Null;
 		Is Dummy Bot(Event Player) == False;
 		Event Player.BaptisteShieldAimSphere == Null;
+		Is Alive(Event Player) == True;
 		
 	}
 
@@ -1415,7 +1418,6 @@ rule("Brigitte: Big shield bash knockback.")
 
 	actions
 	{
-	
 
 		Apply Impulse(Event Player, Direction From Angles(Horizontal Facing Angle Of(Event Player.D), -20), 30, To World, Cancel Contrary Motion);
 		Damage(Event Player, Event Player.D, 150);
@@ -1450,7 +1452,6 @@ rule("Brigitte: Apply shield knockback and damage to players in front of the shi
 
 	actions
 	{
-	
 
 		Apply Impulse(Event Player, Direction From Angles(Horizontal Facing Angle Of(Event Player.D), -20), 30, To World, Cancel Contrary Motion);
 		Damage(Event Player, Event Player.D, 150);
@@ -2080,11 +2081,15 @@ rule("Echo activate ultimate")
 
 	
 	
+	
+	
 		Create Dummy Bot(Hero Being Duplicated(Event Player), Team Of(Event Player), -1, Event Player + Cross Product(Facing Direction Of(Event Player), Up), Direction Towards(Event Player + Cross Product(Facing Direction Of(Event Player), Up), Event Player.EchoAimRayCast));
 		Event Player.EchoDummyBots = Array(Last Created Entity);
 	
 		Create Dummy Bot(Hero Being Duplicated(Event Player), Team Of(Event Player), -1, Event Player - Cross Product(Facing Direction Of(Event Player), Up), Direction Towards(Event Player - Cross Product(Facing Direction Of(Event Player), Up), Event Player.EchoAimRayCast));
 		Modify Player Variable(Event Player, EchoDummyBots, Append To Array, Last Created Entity);
+	
+		
 
 		Start Facing(Value In Array(Event Player.EchoDummyBots, 0), Direction Towards(Eye Position(Value In Array(Event Player.EchoDummyBots, 0)), Event Player.EchoAimRayCast), 1000, To World, Direction and Turn Rate);
 		Start Facing(Value In Array(Event Player.EchoDummyBots, 1), Direction Towards(Eye Position(Value In Array(Event Player.EchoDummyBots, 1)), Event Player.EchoAimRayCast), 1000, To World, Direction and Turn Rate);
@@ -3591,6 +3596,8 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 		Has Status(Event Player, Hacked) == False;
 		Event Player.UsingCustomUlt == Null;
 		Is Dummy Bot(Event Player) == False;
+		Is Alive(Event Player) == True;
+		
 	}
 
 	actions
@@ -4042,6 +4049,8 @@ rule("Mei: za warudo")
 		Event Player.CustomUltReadyToUse == True;
 		Has Status(Event Player, Hacked) == False;
 		Global.T == Null;
+		Is Alive(Event Player) == True;
+		
 	}
 
 	actions
@@ -4102,7 +4111,7 @@ rule("Mei: create icicle effects in the air")
 
 	actions
 	{
-		Wait(0.32, Ignore Condition);
+		Wait(0.321, Ignore Condition);
 		Abort If(Global.T == Null);
 		Cancel Primary Action(Event Player);
 	
@@ -4749,6 +4758,8 @@ rule("Pharah activate ultimate when button is pressed")
 	
 		Event Player.UsingCustomUlt != True;
 		Has Status(Event Player, Hacked) == False;
+		Is Alive(Event Player) == True;
+		
 	}
 
 	actions
@@ -5035,6 +5046,8 @@ rule("Reaper activate ultimate.")
 		Event Player.UsingCustomUlt == Null;
 	
 		Has Status(Event Player, Hacked) == False;
+		Is Alive(Event Player) == True;
+		
     }
 
     actions
@@ -5844,6 +5857,8 @@ rule("Roadhog activate and deactivate ultimate")
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.UsingCustomUlt != True;
 		Has Status(Event Player, Hacked) == False;
+		Is Alive(Event Player) == True;
+		
 	}
 
 	actions
@@ -5981,6 +5996,7 @@ rule("Sigma zero/high gravity")
 	{
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.CustomUltReadyToUse == True;
+		Is Alive(Event Player) == True;
 	
 	}
 
@@ -6543,7 +6559,7 @@ rule("soldier 76 initialize kill streaks and streak counting")
 
 
 
-		Event Player.SoldierAllKillStreaks = Array(Array(3, Custom String("UAV Recon")), Array(5, Custom String("Care Package")), Array(8, Custom String("Tactical Visor")), Array(20, Custom String("Tactical Nuke")), Array(1, Custom String("AC-130")));
+		Event Player.SoldierAllKillStreaks = Array(Array(3, Custom String("UAV Recon")), Array(5, Custom String("Care Package")), Array(8, Custom String("Tactical Visor")), Array(20, Custom String("Tactical Nuke")), Array(13, Custom String("AC-130")));
 
 	
 		Event Player.Soldier76KillStreaksEquipped = Array(Value In Array(Event Player.SoldierAllKillStreaks, 0), Value In Array(Event Player.SoldierAllKillStreaks, 1), Value In Array(Event Player.SoldierAllKillStreaks, 2), Value In Array(Event Player.SoldierAllKillStreaks, 4), Value In Array(Event Player.SoldierAllKillStreaks, 3));
@@ -6756,6 +6772,8 @@ rule("soldier 76 UAV")
 		Is Dummy Bot(Event Player) == false;
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Value In Array(Event Player.Soldier76KillStreaksActive, Index Of Array Value(Event Player.Soldier76KillStreaksEquipped, Value In Array(Event Player.SoldierAllKillStreaks, 0)) / 2) == True;
+		Is Alive(Event Player) == True;
+		
 	
 	
 	}
@@ -6811,7 +6829,8 @@ rule("soldier 76 care package")
 		Is Dummy Bot(Event Player) == false;
 		Event Player.Soldier76Variables != Null;
 		Is Button Held(Event Player, Button(Ultimate)) == True;	
-
+		Is Alive(Event Player) == True;
+		
 	
 	
 		
@@ -6936,7 +6955,8 @@ rule("soldier 76 tactical visor")
 		Is Dummy Bot(Event Player) == false;
 		Event Player.Soldier76Variables != Null;
 		Is Button Held(Event Player, Button(Ultimate)) == True;	
-
+		Is Alive(Event Player) == True;
+		
 	
 	
 		
@@ -6984,7 +7004,8 @@ rule("soldier 76 nuke")
 		Is Dummy Bot(Event Player) == false;
 		Event Player.Soldier76Variables != Null;
 		Is Button Held(Event Player, Button(Ultimate)) == True;
-
+		Is Alive(Event Player) == True;
+		
 	
 	
 
@@ -7220,7 +7241,8 @@ rule("soldier 76 AC-130")
 		Is Dummy Bot(Event Player) == false;
 		Event Player.Soldier76Variables != Null;
 		Is Button Held(Event Player, Button(Ultimate)) == True;
-
+		Is Alive(Event Player) == True;
+		
 	
 	
 
@@ -7448,6 +7470,9 @@ rule("Sombra activate ultimate")
 		Event Player.CustomUltReadyToUse == True;
 		Event Player.UsingCustomUlt != True;
 		Has Status(Event Player, Hacked) == False;
+		Is Dummy Bot(Event Player) == False;
+		Is Alive(Event Player) == True;
+		
 	}
 
 	actions
@@ -7457,10 +7482,10 @@ rule("Sombra activate ultimate")
 	
 		All Players(Opposite Team Of(Team Of(Event Player))).EnemySombra = Event Player;
 	
-		Create HUD Text(Event Player, Event Player.P, Null, Null, Top, 1, Color(Green), Color(White), Color(White), Visible To and String,
+		Create HUD Text(Event Player, Event Player.P, Null, Null, Top, 1, Color(Purple), Color(White), Color(White), Visible To and String,
 			Default Visibility);
 		Event Player.UltDescription = Last Text ID;
-		Create Effect(All Players(All Teams), Bad Aura, Color(Green), Event Player, 1, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Bad Aura, Color(Purple), Event Player, 1, Visible To Position and Radius);
 		Event Player.UltEffect = Last Created Entity;
 		Event Player.P = 20;
 		Chase Player Variable At Rate(Event Player, P, 0, 1, Destination and Rate);
@@ -7514,15 +7539,20 @@ rule("Sombra: If player has virus, create virus effect, text and set variables, 
 	
 		
 		Create HUD Text(Event Player, Custom String(
-			"You have a computer virus. You cannot be healed and take damage over time. Spreads to nearby teammates."), Null, Null, Right, 0,
-			Color(Green), Color(Green), Color(White), Visible To and String, Default Visibility);
+			"You've been infected by a computer virus. You take damage over time. Spreads to nearby teammates."), Null, Null, Right, 0,
+			Color(Purple), Color(Purple), Color(White), Visible To and String, Default Visibility);
 		Event Player.VirusText = Last Text ID;
-		Start Damage Over Time(Event Player, Null, 10, 20);
-		Create Effect(All Players(All Teams), Cloud, Color(Green), Event Player, 1, Visible To Position and Radius);
-		Event Player.VirusEffect = Last Created Entity;
+		Start Damage Over Time(Event Player, Null, 10, 30);
+	
+		Event Player.VirusEffects = Empty Array;
+		Create Effect(All Players(All Teams), Sombra Hacked Sound, Team Of(Event Player), Event Player, 100, Visible To Position and Radius);
+		Modify Player Variable(Event Player, VirusEffects, Append To Array, Last Created Entity);
+	
+		Create Effect(All Players(All Teams), Cloud, Color(Purple), Event Player, 1, Visible To Position and Radius);
+		Modify Player Variable(Event Player, VirusEffects, Append To Array, Last Created Entity);
 		Wait(10, Abort When False);
-		Destroy Effect(Event Player.VirusEffect);
-		Event Player.VirusEffect = Null;
+		Destroy Effect(Event Player.VirusEffects);
+		Event Player.VirusEffects = Null;
 		Destroy HUD Text(Event Player.VirusText);
 		Event Player.VirusText = Null;
 		
@@ -7570,12 +7600,15 @@ rule("Sombra spread virus to nearby enemies")
 	conditions
 	{
 		Event Player.UsingCustomUlt == True;
+		Is Using Ability 1(Event Player) == False;
 		disabled Distance Between(Event Player, Closest Player To(Event Player, Opposite Team Of(Team Of(Event Player)))) <= 5;
 	}
 
 	actions
 	{
 		Wait(1, Ignore Condition);
+	
+	
 		Players Within Radius(Event Player, 10, Opposite Team Of(Team Of(Event Player)), Surfaces).Virus = True;
 		Loop If Condition Is True;
 	}
@@ -7601,8 +7634,8 @@ rule("Sombra: Disable virus if player has spawned and had virus before death")
 
 	actions
 	{
-		Destroy Effect(Event Player.VirusEffect);
-		Event Player.VirusEffect = Null;
+		Destroy Effect(Event Player.VirusEffects);
+		Event Player.VirusEffects = Null;
 		Stop All Damage Over Time(Event Player);
 		Destroy HUD Text(Event Player.VirusText);
 		Event Player.VirusText = Null;
@@ -7631,13 +7664,7 @@ rule("Sombra: Check if player died with virus")
 
 	actions
 	{
-		disabled Event Player.Virus = Null;
-		disabled Destroy Effect(Event Player.VirusEffect);
-		disabled Event Player.VirusEffect = Null;
-		disabled Stop All Damage Over Time(Event Player);
-		disabled Clear Status(Event Player, Hacked);
-		disabled Destroy HUD Text(Event Player.VirusText);
-		disabled Event Player.VirusText = Null;
+		
 		Event Player.HasDiedWithVirus = True;
 	}
 }
@@ -7665,7 +7692,9 @@ rule("Sombra description")
 	actions
 	{
 		Event Player.UltDescription = Custom String("Sombra spreads a computer virus to nearby enemies that does damage over time. {0}", Custom String("
-		The virus will spread from infected enemies to other enemies and also will stay in corpses until they respawn."));
+		The virus will spread from infected enemies to other enemies and also will stay in corpses until they respawn. {0}",
+		Custom String("Virus can't be spread while you are cloaked."))
+		);
 
 	}
 }
@@ -7691,6 +7720,8 @@ rule("Symmetra ultimate activate and deactivate")
 		Event Player.UsingCustomUlt == Null;
 		Hero Of(Event Player) == Hero(Symmetra);
 		Has Status(Event Player, Hacked) == False;
+		Is Alive(Event Player) == True;
+		
 	}
 
 	actions
@@ -8153,14 +8184,16 @@ rule("torb: spawn torb turret")
 		Event Player.UsingCustomUlt == Null;
 		Is Dummy Bot(Event Player) == false;
 		(Event Player.TorbTurret == null || Is Button Held(Event Player, Button(Crouch)) == True) == true;
+		Is Alive(Event Player) == True;
+		
 	}
 
 	actions
 	{
 
 		Call Subroutine(UseCustomUlt);
+		Create Dummy Bot(Hero(Torbjörn), Team Of(Event Player), 7, Event Player + Facing Direction Of(Event Player), Facing Direction Of(Event Player));
 	
-		Create Dummy Bot(Hero(Torbjörn), Team Of(Event Player), -1, Event Player + Facing Direction Of(Event Player), Facing Direction Of(Event Player));
 		Event Player.TorbTurret = Last Created Entity;
 
 	
@@ -8444,6 +8477,8 @@ rule("Activate Tracer's super speed ultimate")
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.CustomUltReadyToUse == True;
 		Has Status(Event Player, Hacked) == False;
+		Is Alive(Event Player) == True;
+		
 	}
 
 	actions
@@ -9267,6 +9302,8 @@ rule("Wrecking ball activate ultimate.")
 		Event Player.UsingCustomUlt == Null;
 	
 		Has Status(Event Player, Hacked) == False;
+		Is Alive(Event Player) == True;
+		
 	}
 
     actions
@@ -9431,6 +9468,8 @@ rule("zarya: uses ultimate")
 		Event Player.CustomUltReadyToUse == True;
 	
 		Has Status(Event Player, Hacked) == False;
+		Is Alive(Event Player) == True;
+		
 	}
 
 	actions
@@ -9630,6 +9669,8 @@ rule("Zenyatta activate ultimate")
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.UsingCustomUlt != True;
 		Has Status(Event Player, Hacked) == False;
+		Is Alive(Event Player) == True;
+		
 	}
 
 	actions
