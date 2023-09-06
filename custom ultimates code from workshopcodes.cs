@@ -154,19 +154,19 @@ variables {
     4: T
     5: TimeStopHealMod
     6: TimeStopTimer
-    7: S
-    8: UltingSigmas
-    9: NukingPlayer
-    10: NukeTimer
-    11: NukeText
-    12: ForLoopIndexGlobal
-    13: NukePosition
-    14: NukeRadius
-    15: R
-    16: P
-    17: Q
+    7: UltingSigmas
+    8: NukingPlayer
+    9: NukeTimer
+    10: NukeText
+    11: ForLoopIndexGlobal
+    12: NukePosition
+    13: NukeRadius
+    14: BluePortal
+    15: RedPortal
+    16: BluePortalRaycast
+    17: RedPortalRaycast
     18: GreenPortal
-    19: W
+    19: YellowPortal
     20: YellowPortalRaycast
     21: GreenPortalRaycast
     22: SymmetraBluePNormal
@@ -250,36 +250,36 @@ variables {
     72: R
     73: P
     74: Q
-    75: U
-    76: ReaperVariables
-    77: ReaperTPPos
-    78: ReinhardtHudText
-    79: RoadhogHUD
-    80: SigmaMaleValues
-    81: SigmaZeroGravBuff
-    82: SigmaHighGravDebuff
-    83: SojournLastRay
-    84: SojournRayArray
-    85: SojournBeamArray
-    86: SojournEyePosArray
-    87: SojournLastEyePos
-    88: SojournDamageRay
-    89: Soldier76Variables
-    90: SoldierAllKillStreaks
-    91: Soldier76KillStreaksEquipped
-    92: SoldierKillStreakTexts
-    93: Soldier76KillStreaksActive
-    94: LocalVariable
-    95: Soldier76CarepackLocation
-    96: SoldierCarePackAmmoIndex
-    97: EnemySombra
-    98: Virus
-    99: VirusText
-    100: VirusEffects
-    101: HasDiedWithVirus
-    102: K
-    103: L
-    104: InPortalSpeed
+    75: ReaperVariables
+    76: ReaperTPPos
+    77: UltHudTextObject
+    78: SigmaMaleValues
+    79: SigmaZeroGravBuff
+    80: SigmaHighGravDebuff
+    81: SojournLastRay
+    82: SojournRayArray
+    83: SojournBeamArray
+    84: SojournEyePosArray
+    85: SojournLastEyePos
+    86: SojournDamageRay
+    87: Soldier76Variables
+    88: SoldierAllKillStreaks
+    89: Soldier76KillStreaksEquipped
+    90: SoldierKillStreakTexts
+    91: Soldier76KillStreaksActive
+    92: LocalVariable
+    93: Soldier76CarepackLocation
+    94: SoldierCarePackAmmoIndex
+    95: Virus
+    96: VirusText
+    97: VirusEffects
+    98: HasDiedWithVirus
+    99: GreenPortal
+    100: YellowPortal
+    101: K
+    102: L
+    103: InPortalSpeed
+    104: PortalUsed
     105: TorbTurret
     106: TorbTurretLevel
     107: TorbTurretLevelText
@@ -1547,7 +1547,7 @@ rule("Brigitte description")
 	{
 		Event Player.UltDescription = Custom String("When using Brigitte's regular ult, gain a massive shield with a lot of health. {0}", Custom String("
 		When shield bashing, the edges of the shield can also damage and knockback enemies. {0}", Custom String("
-		Hitting enemies with the center of the shield does double damage.", Null, Null, Null), Null, Null));
+		Hitting enemies with the center of the shield does extra damage.", Null, Null, Null), Null, Null));
 
 	}
 }
@@ -4132,6 +4132,7 @@ rule("Lucio description")
 
 rule("McCree enable ult")
 {
+	
 
 	event
 	{
@@ -4621,8 +4622,9 @@ rule("Mei: store damage dealt during time stop")
 
 	conditions
 	{
-	
+		Hero Of(Victim) != Hero(Mei);
 		Global.T != Null;
+		
 	}
 
 	actions
@@ -4733,52 +4735,23 @@ rule("Mercy give extra life to herself during Ultimate")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-		Event Player.ExtraLife != True;
+	
 		Is Dummy Bot(Event Player) == false;
 
 	}
 
 	actions
 	{
-		Event Player.ExtraLife = True;
-		Create HUD Text(Event Player, Custom String("You just gained an extra life."), Null, Null, Top, 0, Color( Yellow), Color(White), Color(White), Visible To and String, Default Visibility);
-		Event Player.MercyExtraLifeText = Last Text ID;
-		Create In-World Text(All Players(All Teams), Custom String("Extra life"), Event Player, 1, Clip Against Surfaces,
-			Visible To Position and String, Color(Yellow), Default Visibility);
-		Event Player.ExtraLifeInWorldText = Last Text ID;
-
-	}
-}
-
-
-
-rule("Mercy give extra life if mercy healed them")
-{
-	event
-	{
-		Player Dealt Healing;
-		All;
-		Mercy;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Healer) == True;
-		Healee.ExtraLife != True;
-		Is Dummy Bot(Event Player) == false;
-
-	}
-
-	actions
-	{
-		Healee.ExtraLife = True;
-		Create HUD Text(Healee, Custom String("Mercy gave you an extra life. Resurrect upon death."), Null, Null, Top, 0, Color(
-			Yellow), Color(White), Color(White), Visible To and String, Default Visibility);
-		Healee.MercyExtraLifeText = Last Text ID;
-		Create In-World Text(All Players(All Teams), Custom String("Extra life"), Healee, 1, Clip Against Surfaces,
-			Visible To Position and String, Color(Yellow), Default Visibility);
-		Healee.ExtraLifeInWorldText = Last Text ID;
-
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(All Players(Team Of(Event Player))), 1);
+		If(Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer).ExtraLife != True);
+		Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer).ExtraLife = True;
+		Create HUD Text(Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer), Custom String("Mercy gave you an extra life. Resurrect upon death."), Null, Null, Top, 0, Color( Yellow), Color(White), Color(White), None, Default Visibility);
+		Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer).MercyExtraLifeText = Last Text ID;
+		Create In-World Text(All Players(All Teams), Custom String("Extra life"), Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer), 1, Clip Against Surfaces, None, Color(Yellow), Default Visibility);
+		Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer).ExtraLifeInWorldText = Last Text ID;
+		End;
+		End;
+		
 	}
 }
 
@@ -4834,7 +4807,7 @@ rule("Mercy description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Grant a bonus life to every hero you heal during Mercy's ult.");
+		Event Player.UltDescription = Custom String("Regular ultimate except you also give your whole team an extra life.");
 
 	}
 }
@@ -5123,7 +5096,7 @@ rule("Reset Pharah stuff.")
 		Stop Camera(Event Player);
 		Set Primary Fire Enabled(Event Player, True);
 	
-		Event Player.U = 0;
+		
 		Stop Damage Over Time(Last Damage Over Time ID);
 		Clear Status(Event Player, Burning);
 		
@@ -5866,7 +5839,7 @@ rule("Rein: ult ready")
 
 	actions
 	{
-		Event Player.U = True;
+		Event Player.CustomUltReadyToUse = True;
 	
 	
 	
@@ -5888,8 +5861,7 @@ rule("reinhardt: set variables when using ultimate")
 	{
 	
 		Is Button Held(Event Player, Button(Ultimate)) == True;
-		Event Player.U == True;
-		disabled Global.S != Event Player;
+		Event Player.CustomUltReadyToUse == True;
 		Is Dummy Bot(Event Player) == false;
 		Event Player.S != True;
 
@@ -5900,7 +5872,6 @@ rule("reinhardt: set variables when using ultimate")
 	{
 	
 	
-		disabled Global.S = Event Player;
 		Event Player.Q = 0;
 		Create Effect(All Players(All Teams), Bad Aura, Color(Orange), Event Player, Event Player.Q, Visible To Position and Radius);
 		Event Player.UsingCustomUlt = Last Created Entity;
@@ -5913,12 +5884,12 @@ rule("reinhardt: set variables when using ultimate")
 		
 		
 		
-		Event Player.ReinhardtHudText = Last Text ID;
+		Event Player.UltHudTextObject = Last Text ID;
 		Event Player.S = True;
 		Event Player.P = 100;
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
-		Event Player.U = false;
+		Event Player.CustomUltReadyToUse = false;
 
 	}
 }
@@ -5992,8 +5963,8 @@ rule("reinhardt: reset stuff")
 		Event Player.G = Null;
 		Set Damage Dealt(Event Player, 100);
 		Event Player.Y = 0;
-		Destroy HUD Text(Event Player.ReinhardtHudText);
-		Event Player.ReinhardtHudText = Null;
+		Destroy HUD Text(Event Player.UltHudTextObject);
+		Event Player.UltHudTextObject = Null;
 		Clear Status(Event Player, Burning);
 		Set Damage Received(Event Player, 100);
 	
@@ -6002,6 +5973,7 @@ rule("reinhardt: reset stuff")
 		Set Ultimate Ability Enabled(Event Player, True);
 		Event Player.M = Null;
 	
+		Event Player.CustomUltReadyToUse = Null;
 	}
 }
 
@@ -6148,7 +6120,7 @@ rule("Roadhog activate and deactivate ultimate")
 		Chase Player Variable At Rate(Event Player, Y, 0, 1, Destination and Rate);
 		Create HUD Text(Event Player, String("{0} {1}", Custom String("Reflect damage and healing.
 		Ultimate Duration: "), Event Player.Y), Null, Null, Top, 5, Color(White), Color(White), Color(White), Visible To and String, Default Visibility);
-		Event Player.RoadhogHUD = Last Text Id;
+		Event Player.UltHudTextObject = Last Text Id;
 		Event Player.UsingCustomUlt = True;
 		Create Effect(Event Player.P, Sphere, Color(White), Event Player, 2, Visible To Position and Radius);
 	
@@ -6177,8 +6149,8 @@ rule("Roadhog reset")
 	
 		Set Ultimate Ability Enabled(Event Player, True);
 		Set Ultimate Charge(Event Player, 0);
-		Destroy HUD Text(Event Player.RoadhogHUD);
-		Event Player.RoadhogHUD = Null;
+		Destroy HUD Text(Event Player.UltHudTextObject);
+		Event Player.UltHudTextObject = Null;
 		Event Player.Y = Null;
 		Event Player.P = Null;
 		
@@ -7773,7 +7745,7 @@ rule("Sombra activate ultimate")
 		Call Subroutine(UseCustomUlt);
 	
 	
-		All Players(Opposite Team Of(Team Of(Event Player))).EnemySombra = Event Player;
+	
 	
 		Create HUD Text(Event Player, Event Player.P, Null, Null, Top, 1, Color(Purple), Color(White), Color(White), Visible To and String,
 			Default Visibility);
@@ -8054,10 +8026,12 @@ rule("Symmetra reset")
 	actions
 	{
 		
-		Destroy Effect(Global.R);
-		Destroy Effect(Global.S);
-		Global.P = Null;
-		Global.Q = Null;
+		Destroy Effect(Global.BluePortal);
+		Global.BluePortal = Null;
+		Destroy Effect(Global.RedPortal);
+		Global.RedPortal = Null;
+		Global.BluePortalRaycast = Null;
+		Global.RedPortalRaycast = Null;
 		
 		Set Ultimate Charge(Event Player, 0);
 		Stop Chasing Player Variable(Event Player, UltTimer);
@@ -8086,7 +8060,10 @@ rule("Symmetra reset")
 		
 		
 		Destroy Effect(Global.GreenPortal);
-		Destroy Effect(Global.W);
+		Event Player.GreenPortal = Null;
+		Destroy Effect(Global.YellowPortal);
+		Event Player.YellowPortal = Null;
+		
 		Global.YellowPortalRaycast = Null;
 		Global.GreenPortalRaycast = Null;
 		Set Ultimate Charge(Event Player, 0);
@@ -8120,30 +8097,33 @@ rule("Symmetra team 1 create blue portal")
 
 	actions
 	{
-		Skip If(Global.R == Null, 2);
-		Destroy Effect(Global.R);
-		Global.R = 0;
+		Skip If(Global.BluePortal == Null, 2);
+		Destroy Effect(Global.BluePortal);
+		Global.BluePortal = 0;
 	
-		Global.P = Ray Cast Hit Position(Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(All Teams), Event Player, True);
+		Global.BluePortalRaycast = Ray Cast Hit Position(Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(All Teams), Event Player, True);
 	
-		Global.SymmetraBluePNormal = Ray Cast Hit Normal(Event Player, Global.P, All Players(All Teams), Event Player, True);
-	
+		Global.SymmetraBluePNormal = Ray Cast Hit Normal(Event Player, Global.BluePortalRaycast, All Players(All Teams), Event Player, True);
 		Log To Inspector(Global.SymmetraBluePNormal);
-		Log To Inspector(Direction Towards(Global.P, Eye Position(Event Player)));
-		If(Angle Between Vectors(Global.SymmetraBluePNormal,Direction Towards(Global.P, Eye Position(Event Player))) >= 0.5);
+		Log To Inspector(Direction Towards(Global.BluePortalRaycast, Eye Position(Event Player)));
+		
+	
+		If(Distance Between(Eye Position(Event Player), Global.BluePortalRaycast) < Distance Between(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000));
+	
+		Global.BluePortalRaycast -= Facing Direction Of(Event Player);
 		
 	
 	
-		Play Effect(All Players(All Teams), Good Explosion, Color(Blue), Global.P, 3);
-		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Global.P, 20);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Blue), Global.BluePortalRaycast, 3);
+		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Global.BluePortalRaycast, 20);
 		Wait(0.200, Ignore Condition);
-		Create Effect(All Players(All Teams), Ring, Color(Blue), Global.P, 2, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Ring, Color(Blue), Global.BluePortalRaycast, 2, Visible To Position and Radius);
 		disabled Event Player.UsingCustomUlt += 1;
-		Global.R = Last Created Entity;
+		Global.BluePortal = Last Created Entity;
 		Wait(0.500, Ignore Condition);
 		
 		Else;
-		Global.P = Null;
+		Global.BluePortalRaycast = Null;
 		Global.SymmetraBluePNormal = Null;
 		End;
 	}
@@ -8169,31 +8149,41 @@ rule("Symmetra team 1 create red portal")
 
 	actions
 	{
-		Skip If(Global.S == Null, 2);
-		Destroy Effect(Global.S);
-		Global.S = 0;
+		Skip If(Global.RedPortal == Null, 2);
+		Destroy Effect(Global.RedPortal);
+		Global.RedPortal = 0;
 	
 		
 		
 	
-		Global.Q = Ray Cast Hit Position(Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(All Teams), Event Player, True);
+		Global.RedPortalRaycast = Ray Cast Hit Position(Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(All Teams), Event Player, True);
 		
 		
-		Global.SymmetraRedPNormal = Ray Cast Hit Normal(Event Player, Global.Q, All Players(All Teams), Event Player, True);
+		Global.SymmetraRedPNormal = Ray Cast Hit Normal(Event Player, Global.RedPortalRaycast, All Players(All Teams), Event Player, True);
 		Log To Inspector(Global.SymmetraRedPNormal);
-		Log To Inspector(Direction Towards(Global.Q, Eye Position(Event Player)));
+		Log To Inspector(Direction Towards(Global.RedPortalRaycast, Eye Position(Event Player)));
 		
-		Abort If(Angle Between Vectors(Global.SymmetraRedPNormal,Direction Towards(Global.Q, Eye Position(Event Player))) < 0.5);
+	
+		If(Distance Between(Eye Position(Event Player), Global.RedPortalRaycast) < Distance Between(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000));
+	
+		Global.RedPortalRaycast -= Facing Direction Of(Event Player);
+		
 		
 	
 	
-		Play Effect(All Players(All Teams), Good Explosion, Color(Red), Global.Q, 3);
-		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Global.Q, 20);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Red), Global.RedPortalRaycast, 3);
+		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Global.RedPortalRaycast, 20);
 		Wait(0.200, Ignore Condition);
-		Create Effect(All Players(All Teams), Ring, Color(Red), Global.Q, 2, Visible To Position and Radius);
+		Create Effect(All Players(All Teams), Ring, Color(Red), Global.RedPortalRaycast, 2, Visible To Position and Radius);
 		disabled Event Player.UsingCustomUlt += 1;
-		Global.S = Last Created Entity;
+		Global.RedPortal= Last Created Entity;
 		Wait(0.500, Ignore Condition);
+		Else;
+		
+		Global.RedPortalRaycast = Null;
+		Global.SymmetraRedPNormal = Null;
+		End;
+		
 	}
 }
 
@@ -8217,21 +8207,32 @@ rule("Symmetra team 2 create yellow portal")
 
 	actions
 	{
-		Skip If(Global.W == Null, 2);
-		Destroy Effect(Global.W);
-		Global.W = 0;
-		Global.YellowPortalRaycast = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
-			* 1000, Y Component Of(Facing Direction Of(Event Player)) * 1000 + -17, Z Component Of(Facing Direction Of(Event Player))
-			* 1000), All Players(All Teams), Event Player, True);
-		Global.YellowPortalRaycast -= Facing Direction Of(Event Player);
+		Skip If(Global.YellowPortal == Null, 2);
+		Destroy Effect(Global.YellowPortal);
+		Global.YellowPortal = 0;
+		
+	
+	
+		Global.YellowPortalRaycast = Ray Cast Hit Position(Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(All Teams), Event Player, True);
 		Global.SymmetraYellowPNormal = Ray Cast Hit Normal(Event Player, Global.YellowPortalRaycast, All Players(All Teams), Event Player, True);
+		
+	
+		If(Distance Between(Eye Position(Event Player), Global.YellowPortalRaycast) < Distance Between(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000));
+	
+		Global.YellowPortalRaycast -= Facing Direction Of(Event Player);
+		
+		
 		Play Effect(All Players(All Teams), Good Explosion, Color(Yellow), Global.YellowPortalRaycast, 3);
 		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Global.YellowPortalRaycast, 20);
 		Wait(0.200, Ignore Condition);
 		Create Effect(All Players(All Teams), Ring, Color(Yellow), Global.YellowPortalRaycast, 2, Visible To Position and Radius);
 		disabled Event Player.UsingCustomUlt += 1;
-		Global.W = Last Created Entity;
+		Global.YellowPortal = Last Created Entity;
 		Wait(0.500, Ignore Condition);
+		Else;
+		Global.YellowPortalRaycast = Null;
+		Global.SymmetraYellowPNormal = Null;
+		End;
 	}
 }
 
@@ -8258,11 +8259,17 @@ rule("Symmetra team 2 create green portal")
 		Skip If(Global.GreenPortal == Null, 2);
 		Destroy Effect(Global.GreenPortal);
 		Global.GreenPortal = 0;
-		Global.GreenPortalRaycast = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
-			* 1000, Y Component Of(Facing Direction Of(Event Player)) * 1000 + -17, Z Component Of(Facing Direction Of(Event Player))
-			* 1000), All Players(All Teams), Event Player, True);
-		Global.GreenPortalRaycast -= Facing Direction Of(Event Player);
+		
+		
+		Global.GreenPortalRaycast = Ray Cast Hit Position(Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(All Teams), Event Player, True);
 		Global.SymmetraGreenPNormal = Ray Cast Hit Normal(Event Player, Global.GreenPortalRaycast, All Players(All Teams), Event Player, True);
+		
+	
+		If(Distance Between(Eye Position(Event Player), Global.GreenPortalRaycast) < Distance Between(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000));
+	
+		Global.GreenPortalRaycast -= Facing Direction Of(Event Player);
+		
+		
 		Play Effect(All Players(All Teams), Good Explosion, Color(Green), Global.GreenPortalRaycast, 3);
 		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Global.GreenPortalRaycast, 20);
 		Wait(0.200, Ignore Condition);
@@ -8270,6 +8277,10 @@ rule("Symmetra team 2 create green portal")
 		disabled Event Player.UsingCustomUlt += 1;
 		Global.GreenPortal = Last Created Entity;
 		Wait(0.500, Ignore Condition);
+		Else;
+		Global.GreenPortalRaycast = Null;
+		Global.SymmetraGreenPNormal = Null;
+		End;
 	}
 }
 
@@ -8286,13 +8297,13 @@ rule("Symmetra teleport player when near team 1 blue portal")
 
 	conditions
 	{
-		Distance Between(Global.P, Event Player) < 2.2;
+		Distance Between(Global.BluePortalRaycast, Event Player) < 2.2;
 		Event Player.K != True;
-		Global.P != Null;
-		Global.Q != Null;
+		Global.BluePortalRaycast != Null;
+		Global.RedPortalRaycast != Null;
 		disabled Is Button Held(Event Player, Button(Interact)) == True;
-		Global.R != Null;
-		Global.S != Null;
+		Global.BluePortal != Null;
+		Global.RedPortal != Null;
 	}
 
 	actions
@@ -8303,7 +8314,10 @@ rule("Symmetra teleport player when near team 1 blue portal")
 	
 	
 		Event Player.InPortalSpeed = Speed Of(Event Player);
-		Teleport(Event Player, Global.Q);
+		Event Player.PortalUsed = True;
+	
+		
+		Teleport(Event Player, Global.RedPortalRaycast);
 		Play Effect(All Players(All Teams), Buff Explosion Sound, Color(White), Event Player, 50);
 		Wait(0.01, Ignore Condition);
 
@@ -8333,13 +8347,13 @@ rule("Symmetra teleport player when near team 1 red portal")
 
 	conditions
 	{
-		Distance Between(Global.Q, Event Player) < 2.2;
+		Distance Between(Global.RedPortalRaycast, Event Player) < 2.2;
 		Event Player.L != True;
-		Global.Q != Null;
-		Global.P != Null;
+		Global.RedPortalRaycast != Null;
+		Global.BluePortalRaycast != Null;
 		disabled Is Button Held(Event Player, Button(Interact)) == True;
-		Global.R != Null;
-		Global.S != Null;
+		Global.BluePortal != Null;
+		Global.RedPortal != Null;
 	}
 
 	actions
@@ -8348,7 +8362,11 @@ rule("Symmetra teleport player when near team 1 red portal")
 	
 	
 		Event Player.InPortalSpeed = Speed Of(Event Player);
-		Teleport(Event Player, Global.P);
+	
+		Event Player.PortalUsed = True;
+		
+		
+		Teleport(Event Player, Global.BluePortalRaycast);
 		Wait(0.01, Ignore Condition);
 
 	
@@ -8383,7 +8401,7 @@ rule("Symmetra teleport player when near team 2 yellow portal")
 		Global.YellowPortalRaycast != Null;
 		disabled Is Button Held(Event Player, Button(Interact)) == True;
 		Global.GreenPortal != Null;
-		Global.W != Null;
+		Global.YellowPortal != Null;
 	}
 
 	actions
@@ -8392,7 +8410,10 @@ rule("Symmetra teleport player when near team 2 yellow portal")
 	
 	
 		Event Player.InPortalSpeed = Speed Of(Event Player);
-
+	
+		Event Player.PortalUsed = True;
+		
+		
 		Teleport(Event Player, Global.GreenPortalRaycast);
 	
 		Wait(0.01, Ignore Condition);
@@ -8424,7 +8445,7 @@ rule("Symmetra teleport player when near team 2 green portal")
 		Global.GreenPortalRaycast != Null;
 		Global.YellowPortalRaycast != Null;
 		Global.GreenPortal != Null;
-		Global.W != Null;
+		Global.YellowPortal != Null;
 	}
 
 	actions
@@ -8432,6 +8453,10 @@ rule("Symmetra teleport player when near team 2 green portal")
 		Event Player.K = True;
 		Event Player.InPortalSpeed = Speed Of(Event Player);
 		Teleport(Event Player, Global.YellowPortalRaycast);
+	
+		Event Player.PortalUsed = True;
+		
+		
 		Wait(0.01, Ignore Condition);
 	
 	
@@ -8443,6 +8468,34 @@ rule("Symmetra teleport player when near team 2 green portal")
 }
 
 
+
+
+
+rule("Symmetra teleport player back in bounds")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.PortalUsed != Null;
+		Global.BluePortal == Null;
+		Global.RedPortal == Null;
+		Global.GreenPortal == Null;
+		Global.YellowPortal == Null;
+	}
+
+	actions
+	{
+		Event Player.TeleportBackInBounds = True;
+		Event Player.PortalUsed= Null;
+		Log To Inspector(Custom String("Ermm.. so that just happened."));
+	}
+}
 
 
 

@@ -1495,8 +1495,276 @@ disabled rule("zarya: team 1 gets out of grav")
 }*/
 
 
+rule("zarya: team 1 uses ultimate")
+{
+//Seems like it kinda breaks when using ult on a nearby enemy and couldn't move the position forward
+
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		//Team Of(Event Player) == Team 1;
+		Event Player.CustomUltReadyToUse == True;
+		Hero Of(Event Player) == Hero(Zarya);
+		Has Status(Event Player, Hacked) == False;
+	}
+
+	actions
+	{
+		Destroy HUD Text(Event Player.UltReadyText);
+		Event Player.UltReadyText = Null;
+		Set Primary Fire Enabled(Event Player, False);
+		Set Secondary Fire Enabled(Event Player, False);
+		Event Player.S = 15;
+		Event Player.UsingCustomUlt = True;
+		//Big Message(All Players(All Teams), Hero Icon String(Hero(Zarya)));
+		Event Player.CustomUltReadyToUse = False;
+		//disabled Global.A = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
+		//	* 1000, Y Component Of(Facing Direction Of(Event Player)) * 1000 + 2, Z Component Of(Facing Direction Of(Event Player))
+		//	* 1000), All Players(All Teams), Event Player, True);
+		//Create Effect(All Players(All Teams), Bad Aura, Color(Purple), Global.A, 4, Visible To Position and Radius);
+		//Create Homing Projectile(Zarya Graviton, Event Player, Null, Null, To World, Damage, Remove From Array(All Teams, All Teams), 0, 0, 0, Bad Explosion, Zarya Particle Cannon Explosion Sound, 0, 100, Event Player.S, 0, Global.A, 1);
+		Create Projectile Effect(All Players(All Teams), Zarya Graviton, All Players(Team Of(Event Player)), Global.A, Facing Direction Of(Event Player), 0.5, Visible To Position Direction and Size);
+		Wait(15, Ignore Condition);
+		Event Player.UsingCustomUlt = Null;
+		Destroy Effect(Last Created Entity);
+		//Destroy Effect(Last Created Entity);
+		Set Ultimate Ability Enabled(Event Player, True);
+		Clear Status(All Players(Opposite Team Of(Team Of(Event Player))), Rooted);
+		Set Ultimate Charge(Event Player, 0);
+		Event Player.S = Null;
+		Set Primary Fire Enabled(Event Player, True);
+		Set Secondary Fire Enabled(Event Player, True);
+		Wait(0.100, Ignore Condition);
+		Stop Accelerating(All Players(Opposite Team Of(Team Of(Event Player))));
+		Global.A = Null;
+	}
+}
+
+rule("zarya: team 2 uses ultimate")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		Team Of(Event Player) == Team 2;
+		Event Player.CustomUltReadyToUse == True;
+		Hero Of(Event Player) == Hero(Zarya);
+		Has Status(Event Player, Hacked) == False;
+	}
+
+	actions
+	{
+		Destroy HUD Text(Event Player.UltReadyText);
+		Event Player.UltReadyText = Null;
+		Set Primary Fire Enabled(Event Player, False);
+		Set Secondary Fire Enabled(Event Player, False);
+		Event Player.S = 15;
+		Event Player.UsingCustomUlt = True;
+		Big Message(All Players(All Teams), Hero Icon String(Hero(Zarya)));
+		Event Player.UsingCustomUlt = Null;
+		disabled Global.B = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
+			* 1000, Y Component Of(Facing Direction Of(Event Player)) * 1000 + 2, Z Component Of(Facing Direction Of(Event Player))
+			* 1000), All Players(All Teams), Event Player, True);
+		//Create Effect(All Players(All Teams), Bad Aura, Color(Purple), Global.B, 4, Visible To Position and Radius);
+		Create Projectile Effect(All Players(All Teams), Zarya Graviton, All Players(Team Of(Event Player)), Global.B, Facing Direction Of(Event Player), 1, Visible To Position Direction and Size);
+		Wait(15, Ignore Condition);
+		Destroy Effect(Last Created Entity);
+		Destroy Effect(Last Created Entity);
+		Event Player.CustomUltReadyToUse = False;
+		Set Ultimate Ability Enabled(Event Player, True);
+		Clear Status(All Players(Opposite Team Of(Team Of(Event Player))), Rooted);
+		Set Ultimate Charge(Event Player, 0);
+		Event Player.S = Null;
+		Set Primary Fire Enabled(Event Player, True);
+		Set Secondary Fire Enabled(Event Player, True);
+		Wait(0.100, Ignore Condition);
+		Stop Accelerating(All Players(Opposite Team Of(Team Of(Event Player))));
+		Global.B = Null;
+	}
+}
+
+rule("zarya: team 1 gets pulled into grav")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		All;
+	}
+
+	conditions
+	{
+		Global.B != Null;
+		Team Of(Event Player) == Team 1;
+		Distance Between(Event Player, Global.B) <= 7;
+	}
+
+	actions
+	{
+		disabled Start Accelerating(Event Player, Direction Towards(Position Of(Event Player), Global.B), 200, 200, To World,
+			Direction Rate and Max Speed);
+		disabled Set Status(Event Player, Null, Rooted, 9999);
+		//Set Status(Event Player, Null, Rooted, 1);
+		Wait(0.016, Ignore Condition);
+		Apply Impulse(Event Player, Vector Towards(Event Player, Global.B), 10, To World, Cancel Contrary Motion);
+		Loop If Condition Is True;
+	}
+}
+
+rule("zarya: team 2 gets pulled into grav")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		All;
+	}
+
+	conditions
+	{
+		Global.A != Null;
+		Team Of(Event Player) == Team 2;
+		Distance Between(Event Player, Global.A) <= 7;
+	}
+
+	actions
+	{
+		disabled Start Accelerating(Event Player, Direction Towards(Position Of(Event Player), Global.A), 200, 200, To World,
+			Direction Rate and Max Speed);
+		//Set Status(Event Player, Null, Rooted, 1);
+		Wait(0.016, Ignore Condition);
+		Apply Impulse(Event Player, Vector Towards(Event Player, Global.A), 10, To World, Cancel Contrary Motion);
+		Loop If Condition Is True;
+	}
+}
+
+rule("Zarya team 1 died")
+{
+	event
+	{
+		Player Died;
+		Team 1;
+		Zarya;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		Event Player.UsingCustomUlt = Null;
+		Destroy Effect(Last Created Entity);
+		Destroy Effect(Last Created Entity);
+		Event Player.CustomUltReadyToUse = False;
+		Set Ultimate Ability Enabled(Event Player, True);
+		Clear Status(All Players(Opposite Team Of(Team Of(Event Player))), Rooted);
+		Set Ultimate Charge(Event Player, 0);
+		Event Player.S = Null;
+		Set Primary Fire Enabled(Event Player, True);
+		Set Secondary Fire Enabled(Event Player, True);
+		Wait(0.100, Ignore Condition);
+		disabled Stop Accelerating(All Players(Opposite Team Of(Team Of(Event Player))));
+		Global.A = Null;
+	}
+}
+
+rule("Zarya team 2 died")
+{
+	event
+	{
+		Player Died;
+		Team 2;
+		Zarya;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		Event Player.UsingCustomUlt = Null;
+		Destroy Effect(Last Created Entity);
+		Destroy Effect(Last Created Entity);
+		Event Player.CustomUltReadyToUse = False;
+		Set Ultimate Ability Enabled(Event Player, True);
+		Clear Status(All Players(Opposite Team Of(Team Of(Event Player))), Rooted);
+		Set Ultimate Charge(Event Player, 0);
+		Event Player.S = Null;
+		Set Primary Fire Enabled(Event Player, True);
+		Set Secondary Fire Enabled(Event Player, True);
+		Wait(0.100, Ignore Condition);
+		disabled Stop Accelerating(All Players(Opposite Team Of(Team Of(Event Player))));
+		Global.B = Null;
+	}
+}
+
+rule("Zarya team 2 set grav point position")
+{
+	event
+	{
+		Ongoing - Each Player;
+		Team 2;
+		Zarya;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		Wait(0.016, Ignore Condition);
+		Global.B = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
+			* Event Player.S, Y Component Of(Facing Direction Of(Event Player)) * Event Player.S + 2, Z Component Of(Facing Direction Of(
+			Event Player)) * Event Player.S), Null, All Players(All Teams), True);
+		Loop If Condition Is True;
+	}
+}
 
 
+rule("Zarya move gravity point backward team 2")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Zarya;
+	}
+
+	conditions
+	{
+		//Hero Of(Event Player) == Hero(Zarya);
+		disabled Event Player.CustomUltReadyToUse == True;
+		Event Player.UsingCustomUlt == True;
+		Is Button Held(Event Player, Button(Secondary Fire)) == True;
+		Distance Between(Event Player, Global.B) > 7;
+	}
+
+	actions
+	{
+		Wait(0.016, Ignore Condition);
+		Event Player.S -= 0.200;
+		Loop If Condition Is True;
+	}
+}
 
 
 
