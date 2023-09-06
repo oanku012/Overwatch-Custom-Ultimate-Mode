@@ -37,9 +37,9 @@ settings
 		{
 			enabled maps
 			{
+				Colosseo 0
 			
 			
-				Workshop Expanse 0
 			
 			}
 		}
@@ -186,122 +186,123 @@ variables {
     8: UltDescription
     9: CurrentGravities
     10: CurrentSpeeds
-    11: MenuHUDOptions
-    12: MenuOptions
-    13: ForLoopIndexPlayer
-    14: MenuHUDChooseSort
-    15: MenuOpen
-    16: MenuChosenOption
-    17: Nanoboosted
-    18: AnaHealMod
-    19: BaptisteShieldAimSphere
-    20: BaptisteShieldPos
-    21: BaptisteShieldReadyToPlant
-    22: BaptisteShieldBot
-    23: D
-    24: BrigitteUltActive
-    25: BrigitteKnockedBack
-    26: S
-    27: Y
-    28: M
-    29: DVAVariables
-    30: EchoAimRayCast
-    31: EchoDummyBots
-    32: EchoEffects
-    33: V
-    34: HanzoDragonPos
-    35: HanzoUltimateAmmo
-    36: HanzoDragonTargetPos
-    37: JunkerQueenInArena
-    38: JunkerQueenEnemyArray
-    39: JunkerQueenEnemyPositions
-    40: JunkerTeleportPos
-    41: JunkerReadyToTeleport
-    42: JunkerQueenPositions
-    43: JunkerDamageCounter
-    44: JunkerHealthBonus
-    45: JunkerHealthPool
-    46: JunkerScale
-    47: JunkerCDReduction
-    48: JunkerRageEffects
-    49: JunkerWinCounterText
-    50: JunkerWinCounter
-    51: JunkerArenaSphere
-    52: ExtraLife
-    53: JunkerKnifeThrowCD
-    54: JunkratBombPosition
-    55: JunkratBombOrb
-    56: JunkratExplosionRadius
-    57: JunkratRadiusRing
-    58: JunkratTimer
-    59: JunkratTimerHUD
-    60: JunkratTimerAboveHead
-    61: MeiZaWarudoSphere
-    62: MeiIcicleEffects
-    63: MeiIciclePositions
-    64: MeiIcicleDirections
-    65: TimeStopStunned
-    66: O
-    67: N
-    68: MercyExtraLifeText
-    69: ExtraLifeInWorldText
-    70: R
-    71: P
-    72: Q
-    73: U
-    74: ReaperVariables
-    75: ReaperTPPos
-    76: ReinhardtHudText
-    77: RoadhogHUD
-    78: SigmaMaleTimer
-    79: SigmaMaleValues
-    80: SigmaZeroGravBuff
-    81: SigmaHighGravDebuff
-    82: SojournLastRay
-    83: SojournRayArray
-    84: SojournBeamArray
-    85: SojournEyePosArray
-    86: SojournLastEyePos
-    87: SojournDamageRay
-    88: Soldier76Variables
-    89: SoldierAllKillStreaks
-    90: Soldier76KillStreaksEquipped
-    91: SoldierKillStreakTexts
-    92: Soldier76KillStreaksActive
-    93: LocalVariable
-    94: Soldier76CarepackLocation
-    95: SoldierCarePackAmmoIndex
-    96: EnemySombra
-    97: Virus
-    98: VirusText
-    99: VirusEffects
-    100: HasDiedWithVirus
-    101: K
-    102: L
-    103: InPortalSpeed
-    104: TorbTurret
-    105: TorbTurretLevel
-    106: TorbTurretLevelText
-    107: TorbCurrentTarget
-    108: WidowZoomedIn
-    109: WidowPlayersInViewAngleSorted
-    110: WidowRayCastForward
-    111: WidowRayCastStartPos
-    112: WidowRayCastEndPos
-    113: WidowRayCastBackward
-    114: WidowRayCastHeadForward
-    115: WidowRayCastHeadBackward
-    116: WidowFireBeam
-    117: WidowDamage
-    118: WidowAimBeam
-    119: WidowLastFacingDirection
-    120: WinstonGrabbing
-    121: J
-    122: I
-    123: H
-    124: WinstonRayCast1
-    125: WinstonRayCast2
-    126: ZaryaGravPos
+    11: TeleportBackInBounds
+    12: MenuHUDOptions
+    13: MenuOptions
+    14: ForLoopIndexPlayer
+    15: MenuHUDChooseSort
+    16: MenuOpen
+    17: MenuChosenOption
+    18: Nanoboosted
+    19: AnaHealMod
+    20: BaptisteShieldAimSphere
+    21: BaptisteShieldPos
+    22: BaptisteShieldReadyToPlant
+    23: BaptisteShieldBot
+    24: D
+    25: BrigitteUltActive
+    26: BrigitteKnockedBack
+    27: S
+    28: Y
+    29: M
+    30: DVAVariables
+    31: EchoAimRayCast
+    32: EchoDummyBots
+    33: EchoEffects
+    34: V
+    35: HanzoDragonPos
+    36: UltTimer
+    37: UltTimerText
+    38: HanzoUltimateAmmo
+    39: HanzoDragonTargetPos
+    40: JunkerQueenInArena
+    41: JunkerQueenEnemyArray
+    42: JunkerQueenEnemyPositions
+    43: JunkerTeleportPos
+    44: JunkerReadyToTeleport
+    45: JunkerQueenPositions
+    46: JunkerDamageCounter
+    47: JunkerHealthBonus
+    48: JunkerHealthPool
+    49: JunkerScale
+    50: JunkerCDReduction
+    51: JunkerRageEffects
+    52: JunkerWinCounterText
+    53: JunkerWinCounter
+    54: JunkerArenaSphere
+    55: ExtraLife
+    56: JunkerKnifeThrowCD
+    57: JunkratBombPosition
+    58: JunkratBombOrb
+    59: JunkratExplosionRadius
+    60: JunkratRadiusRing
+    61: UltTimerAboveHead
+    62: UltTimerHUD
+    63: MeiZaWarudoSphere
+    64: MeiIcicleEffects
+    65: MeiIciclePositions
+    66: MeiIcicleDirections
+    67: TimeStopStunned
+    68: O
+    69: N
+    70: MercyExtraLifeText
+    71: ExtraLifeInWorldText
+    72: R
+    73: P
+    74: Q
+    75: U
+    76: ReaperVariables
+    77: ReaperTPPos
+    78: ReinhardtHudText
+    79: RoadhogHUD
+    80: SigmaMaleValues
+    81: SigmaZeroGravBuff
+    82: SigmaHighGravDebuff
+    83: SojournLastRay
+    84: SojournRayArray
+    85: SojournBeamArray
+    86: SojournEyePosArray
+    87: SojournLastEyePos
+    88: SojournDamageRay
+    89: Soldier76Variables
+    90: SoldierAllKillStreaks
+    91: Soldier76KillStreaksEquipped
+    92: SoldierKillStreakTexts
+    93: Soldier76KillStreaksActive
+    94: LocalVariable
+    95: Soldier76CarepackLocation
+    96: SoldierCarePackAmmoIndex
+    97: EnemySombra
+    98: Virus
+    99: VirusText
+    100: VirusEffects
+    101: HasDiedWithVirus
+    102: K
+    103: L
+    104: InPortalSpeed
+    105: TorbTurret
+    106: TorbTurretLevel
+    107: TorbTurretLevelText
+    108: TorbCurrentTarget
+    109: WidowZoomedIn
+    110: WidowPlayersInViewAngleSorted
+    111: WidowRayCastForward
+    112: WidowRayCastStartPos
+    113: WidowRayCastEndPos
+    114: WidowRayCastBackward
+    115: WidowRayCastHeadForward
+    116: WidowRayCastHeadBackward
+    117: WidowFireBeam
+    118: WidowDamage
+    119: WidowAimBeam
+    120: WidowLastFacingDirection
+    121: WinstonGrabbing
+    122: J
+    123: I
+    124: H
+    125: WinstonRayCast1
+    126: WinstonRayCast2
+    127: ZaryaGravPos
 }
 
 
@@ -644,6 +645,35 @@ rule("Set current hero to B variable")
 	
 	}
 }
+
+
+
+rule("Teleport back in bounds if standing out of bounds")
+{
+
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.TeleportBackInBounds == True;
+		
+		(Is On Ground(Event Player) == True || Vertical Speed Of(Event Player) == 0) == True;
+	
+	
+	}
+
+	actions
+	{
+		Teleport(Event Player, Nearest Walkable Position(Position Of(Event Player)));
+		Event Player.TeleportBackInBounds = False;
+	}
+}
+
 
 
 
@@ -2781,10 +2811,15 @@ rule("Hanzo activate ult for the first time")
 	actions
 	{
 	
-		Value In Array(Event Player.CurrentSpeeds, 2) += 400;
-		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
+	
+	
+		Event Player.UltTimer = 60;
+		Chase Player Variable At Rate(Event Player, UltTimer, 0, 1, Destination And Rate);
+		
+		Create HUD Text(Event Player, Event Player.UltTimer, Null, Null, Top, 0, Color(white), Color(white), Color(white), Visible To And String, Default Visibility);
+		Event Player.UltTimerText = Last Text ID;
 		Event Player.HanzoUltimateAmmo = 3;
-		Wait Until((Event Player.HanzoUltimateAmmo == Null && Event Player.HanzoDragonTargetPos ==Null) || Is Dead(Event Player), 60);
+		Wait Until((Event Player.HanzoUltimateAmmo == Null && Event Player.HanzoDragonTargetPos ==Null) || Is Dead(Event Player), Event Player.UltTimer);
 		Call Subroutine(ResetHanzo);
 	
 	}
@@ -2931,14 +2966,47 @@ rule("Reset Hanzo.")
 		Event Player.HanzoDragonTargetPos = Null;
 		Event Player.HanzoDragonPos = Null;
 		
-		Value In Array(Event Player.CurrentSpeeds, 2) -= 400;
-		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
+	
+	
 		Event Player.HanzoUltimateAmmo = Null;	
 		Allow Button(Event Player, Button(Jump));
 		Set Ultimate Charge(Event Player, 0);
 		Enable Movement Collision With Environment(Event Player);
 		Enable Movement Collision With Players(Event Player);
 		
+		Stop Chasing Player Variable(Event Player, UltTimer);
+		Event Player.UltTimer = Null;
+		
+		Destroy HUD Text(Event Player.UltTimerText);
+		Event Player.UltTimerText = Null;
+		
+		Event Player.TeleportBackInBounds = True;
+	}
+}
+
+
+
+rule("Hanzo description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Hanzo;
+	}
+
+	conditions
+	{
+	
+		
+
+	}
+
+	actions
+	{
+		
+		Event Player.UltDescription = Custom String("Ride your dragons after firing them. You can use the ultimate 3 times in a row and change direction.{0}", Custom String("
+		You pass through walls while riding the dragon. Press jump to hop off the dragon."));
 
 	}
 }
@@ -3843,13 +3911,13 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 		Event Player.JunkratExplosionRadius = 30;
 		Create Effect(All Players(All Teams), Ring, Team Of(Event Player), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius, Position And Radius);
 		Event Player.JunkratRadiusRing = Last Created Entity;
-		Event Player.JunkratTimer = 20;
-		Create Hud Text(Event Player, Event Player.JunkratTimer, null, null, Top, 0, Color(Orange), Color(Orange), Color(Orange), String, Default Visibility);
-		Event Player.JunkratTimerHUD = Last Text Id;
-		Create In-World Text(All Players(All Teams), Event Player.JunkratTimer, Event Player.JunkratBombPosition + Up * 2, 10, Clip Against Surfaces, Visible To Position and String, Team Of(Event Player), Default Visibility);
-		Event Player.JunkratTimerAboveHead = Last Text Id;
-		Chase Player Variable At Rate(Event Player, JunkratTimer, 0, 1, None);
-		Wait(Event Player.JunkratTimer, Ignore Condition);
+		Event Player.UltTimer = 20;
+		Create Hud Text(Event Player, Event Player.UltTimer, null, null, Top, 0, Color(Orange), Color(Orange), Color(Orange), String, Default Visibility);
+		Event Player.UltTimerText = Last Text Id;
+		Create In-World Text(All Players(All Teams), Event Player.UltTimer, Event Player.JunkratBombPosition + Up * 2, 10, Clip Against Surfaces, Visible To Position and String, Team Of(Event Player), Default Visibility);
+		Event Player.UltTimerAboveHead = Last Text Id;
+		Chase Player Variable At Rate(Event Player, UltTimer, 0, 1, None);
+		Wait(Event Player.UltTimer, Ignore Condition);
 		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Event Player.JunkratBombPosition, Down, To World, Damage, Opposite Team Of(Team Of(Event Player)), 800, 0.5, Event Player.JunkratExplosionRadius, Junkrat RIP Tire Explosion Effect, Junkrat RIP Tire Explosion Sound, 1, 100, 1, 30, 0, 100);
 		
 		If(Distance Between(Event Player, Event Player.JunkratBombPosition) < Event Player.JunkratExplosionRadius && Is In Line of Sight(Event Player, Event Player.JunkratBombPosition, All Barriers Block LOS));
@@ -3878,10 +3946,10 @@ rule("Junkrat reset")
 	{
 		Destroy Effect(Event Player.JunkratBombOrb);
 		Event Player.JunkratBombOrb = null;
-		Destroy Hud Text(Event Player.JunkratTimerHUD);
-		Event Player.JunkratTimerHUD = Null;
-		Destroy In-World Text(Event Player.JunkratTimerAboveHead);
-		Event Player.JunkratTimerAboveHead = Null;
+		Destroy Hud Text(Event Player.UltTimerText);
+		Event Player.UltTimerHUD = Null;
+		Destroy In-World Text(Event Player.UltTimerAboveHead);
+		Event Player.UltTimerAboveHead = Null;
 		Destroy Effect(Event Player.JunkratRadiusRing);
 		Event Player.JunkratRadiusRing = Null;
 	
@@ -4082,9 +4150,6 @@ rule("McCree enable ult")
 	actions
 	{
 	
-	
-	
-		
 	
 	
 		Set Status(Event Player, Event Player, Burning, 7);
@@ -5352,6 +5417,9 @@ rule("Reaper reset stuff.")
 		Event Player.ReaperTPPos = Null;
 
 		Event Player.ReaperVariables = Null;
+		
+		Event Player.TeleportBackInBounds = True;
+		
         Call Subroutine(StopUsingCustomUlt);
 
 
@@ -5700,32 +5768,6 @@ rule("Reaper instant teleport update aim position")
 
 	}
 }
-
-
-
-rule("Reaper teleport back in bounds if standing out of bounds")
-{
-
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Reaper;
-	}
-
-	conditions
-	{
-		Is On Ground(Event Player) == True;
-		Distance Between(Event Player, Nearest Walkable Position(Position Of(Event Player))) > 1.5;
-	}
-
-	actions
-	{
-		Teleport(Event Player, Nearest Walkable Position(Position Of(Event Player)));
-
-	}
-}
-
 
 
 
@@ -6251,17 +6293,17 @@ rule("Sigma zero/high gravity")
 		End;
 
 
-		Event Player.SigmaMaleTimer = 15;
+		Event Player.UltTimer = 15;
 		Big Message(All Players(All Teams), Hero Icon String(Hero(Sigma)));
 		Set Gravity(Event Player, 0);
-		Create HUD Text(Event Player, Event Player.SigmaMaleTimer, Null, Null, Right, 0, Color(Blue), Color(White), Color(White), Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, Event Player.UltTimer, Null, Null, Right, 0, Color(Blue), Color(White), Color(White), Visible To and String, Default Visibility);
 		Event Player.SigmaMaleValues = Array(Last Text ID);
 
 		Create Effect(All Players(All Teams), Sphere, Team Of(Event Player), Event Player, 20, Position and Radius);
 		Modify Player Variable(Event Player, SigmaMaleValues, Append To Array, Last Created Entity);
 
-		Chase Player Variable At Rate(Event Player, SigmaMaleTimer, 0, 1, Destination and Rate);
-		Wait Until(Is Dead(Event Player) == true, Event Player.SigmaMaleTimer);
+		Chase Player Variable At Rate(Event Player, UltTimer, 0, 1, Destination and Rate);
+		Wait Until(Is Dead(Event Player) == true, Event Player.UltTimer);
 		Call Subroutine(ResetSigma);
 	}
 }
@@ -6282,6 +6324,9 @@ rule("Reset Sigma")
 		Destroy Effect(Value In Array(Event Player.SigmaMaleValues, 1));
 
 		Modify Global Variable(UltingSigmas, Remove From Array By Value, Event Player);
+
+		Stop Chasing Player Variable(Event Player, UltTimer);
+		Event Player.UltTimer = Null;
 
 		Call Subroutine(StopUsingCustomUlt);
 	}
@@ -7977,14 +8022,15 @@ rule("Symmetra ultimate activate and deactivate")
 		Call Subroutine(UseCustomUlt);
 	
 	
-		Event Player.G = 20;
-		Chase Player Variable At Rate(Event Player, G, 0, 1, Destination and Rate);
-		Create HUD Text(Event Player, String("Use Ultimate Ability"), Event Player.G, Null, Top, 3, Color(Blue), Color(White), Color(
+		Event Player.UltTimer = 20;
+		Chase Player Variable At Rate(Event Player, UltTimer, 0, 1, Destination and Rate);
+		Create HUD Text(Event Player, String("Use Ultimate Ability"), Event Player.UltTimer, Null, Top, 3, Color(Blue), Color(White), Color(
 			White), Visible To and String, Default Visibility);
+		Event Player.UltTimerText = Last Text ID;
 	
 		Set Primary Fire Enabled(Event Player, False);
 		Set Secondary Fire Enabled(Event Player, False);
-		Wait(Event Player.G, Ignore Condition);
+		Wait(Event Player.UltTimer, Ignore Condition);
 		If(Team Of(Event Player) == Team 1);
 		Call Subroutine(ResetSymmetraTeam1);
 		Else;
@@ -8008,19 +8054,18 @@ rule("Symmetra reset")
 	actions
 	{
 		
-	
-	
 		Destroy Effect(Global.R);
 		Destroy Effect(Global.S);
 		Global.P = Null;
 		Global.Q = Null;
 		
-	
-	
 		Set Ultimate Charge(Event Player, 0);
-	
-	
-	
+		Stop Chasing Player Variable(Event Player, UltTimer);
+		Event Player.UltTimer = Null;
+		Destroy HUD Text(Event Player.UltTimerText);
+		Event Player.UltTimerText = Null;
+		
+		
 		Call Subroutine(StopUsingCustomUlt);
 	}
 }
@@ -8039,19 +8084,17 @@ rule("Symmetra reset")
 	actions
 	{
 		
-	
-	
 		
 		Destroy Effect(Global.GreenPortal);
 		Destroy Effect(Global.W);
 		Global.YellowPortalRaycast = Null;
 		Global.GreenPortalRaycast = Null;
-	
-	
 		Set Ultimate Charge(Event Player, 0);
-	
-	
-	
+		Stop Chasing Player Variable(Event Player, UltTimer);
+		Event Player.UltTimer = Null;
+		Destroy HUD Text(Event Player.UltTimerText);
+		Event Player.UltTimerText = Null;
+		
 		Call Subroutine(StopUsingCustomUlt);
 	}
 }
@@ -8080,11 +8123,15 @@ rule("Symmetra team 1 create blue portal")
 		Skip If(Global.R == Null, 2);
 		Destroy Effect(Global.R);
 		Global.R = 0;
-		Global.P = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
-			* 1000, Y Component Of(Facing Direction Of(Event Player)) * 1000 + -17, Z Component Of(Facing Direction Of(Event Player))
-			* 1000), All Players(All Teams), Event Player, True);
-		Global.P -= Facing Direction Of(Event Player);
-		Global.SymmetraBluePNormal = Ray Cast Hit Normal(Event Player, Global.P + Facing Direction Of(Event Player), All Players(All Teams), Event Player, True);
+	
+		Global.P = Ray Cast Hit Position(Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(All Teams), Event Player, True);
+	
+		Global.SymmetraBluePNormal = Ray Cast Hit Normal(Event Player, Global.P, All Players(All Teams), Event Player, True);
+	
+		Log To Inspector(Global.SymmetraBluePNormal);
+		Log To Inspector(Direction Towards(Global.P, Eye Position(Event Player)));
+		If(Angle Between Vectors(Global.SymmetraBluePNormal,Direction Towards(Global.P, Eye Position(Event Player))) >= 0.5);
+		
 	
 	
 		Play Effect(All Players(All Teams), Good Explosion, Color(Blue), Global.P, 3);
@@ -8094,6 +8141,11 @@ rule("Symmetra team 1 create blue portal")
 		disabled Event Player.UsingCustomUlt += 1;
 		Global.R = Last Created Entity;
 		Wait(0.500, Ignore Condition);
+		
+		Else;
+		Global.P = Null;
+		Global.SymmetraBluePNormal = Null;
+		End;
 	}
 }
 
@@ -8120,11 +8172,19 @@ rule("Symmetra team 1 create red portal")
 		Skip If(Global.S == Null, 2);
 		Destroy Effect(Global.S);
 		Global.S = 0;
-		Global.Q = Ray Cast Hit Position(Event Player, Position Of(Event Player) + Vector(X Component Of(Facing Direction Of(Event Player))
-			* 1000, Y Component Of(Facing Direction Of(Event Player)) * 1000 + -17, Z Component Of(Facing Direction Of(Event Player))
-			* 1000), All Players(All Teams), Event Player, True);
-		Global.Q -= Facing Direction Of(Event Player);
-		Global.SymmetraRedPNormal = Ray Cast Hit Normal(Event Player, Global.Q + Facing Direction Of(Event Player), All Players(All Teams), Event Player, True);
+	
+		
+		
+	
+		Global.Q = Ray Cast Hit Position(Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(All Teams), Event Player, True);
+		
+		
+		Global.SymmetraRedPNormal = Ray Cast Hit Normal(Event Player, Global.Q, All Players(All Teams), Event Player, True);
+		Log To Inspector(Global.SymmetraRedPNormal);
+		Log To Inspector(Direction Towards(Global.Q, Eye Position(Event Player)));
+		
+		Abort If(Angle Between Vectors(Global.SymmetraRedPNormal,Direction Towards(Global.Q, Eye Position(Event Player))) < 0.5);
+		
 	
 	
 		Play Effect(All Players(All Teams), Good Explosion, Color(Red), Global.Q, 3);
@@ -9298,8 +9358,6 @@ rule("winston: using ultimate")
 
 	actions
 	{
-	
-	
 		Start Scaling Player(Event Player, 2, false);
 		Wait Until(Is Using Ultimate(Event Player) != true || Is Dead(Event Player) == true, 50);
 		Call Subroutine(ResetWinston);
@@ -9438,7 +9496,6 @@ rule("winston: when winston hits someone, set root status and get direction and 
 
 	conditions
 	{
-	
 		Is Using Ultimate(Event Player) == True;
 	
 		Victim.J == Null;
