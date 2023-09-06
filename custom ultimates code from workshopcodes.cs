@@ -300,9 +300,8 @@ variables {
     122: J
     123: I
     124: H
-    125: WinstonRayCast1
-    126: WinstonRayCast2
-    127: ZaryaGravPos
+    125: WinstonRayCasts
+    126: ZaryaGravPos
 }
 
 
@@ -697,7 +696,7 @@ rule("Test dummy")
 	actions
 	{
 	
-		Create Dummy Bot(All Heroes, Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
+		Create Dummy Bot(All Tank Heroes, Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
 	
 	
 		
@@ -9598,12 +9597,23 @@ rule("winston: check for wall with ray cast.")
 
 	actions
 	{
-		Wait(0.1, Ignore Condition);
+		Wait(0.05, Ignore Condition);
+		Event Player.WinstonRayCasts = Array(Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Event Player.I * 2, All Players(All Teams), Array(Event Player, Event Player.J), True), Ray Cast Hit Position(Position Of(Event Player), Position Of(Event Player) + Event Player.I * 2, All Players(All Teams), Array(Event Player, Event Player.J), True));
 	
-		Event Player.WinstonRayCast1 = Ray Cast Hit Normal(Eye Position(Event Player), Eye Position(Event Player) + Event Player.I, Null, Array(Event Player, Event Player.J), True);
 	
-		Event Player.WinstonRayCast2 = Ray Cast Hit Normal(Position Of(Event Player), Position Of(Event Player) + Event Player.I, Null, Array(Event Player, Event Player.J), True);
-		Loop If((Event Player.J != null && Is Alive(Event Player)) && (Event Player.WinstonRayCast1 == Direction Towards(Eye Position(Event Player) + Event Player.I, Eye Position(Event Player) ) || Event Player.WinstonRayCast2 == Direction Towards(Position Of(Event Player) + Event Player.I, Position Of(Event Player) )) == True);
+	
+	
+	
+	
+	
+	
+	
+	
+		
+	
+	
+		
+		Loop If(Is On Ground(Event Player) == False && (Event Player.J != null && Is Alive(Event Player)) && Distance Between(Eye Position(Event Player), Value In Array(Event Player.WinstonRayCasts, 0)) == Distance Between(Eye Position(Event Player), Eye Position(Event Player) + Event Player.I * 2) && Distance Between(Position Of(Event Player), Value In Array(Event Player.WinstonRayCasts, 1)) == Distance Between(Position Of(Event Player), Position Of(Event Player) + Event Player.I * 2) == True);
 	
 		
 		If(Is On Ground(Event Player) == False);
