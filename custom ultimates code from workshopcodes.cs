@@ -253,8 +253,8 @@ variables {
     75: ReaperVariables
     76: ReaperTPPos
     77: UltHudTextObject
-    78: SigmaMaleValues
-    79: SigmaZeroGravBuff
+    78: SigmaZeroGravBuff
+    79: SigmaMaleValues
     80: SigmaHighGravDebuff
     81: SojournLastRay
     82: SojournRayArray
@@ -473,7 +473,7 @@ rule("Disable vanilla ultimate when charge is full")
 		(Hero Of(Event Player) == Hero(Mei) || Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Bastion) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)) == true;
 		Ultimate Charge Percent(Event Player) > 99.800;
 		Event Player.CustomUltReadyToUse != True;
-		Is Dummy Bot(Event Player) == false;
+	
 
 	}
 
@@ -696,8 +696,8 @@ rule("Test dummy")
 	actions
 	{
 	
-		Create Dummy Bot(Hero(Genji), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
 	
+		Create Dummy Bot(Hero(Sigma), Team Of(Event Player), -1, Event Player, Vector(0, 0, 0));
 		Wait(1, Ignore Condition);
 		
 	
@@ -706,7 +706,7 @@ rule("Test dummy")
 		Set Ultimate Charge(Last Created Entity, 100);
 		
 		Start Holding Button(Last Created Entity, Button(Ultimate));
-		Start Holding Button(Last Created Entity, Button(Primary Fire));
+	
 	
 		
 	}
@@ -2615,7 +2615,7 @@ rule("Genji Omae wa mou shindeiru")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-	
+		Is Dummy Bot(Event Player) == false;
 
 	}
 
@@ -2641,7 +2641,7 @@ rule("Genji deals damage")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-	
+		Is Dummy Bot(Event Player) == false;
 	}
 
 	actions
@@ -2676,7 +2676,7 @@ rule("Start damage over time on players that were hit during Genji's ult after h
 	{
 		Is Using Ultimate(Event Player.V) != True;
 		Event Player.V != Null;
-	
+		Is Dummy Bot(Event Player.V) == false;
 		
 	}
 
@@ -4395,6 +4395,8 @@ rule("Mei: za warudo")
 		Event Player.MeiIciclePositions = Empty Array;
 		Event Player.MeiIcicleDirections = Empty Array;
 		
+		Set Secondary Fire Enabled(Event Player, False);
+		
 	
 		Wait Until(Global.T == Null, Global.TimeStopTimer);
 		Call Subroutine(ResetMei);
@@ -4414,14 +4416,14 @@ rule("Mei: create icicle effects in the air")
 
 	conditions
 	{
-		Is Firing Secondary(Event Player) == True;
 	
+		Is Button Held(Event Player, Button(Secondary Fire)) == True;
 		Global.T != Null;
 	}
 
 	actions
 	{
-		Wait(0.321, Ignore Condition);
+		Wait(0.4, Ignore Condition);
 		Abort If(Global.T == Null);
 		Cancel Primary Action(Event Player);
 	
@@ -4430,8 +4432,8 @@ rule("Mei: create icicle effects in the air")
 		Modify Player Variable(Event Player, MeiIcicleEffects, Append To Array, Last Created Entity);
 		Modify Player Variable(Event Player, MeiIciclePositions, Append To Array, Eye Position(Event Player));
 		Modify Player Variable(Event Player, MeiIcicleDirections, Append To Array, Facing Direction Of(Event Player));
-		Wait(0.4, Ignore Condition);
-		Cancel Primary Action(Event Player);
+	
+	
 		
 	}
 }
@@ -4455,6 +4457,7 @@ rule("Mei reset")
 		Event Player.Y = False;
 		Unpause Match Time;
 		Set Ultimate Ability Enabled(Event Player, True);
+		Set Secondary Fire Enabled(Event Player, True);
 		
 		Destroy Effect(Event Player.MeiZaWarudoSphere);
 		
@@ -4530,7 +4533,7 @@ rule("Mei: freeze players and stop horizontal movement")
 
 
 
-rule("Mei: stop players from falling")
+rule("Mei: stop players from falling and moving horizontally")
 {
 	event
 	{
@@ -4551,6 +4554,11 @@ rule("Mei: stop players from falling")
 	{
 		Wait(0.001, Ignore Condition);
 		Apply Impulse(Event Player, Up, 0.001, To Player, Cancel Contrary Motion);
+		Apply Impulse(Event Player, Down, 0.001, To Player, Cancel Contrary Motion);
+		Apply Impulse(Event Player, Backward, 0.001, To World, Cancel Contrary Motion);
+		Apply Impulse(Event Player, Right, 0.001, To World, Cancel Contrary Motion);
+		Apply Impulse(Event Player, Left, 0.001, To World, Cancel Contrary Motion);
+		Apply Impulse(Event Player, Forward, 0.001, To World, Cancel Contrary Motion);
 		Loop If Condition Is True;
 	}
 }
@@ -5889,7 +5897,7 @@ rule("reinhardt: set variables when using ultimate")
 		Create Effect(All Players(All Teams), Bad Aura Sound, Team Of(Event Player), Event Player, Event Player.Q, Visible To Position and Radius);
 		Event Player.G = Last Created Entity;
 		Event Player.R = 100;
-		Event Player.Y = 10;
+		Event Player.Y = 0;
 	
 		Create HUD Text(Event Player, Custom String("Power-up duration: "), Event Player.Y, String("{0} {1}", String("{0} {1} {2}", String("Damage"), String("Dealt"), String("{0}%", Event Player.R)), String("{0} {1} {2}", String("Damage"), Custom String("received: "), String("{0}%", Event Player.P))), Right, 0, Color(Yellow), Color(Yellow), Color(White), Visible To and String, Default Visibility);
 		
@@ -5920,9 +5928,10 @@ rule("reinhardt: increase buffs in the air")
 	{
 	
 		Is In Air(Event Player) == True;
+	
 		Event Player.S == True;
 		Is Dummy Bot(Event Player) == false;
-
+		Event Player.SigmaZeroGravBuff == False;
 	}
 
 	actions
@@ -5933,23 +5942,19 @@ rule("reinhardt: increase buffs in the air")
 	
 		
 	
-	
+		Event Player.Y += 1;
 		Event Player.R += 30;
 		Event Player.Q += 0.300;
 		Set Damage Dealt(Event Player, Event Player.R);
 		
 	
 	
-		Event Player.P -= 12;
-		If(Event Player.P < 0);
-		Event Player.P = 0;
-		End;
+	
+		Event Player.P /= 1.15;
+		
 		Set Damage Received(Event Player, Event Player.P);
 		Loop If Condition Is True;
-		Wait(1, Ignore Condition);
-	
-		Skip If(Event Player.M == True, 1);
-		Call Subroutine(ResetReinhardt);
+		
 	}
 }
 
@@ -6091,8 +6096,8 @@ rule("Reinhardt description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Jump down from high while using earthshatter to get increased damage and damage resistance for 10 seconds.{0}", Custom String(" 
-		Buff effectiveness increased by air time."));
+		Event Player.UltDescription = Custom String("Jump down from high while using earthshatter to get increased damage and damage resistance.{0}", Custom String(" 
+		Buff effectiveness and duration increased by air time."));
 
 	}
 }
@@ -6258,6 +6263,7 @@ rule("Sigma zero/high gravity")
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.CustomUltReadyToUse == True;
 		Is Alive(Event Player) == True;
+	
 	
 	}
 
