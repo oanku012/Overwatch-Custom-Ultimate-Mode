@@ -696,17 +696,17 @@ rule("Test dummy")
 	actions
 	{
 	
-		Create Dummy Bot(All Tank Heroes, Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
+		Create Dummy Bot(Hero(Genji), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
 	
-	
+		Wait(1, Ignore Condition);
 		
 	
 	
 		
-	
+		Set Ultimate Charge(Last Created Entity, 100);
 		
-	
-	
+		Start Holding Button(Last Created Entity, Button(Ultimate));
+		Start Holding Button(Last Created Entity, Button(Primary Fire));
 	
 		
 	}
@@ -2615,13 +2615,13 @@ rule("Genji Omae wa mou shindeiru")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-		Is Dummy Bot(Event Player) == false;
+	
 
 	}
 
 	actions
 	{
-		Set Damage Dealt(Event Player, 1);
+		Set Damage Dealt(Event Player, 0.1);
 		Event Player.Y = True;
 	
 	}
@@ -2641,18 +2641,21 @@ rule("Genji deals damage")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-		Is Dummy Bot(Event Player) == false;
+	
 	}
 
 	actions
 	{
 	
 
-		Skip If(Victim.V != null, 1);
-		Big Message(Victim, String("{0}: {1}", Hero Icon String(Hero(Genji)), Custom String("Omae wa mou shindeiru")));
-
+		Abort If(Victim.V != null);
 		Victim.V = Event Player;
-
+		
+		Big Message(Victim, String("{0}: {1}", Hero Icon String(Hero(Genji)), Custom String("Omae wa mou shindeiru")));
+		Big Message(Victim, String("{0}: {1}", Hero Icon String(Hero Of(Victim)), Custom String("Nani???")));
+		
+		
+		
 		
 
 	}
@@ -2673,20 +2676,27 @@ rule("Start damage over time on players that were hit during Genji's ult after h
 	{
 		Is Using Ultimate(Event Player.V) != True;
 		Event Player.V != Null;
-		Is Dummy Bot(Event Player.V) == false;
-
+	
+		
 	}
 
 	actions
 	{
-		Start Damage Over Time(Event Player, Event Player.V, 9999, 100);
-		Big Message(Event Player, String("{0}: {1}", Hero Icon String(Hero Of(Event Player)), Custom String("Nani???")));
-
+		If(Is Alive(Event Player.V) == True);
+		
 	
+	
+		Start Damage Over Time(Event Player, Event Player.V, 9999, 0.5 * Max Health(Event Player));
+		
 		Set Status(Event Player, Event Player.V, Stunned, 9999);
 		Create Effect(All Players(All Teams), Bad Aura Sound, Color(White), Event Player, 1000, Visible To Position and Radius);
 		disabled Wait(3, Ignore Condition);
 		disabled Event Player.V = Null;
+		Else;
+		Event Player.V = Null;
+		Big Message(Event Player, String("{0}: {1}", Hero Icon String(Hero(Genji)), Custom String("Forgive me master. I was too weak.")));
+		
+		End;
 	}
 }
 
@@ -2778,8 +2788,9 @@ rule("Genji description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Genji cuts his enemies with such precision that they don't even notice they've been cut until the ultimate is over. {0}", Custom String("
-		Only a single strike is enough. Also gain extra movement speed.", Null, Null, Null));
+		Event Player.UltDescription = Custom String("Genji cuts his enemies with such precision that they don't even notice they've been cut until Genji sheathes his sword. {0}", Custom String("
+		Only a single strike is enough. However if Genji perishes while using his ultimate, {0}", Custom String("
+		it will be so embarrassing that his cuts will have no effect.", Null, Null)));
 
 	}
 }
@@ -4373,7 +4384,7 @@ rule("Mei: za warudo")
 		Global.TimeStopHealMod = Last Healing Modification ID;
 		Pause Match Time;
 		Global.T = Event Player;
-		Global.TimeStopTimer = 5;
+		Global.TimeStopTimer = 8;
 		Big Message(All Players(All Teams), Custom String("Mei has frozen time!"));
 		Event Player.S = 1;
 		Event Player.CustomUltReadyToUse = False;
@@ -5810,7 +5821,8 @@ rule("Reaper description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Guns disabled, but melee kills in one hit. Instant teleportation ability. Wraith form flies through walls.");
+		Event Player.UltDescription = Custom String("Disable guns, but gain extra movement speed and 350 extra damage on melee hits. {0}", Custom String("
+		Instant teleportation ability. Wraith form flies through walls."));
 
 	}
 }
@@ -9381,7 +9393,7 @@ rule("Widow description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Fire at enemies through walls during her ultimate. Casts a laser that warns enemies if they're being aimed at.{0}", Custom String("
+		Event Player.UltDescription = Custom String("Snipe at enemies through walls during her ultimate. Casts a laser that warns enemies if they're being aimed at.{0}", Custom String("
 		Headshots cause a jingle sound. Hit detection might not always work properly.", Null, Null, Null));
 
 	}
