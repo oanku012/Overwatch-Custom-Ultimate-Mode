@@ -3928,7 +3928,7 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 		Event Player.UltTimerAboveHead = Last Text Id;
 		Chase Player Variable At Rate(Event Player, UltTimer, 0, 1, None);
 		Wait(Event Player.UltTimer, Ignore Condition);
-		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Event Player.JunkratBombPosition, Down, To World, Damage, Opposite Team Of(Team Of(Event Player)), 800, 0.5, Event Player.JunkratExplosionRadius, Junkrat RIP Tire Explosion Effect, Junkrat RIP Tire Explosion Sound, 1, 100, 1, 30, 0, 100);
+		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Event Player.JunkratBombPosition, Down, To World, Damage, Opposite Team Of(Team Of(Event Player)), 800, 0.5, Event Player.JunkratExplosionRadius, Junkrat RIP Tire Explosion Effect, Junkrat RIP Tire Explosion Sound, 1, 100, 0, 30, 0, 0);
 		
 		If(Distance Between(Event Player, Event Player.JunkratBombPosition) < Event Player.JunkratExplosionRadius && Is In Line of Sight(Event Player, Event Player.JunkratBombPosition, All Barriers Block LOS));
 		Damage(Event Player, Event Player, 800);
