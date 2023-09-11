@@ -2246,10 +2246,11 @@ rule("D.Va description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("After spawning a new mech, you get a choice between 4 different upgrades for your mech. {0}", Custom String("
-		Upgrades will stack and persist for as long as you stay alive. {0}", Custom String("
+		Event Player.UltDescription = Custom String("After spawning a new mech, you get to choose between different upgrades for your mech. {0}", Custom String("
+		Upgrades will persist for as long as you stay alive. {0}", Custom String("
 		The upgrades will only apply to D.Vas mech and not to her baby form. {0}", Custom String("
-		Use primary fire and secondary fire to move between options in the menu and jump to confirm."))));
+		Use primary fire and secondary fire to move between options in the menu and jump to confirm. {0}"), Custom String("
+		Each upgrade can only be obtained once."))));
 
 	}
 }
