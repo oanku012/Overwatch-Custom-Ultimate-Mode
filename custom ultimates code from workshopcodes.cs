@@ -750,6 +750,7 @@ rule("CreateMenu")
 		Set Status(Event Player, Event Player, Phased Out, 9999);
 
 		Set Knockback Received(Event Player, 0); 
+	
     }
 }
 
@@ -845,6 +846,7 @@ rule("ChooseMenuFinalizeChoice")
 		Event Player.ForLoopIndexPlayer = Null;
 
 		Event Player.MenuOpen = Null;
+		Event Player.MenuHUDChooseSort = Null;
     }
 }
 
@@ -1742,15 +1744,22 @@ rule("D.VA Has spawned with no upgrades, set hud and initial damage+max health")
 
 	actions
 	{
-		Create HUD Text(Event Player, String("{0} {1}", String("Damage"), String("{0}: {1}", String("Dealt"), String("{0}%",
-			Event Player.G))), Null, Null, Right, 0, Color(White), Color(White), Color(White), Visible To and String, Default Visibility);
-		Event Player.DVAVariables = Array(Last Text Id);
-
 	
-		Modify Player Variable(Event Player, DVAVariables, Append To Array, 0);
+		
 	
-		Event Player.G = Array(100, 0, 1, false);
+		Event Player.DVAVariables = Array(0, 0, 0, 0, 0, False, Custom String(" "));
+		
+		Create HUD Text(Event Player, Custom String("Upgrades unlocked: {0}", Value In Array(Event Player.DVAVariables, 6)), Null, Null, Left, 0, Color(white), Color(white), Color(white), Visible To And String, Default Visibility);
+		
+		Value In Array(Event Player.DVAVariables, 0) = Last Text ID;
 	
+	
+	
+	
+		Event Player.G = Array(100, 0, 1, false, 0, 0);
+	
+		Event Player.MenuOptions = Array(Custom String("Halved cooldowns"), Custom String("Double damage"), Custom String("Shields"), Custom String("Infinite defense matrix"), Custom String("Bonus Armor"), Custom String("Improved mobility"));
+		
 		
 	
 
@@ -1774,8 +1783,25 @@ rule("Remove D.Va stuff when switching hero.")
 
 	actions
 	{
-		Set Damage Dealt(Event Player, 100);
+		If(Value In Array(Event Player.G, 5) > 0);
+		Value In Array(Event Player.CurrentSpeeds, 0) -= Value In Array(Event Player.G, 5);
+		Value In Array(Event Player.CurrentSpeeds, 1) -= Value In Array(Event Player.G, 5);
+		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
+		Set Jump Vertical Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 1));
+		End;
+
+	
+	
+	
+		
 		Remove Health Pool From Player(Value In Array(Event Player.DVAVariables, 2));
+		
+		Remove Health Pool From Player(Value In Array(Event Player.DVAVariables, 3));
+		
+		Stop Damage Modification(Value In Array(Event Player.DVAVariables, 4));
+		
+		
+		
 		Destroy Hud Text(Value In Array(Event Player.DVAVariables, 0));
 		Event Player.DVAVariables = Null;
 	
@@ -1817,14 +1843,16 @@ rule("D.VA has spawned a new mech, choose upgrade")
 	{
 	
 
-		Event Player.MenuOptions = Array(Custom String("Halved cooldowns"), Custom String("+50% damage"), Custom String("+50% shield health"), Custom String("Infinite defense matrix"));
-		
+		If(Event Player.MenuOptions != Empty Array);
 		Set Status(Event Player, Event Player, Phased Out, 1);
 		
 
 		Wait(1, Ignore Condition);
 
 		Call Subroutine(CreateMenu);
+		Else;
+		Event Player.MenuChosenOption = Custom String("All upgrades unlocked.");
+		End;
 	}
 }
 
@@ -1845,46 +1873,96 @@ rule("D.VA has chosen a new upgrade")
 	
 		Is Dummy Bot(Event Player) == false;
 	
+	
 		Event Player.MenuChosenOption != Null;
 		Event Player.DVAVariables != Null;
-
+		
 	}
 
 	actions
 	{
 		If(Event Player.MenuChosenOption == Custom String("Halved cooldowns"));
-		Value In Array(Event Player.G, 2) += 1;
+		Value In Array(Event Player.G, 2) = 2;
 		Big Message(Event Player, Custom String("Cooldowns halved."));
-		else if(Event Player.MenuChosenOption == Custom String("+50% damage"));
-		Value In Array(Event Player.G, 0) += 50;
+		Modify Player Variable(Event Player, MenuOptions, Remove From Array By Value, Custom String("Halved cooldowns"));
+		Value In Array(Event Player.DVAVariables, 6) = String("{0} {1}", Value In Array(Event Player.DVAVariables, 6), Custom String("\nHalved Cooldowns"));
+		
+		else if(Event Player.MenuChosenOption == Custom String("Double damage"));
+		Value In Array(Event Player.G, 0) = 200;
 		Big Message(Event Player, Custom String("Damage increased."));
-		else if(Event Player.MenuChosenOption == Custom String("+50% shield health"));
-		Value In Array(Event Player.G, 1) += 325;
-	
+		Modify Player Variable(Event Player, MenuOptions, Remove From Array By Value, Custom String("Double damage"));
+				Value In Array(Event Player.DVAVariables, 6) = String("{0} {1}", Value In Array(Event Player.DVAVariables, 6), Custom String("\nDouble Damage"));
+		
+		else if(Event Player.MenuChosenOption == Custom String("Shields"));
+		Value In Array(Event Player.G, 1) = 400;
 		Big Message(Event Player, Custom String("Added shields"));
-	
-	
+		Modify Player Variable(Event Player, MenuOptions, Remove From Array By Value, Custom String("Shields"));
+				Value In Array(Event Player.DVAVariables, 6) = String("{0} {1}", Value In Array(Event Player.DVAVariables, 6), Custom String("\nShields"));
+		
 		else if(Event Player.MenuChosenOption == Custom String("Infinite defense matrix"));
 		Value In Array(Event Player.G, 3) = true;
 		Big Message(Event Player, Custom String("Infinite defense matrix added"));
-
+		Modify Player Variable(Event Player, MenuOptions, Remove From Array By Value, Custom String("Infinite defense matrix"));
+				Value In Array(Event Player.DVAVariables, 6) = String("{0} {1}", Value In Array(Event Player.DVAVariables, 6), Custom String("\nInfinite Defense Matrix"));
+		
+		else if(Event Player.MenuChosenOption == Custom String("Bonus Armor"));
+		Value In Array(Event Player.G, 4) = 400;
+		Big Message(Event Player, Custom String("Bonus armor added"));
+		Modify Player Variable(Event Player, MenuOptions, Remove From Array By Value, Custom String("Bonus Armor"));
+				Value In Array(Event Player.DVAVariables, 6) = String("{0} {1}", Value In Array(Event Player.DVAVariables, 6), Custom String("\nBonus Armor"));
+		
+		else if(Event Player.MenuChosenOption == Custom String("Improved mobility"));
+		Value In Array(Event Player.G, 5) = 100;
+		Big Message(Event Player, Custom String("Mobility upgraded"));
+		Modify Player Variable(Event Player, MenuOptions, Remove From Array By Value, Custom String("Improved mobility"));
+				Value In Array(Event Player.DVAVariables, 6) = String("{0} {1}", Value In Array(Event Player.DVAVariables, 6), Custom String("\nImproved Mobility"));
+		
+		Else If(Event Player.MenuChosenOption == Custom String("All upgrades unlocked."));
+		Big Message(Event Player, Custom String("All upgrades unlocked."));
 		End;
 
-		Set Damage Dealt(Event Player, Value In Array(Event Player.G, 0));
+	
 	
 		
+		If(Value In Array(Event Player.G, 0) != 100);
+		Start Damage Modification(All Players(Opposite Team Of(Team Of(Event Player))), Event Player, Value In Array(Event Player.G, 0), Receivers Damagers And Damage Percent);
+		
+		Value In Array(Event Player.DVAVariables, 4) = Last Damage Modification ID;
+		End;
+		
+		If(Value In Array(Event Player.G, 1) != Null);
 		Add Health Pool To Player(Event Player, Shields, Value In Array(Event Player.G, 1), true, true);
 
-		Modify Player Variable(Event Player, DVAVariables, Append To Array, Last Created Health Pool);
+		Value In Array(Event Player.DVAVariables, 2) = Last Created Health Pool;
+		End;
+		
+		If(Value In Array(Event Player.G, 4) != Null);
+		Add Health Pool To Player(Event Player, Armor, Value In Array(Event Player.G, 4), true, true);
 
+		Value In Array(Event Player.DVAVariables, 3) = Last Created Health Pool;
+		End;
+	
 
-
+		
+		
+		If(Value In Array(Event Player.G, 5) != Null);
+		Value In Array(Event Player.CurrentSpeeds, 0) += Value In Array(Event Player.G, 5);
+		Value In Array(Event Player.CurrentSpeeds, 1) += Value In Array(Event Player.G, 5);
+		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
+		Set Jump Vertical Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 1));
+		End;
+		
+	
+		
 	
 	
 	
 	
 
 		Event Player.MenuChosenOption = Null;
+		Value In Array(Event Player.DVAVariables, 5) = False;
+		
+		Log To Inspector(Damage Modification Count);
 
 	
 
@@ -1926,13 +2004,52 @@ rule("D.VA reduce ability 1 and secondary fire cooldown after obtaining cooldown
 		End;
 
 	
-		If(Ability Cooldown(Event Player, Button(Ability 2)) > 0);
-		Set Ability Cooldown(Event Player, Button(Ability 2), Ability Cooldown(Event Player, Button(Ability 2)) / Value In Array(Event Player.G, 2));
-		End;
+		
 
 		If(Ability Cooldown(Event Player, Button(Secondary Fire)) > 0);
 		Set Ability Cooldown(Event Player, Button(Secondary Fire), Ability Cooldown(Event Player, Button(Secondary Fire)) / Value In Array(Event Player.G, 2));
 		End;
+
+		
+
+	
+
+
+	}
+}
+
+
+
+
+
+rule("D.VA reduce ability 2 cooldown after obtaining cooldown upgrade")
+{
+
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		D.Va;
+	}
+
+	conditions
+	{
+		Has Spawned(Event Player) == True;
+	
+		Is Dummy Bot(Event Player) == false;
+	
+		Event Player.DVAVariables != Null;
+		Value In Array(Event Player.G, 2) >= 2;
+		Is Using Ability 2(Event Player) == True;
+
+	}
+
+	actions
+	{
+		Wait(1.8, Ignore Condition);
+		Set Ability Cooldown(Event Player, Button(Ability 2), 3.5);
+		
+
 
 		
 
@@ -1981,7 +2098,7 @@ rule("D.VA reset health and damage when dying and remove upgrades")
 {
 	event
 	{
-		Ongoing - Each Player;
+		Player Died;
 		All;
 		D.Va;
 	}
@@ -1989,7 +2106,7 @@ rule("D.VA reset health and damage when dying and remove upgrades")
 	conditions
 	{
 	
-		Is Dead(Event Player) == True;
+	
 		Is Dummy Bot(Event Player) == false;
 		Event Player.DVAVariables != Null;
 	
@@ -1999,19 +2116,40 @@ rule("D.VA reset health and damage when dying and remove upgrades")
 
 	actions
 	{
-		Set Damage Dealt(Event Player, 100);
-	
-		Event Player.G = Array(100, 0, 1, false);
-
 	
 	
-	
+		If(Value In Array(Event Player.DVAVariables, 5) ==  False);
+		If(Value In Array(Event Player.G, 5) > 0);
+		Value In Array(Event Player.CurrentSpeeds, 0) -= Value In Array(Event Player.G, 5);
+		Value In Array(Event Player.CurrentSpeeds, 1) -= Value In Array(Event Player.G, 5);
+		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
+		Set Jump Vertical Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 1));
+		End;
 		Remove Health Pool From Player(Value In Array(Event Player.DVAVariables, 2));
+		Value In Array(Event Player.DVAVariables, 2) = Null;
+		Remove Health Pool From Player(Value In Array(Event Player.DVAVariables, 3));
+		Value In Array(Event Player.DVAVariables, 3) = Null;
+		Stop Damage Modification(Value In Array(Event Player.DVAVariables, 4));
+		Value In Array(Event Player.DVAVariables, 4) = Null;
+		End;
+		
+		
+		
+		
+		Event Player.G = Array(100, 0, 1, false, 0, 0);
 
+	
+	
+	
 		Value In Array(Event Player.DVAVariables, 1) = 0;
+		
+		
+		Event Player.MenuOptions = Array(Custom String("Halved cooldowns"), Custom String("Double damage"), Custom String("Shields"), Custom String("Infinite defense matrix"), Custom String("Bonus Armor"), Custom String("Improved mobility"));
+		
+		Value In Array(Event Player.DVAVariables, 6) = Custom String(" ");
+		
 
-
-		Event Player.DVAVariables = Remove From Array(Event Player.DVAVariables, Value In Array(Event Player.DVAVariables, 2));
+	
 
 	
 
@@ -2039,22 +2177,45 @@ rule("D.Va reset damage and health when in baby form.")
 		Event Player.DVAVariables != Null;
 		Value In Array(Event Player.DVAVariables, 1) > 0;
 		Is Alive(Event Player) == True;
+		(Value In Array(Event Player.DVAVariables, 2) != Null || Value In Array(Event Player.DVAVariables, 3) != Null || Value In Array(Event Player.DVAVariables, 4) != Null || Value In Array(Event Player.G, 5) != Null) == True;
+	
+		Value In Array(Event Player.DVAVariables, 5) ==  False;
 		
 	}
 
 	actions
 	{
-		Set Damage Dealt(Event Player, 100);
+	
 	
 	
 	
 	
 		
 	
+		If(Value In Array(Event Player.G, 5) > 0);
+		Value In Array(Event Player.CurrentSpeeds, 0) -= Value In Array(Event Player.G, 5);
+		Value In Array(Event Player.CurrentSpeeds, 1) -= Value In Array(Event Player.G, 5);
+		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
+		Set Jump Vertical Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 1));
+		End;
+		
+		
 		Remove Health Pool From Player(Value In Array(Event Player.DVAVariables, 2));
-		
+		Value In Array(Event Player.DVAVariables, 2) = Null;
 
-		Event Player.DVAVariables = Remove From Array(Event Player.DVAVariables, Value In Array(Event Player.DVAVariables, 2));
+	
+		
+		Remove Health Pool From Player(Value In Array(Event Player.DVAVariables, 3));
+		Value In Array(Event Player.DVAVariables, 3) = Null;
+		
+		Stop Damage Modification(Value In Array(Event Player.DVAVariables, 4));
+		Value In Array(Event Player.DVAVariables, 4) = Null;
+		
+		Log To Inspector(Custom String("Reset upgrades"));
+		
+		Value In Array(Event Player.DVAVariables, 5) =  True;
+
+	
 
 	
 	
@@ -4185,7 +4346,7 @@ rule("Lucio: do stuff when the bass has dropped")
 		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Event Player.R, 1);
 		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
 		End;
-		Wait(0.016, Abort When False);
+		Wait(0.016, Ignore Condition);
 	
 		Damage(Players Within Radius(Event Player, 30, Team Of(Event Player), Surfaces), Null, 750);
 		
