@@ -37,10 +37,10 @@ settings
 		{
 			enabled maps
 			{
-				Colosseo 0
 			
 			
 			
+				Workshop Chamber 0
 			}
 		}
 
@@ -200,108 +200,107 @@ variables {
     22: BaptisteShieldReadyToPlant
     23: BaptisteShieldBot
     24: D
-    25: BrigitteUltActive
-    26: BrigitteKnockedBack
-    27: S
-    28: Y
-    29: M
-    30: DVAVariables
-    31: EchoAimRayCast
-    32: EchoDummyBots
-    33: EchoEffects
-    34: V
-    35: HanzoDragonPos
-    36: UltTimer
-    37: UltTimerText
-    38: HanzoUltimateAmmo
-    39: HanzoDragonTargetPos
-    40: JunkerQueenInArena
-    41: JunkerQueenEnemyArray
-    42: JunkerQueenEnemyPositions
-    43: JunkerTeleportPos
-    44: JunkerReadyToTeleport
-    45: JunkerQueenPositions
-    46: JunkerDamageCounter
-    47: JunkerHealthBonus
-    48: JunkerHealthPool
-    49: JunkerScale
-    50: JunkerCDReduction
-    51: JunkerRageEffects
-    52: JunkerWinCounterText
-    53: JunkerWinCounter
-    54: JunkerArenaSphere
-    55: ExtraLife
-    56: JunkerKnifeThrowCD
-    57: JunkratBombPosition
-    58: JunkratBombOrb
-    59: JunkratExplosionRadius
-    60: JunkratRadiusRing
-    61: UltTimerAboveHead
-    62: UltTimerHUD
-    63: MeiZaWarudoSphere
-    64: MeiIcicleEffects
-    65: MeiIciclePositions
-    66: MeiIcicleDirections
-    67: TimeStopStunned
-    68: O
-    69: N
-    70: MercyExtraLifeText
-    71: ExtraLifeInWorldText
-    72: R
-    73: P
-    74: Q
-    75: ReaperVariables
-    76: ReaperTPPos
-    77: UltHudTextObject
-    78: SigmaZeroGravBuff
-    79: SigmaMaleValues
-    80: SigmaHighGravDebuff
-    81: SojournLastRay
-    82: SojournRayArray
-    83: SojournBeamArray
-    84: SojournEyePosArray
-    85: SojournLastEyePos
-    86: SojournDamageRay
-    87: Soldier76Variables
-    88: SoldierAllKillStreaks
-    89: Soldier76KillStreaksEquipped
-    90: SoldierKillStreakTexts
-    91: Soldier76KillStreaksActive
-    92: LocalVariable
-    93: Soldier76CarepackLocation
-    94: SoldierCarePackAmmoIndex
-    95: Virus
-    96: VirusText
-    97: VirusEffects
-    98: HasDiedWithVirus
-    99: GreenPortal
-    100: YellowPortal
-    101: K
-    102: L
-    103: InPortalSpeed
-    104: PortalUsed
-    105: TorbTurret
-    106: TorbTurretLevel
-    107: TorbTurretLevelText
-    108: TorbCurrentTarget
-    109: WidowZoomedIn
-    110: WidowPlayersInViewAngleSorted
-    111: WidowRayCastForward
-    112: WidowRayCastStartPos
-    113: WidowRayCastEndPos
-    114: WidowRayCastBackward
-    115: WidowRayCastHeadForward
-    116: WidowRayCastHeadBackward
-    117: WidowFireBeam
-    118: WidowDamage
-    119: WidowAimBeam
-    120: WidowLastFacingDirection
-    121: WinstonGrabbing
-    122: J
-    123: I
-    124: H
-    125: WinstonRayCasts
-    126: ZaryaGravPos
+    25: BrigitteKnockedBack
+    26: S
+    27: Y
+    28: M
+    29: DVAVariables
+    30: EchoAimRayCast
+    31: EchoDummyBots
+    32: EchoEffects
+    33: V
+    34: HanzoDragonPos
+    35: UltTimer
+    36: UltTimerText
+    37: HanzoUltimateAmmo
+    38: HanzoDragonTargetPos
+    39: JunkerQueenInArena
+    40: JunkerQueenEnemyArray
+    41: JunkerQueenEnemyPositions
+    42: JunkerTeleportPos
+    43: JunkerReadyToTeleport
+    44: JunkerQueenPositions
+    45: JunkerDamageCounter
+    46: JunkerHealthBonus
+    47: JunkerHealthPool
+    48: JunkerScale
+    49: JunkerCDReduction
+    50: JunkerRageEffects
+    51: JunkerWinCounterText
+    52: JunkerWinCounter
+    53: JunkerArenaSphere
+    54: ExtraLife
+    55: JunkerKnifeThrowCD
+    56: JunkratBombPosition
+    57: JunkratBombOrb
+    58: JunkratExplosionRadius
+    59: JunkratRadiusRing
+    60: UltTimerAboveHead
+    61: UltTimerHUD
+    62: Q
+    63: UltHudTextObject
+    64: SigmaZeroGravBuff
+    65: R
+    66: LucioHealthPoolHealthAmount
+    67: LucioHealthPool
+    68: MeiZaWarudoSphere
+    69: MeiIcicleEffects
+    70: MeiIciclePositions
+    71: MeiIcicleDirections
+    72: TimeStopStunned
+    73: O
+    74: N
+    75: MercyExtraLifeText
+    76: ExtraLifeInWorldText
+    77: P
+    78: ReaperVariables
+    79: ReaperTPPos
+    80: SigmaMaleValues
+    81: SigmaHighGravDebuff
+    82: SojournLastRay
+    83: SojournRayArray
+    84: SojournBeamArray
+    85: SojournEyePosArray
+    86: SojournLastEyePos
+    87: SojournDamageRay
+    88: Soldier76Variables
+    89: SoldierAllKillStreaks
+    90: Soldier76KillStreaksEquipped
+    91: SoldierKillStreakTexts
+    92: Soldier76KillStreaksActive
+    93: LocalVariable
+    94: Soldier76CarepackLocation
+    95: SoldierCarePackAmmoIndex
+    96: Virus
+    97: VirusText
+    98: VirusEffects
+    99: HasDiedWithVirus
+    100: GreenPortal
+    101: YellowPortal
+    102: K
+    103: L
+    104: InPortalSpeed
+    105: PortalUsed
+    106: TorbTurret
+    107: TorbTurretLevel
+    108: TorbTurretLevelText
+    109: TorbCurrentTarget
+    110: WidowZoomedIn
+    111: WidowPlayersInViewAngleSorted
+    112: WidowRayCastForward
+    113: WidowRayCastStartPos
+    114: WidowRayCastEndPos
+    115: WidowRayCastBackward
+    116: WidowRayCastHeadForward
+    117: WidowRayCastHeadBackward
+    118: WidowFireBeam
+    119: WidowDamage
+    120: WidowAimBeam
+    121: WidowLastFacingDirection
+    122: WinstonGrabbing
+    123: WinstonDamageArray
+    124: WinstonRayCasts
+    125: ZaryaGravPos
 }
 
 
@@ -318,27 +317,28 @@ subroutines {
     9: ResetHanzo
     10: ResetJQ
     11: ResetJunkrat
-    12: ResetCassidy
-    13: ResetMei
-    14: ResetMoira
-    15: ResetPharah
-    16: ResetReaper
-    17: ResetReinhardt
-    18: ResetRoadhog
-    19: ResetSigma
-    20: ResetSojourn
-    21: ResetSoldier
-    22: ResetSombra
-    23: ResetSymmetraTeam1
-    24: ResetSymmetraTeam2
-    25: ResetTorb
-    26: ResetTracer
-    27: ResetWidow
-    28: ResetWinston
-    29: ResetWB
-    30: ResetZarya
-    31: ResetZenyatta
-    32: StopPossessing
+    12: ResetLucio
+    13: ResetCassidy
+    14: ResetMei
+    15: ResetMoira
+    16: ResetPharah
+    17: ResetReaper
+    18: ResetReinhardt
+    19: ResetRoadhog
+    20: ResetSigma
+    21: ResetSojourn
+    22: ResetSoldier
+    23: ResetSombra
+    24: ResetSymmetraTeam1
+    25: ResetSymmetraTeam2
+    26: ResetTorb
+    27: ResetTracer
+    28: ResetWidow
+    29: ResetWinston
+    30: ResetWB
+    31: ResetZarya
+    32: ResetZenyatta
+    33: StopPossessing
 }
 
 
@@ -403,6 +403,8 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		Call Subroutine(ResetJQ);
 		Else If(Event Player.B == Hero(Junkrat));
 		Call Subroutine(ResetJunkrat);
+		Else If(Event Player.B == Hero(Lúcio));
+		Call Subroutine(ResetLucio);
 		Else If(Event Player.B == Hero(Mei));
 		Call Subroutine(ResetMei);
 		Else If(Event Player.B == Hero(Moira));
@@ -473,7 +475,7 @@ rule("Disable vanilla ultimate when charge is full")
 		(Hero Of(Event Player) == Hero(Mei) || Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Bastion) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)) == true;
 		Ultimate Charge Percent(Event Player) > 99.800;
 		Event Player.CustomUltReadyToUse != True;
-	
+		Is Dummy Bot(Event Player) == false;
 
 	}
 
@@ -696,16 +698,16 @@ rule("Test dummy")
 	actions
 	{
 	
-	
-		Create Dummy Bot(Hero(Sigma), Team Of(Event Player), -1, Event Player, Vector(0, 0, 0));
-		Wait(1, Ignore Condition);
-		
+		Create Dummy Bot(Hero(Genji), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
 	
 	
 		
-		Set Ultimate Charge(Last Created Entity, 100);
+	
+	
 		
-		Start Holding Button(Last Created Entity, Button(Ultimate));
+	
+		
+	
 	
 	
 		
@@ -713,24 +715,6 @@ rule("Test dummy")
 }
 
 
-
-rule("ServerLoad")
-{
-	event
-	{
-		Ongoing - Global;
-	}
-
-	conditions
-	{
-
-	}
-
-	actions
-	{
-		Create HUD Text(All Players(All Teams), Custom String("Server load: "), Server Load, Null, Right, 0, Color(White), Color(White), Color(White), Visible To and String, Default Visibility);
-	}
-}
 
 
 
@@ -1354,7 +1338,7 @@ rule("Brigitte: Increase shield size when using ultimate")
 	
 	
 	
-		Event Player.BrigitteUltActive = true;
+		Event Player.UsingCustomUlt = true;
 	
 		Set Max Health(Event Player, Max Health(Event Player) * 5);
 	
@@ -1415,7 +1399,7 @@ rule("Reset everything with brigitte.")
 	
 		Set Ability 1 Enabled(Event Player, True);
 		Set Ability 2 Enabled(Event Player, True);
-		Event Player.BrigitteUltActive = Null;
+		Event Player.UsingCustomUlt = Null;
 	
 	
 		Stop Scaling Barriers(Event Player);
@@ -1440,8 +1424,8 @@ rule("Brigitte: Force holding shield.")
 
 	conditions
 	{
-		Event Player.BrigitteUltActive == True;
-		Hero Of(Event Player) == Hero(Brigitte);
+		Event Player.UsingCustomUlt == True;
+	
 		Is Button Held(Event Player, Button(Secondary Fire)) != True;
 	}
 
@@ -1464,7 +1448,8 @@ rule("Brigitte: Big shield bash knockback.")
 
 	conditions
 	{
-		Event Player.D.BrigitteUltActive == True;
+		Event Player.D.UsingCustomUlt == True;
+		Hero Of(Event Player.D) == Hero(Brigitte);
 		Is Button Held(Event Player.D, Button(Secondary Fire)) == True;
 		Is Firing Primary(Event Player.D) == True;
 		Event Player.D != Null;
@@ -1497,7 +1482,8 @@ rule("Brigitte: Apply shield knockback and damage to players in front of the shi
 
 	conditions
 	{
-		Event Player.D.BrigitteUltActive == True;
+		Event Player.D.UsingCustomUlt == True;
+		Hero Of(Event Player.D) == Hero(Brigitte);
 		Is Button Held(Event Player.D, Button(Secondary Fire)) == True;
 		Is Firing Primary(Event Player.D) == True;
 		Event Player.D != Null;
@@ -4058,7 +4044,72 @@ rule("Junkrat description")
 
 
 
-rule("Lucio activate ult")
+rule("Lucio: ult ready")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Lúcio;
+	}
+
+	conditions
+	{
+		Ultimate Charge Percent(Event Player) > 99.900;
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+		Event Player.CustomUltReadyToUse = True;
+	}
+}
+
+
+
+rule("Lucio: set variables when using ultimate")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Lúcio;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		Event Player.CustomUltReadyToUse == True;
+		Is Dummy Bot(Event Player) == false;
+		Event Player.S != True;
+
+
+	}
+
+	actions
+	{
+	
+	
+	
+		Event Player.Q = 750;
+		
+		
+	
+		Create HUD Text(Event Player, Custom String("Bonus health: {0}", Event Player.Q), Null, Null, Left, 0, Color(Green), Color(white), Color(white), Visible To And String, Default Visibility);
+		
+		
+		Event Player.UltHudTextObject = Last Text ID;
+		Event Player.CustomUltReadyToUse = false;
+		Wait(0.1, Ignore Condition);
+		Event Player.S = True;
+		
+	}
+}
+
+
+
+rule("Lucio: increase buffs in the air")
 {
 	event
 	{
@@ -4070,48 +4121,203 @@ rule("Lucio activate ult")
 	conditions
 	{
 	
-		Is Using Ultimate(Event Player) == True;
-		
+		Is In Air(Event Player) == True;
 	
+		Event Player.S == True;
 		Is Dummy Bot(Event Player) == false;
+		Event Player.SigmaZeroGravBuff == False;
 	}
 
 	actions
 	{
-		Wait(0.5, Abort When False);
-		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
-		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
-		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
-		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
-		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
-		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
-		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
-		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
-		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
-		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
-		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
-		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
-		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
-		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
-	
-		
-		Damage(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off), Event Player, 50);
-		
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off)), 1);
-		
-		Apply Impulse(Value In Array(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer),  Direction Towards(Position Of(Event Player), Value In Array(Players Within Radius(Event Player, 12, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer) + Up*2), 20, To World, Cancel Contrary Motion);
-		
-		End;
-		
-		
-		
-		
-	
-		
+		Wait(0.200, Ignore Condition);
+		Event Player.R += 2;
+		Event Player.Q += 100;
 		Loop If Condition Is True;
-
+		
 	}
 }
+
+
+
+rule("Lucio: do stuff when the bass has dropped")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Lúcio;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+		Is On Ground(Event Player) == True;
+		Event Player.S == True;
+	}
+
+	actions
+	{
+		Event Player.S = 0;
+		Event Player.M = True;
+		Set Ultimate Ability Enabled(Event Player, False);
+		Players Within Radius(Event Player, 30, Team Of(Event Player), Surfaces).LucioHealthPoolHealthAmount = Event Player.Q;
+		Chase Player Variable At Rate(Event Player, Q, 0, 125, Destination And Rate);
+	
+	
+	
+		
+	
+	
+	
+	
+		
+	
+		
+	
+	
+		
+	
+	
+	
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Event Player.R, 1);
+		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
+		End;
+		Wait(0.016, Abort When False);
+	
+		Damage(Players Within Radius(Event Player, 30, Team Of(Event Player), Surfaces), Null, 750);
+		
+	
+		
+		
+	
+	
+	}
+}
+
+
+
+rule("Lucio: create health pool for affected players")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.LucioHealthPoolHealthAmount != Null;
+		Event Player.LucioHealthPool == Null;
+	
+	}
+
+	actions
+	{
+		Add Health Pool To Player(Event Player, Health, Event Player.LucioHealthPoolHealthAmount, True, True);
+		Event Player.LucioHealthPool = Last Created Health Pool;
+		Chase Player Variable At Rate(Event Player, LucioHealthPoolHealthAmount, 0, 125, Destination And Rate);
+	
+		
+	
+	
+	}
+}
+
+
+
+rule("Lucio: remove health pool after it has decayed")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.LucioHealthPool != Null;
+		(Event Player.LucioHealthPoolHealthAmount <= 0 || Is Dead(Event Player) == True) == True;
+		
+	}
+
+	actions
+	{
+		If(Hero Of(Event Player) == Hero(Lúcio) && Event Player.M == True);
+		Call Subroutine(ResetLucio);
+		Else;
+		Stop Chasing Player Variable(Event Player, LucioHealthPoolHealthAmount);
+		Remove Health Pool From Player(Event Player.LucioHealthPool);
+		Event Player.LucioHealthPool = Null;
+		Event Player.LucioHealthPoolHealthAmount = Null;
+		End;
+		
+	}
+}
+
+
+
+rule("Lucio: reset stuff")
+{
+	event
+	{
+		Subroutine;
+		ResetLucio;
+	}
+
+	actions
+	{
+		Event Player.R = 0;
+		Stop Chasing Player Variable(Event Player, Q);
+		Event Player.Q = 0;
+		Stop Chasing Player Variable(Event Player, LucioHealthPoolHealthAmount);
+		Event Player.LucioHealthPoolHealthAmount = 0;
+		Remove Health Pool From Player(Event Player.LucioHealthPool);
+		Event Player.LucioHealthPool = Null;
+		Event Player.Y = 0;
+		Destroy HUD Text(Event Player.UltHudTextObject);
+		Event Player.UltHudTextObject = Null;
+		Set Ultimate Ability Enabled(Event Player, True);
+		Event Player.S = Null;
+		Event Player.M = Null;
+	
+		Event Player.CustomUltReadyToUse = Null;
+		
+	}
+}
+
+
+
+rule("Lucio disable power up if ult hasn't been used and player is on ground")
+{
+
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Lúcio;
+	}
+
+	conditions
+	{
+		Is On Ground(Event Player) == True;
+		Event Player.M != True;
+		Event Player.S == True;
+	}
+
+	actions
+	{
+		Wait(0.250, Abort When False);
+
+		Call Subroutine(ResetLucio);
+	}
+}
+
+
 
 rule("Lucio description")
 {
@@ -4131,7 +4337,7 @@ rule("Lucio description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("While using his regular ultimate, Lúcio drops the bass so hard that it creates damaging shockwaves around him.", Null);
+		Event Player.UltDescription = Custom String("Increase the amount of bonus health from Lucio's ultimate based on how long you stay in the air.", Null);
 
 	}
 }
@@ -4427,10 +4633,10 @@ rule("Mei: create icicle effects in the air")
 		Abort If(Global.T == Null);
 		Cancel Primary Action(Event Player);
 	
-		Create Projectile Effect(All Players(All Teams), Mei Icicle, All Players(Team Of(Event Player)), Eye Position(Event Player), Facing Direction Of(Event Player), 0, None);
+		Create Projectile Effect(All Players(All Teams), Mei Icicle, All Players(Team Of(Event Player)), Eye Position(Event Player) + Facing Direction Of(Event Player), Facing Direction Of(Event Player), 0, None);
 	
 		Modify Player Variable(Event Player, MeiIcicleEffects, Append To Array, Last Created Entity);
-		Modify Player Variable(Event Player, MeiIciclePositions, Append To Array, Eye Position(Event Player));
+		Modify Player Variable(Event Player, MeiIciclePositions, Append To Array, Eye Position(Event Player) + Facing Direction Of(Event Player));
 		Modify Player Variable(Event Player, MeiIcicleDirections, Append To Array, Facing Direction Of(Event Player));
 	
 	
@@ -8716,10 +8922,12 @@ rule("torb: level 3 turret")
 		Call Subroutine(UseCustomUlt);
 		Event Player.TorbTurret.TorbTurretLevel = 3;
 		Set Ultimate Charge(Event Player.TorbTurret, 100);
+		Wait(0.1, Ignore Condition);
 		Press Button(Event Player.TorbTurret, Button(Ultimate));
 		Destroy In-World Text(Event Player.TorbTurret.TorbTurretLevelText);
 		Create In-World Text(All Players(All Teams), Custom String("Turretbjörn Lvl 3"), Event Player.TorbTurret + Up*2, 1, Clip Against Surfaces, Visible to and String, Team Of(Event Player), Default Visibility);
 		Event Player.TorbTurret.TorbTurretLevelText = Last Text Id;
+		Start Holding Button(Event Player.TorbTurret, Button(Ultimate));
 		Wait(1, Ignore Condition);
 		Call Subroutine(StopUsingCustomUlt);
 
@@ -9568,7 +9776,7 @@ rule("winston: when winston hits someone, set root status and get direction and 
 	{
 		Is Using Ultimate(Event Player) == True;
 	
-		Victim.J == Null;
+		Victim.WinstonDamageArray == Null;
 	}
 
 	actions
@@ -9576,10 +9784,13 @@ rule("winston: when winston hits someone, set root status and get direction and 
 
 		Wait(0.1, Abort When False);
 		
-		Victim.J = Event Player;
+	
+		Victim.WinstonDamageArray = Array(Event Player, Direction Towards(Position Of(Event Player), Victim));
+		
+	
 		
 
-		Victim.I = Direction Towards(Position Of(Event Player), Victim);
+	
 	
 		
 	
@@ -9590,7 +9801,7 @@ rule("winston: when winston hits someone, set root status and get direction and 
 	
 		
 		Set Status(Victim, Event Player, Rooted, 1);
-		Victim.H = Speed Of In Direction(Victim, Victim.I);
+	
 
 	}
 }
@@ -9609,14 +9820,14 @@ rule("winston: check for wall with ray cast.")
 
 	conditions
 	{
-		Event Player.J != Null;
+		Event Player.WinstonDamageArray != Null;
 	
 	}
 
 	actions
 	{
 		Wait(0.05, Ignore Condition);
-		Event Player.WinstonRayCasts = Array(Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Event Player.I * 2, All Players(All Teams), Array(Event Player, Event Player.J), True), Ray Cast Hit Position(Position Of(Event Player), Position Of(Event Player) + Event Player.I * 2, All Players(All Teams), Array(Event Player, Event Player.J), True));
+		Event Player.WinstonRayCasts = Array(Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Value In Array(Event Player.WinstonDamageArray, 1) * 2, All Players(All Teams), Array(Event Player, Value In Array(Event Player.WinstonDamageArray, 0)), True), Ray Cast Hit Position(Position Of(Event Player), Position Of(Event Player) + Value In Array(Event Player.WinstonDamageArray, 1) * 2, All Players(All Teams), Array(Event Player, Value In Array(Event Player.WinstonDamageArray, 0)), True));
 	
 	
 	
@@ -9631,25 +9842,28 @@ rule("winston: check for wall with ray cast.")
 	
 	
 		
-		Loop If(Is On Ground(Event Player) == False && (Event Player.J != null && Is Alive(Event Player)) && Distance Between(Eye Position(Event Player), Value In Array(Event Player.WinstonRayCasts, 0)) == Distance Between(Eye Position(Event Player), Eye Position(Event Player) + Event Player.I * 2) && Distance Between(Position Of(Event Player), Value In Array(Event Player.WinstonRayCasts, 1)) == Distance Between(Position Of(Event Player), Position Of(Event Player) + Event Player.I * 2) == True);
+		Loop If(Is On Ground(Event Player) == False && (Value In Array(Event Player.WinstonDamageArray, 0) != null && Is Alive(Event Player)) && Distance Between(Eye Position(Event Player), Value In Array(Event Player.WinstonRayCasts, 0)) == Distance Between(Eye Position(Event Player), Eye Position(Event Player) + Value In Array(Event Player.WinstonDamageArray, 1) * 2) && Distance Between(Position Of(Event Player), Value In Array(Event Player.WinstonRayCasts, 1)) == Distance Between(Position Of(Event Player), Position Of(Event Player) + Value In Array(Event Player.WinstonDamageArray, 1) * 2) == True);
 	
 		
 		If(Is On Ground(Event Player) == False);
 		
 		Set Status(Event Player, Null, Stunned, 1.5);
 
-		Damage(Event Player, Event Player.J, 150);
+		Damage(Event Player, Value In Array(Event Player.WinstonDamageArray, 0), 150);
 		
 		Wait(1.5, Ignore Condition);
-		Event Player.J = null;
-		Event Player.I = 0;
-		Event Player.H = 0;
+		Event Player.WinstonDamageArray = Null;
+	
+	
+	
 		
 		Else;
+		Event Player.WinstonDamageArray = Null;
+		
 	
-		Event Player.J = null;
-		Event Player.I = 0;
-		Event Player.H = 0;
+	
+	
+	
 		End;
 		
 	}
