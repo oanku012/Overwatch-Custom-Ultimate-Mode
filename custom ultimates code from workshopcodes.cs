@@ -484,7 +484,7 @@ rule("Disable vanilla ultimate when charge is full")
 		Set Ultimate Ability Enabled(Event Player, False);
 		Create HUD Text(Event Player, Custom String("ULT READY PRESS Q TO USE ULTIMATE"), Null, Null, Top, 1, Color(Blue), Color(White), Color(White), Visible To and String, Default Visibility);
 		Event Player.UltReadyText = Last Text ID;
-	
+		Event Player.B = Hero Of(Event Player);
 	}
 }
 
@@ -672,7 +672,7 @@ rule("Test dummy")
 	actions
 	{
 	
-		Create Dummy Bot(Hero(Genji), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
+		Create Dummy Bot(All Heroes, Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
 	
 	
 		
@@ -719,12 +719,22 @@ rule("CreateMenu")
 
 		Event Player.MenuOpen = True;
 
-		Set Status(Event Player, Event Player, Frozen, 9999);
+	
 
 		Set Status(Event Player, Event Player, Phased Out, 9999);
 
 		Set Knockback Received(Event Player, 0); 
 	
+		
+		Disallow Button(Event Player, Button(Primary Fire));
+		Disallow Button(Event Player, Button(Secondary Fire));
+		Disallow Button(Event Player, Button(Ability 1));
+		Disallow Button(Event Player, Button(Ability 2));
+		Disallow Button(Event Player, Button(Jump));
+		Disallow Button(Event Player, Button(Ultimate));
+		Disallow Button(Event Player, Button(Interact));
+		
+		Start Forcing Throttle(Event Player, 0, 0, 0, 0, 0, 0);
     }
 }
 
@@ -810,8 +820,19 @@ rule("ChooseMenuFinalizeChoice")
     {
 		Event Player.MenuChosenOption = Value In Array(Event Player.MenuOptions, Event Player.MenuHUDChooseSort);
         Clear Status(Event Player, Phased Out);
-        Clear Status(Event Player, Frozen);
+       
 		Set Knockback Received(Event Player, 100); 
+		
+		Allow Button(Event Player, Button(Primary Fire));
+		Allow Button(Event Player, Button(Secondary Fire));
+		Allow Button(Event Player, Button(Ability 1));
+		Allow Button(Event Player, Button(Ability 2));
+		Allow Button(Event Player, Button(Jump));
+		Allow Button(Event Player, Button(Ultimate));
+		Allow Button(Event Player, Button(Interact));
+		
+		Stop Forcing Throttle(Event Player);
+		
 
 		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count of(Event Player.MenuHUDOptions), 1);
 		Destroy Hud Text(Value In Array(Event Player.MenuHUDOptions, Event Player.ForLoopIndexPlayer));
@@ -1735,7 +1756,7 @@ rule("D.VA Has spawned with no upgrades, set hud and initial damage+max health")
 	
 		Event Player.G = Array(100, 0, 1, false, 0, 0);
 	
-		Event Player.MenuOptions = Array(Custom String("Halved cooldowns"), Custom String("Double damage"), Custom String("Shields"), Custom String("Infinite defense matrix"), Custom String("Bonus Armor"), Custom String("Improved mobility"));
+		Event Player.MenuOptions = Array(Custom String("Halved cooldowns"), Custom String("Double damage"), Custom String("Shields"), Custom String("Faster defense matrix recharge"), Custom String("Bonus Armor"), Custom String("Improved mobility"));
 		Event Player.B = Hero Of(Event Player);
 		
 		
@@ -1814,7 +1835,6 @@ rule("D.VA has spawned a new mech, choose upgrade")
 		Value In Array(Event Player.DVAVariables, 1) > 0;
 		Is In Alternate Form(Event Player) != True;
 
-
 	}
 
 	actions
@@ -1854,6 +1874,7 @@ rule("D.VA has chosen a new upgrade")
 	
 		Event Player.MenuChosenOption != Null;
 		Event Player.DVAVariables != Null;
+	
 		
 	}
 
@@ -1877,11 +1898,11 @@ rule("D.VA has chosen a new upgrade")
 		Modify Player Variable(Event Player, MenuOptions, Remove From Array By Value, Custom String("Shields"));
 				Value In Array(Event Player.DVAVariables, 6) = String("{0} {1}", Value In Array(Event Player.DVAVariables, 6), Custom String("\nShields"));
 		
-		else if(Event Player.MenuChosenOption == Custom String("Infinite defense matrix"));
+		else if(Event Player.MenuChosenOption == Custom String("Faster defense matrix recharge"));
 		Value In Array(Event Player.G, 3) = true;
-		Big Message(Event Player, Custom String("Infinite defense matrix added"));
-		Modify Player Variable(Event Player, MenuOptions, Remove From Array By Value, Custom String("Infinite defense matrix"));
-				Value In Array(Event Player.DVAVariables, 6) = String("{0} {1}", Value In Array(Event Player.DVAVariables, 6), Custom String("\nInfinite Defense Matrix"));
+		Big Message(Event Player, Custom String("Added faster defense matrix recharge"));
+		Modify Player Variable(Event Player, MenuOptions, Remove From Array By Value, Custom String("Faster defense matrix recharge"));
+				Value In Array(Event Player.DVAVariables, 6) = String("{0} {1}", Value In Array(Event Player.DVAVariables, 6), Custom String("\nFaster defense matrix recharge"));
 		
 		else if(Event Player.MenuChosenOption == Custom String("Bonus Armor"));
 		Value In Array(Event Player.G, 4) = 400;
@@ -2060,14 +2081,16 @@ rule("D.VA regen defense matrix when it's upgraded")
 	
 		Event Player.DVAVariables != Null;
 		Value In Array(Event Player.G, 3) == True;
-	
-		Is Firing Secondary(Event Player) == True;
+		Ability Resource(Event Player, Button(Secondary Fire)) < 100;
+		Is Firing Secondary(Event Player) == False;
+		Ability Cooldown(Event Player, Button(Secondary Fire)) <= 0.3;
 	}
 
 	actions
 	{
-		Wait(1, Abort When False);
-		Set Ability Resource(Event Player, Button(Secondary Fire), 100);
+		Wait(0.016, Abort When False);
+		Set Ability Resource(Event Player, Button(Secondary Fire), Ability Resource(Event Player, Button(Secondary Fire)) + 2);
+		Log To Inspector(Ability Resource(Event Player, Button(Secondary Fire)));
 		Loop If Condition Is True;
 	}
 }
@@ -2125,7 +2148,7 @@ rule("D.VA reset health and damage when dying and remove upgrades")
 		Value In Array(Event Player.DVAVariables, 1) = 0;
 		
 		
-		Event Player.MenuOptions = Array(Custom String("Halved cooldowns"), Custom String("Double damage"), Custom String("Shields"), Custom String("Infinite defense matrix"), Custom String("Bonus Armor"), Custom String("Improved mobility"));
+		Event Player.MenuOptions = Array(Custom String("Halved cooldowns"), Custom String("Double damage"), Custom String("Shields"), Custom String("Faster defense matrix recharge"), Custom String("Bonus Armor"), Custom String("Improved mobility"));
 		
 		Value In Array(Event Player.DVAVariables, 6) = Custom String(" ");
 		
@@ -10658,7 +10681,7 @@ rule("Zenyatta move possessed player forward")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -10683,7 +10706,7 @@ rule("Zenyatta move possessed player sideways")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -10707,7 +10730,7 @@ rule("Zenyatta move possessed player backwards")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -10732,7 +10755,7 @@ rule("Zenyatta primary fire")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -10761,7 +10784,7 @@ rule("Zenyatta secondary fire")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -10792,7 +10815,7 @@ rule("Zenyatta stop moving when there's no throttle")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -10817,7 +10840,7 @@ rule("Zenyatta enable moving when there's throttle")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -10841,7 +10864,7 @@ rule("Zenyatta jump")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -10870,7 +10893,7 @@ rule("Zenyatta crouch")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -10899,7 +10922,7 @@ rule("Zenyatta ability 1")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -10928,7 +10951,7 @@ rule("Zenyatta ability 2")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -10957,7 +10980,7 @@ rule("Zenyatta ultimate")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -10986,7 +11009,7 @@ rule("Zenyatta voice line up")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -11009,7 +11032,7 @@ rule("Zenyatta voice line right")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -11032,7 +11055,7 @@ rule("Zenyatta voice line left")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -11055,7 +11078,7 @@ rule("Zenyatta voice line down")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -11079,7 +11102,7 @@ rule("Zenyatta emote up")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -11102,7 +11125,7 @@ rule("Zenyatta emote right")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -11125,7 +11148,7 @@ rule("Zenyatta emote left")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -11148,7 +11171,7 @@ rule("Zenyatta emote down")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -11171,7 +11194,7 @@ rule("Zenyatta hello")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -11194,7 +11217,7 @@ rule("Zenyatta ultimate status")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -11217,7 +11240,7 @@ rule("Zenyatta need healing")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -11240,7 +11263,7 @@ rule("Zenyatta group up")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -11263,7 +11286,7 @@ rule("Zenyatta thanks")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
@@ -11286,7 +11309,7 @@ rule("Zenyatta acknowledge")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Zenyatta;
 	}
 
 	conditions
