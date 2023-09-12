@@ -37,10 +37,10 @@ settings
 		{
 			enabled maps
 			{
+				Colosseo 0
 			
 			
 			
-				Workshop Chamber 0
 			}
 		}
 
@@ -176,131 +176,130 @@ variables {
 
   player:
     0: B
-    1: EquippedEmotes
-    2: CustomUltReadyToUse
-    3: UltReadyText
-    4: UsingCustomUlt
-    5: UltEffect
-    6: G
-    7: UltDescriptionTextObject
-    8: UltDescription
-    9: CurrentGravities
-    10: CurrentSpeeds
-    11: TeleportBackInBounds
-    12: MenuHUDOptions
-    13: MenuOptions
-    14: ForLoopIndexPlayer
-    15: MenuHUDChooseSort
-    16: MenuOpen
-    17: MenuChosenOption
-    18: Nanoboosted
-    19: AnaHealMod
-    20: BaptisteShieldAimSphere
-    21: BaptisteShieldPos
-    22: BaptisteShieldReadyToPlant
-    23: BaptisteShieldBot
-    24: D
-    25: BrigitteKnockedBack
-    26: S
-    27: Y
-    28: M
-    29: DVAVariables
-    30: EchoAimRayCast
-    31: EchoDummyBots
-    32: EchoEffects
-    33: V
-    34: HanzoDragonPos
-    35: UltTimer
-    36: UltTimerText
-    37: HanzoUltimateAmmo
-    38: HanzoDragonTargetPos
-    39: JunkerQueenInArena
-    40: JunkerQueenEnemyArray
-    41: JunkerQueenEnemyPositions
-    42: JunkerTeleportPos
-    43: JunkerReadyToTeleport
-    44: JunkerQueenPositions
-    45: JunkerDamageCounter
-    46: JunkerHealthBonus
-    47: JunkerHealthPool
-    48: JunkerScale
-    49: JunkerCDReduction
-    50: JunkerRageEffects
-    51: JunkerWinCounterText
-    52: JunkerWinCounter
-    53: JunkerArenaSphere
-    54: ExtraLife
-    55: JunkerKnifeThrowCD
-    56: JunkratBombPosition
-    57: JunkratBombOrb
-    58: JunkratExplosionRadius
-    59: JunkratRadiusRing
-    60: UltTimerAboveHead
-    61: UltTimerHUD
-    62: Q
-    63: UltHudTextObject
-    64: SigmaZeroGravBuff
-    65: R
-    66: LucioHealthPoolHealthAmount
-    67: LucioHealthPool
-    68: MeiZaWarudoSphere
-    69: MeiIcicleEffects
-    70: MeiIciclePositions
-    71: MeiIcicleDirections
-    72: TimeStopStunned
-    73: O
-    74: N
-    75: MercyExtraLifeText
-    76: ExtraLifeInWorldText
-    77: P
-    78: ReaperVariables
-    79: ReaperTPPos
-    80: SigmaMaleValues
-    81: SigmaHighGravDebuff
-    82: SojournLastRay
-    83: SojournRayArray
-    84: SojournBeamArray
-    85: SojournEyePosArray
-    86: SojournLastEyePos
-    87: SojournDamageRay
-    88: Soldier76Variables
-    89: SoldierAllKillStreaks
-    90: Soldier76KillStreaksEquipped
-    91: SoldierKillStreakTexts
-    92: Soldier76KillStreaksActive
-    93: LocalVariable
-    94: Soldier76CarepackLocation
-    95: SoldierCarePackAmmoIndex
-    96: Virus
-    97: VirusText
-    98: VirusEffects
-    99: HasDiedWithVirus
-    100: GreenPortal
-    101: YellowPortal
-    102: K
-    103: L
-    104: InPortalSpeed
-    105: PortalUsed
-    106: TorbTurret
-    107: TorbTurretLevel
-    108: TorbTurretLevelText
-    109: TorbCurrentTarget
-    110: WidowZoomedIn
-    111: WidowPlayersInViewAngleSorted
-    112: WidowRayCastForward
-    113: WidowRayCastStartPos
-    114: WidowRayCastEndPos
-    115: WidowRayCastBackward
-    116: WidowRayCastHeadForward
-    117: WidowRayCastHeadBackward
-    118: WidowFireBeam
-    119: WidowDamage
-    120: WidowAimBeam
-    121: WidowLastFacingDirection
-    122: WinstonGrabbing
-    123: WinstonDamageArray
-    124: WinstonRayCasts
-    125: ZaryaGravPos
+    1: CustomUltReadyToUse
+    2: UltReadyText
+    3: UsingCustomUlt
+    4: UltEffect
+    5: G
+    6: UltDescriptionTextObject
+    7: UltDescription
+    8: CurrentGravities
+    9: CurrentSpeeds
+    10: TeleportBackInBounds
+    11: MenuHUDOptions
+    12: MenuOptions
+    13: ForLoopIndexPlayer
+    14: MenuHUDChooseSort
+    15: MenuOpen
+    16: MenuChosenOption
+    17: Nanoboosted
+    18: AnaHealMod
+    19: BaptisteShieldAimSphere
+    20: BaptisteShieldPos
+    21: BaptisteShieldReadyToPlant
+    22: BaptisteShieldBot
+    23: D
+    24: BrigitteKnockedBack
+    25: S
+    26: Y
+    27: M
+    28: DVAVariables
+    29: EchoAimRayCast
+    30: EchoDummyBots
+    31: EchoEffects
+    32: V
+    33: HanzoDragonPos
+    34: UltTimer
+    35: UltTimerText
+    36: HanzoUltimateAmmo
+    37: HanzoDragonTargetPos
+    38: JunkerQueenInArena
+    39: JunkerQueenEnemyArray
+    40: JunkerQueenEnemyPositions
+    41: JunkerTeleportPos
+    42: JunkerReadyToTeleport
+    43: JunkerQueenPositions
+    44: JunkerDamageCounter
+    45: JunkerHealthBonus
+    46: JunkerHealthPool
+    47: JunkerScale
+    48: JunkerCDReduction
+    49: JunkerRageEffects
+    50: JunkerWinCounterText
+    51: JunkerWinCounter
+    52: JunkerArenaSphere
+    53: ExtraLife
+    54: JunkerKnifeThrowCD
+    55: JunkratBombPosition
+    56: JunkratBombOrb
+    57: JunkratExplosionRadius
+    58: JunkratRadiusRing
+    59: UltTimerAboveHead
+    60: UltTimerHUD
+    61: Q
+    62: UltHudTextObject
+    63: SigmaZeroGravBuff
+    64: R
+    65: LucioHealthPoolHealthAmount
+    66: LucioHealthPool
+    67: MeiZaWarudoSphere
+    68: MeiIcicleEffects
+    69: MeiIciclePositions
+    70: MeiIcicleDirections
+    71: TimeStopStunned
+    72: O
+    73: N
+    74: MercyExtraLifeText
+    75: ExtraLifeInWorldText
+    76: P
+    77: ReaperVariables
+    78: ReaperTPPos
+    79: SigmaMaleValues
+    80: SigmaHighGravDebuff
+    81: SojournLastRay
+    82: SojournRayArray
+    83: SojournBeamArray
+    84: SojournEyePosArray
+    85: SojournLastEyePos
+    86: SojournDamageRay
+    87: Soldier76Variables
+    88: SoldierAllKillStreaks
+    89: Soldier76KillStreaksEquipped
+    90: SoldierKillStreakTexts
+    91: Soldier76KillStreaksActive
+    92: LocalVariable
+    93: Soldier76CarepackLocation
+    94: SoldierCarePackAmmoIndex
+    95: Virus
+    96: VirusText
+    97: VirusEffects
+    98: HasDiedWithVirus
+    99: GreenPortal
+    100: YellowPortal
+    101: K
+    102: L
+    103: InPortalSpeed
+    104: PortalUsed
+    105: TorbTurret
+    106: TorbTurretLevel
+    107: TorbTurretLevelText
+    108: TorbCurrentTarget
+    109: WidowZoomedIn
+    110: WidowPlayersInViewAngleSorted
+    111: WidowRayCastForward
+    112: WidowRayCastStartPos
+    113: WidowRayCastEndPos
+    114: WidowRayCastBackward
+    115: WidowRayCastHeadForward
+    116: WidowRayCastHeadBackward
+    117: WidowFireBeam
+    118: WidowDamage
+    119: WidowAimBeam
+    120: WidowLastFacingDirection
+    121: WinstonGrabbing
+    122: WinstonDamageArray
+    123: WinstonRayCasts
+    124: ZaryaGravPos
 }
 
 
@@ -448,10 +447,10 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		End;
 
 		
-		Event Player.B = Hero Of(Event Player);
+		Event Player.B = Null;
 		
 		
-		Event Player.EquippedEmotes = Null;
+	
 	
 		
 
@@ -621,31 +620,6 @@ rule("Set default gravities and speeds for player")
 
 
 
-
-
-
-rule("Set current hero to B variable")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Has Spawned(Event Player) == True;
-	
-
-	}
-
-	actions
-	{
-		Event Player.B = Hero Of(Event Player);
-	
-	}
-}
 
 
 
@@ -1035,8 +1009,6 @@ rule("Ana description")
 
 
 
-
-
 rule("Start aiming baptiste ult")
 {
 	event
@@ -1067,6 +1039,7 @@ rule("Start aiming baptiste ult")
 		Create Effect(Event Player, Sphere, Color(Blue), Event Player.BaptisteShieldPos, 5, Position and Radius);
 		
 		Event Player.BaptisteShieldAimSphere = Last Created Entity;
+		Event Player.B = Hero Of(Event Player);
 		
 		Wait Until(Is Button Held(Event Player, Button(Ultimate)) == False || Is Dead(Event Player) == True, 10);
 		If(Is Alive(Event Player) == True);
@@ -1206,6 +1179,7 @@ rule("Reset everything with baptiste.")
 		Event Player.BaptisteShieldPos = Null;
 		Event Player.BaptisteShieldAimSphere = Null;
 		Event Player.BaptisteShieldReadyToPlant = Null;
+		Event Player.B = Null;
 		
     }
 }
@@ -1368,6 +1342,9 @@ rule("Brigitte: Increase shield size when using ultimate")
 
 		Start Scaling Barriers(Event Player, 15, False);
 
+		Event Player.B = Hero Of(Event Player);
+		
+
 	
 
 	
@@ -1409,7 +1386,7 @@ rule("Reset everything with brigitte.")
 		Set Max Health(Event Player, 100);
 		Stop Holding Button(Event Player, Button(Secondary Fire));
 		All Players(Opposite Team Of(Team Of(Event Player))).D = Null;
-	
+		Event Player.B = Null;
     }
 }
 
@@ -1561,7 +1538,7 @@ rule("Doomfist use ult")
 
 	actions
 	{
-	
+		Event Player.B = Hero Of(Event Player);
 		Set Ultimate Ability Enabled(Event Player, False);
 		Event Player.UsingCustomUlt = True;
 		Wait Until(Is Dead(Event Player), 20);
@@ -1650,7 +1627,7 @@ rule("Reset Doomfist stuff")
 		disabled Event Player.UsingCustomUlt = Null;
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
-	
+		Event Player.B = Null;
 		Set Ultimate Ability Enabled(Event Player, True);
 		Event Player.UsingCustomUlt = Null;
 		
@@ -1747,7 +1724,7 @@ rule("D.VA Has spawned with no upgrades, set hud and initial damage+max health")
 	
 		
 	
-		Event Player.DVAVariables = Array(0, 0, 0, 0, 0, False, Custom String(" "));
+		Event Player.DVAVariables = Array(0, 0, 0, 0, 0, False, Custom String(" "), 0);
 		
 		Create HUD Text(Event Player, Custom String("Upgrades unlocked: {0}", Value In Array(Event Player.DVAVariables, 6)), Null, Null, Left, 0, Color(white), Color(white), Color(white), Visible To And String, Default Visibility);
 		
@@ -1759,6 +1736,7 @@ rule("D.VA Has spawned with no upgrades, set hud and initial damage+max health")
 		Event Player.G = Array(100, 0, 1, false, 0, 0);
 	
 		Event Player.MenuOptions = Array(Custom String("Halved cooldowns"), Custom String("Double damage"), Custom String("Shields"), Custom String("Infinite defense matrix"), Custom String("Bonus Armor"), Custom String("Improved mobility"));
+		Event Player.B = Hero Of(Event Player);
 		
 		
 	
@@ -1783,7 +1761,7 @@ rule("Remove D.Va stuff when switching hero.")
 
 	actions
 	{
-		If(Value In Array(Event Player.G, 5) > 0);
+		If(Value In Array(Event Player.DVAVariables, 7) == True);
 		Value In Array(Event Player.CurrentSpeeds, 0) -= Value In Array(Event Player.G, 5);
 		Value In Array(Event Player.CurrentSpeeds, 1) -= Value In Array(Event Player.G, 5);
 		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
@@ -1807,7 +1785,7 @@ rule("Remove D.Va stuff when switching hero.")
 	
 	
 		Event Player.G = Null;
-	
+		Event Player.B = Null;
 		
 	
 		
@@ -1950,6 +1928,8 @@ rule("D.VA has chosen a new upgrade")
 		Value In Array(Event Player.CurrentSpeeds, 1) += Value In Array(Event Player.G, 5);
 		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
 		Set Jump Vertical Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 1));
+		Value In Array(Event Player.DVAVariables, 7) = True;
+		
 		End;
 		
 	
@@ -2119,11 +2099,12 @@ rule("D.VA reset health and damage when dying and remove upgrades")
 	
 	
 		If(Value In Array(Event Player.DVAVariables, 5) ==  False);
-		If(Value In Array(Event Player.G, 5) > 0);
+		If(Value In Array(Event Player.DVAVariables, 7) == True);
 		Value In Array(Event Player.CurrentSpeeds, 0) -= Value In Array(Event Player.G, 5);
 		Value In Array(Event Player.CurrentSpeeds, 1) -= Value In Array(Event Player.G, 5);
 		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
 		Set Jump Vertical Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 1));
+		Value In Array(Event Player.DVAVariables, 7) = False;
 		End;
 		Remove Health Pool From Player(Value In Array(Event Player.DVAVariables, 2));
 		Value In Array(Event Player.DVAVariables, 2) = Null;
@@ -2192,11 +2173,13 @@ rule("D.Va reset damage and health when in baby form.")
 	
 		
 	
-		If(Value In Array(Event Player.G, 5) > 0);
+		If(Value In Array(Event Player.DVAVariables, 7) == True);
 		Value In Array(Event Player.CurrentSpeeds, 0) -= Value In Array(Event Player.G, 5);
 		Value In Array(Event Player.CurrentSpeeds, 1) -= Value In Array(Event Player.G, 5);
 		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
 		Set Jump Vertical Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 1));
+		Value In Array(Event Player.DVAVariables, 7) = False;
+		
 		End;
 		
 		
@@ -2280,10 +2263,12 @@ rule("Echo activate ultimate")
 
 	actions
 	{
+		Event Player.B = Hero(Echo);
+		
 	
 		Wait(0.1, Ignore Condition);
 		Start Camera(Event Player, Update Every Frame(Eye Position(Event Player) - Facing Direction Of(Event Player) * 2 + Up*0.5), Update Every Frame(Eye Position(Event Player) + Facing Direction Of(Event Player) * 2 + Up*0.5), 0);
-
+		
 	
 	
 		If(Number of Players(Team Of(Event Player)) >= Number of Slots(Team Of(Event Player)));
@@ -2364,7 +2349,7 @@ rule("Resets everything with Echo after Ult is over or when changing hero.")
 		Event Player.EchoDummyBots = Null;
 		Event Player.EchoAimRayCast = Null;
 		Stop Camera(Event Player);
-	
+		Event Player.B = Null;
 	}
 }
 
@@ -2771,7 +2756,7 @@ rule("Genji Omae wa mou shindeiru")
 	{
 		Set Damage Dealt(Event Player, 0.1);
 		Event Player.Y = True;
-	
+		Event Player.B = Hero Of(Event Player);
 	}
 }
 
@@ -2885,7 +2870,7 @@ rule("Reset Genji stuff")
 	{
 		Set Damage Dealt(Event Player, 100);
 		Event Player.Y = 0;
-	
+		Event Player.B = Null;
 	}
 }
 
@@ -2977,6 +2962,7 @@ rule("Hanzo activate ult for the first time")
 		Create HUD Text(Event Player, Event Player.UltTimer, Null, Null, Top, 0, Color(white), Color(white), Color(white), Visible To And String, Default Visibility);
 		Event Player.UltTimerText = Last Text ID;
 		Event Player.HanzoUltimateAmmo = 3;
+		Event Player.B = Hero Of(Event Player);
 		Wait Until((Event Player.HanzoUltimateAmmo == Null && Event Player.HanzoDragonTargetPos ==Null) || Is Dead(Event Player), Event Player.UltTimer);
 		Call Subroutine(ResetHanzo);
 	
@@ -3137,7 +3123,7 @@ rule("Reset Hanzo.")
 		
 		Destroy HUD Text(Event Player.UltTimerText);
 		Event Player.UltTimerText = Null;
-		
+		Event Player.B = Null;
 		Event Player.TeleportBackInBounds = True;
 	}
 }
@@ -3195,7 +3181,7 @@ rule("Junker queen choose enemies for the arena fight.")
 
 	actions
 	{
-	
+		Event Player.B = Hero Of(Event Player);
 		If(Event Player.JunkerQueenEnemyArray == Null);
 		Event Player.JunkerQueenEnemyArray = Array(Victim);
 		Event Player.JunkerQueenEnemyPositions = Array(Position Of(Victim));
@@ -3804,7 +3790,7 @@ rule("Reset Junker Queen effects and buffs.")
 
 		Event Player.JunkerReadyToTeleport = Null;
 		
-
+		Event Player.B = Null;
 	
 	
 
@@ -4050,7 +4036,7 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 	conditions
 	{
 		Is Button Held(Event Player, Button(Ultimate)) == True;
-	
+		Hero Of(Event Player) == Hero(junkrat);
 		Event Player.CustomUltReadyToUse == True;
 		Has Status(Event Player, Hacked) == False;
 		Event Player.UsingCustomUlt == Null;
@@ -4061,6 +4047,7 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 
 	actions
 	{
+		Event Player.B = Hero Of(Event Player);
 		Call Subroutine(UseCustomUlt);
 		Event Player.JunkratBombPosition = Event Player;
 	
@@ -4082,7 +4069,7 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 		Damage(Event Player, Event Player, 800);
 		End;
 		
-	
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
 	
 	
 	
@@ -4161,7 +4148,7 @@ rule("Junkrat drop bomb on death.")
 		Event Player.UsingCustomUlt == true;
 		(Is Alive(Event Player) != true || ((Is Button Held(Event Player, Button(Interact)) == True) && Is Button Held(Event Player, Button(Crouch)) == False)) == True;
 		Is Dummy Bot(Event Player) == False;
-		
+		Event Player.JunkratBombPosition == Event Player;
 	}
 
 	actions
@@ -4219,12 +4206,15 @@ rule("Lucio: ult ready")
 	{
 		Ultimate Charge Percent(Event Player) > 99.900;
 		Is Dummy Bot(Event Player) == false;
-
+		Hero Of(Event Player) == Hero(Lúcio);
+		
 	}
 
 	actions
 	{
 		Event Player.CustomUltReadyToUse = True;
+		Event Player.B = Hero Of(Event Player);
+		
 	}
 }
 
@@ -4448,6 +4438,7 @@ rule("Lucio: reset stuff")
 		Event Player.M = Null;
 	
 		Event Player.CustomUltReadyToUse = Null;
+		Event Player.B = Null;
 		
 	}
 }
@@ -4523,14 +4514,15 @@ rule("McCree enable ult")
 	{
 		Is Using Ultimate(Event Player) == True;
 		Is Dummy Bot(Event Player) == false;
-
+		Hero Of(Event Player) == Hero(Cassidy);
+		
 	}
 
 	actions
 	{
 	
 	
-	
+		Event Player.B = Hero Of(Event Player);
 		Set Status(Event Player, Event Player, Burning, 7);
 		Wait Until(Is Dead(Event Player) == True || Is Using Ultimate(Event Player) == false, 7);
 		Call Subroutine(ResetCassidy);
@@ -4675,7 +4667,7 @@ rule("Reset McCree.")
 	{
 	
 	
-	
+		Event Player.B = Null;
 		Clear Status(Event Player, Burning);
 	}
 }
@@ -4728,11 +4720,13 @@ rule("Mei: za warudo")
 		Global.T == Null;
 		Is Alive(Event Player) == True;
 		Is Dummy Bot(Event Player) == False;
+		Hero Of(Event Player) == Hero(Mei);
 		
 	}
 
 	actions
 	{
+		Event Player.B = Hero Of(Event Player);
 	
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
@@ -4784,6 +4778,7 @@ rule("Mei: create icicle effects in the air")
 
 	conditions
 	{
+		Hero Of(Event Player) == Hero(Mei);
 	
 		Is Button Held(Event Player, Button(Secondary Fire)) == True;
 		Global.T != Null;
@@ -4835,7 +4830,7 @@ rule("Mei reset")
 		Play Effect(All Players(All Teams), Debuff Impact Sound, Color(White), Event Player, 200);
 		Destroy HUD Text(Last Text ID);
 		Set Ultimate Charge(Event Player, 0);
-	
+		Event Player.B = Null;
 		
 	
 		
@@ -5123,7 +5118,8 @@ rule("Mercy give extra life to herself during Ultimate")
 		Is Using Ultimate(Event Player) == True;
 	
 		Is Dummy Bot(Event Player) == false;
-
+		Hero Of(Event Player) == Hero(Mercy);
+		
 	}
 
 	actions
@@ -5214,15 +5210,16 @@ rule("moira: coalescence X 100 set initial modifications")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-	
+		Hero Of(Event Player) == Hero(Moira);
 		Is Dummy Bot(Event Player) == false;
 
 	}
 
 	actions
 	{
+		
 		Wait(0.5, Ignore Condition);
-	
+		Event Player.B = Hero Of(Event Player);
 		Event Player.UsingCustomUlt = True;
 	}
 }
@@ -5301,6 +5298,7 @@ rule("Reset Moira")
 		Event Player.M = Null;
 		Event Player.UsingCustomUlt = Null;
 	
+		Event Player.B = Null;
 	}
 }
 
@@ -5347,7 +5345,7 @@ rule("Orisa: leap in facing direction")
 
 	conditions
 	{
-	
+		Hero Of(Event Player) == Hero(Orisa);
 		Is Using Ultimate(Event Player) == True;
 		Is Dummy Bot(Event Player) == false;
 		Is Button Held(Event Player, Button(Jump)) == True;
@@ -5413,7 +5411,7 @@ rule("Pharah activate ultimate when button is pressed")
 	{
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.CustomUltReadyToUse == True;
-	
+		Hero Of(Event Player) == Hero(Pharah);
 		Event Player.UsingCustomUlt != True;
 		Has Status(Event Player, Hacked) == False;
 		Is Alive(Event Player) == True;
@@ -5423,6 +5421,7 @@ rule("Pharah activate ultimate when button is pressed")
 
 	actions
 	{
+		Event Player.B = Hero Of(Event Player);
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
 		Apply Impulse(Event Player, Up, 10, To World, Cancel Contrary Motion);
@@ -5488,6 +5487,8 @@ rule("Reset Pharah stuff.")
 		
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
+		Event Player.B = Null;
+		
 	}
 }
 
@@ -5703,7 +5704,7 @@ rule("Reaper activate ultimate.")
         Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.CustomUltReadyToUse == True;
 		Event Player.UsingCustomUlt == Null;
-	
+		Hero Of(Event Player) == Hero(Reaper);
 		Has Status(Event Player, Hacked) == False;
 		Is Alive(Event Player) == True;
 		Is Dummy Bot(Event Player) == False;
@@ -5712,6 +5713,7 @@ rule("Reaper activate ultimate.")
 
     actions
     {
+		Event Player.B = Hero Of(Event Player);
         Call Subroutine(UseCustomUlt);
 		Set Primary Fire Enabled(Event Player, False);
 	
@@ -5780,7 +5782,8 @@ rule("Reaper reset stuff.")
 		Event Player.TeleportBackInBounds = True;
 		
         Call Subroutine(StopUsingCustomUlt);
-
+		Event Player.B = Null;
+		
 
     }
 }
@@ -6218,7 +6221,7 @@ rule("Rein: ult ready")
 
 	conditions
 	{
-	
+		Hero Of(Event Player) == Hero(Reinhardt);
 		Ultimate Charge Percent(Event Player) > 99.900;
 		Is Dummy Bot(Event Player) == false;
 
@@ -6226,6 +6229,7 @@ rule("Rein: ult ready")
 
 	actions
 	{
+		Event Player.B = Hero Of(Event Player);
 		Event Player.CustomUltReadyToUse = True;
 	
 	
@@ -6356,7 +6360,7 @@ rule("reinhardt: reset stuff")
 		Event Player.S = 0;
 		Set Ultimate Ability Enabled(Event Player, True);
 		Event Player.M = Null;
-	
+		Event Player.B = Null;
 		Event Player.CustomUltReadyToUse = Null;
 	}
 }
@@ -6486,7 +6490,7 @@ rule("Roadhog activate and deactivate ultimate")
 
 	conditions
 	{
-	
+		Hero Of(Event Player) == Hero(Roadhog);
 		Event Player.CustomUltReadyToUse == True;
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.UsingCustomUlt != True;
@@ -6497,6 +6501,7 @@ rule("Roadhog activate and deactivate ultimate")
 
 	actions
 	{
+		Event Player.B = Hero Of(Event Player);
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
 		Event Player.P = Remove From Array(All Players(All Teams), Event Player);
@@ -6530,7 +6535,7 @@ rule("Roadhog reset")
 		Destroy Effect(Last Created Entity);
 		Event Player.UsingCustomUlt = Null;
 		Event Player.CustomUltReadyToUse = Null;
-	
+		Event Player.B = Null;
 		Set Ultimate Ability Enabled(Event Player, True);
 		Set Ultimate Charge(Event Player, 0);
 		Destroy HUD Text(Event Player.UltHudTextObject);
@@ -6631,13 +6636,15 @@ rule("Sigma zero/high gravity")
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.CustomUltReadyToUse == True;
 		Is Alive(Event Player) == True;
-	
+		Hero Of(Event Player) == Hero(Sigma);
 	
 	}
 
 	actions
 	{
 		Call Subroutine(UseCustomUlt);
+		Event Player.B = Hero Of(Event Player);
+		
 
 	
 	
@@ -6684,6 +6691,7 @@ rule("Reset Sigma")
 
 		Stop Chasing Player Variable(Event Player, UltTimer);
 		Event Player.UltTimer = Null;
+		Event Player.B = Null;
 
 		Call Subroutine(StopUsingCustomUlt);
 	}
@@ -6974,15 +6982,15 @@ rule("Sojourn when using ultimate and firing railgun leave behind damaging beams
 	{
 		Is Using Ultimate(Event Player) == True;
         Is Firing Secondary(Event Player) == true;
-	
+		Hero Of(Event Player) == Hero(Sojourn);
 		Is Dummy Bot(Event Player) == false;
 
 	}
 
 	actions
 	{
-	
-	
+		Skip If(Event Player.B == Hero Of(Event Player), 1);
+		Event Player.B = Hero Of(Event Player);
 
 		Create Beam Effect(All Players(All Teams), Bad Beam, Eye Position(Event Player), Event Player.SojournLastRay, Team Of(Event Player), none);
 
@@ -7134,7 +7142,7 @@ rule("Sojourn reset values and destroy beams.")
         Event Player.SojournLastRay = 0;
         Event Player.SojournRayArray = 0;
         
-	
+		Event Player.B = Null;
     }
 }
 
@@ -7187,6 +7195,7 @@ rule("soldier 76 initialize kill streaks and streak counting")
 
 	actions
 	{
+		Event Player.B = Hero Of(Event Player);
 		Event Player.Soldier76Variables = Array(0);
 		Set Ultimate Ability Enabled(Event Player, False);
 
@@ -7386,6 +7395,7 @@ rule("soldier 76 reset everything with soldier. Really only used when Soldier sw
 		Event Player.SoldierKillStreakTexts = Null;
 		Event Player.Soldier76KillStreaksEquipped = Null;
 		
+		Event Player.B = Null;
 		
 	}
 }
@@ -8115,7 +8125,7 @@ rule("Sombra activate ultimate")
 
 	conditions
 	{
-	
+		Hero Of(Event Player) == Hero(Sombra);
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Event Player.CustomUltReadyToUse == True;
 		Event Player.UsingCustomUlt != True;
@@ -8127,6 +8137,7 @@ rule("Sombra activate ultimate")
 
 	actions
 	{
+		Event Player.B = Hero Of(Event Player);
 		Call Subroutine(UseCustomUlt);
 	
 	
@@ -8160,7 +8171,7 @@ rule("Reset Ult modifications on Sombra.")
     {
         
 		Event Player.P = Null;
-	
+		Event Player.B = Null;
 		Destroy HUD Text(Event Player.UltDescription);
         
 		
@@ -8376,6 +8387,7 @@ rule("Symmetra ultimate activate and deactivate")
 
 	actions
 	{
+		Event Player.B = Hero Of(Event Player);
 		Call Subroutine(UseCustomUlt);
 	
 	
@@ -8423,6 +8435,7 @@ rule("Symmetra reset")
 		Event Player.UltTimer = Null;
 		Destroy HUD Text(Event Player.UltTimerText);
 		Event Player.UltTimerText = Null;
+		Event Player.B = Null;
 		
 		
 		Call Subroutine(StopUsingCustomUlt);
@@ -8456,6 +8469,7 @@ rule("Symmetra reset")
 		Event Player.UltTimer = Null;
 		Destroy HUD Text(Event Player.UltTimerText);
 		Event Player.UltTimerText = Null;
+		Event Player.B = Null;
 		
 		Call Subroutine(StopUsingCustomUlt);
 	}
@@ -8923,7 +8937,7 @@ rule("torb: spawn torb turret")
 
 	conditions
 	{
-	
+		Hero Of(Event Player) == Hero(Torbjörn);
 		Event Player.CustomUltReadyToUse == True;
 		Is Button Held(Event Player, Button(Ultimate)) == True;
 		Has Status(Event Player, Hacked) == False;
@@ -8936,7 +8950,8 @@ rule("torb: spawn torb turret")
 
 	actions
 	{
-
+		Event Player.B = Hero Of(Event Player);
+		
 		Call Subroutine(UseCustomUlt);
 	
 	
@@ -9007,6 +9022,7 @@ rule("torb: reset torb")
 		Destroy Dummy Bot(Team Of(Event Player), Slot Of(Event Player.TorbTurret));
 
 		Event Player.TorbTurret = Null;
+		Event Player.B = Null;
 		
 	}
 }
@@ -9240,7 +9256,7 @@ rule("Activate Tracer's super speed ultimate")
 		Event Player.CustomUltReadyToUse == True;
 		Has Status(Event Player, Hacked) == False;
 		Is Alive(Event Player) == True;
-		
+		Hero Of(Event Player) == Hero(Tracer);
 	}
 
 	actions
@@ -9249,11 +9265,12 @@ rule("Activate Tracer's super speed ultimate")
 		Event Player.UltReadyText = Null;
 		Create Effect(All Players(All Teams), Energy Sound, Color(White), Event Player, 200, Visible To Position and Radius);
 		Event Player.UsingCustomUlt = True;
-		Start Forcing Throttle(Event Player, 1, 1, 0, 0, 0, 1);
 		Set Slow Motion(1);
 	
+		Event Player.B = Hero Of(Event Player);
+		Wait(0.3,Ignore Condition);
 		
-		Wait(0.15,Ignore Condition);
+		Start Forcing Throttle(Event Player, 1, 1, 0, 0, 0, 1);
 		
 		Value In Array(Event Player.CurrentSpeeds, 0) += 4900;
 		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
@@ -9283,7 +9300,9 @@ rule("Tracer reset")
 		Event Player.UsingCustomUlt = False;
 		Destroy Effect(Last Created Entity);
 		Set Slow Motion(100);
+		Event Player.B = Null;
 		
+		Call Subroutine(StopUsingCustomUlt);
 	}
 }
 
@@ -9533,7 +9552,7 @@ rule("Widowmaker aim through wall and create beam.")
 	actions
 	{
         Event Player.WidowDamage = 12;
-
+		Event Player.B = Hero Of(Event Player);
        
         Wait(0.32, Abort When False);
 
@@ -9683,7 +9702,7 @@ rule("Widowmaker reset")
 		if(Event Player.WidowFireBeam != Null);
         Destroy Effect(Event Player.WidowFireBeam);
 		End;
-		
+		Event Player.B = Null;
     }
 
 }
@@ -9792,12 +9811,13 @@ rule("winston: using ultimate")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-	
+		Hero Of(Event Player) == Hero(Winston);
 		Is Dummy Bot(Event Player) == false;
 	}
 
 	actions
 	{
+		Event Player.B = Hero Of(Event Player);
 		Start Scaling Player(Event Player, 2, false);
 		Wait Until(Is Using Ultimate(Event Player) != true || Is Dead(Event Player) == true, 50);
 		Call Subroutine(ResetWinston);
@@ -9822,7 +9842,7 @@ rule("winston: reset")
 		Stop Scaling Player(Event Player);
 		Detach Players(Event Player.WinstonGrabbing);
 		Event Player.WinstonGrabbing = Null;
-	
+		Event Player.B = Null;
 
 	}
 }
@@ -10084,6 +10104,8 @@ rule("Wrecking ball activate ultimate.")
 
     actions
     {
+		Event Player.B = Hero Of(Event Player);
+		
         Call Subroutine(UseCustomUlt);
         Start Scaling Player(Event Player, 3, false);
        
@@ -10129,8 +10151,10 @@ rule("Wrecking ball reset.")
 		Set Secondary Fire Enabled(Event Player, True);
         Set Damage Received(Event Player, 100);
         Set Knockback Received(Event Player, 100);
-
-
+        Allow Button(Event Player, Button(Ability 1));
+		
+		Event Player.B = Null;
+		
 
     }
 }
@@ -10250,6 +10274,8 @@ rule("zarya: uses ultimate")
 
 	actions
 	{
+		Event Player.B = Hero Of(Event Player);
+		
 		Call Subroutine(UseCustomUlt);
 		Set Primary Fire Enabled(Event Player, False);
 		Set Secondary Fire Enabled(Event Player, False);
@@ -10284,6 +10310,8 @@ rule("zarya: reset")
 		Event Player.S = Null;
 	
 		Event Player.ZaryaGravPos = Null;
+		Event Player.B = Null;
+		
 	}
 }
 
@@ -10451,6 +10479,8 @@ rule("Zenyatta activate ultimate")
 
 	actions
 	{
+		Event Player.B = Hero Of(Event Player);
+		
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
 	
@@ -10479,6 +10509,8 @@ rule("Zenyatta reset")
 
 	actions
 	{
+		Event Player.B = Null;
+		
 		If(Event Player.P != Null);
 		Call Subroutine(StopPossessing);
 		End;
