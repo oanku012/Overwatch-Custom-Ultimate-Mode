@@ -654,42 +654,6 @@ rule("Teleport back in bounds if standing out of bounds")
 
 
 
-rule("Test dummy")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Is Button Held(Event Player, Button(Interact)) == True;
-	
-	}
-
-	actions
-	{
-	
-		Create Dummy Bot(All Heroes, Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
-	
-	
-		
-	
-	
-		
-	
-		
-	
-	
-	
-		
-	}
-}
-
-
-
 
 
 rule("CreateMenu")
@@ -3938,7 +3902,7 @@ rule("Destroy arena after some time.")
 		Create HUD Text(Filtered Array(All Players(All Teams), Current Array Element.JunkerQueenInArena != Null), Global.JunkerArenaTimer, Null, Null, Top, 0, Color(Orange), Color(white), Color(white), Visible To And String, Default Visibility);
 		Global.JunkerArenaTimerText = Last Text ID;
 		Chase Global Variable At Rate(JunkerArenaTimer, 0, 1, None);
-		Wait(Global.JunkerArenaTimer, Abort When False);
+		Wait Until(Global.JunkerArenaTimer == 0, 9999);
 		
 	
 		
@@ -4077,7 +4041,7 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 		Create Projectile Effect(All Players(All Teams), Bastion A-36 Tactical Grenade, All PLayers(Team Of(Event Player)), Event Player.JunkratBombPosition, Null, 0.5, Visible To Position Direction and Size);
 		Event Player.JunkratBombOrb = Last Created Entity;
 		Event Player.JunkratExplosionRadius = 30;
-		Create Effect(All Players(All Teams), Ring, Team Of(Event Player), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius, Position And Radius);
+		Create Effect(All Players(All Teams), Ring, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius, Position And Radius);
 		Event Player.JunkratRadiusRing = Last Created Entity;
 		Event Player.UltTimer = 20;
 		Create Hud Text(Event Player, Event Player.UltTimer, null, null, Top, 0, Color(Orange), Color(Orange), Color(Orange), String, Default Visibility);
@@ -4093,6 +4057,23 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 		End;
 		
 		Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
+		Play Effect(All Players(All Teams), Ashe Dynamite Explosion Sound, Color(Orange), Event Player.JunkratBombPosition, 200);
+		Wait(0.05, Ignore Condition);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
+		Play Effect(All Players(All Teams), Junkrat RIP Tire Explosion Sound, Color(Orange), Event Player.JunkratBombPosition,200);
+		
+		Wait(0.05, Ignore Condition);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
+		Play Effect(All Players(All Teams),Pharah Rocket Launcher Explosion Sound, Color(Orange), Event Player.JunkratBombPosition, 200);
+		
+		Wait(0.05, Ignore Condition);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
+		Play Effect(All Players(All Teams),Reinhardt Fire Strike Target Impact Sound, Color(Orange), Event Player.JunkratBombPosition, 200);
+		
 	
 	
 	
@@ -4148,7 +4129,7 @@ rule("Junkrat timer sound effect")
 
 	actions
 	{
-		Wait(1, Ignore Condition);
+		Wait(1, Abort When False);
 		Play Effect(All Players(All Teams), Debuff Impact Sound, Team Of(Event Player), Event Player.JunkratBombPosition, 200);
 		Loop If Condition Is True;
 	}
@@ -4842,8 +4823,8 @@ rule("Mei reset")
 		Event Player.S = 0;
 		Event Player.Y = False;
 		Unpause Match Time;
-		Set Ultimate Ability Enabled(Event Player, True);
-		Set Secondary Fire Enabled(Event Player, True);
+	
+	
 		
 		Destroy Effect(Event Player.MeiZaWarudoSphere);
 		
@@ -4851,7 +4832,7 @@ rule("Mei reset")
 		
 	
 		Play Effect(All Players(All Teams), Debuff Impact Sound, Color(White), Event Player, 200);
-		Destroy HUD Text(Last Text ID);
+	
 		Set Ultimate Charge(Event Player, 0);
 		Event Player.B = Null;
 		
@@ -4870,7 +4851,7 @@ rule("Mei reset")
 		Event Player.MeiIciclePositions = Null;
 		Event Player.MeiIcicleDirections = Null;
 		
-		
+		Call Subroutine(StopUsingCustomUlt);
 	}
 }
 
@@ -6294,7 +6275,7 @@ rule("reinhardt: set variables when using ultimate")
 		Event Player.R = 100;
 		Event Player.Y = 0;
 	
-		Create HUD Text(Event Player, Custom String("Power-up duration: "), Event Player.Y, String("{0} {1}", String("{0} {1} {2}", String("Damage"), String("Dealt"), String("{0}%", Event Player.R)), String("{0} {1} {2}", String("Damage"), Custom String("received: "), String("{0}%", Event Player.P))), Right, 0, Color(Yellow), Color(Yellow), Color(White), Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, Custom String("Power-up duration: {0}", Event Player.Y), Null, String("{0} {1}", String("{0} {1} {2}", String("Damage"), String("Dealt"), String("{0}%", Event Player.R)), String("{0} {1} {2}", String("Damage"), Custom String("received: "), String("{0}%", Event Player.P))), Right, 0, Color(Yellow), Color(Yellow), Color(White), Visible To and String, Default Visibility);
 		
 		
 		
@@ -8405,6 +8386,7 @@ rule("Symmetra ultimate activate and deactivate")
 		Hero Of(Event Player) == Hero(Symmetra);
 		Has Status(Event Player, Hacked) == False;
 		Is Alive(Event Player) == True;
+		Is Dummy Bot(Event Player) == False;
 		
 	}
 
@@ -8422,7 +8404,7 @@ rule("Symmetra ultimate activate and deactivate")
 	
 		Set Primary Fire Enabled(Event Player, False);
 		Set Secondary Fire Enabled(Event Player, False);
-		Wait(Event Player.UltTimer, Ignore Condition);
+		Wait Until(Is Dead(Event Player) == True, Event Player.UltTimer);
 		If(Team Of(Event Player) == Team 1);
 		Call Subroutine(ResetSymmetraTeam1);
 		Else;
@@ -9280,6 +9262,7 @@ rule("Activate Tracer's super speed ultimate")
 		Has Status(Event Player, Hacked) == False;
 		Is Alive(Event Player) == True;
 		Hero Of(Event Player) == Hero(Tracer);
+		Is Dummy Bot(Event Player) == False;
 	}
 
 	actions
@@ -9291,6 +9274,8 @@ rule("Activate Tracer's super speed ultimate")
 		Set Slow Motion(1);
 	
 		Event Player.B = Hero Of(Event Player);
+		Disable Movement Collision With Players(Event Player);
+		
 		Wait(0.3,Ignore Condition);
 		
 		Start Forcing Throttle(Event Player, 1, 1, 0, 0, 0, 1);
@@ -9324,6 +9309,7 @@ rule("Tracer reset")
 		Destroy Effect(Last Created Entity);
 		Set Slow Motion(100);
 		Event Player.B = Null;
+		Enable Movement Collision With Players(Event Player);
 		
 		Call Subroutine(StopUsingCustomUlt);
 	}
@@ -9345,6 +9331,8 @@ rule("Tracer play effects while ult is active")
 		Hero Of(Event Player) == Hero(Tracer);
 		Event Player.UsingCustomUlt == True;
 		Event Player.CustomUltReadyToUse == True;
+		Is Dummy Bot(Event Player) == False;
+		
 	}
 
 	actions
@@ -9353,6 +9341,35 @@ rule("Tracer play effects while ult is active")
 	
 	
 		Play Effect(All Players(All Teams), Good Explosion, Team Of(Event Player), Position Of(Event Player) + Backward, 1);
+		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("Tracer put player back into the ground if they fly into the air")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Tracer;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Tracer);
+		Event Player.UsingCustomUlt == True;
+		Event Player.CustomUltReadyToUse == True;
+		Is In Air(Event Player) == True;
+		Is Dummy Bot(Event Player) == False;
+		
+	}
+
+	actions
+	{
+		Wait(0.016, Ignore Condition);
+		Apply Impulse(Event Player, Down, 1000, To World, Cancel Contrary Motion);
 		Loop If Condition Is True;
 	}
 }
@@ -9373,13 +9390,16 @@ rule("Tracer damage players when running at them")
 		Hero Of(Event Player) == Hero(Tracer);
 		Event Player.UsingCustomUlt == True;
 		Event Player.CustomUltReadyToUse == True;
-		Filtered Array(Players Within Radius(Update Every Frame(Eye Position(Event Player)), 1.8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Is Alive(Current Array Element) == True)  != Empty Array;
+		Filtered Array(Players Within Radius(Update Every Frame(Event Player), 1.9, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Is Alive(Current Array Element) == True)  != Empty Array;
+	
+		Is Dummy Bot(Event Player) == False;
 	
 	}
 
 	actions
 	{
-		Damage(Filtered Array(Players Within Radius(Update Every Frame(Eye Position(Event Player)), 1.8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Is Alive(Current Array Element) == True), Event Player, 500);
+		Damage(Filtered Array(Players Within Radius(Update Every Frame(Event Player), 1.9, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Is Alive(Current Array Element) == True), Event Player, 500);
+	
 		
 	}
 }
@@ -10292,7 +10312,7 @@ rule("zarya: uses ultimate")
 	
 		Has Status(Event Player, Hacked) == False;
 		Is Alive(Event Player) == True;
-		
+		Is Dummy Bot(Event Player) == False;
 	}
 
 	actions
@@ -10352,6 +10372,8 @@ rule("Zarya set grav point position")
 	conditions
 	{
 		Event Player.UsingCustomUlt == True;
+		Is Dummy Bot(Event Player) == False;
+		
 	}
 
 	actions
@@ -10381,6 +10403,8 @@ rule("Zarya move gravity point forward")
 	
 		Event Player.UsingCustomUlt == True;
 		Is Button Held(Event Player, Button(Primary Fire)) == True;
+		Is Dummy Bot(Event Player) == False;
+		
 	}
 
 	actions
@@ -10410,6 +10434,8 @@ rule("Zarya move gravity point backward")
 		Event Player.UsingCustomUlt == True;
 		Is Button Held(Event Player, Button(Secondary Fire)) == True;
 		Distance Between(Event Player, Event Player.ZaryaGravPos) > 7;
+		Is Dummy Bot(Event Player) == False;
+		
 	}
 
 	actions
@@ -10497,6 +10523,7 @@ rule("Zenyatta activate ultimate")
 		Event Player.UsingCustomUlt != True;
 		Has Status(Event Player, Hacked) == False;
 		Is Alive(Event Player) == True;
+		Is Dummy Bot(Event Player) == False;
 		
 	}
 
@@ -10565,7 +10592,8 @@ rule("Zenyatta possess a player")
 	{
 		Event Player.UsingCustomUlt == True;
 	
-
+		Is Dummy Bot(Event Player) == False;
+		
 	}
 
 	actions
@@ -10663,6 +10691,7 @@ rule("Zenyatta leave possessed player when using interact or when possessed play
 	{
 		Event Player.P != Null;
 		(Is Button Held(Event Player, Button(Interact)) || Is Dead(Event Player.P))== True;
+		Is Dummy Bot(Event Player) == False;
 		
 
 	}
@@ -10689,6 +10718,7 @@ rule("Zenyatta move possessed player forward")
 		Event Player.P != Null;
 		Z Component Of(Throttle Of(Event Player)) > Null;
 		
+		Is Dummy Bot(Event Player) == False;
 	}
 
 	actions
