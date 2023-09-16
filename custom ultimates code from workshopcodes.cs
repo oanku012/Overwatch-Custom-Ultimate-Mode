@@ -4867,7 +4867,7 @@ rule("Mei reset")
 		
 		Event Player.MeiZaWarudoSphere = Null;
 		
-	
+		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
 		Play Effect(All Players(All Teams), Debuff Impact Sound, Color(White), Event Player, 200);
 	
 		Set Ultimate Charge(Event Player, 0);
