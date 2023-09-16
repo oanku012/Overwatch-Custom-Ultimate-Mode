@@ -2945,9 +2945,9 @@ rule("Genji description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Genji cuts his enemies with such precision that they don't even notice they've been cut until Genji sheathes his sword. {0}", Custom String("
-		Only a single strike is enough. However if Genji perishes while using his ultimate, {0}", Custom String("
-		it will be so embarrassing that his cuts will have no effect.", Null, Null)));
+		Event Player.UltDescription = Custom String("Genji cuts his enemies so precisely that they don't even notice they've been cut until Genji sheathes his sword. {0}", Custom String("
+		Only a single slash is enough and they're already dead. However if Genji perishes while using his ultimate, {0}", Custom String("
+		it will be so embarrassing that his cuts will lose their effect.", Null, Null)));
 
 	}
 }
@@ -8395,7 +8395,8 @@ rule("Sombra description")
 	{
 		Event Player.UltDescription = Custom String("Sombra spreads a computer virus to nearby enemies that does damage over time. {0}", Custom String("
 		The virus will spread from infected enemies to other enemies and also will stay in corpses until they respawn. {0}",
-		Custom String("Virus can't be spread while you are cloaked."))
+		Custom String("
+		Virus can't be spread while you are cloaked."))
 		);
 
 	}
