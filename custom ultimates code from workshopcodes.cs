@@ -7,9 +7,9 @@ settings
 
 	main
 	{
-		Description: "Overpowered custom-made ultimates for each hero. Currently only supports team-based modes and 1 of each hero per team."
+		Description: "Overpowered custom-made ultimates for each hero. Currently only supports team-based modes and 1 of each hero per team. Press Crouch+Interact to see the ultimate description for your hero."
 
-		Mode Name: "Goofy OP ultimates"
+		Mode Name: "Overpowered ultimates"
 		
 	}
 
@@ -28,50 +28,71 @@ settings
 		General
 		{
 		
-			Respawn Time Scalar: 50%
-		}
-
 		
-
-		Skirmish
-		{
-			enabled maps
-			{
-				Colosseo 0
+			Hero Limit: 1 Per Team
 			
-			
-			
-			}
 		}
 
-		disabled Team Deathmatch
+		Team Deathmatch
 		{
-			Game Length In Minutes: 5
-			Score To Win: 1
-		}
-
 		
+		}
+		
+		Assault
+		{
+		
+		}
+		
+		Push
+		{
+		
+		}
+		
+		Control
+		{
+			
+		}
+		
+		Escort
+		{
+		
+		}
+		
+		Flashpoint
+		{
+		
+		}
+		
+		Hybrid
+		{
+		
+		}
+		
+		Capture The Flag
+		{
+		
+		}
 	}
 
 	heroes
 	{
 		Team 1
 		{
-			Ultimate Generation: 500%
-			Ultimate Generation - Combat: 500%
-			Ultimate Generation - Passive: 500%
+			Ultimate Generation: 200%
+		
+		
            
 		
-            Spawn With Ultimate Ready: On
+           
            
 		
 		}
 
 		Team 2
 		{
-			Ultimate Generation: 500%
-			Ultimate Generation - Combat: 500%
-			Ultimate Generation - Passive: 500%
+			Ultimate Generation: 200%
+		
+		
            
 
 		
@@ -341,6 +362,24 @@ subroutines {
 }
 
 
+
+rule("Disable inspector for better performance")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+		
+	}
+
+	actions
+	{
+		Disable Inspector Recording;
+	}
+}
 
 
 
@@ -648,8 +687,6 @@ rule("Teleport back in bounds if standing out of bounds")
 		Event Player.TeleportBackInBounds = False;
 	}
 }
-
-
 
 
 
@@ -4734,7 +4771,7 @@ rule("Mei: za warudo")
 	
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
-	
+		Set Projectile Speed(All Players(All Teams), 0);
 		Create Effect(All Players(All Teams), Sphere, Color(Aqua), Event Player, Event Player.S, Visible To Position and Radius);
 		Event Player.MeiZaWarudoSphere = Last Created Entity;
 		
@@ -8992,6 +9029,9 @@ rule("torb: spawn torb turret")
 		Set Gravity(Event Player.TorbTurret, Value In Array(Event Player.TorbTurret.CurrentGravities, 0));
 		Set Knockback Received(Event Player.TorbTurret, 0);
 		Event Player.TorbTurret.TorbTurretLevel = 1;
+		
+		Disable Movement Collision With Players(Event Player.TorbTurret);
+		
 		Wait(0.5, Ignore Condition);
 		
 		Create In-World Text(All Players(All Teams), Custom String("Turretbjörn Lvl 1"), Event Player.TorbTurret + Up*2, 1, Clip Against Surfaces, Visible to and String, Team Of(Event Player), Default Visibility);
