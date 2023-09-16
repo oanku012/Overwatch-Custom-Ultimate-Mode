@@ -1,0 +1,144 @@
+settings
+{
+    //MAYBE SET SOME OF THE ULTIMATES TO HAVE INFINITE TIMER, BUT END WHEN ULT ENDS WITH WAIT UNTIL
+//SHOULD MAYBE ACCOUNT FOR THE FACT THAT PEOPLE JOIN MID-MATCH AND SOME OF THE VARIABLES MIGHT NOT BE SET FOR THEM IF AN ULT IS BEING USED
+//Could maybe just manually set exceptions for gravity and other stat altering stuff that might conflict with other ultimates
+//WHAT IF JUNKER QUEEN LEAVES MATCH WHILE USING ULT??? DO THE ENEMY PLAYERS STAY UP IN THE AIR???
+//OPTIMIZE CODE AT SOME POINT, MAYBE MAKE LOOPS LESS FREQUENT WHEN IT'S NOT NECESSARY, Someone on reddit https://www.reddit.com/r/OverwatchCustomGames/comments/dtr1t2/how_do_i_get_my_custom_game_to_stop_crashing/ had some nice tips like putting less heavy condition checks first on a list
+
+/*damn, F. what i can tell you right now at least is that one very common source of server load are effects, so if you're constantly creating and destroy a ton of effects, you may want to find more efficient methods for using effects such as using array tricks with the visibility, or simply opting for dummy bots to simulate projectile attacks or whatever.
+
+another thing is to look out for conditions that are overly complicated in "ongoing - each player" rules, as those conditions are reevaluated for every single ingame tick to check when they become true/false. if u order the conditions in your list such that the less complicated conditions are at the top, the reevaluation "short circuits" faster when they hit a less load-heavy condition that returns false and that can help with server load.
+
+one very big contributor to server load as well would be large arrays. now that the variable limit has been expanded to 128, i recommend not using arrays wherever its unnecessary and opt for single variable values instead. it might make your code look messier but the difference in server load can be pretty significant. if you have no choice but to use arrays, id recommend trying to cut down their sizes as much as you can before you have to sacrifice too much gameplay fluidity.
+
+one very common trick lots of workshoppers use to reduce server load is to pepper your actions with a bunch of waits. they can be short like 0.03 or as long as 0.25, but having waits in rules that execute a butt ton of actions within a single tick will help you tremendously with server load, as it spreads the cpu burden accross more ingame ticks as opposed to having them all run at once. apparently wait(0.016) can be quite stressing on the server load still, so you cant make your waits too short. really, the longer the better, so u can just experiment around and find what works. this also applies to waits in loops.
+
+finally, of course, nothing will beat cleaning up server load better than simply figuring out how to optimise your script in general. if you can find a way to rewrite a rule with less rules, or with less operation-heavy values, then do. it might sound tough but if you consult some people for help or just re-read old rules carefully you're bound to find new ways to more efficiently code for one thing or another.
+
+good luck with your mode!*/
+
+
+	main
+	{
+		Description: "Overpowered custom-made ultimates for each hero. Currently only supports team-based modes and 1 of each hero per team. Press Crouch+Interact to see the ultimate description for your hero."
+
+		Mode Name: "Overpowered ultimates"
+		
+	}
+
+
+	lobby
+	{
+		Max Team 1 Players: 4
+		Max Team 2 Players: 4
+		Max FFA Players: 8
+	}
+
+	
+	
+
+	modes
+	{
+		General
+		{
+			Respawn Time Scalar: 50%
+
+			Hero Limit: 1 Per Team
+			
+		}
+
+		
+
+		Skirmish
+		{
+			/*enabled maps
+			{
+				Colosseo 0
+				
+			
+			
+			}*/
+		}
+
+		Deathmatch
+		{
+		}
+	
+	}
+
+	heroes
+	{
+
+		General
+		{
+
+			Ultimate Generation: 500%
+			Ultimate Generation - Combat: 500%
+			Ultimate Generation - Passive: 500%
+			Spawn With Ultimate Ready: On
+
+			Ashe
+			{
+				Infinite Ultimate Duration: On
+				Ultimate Duration: 500%
+			}
+
+			Bastion
+			{
+			
+				Ultimate Duration: 300%
+			}
+
+			Doomfist
+			{
+				Ultimate Duration: 500%
+			}
+			
+			
+
+			Soldier: 76
+			{
+				Ultimate Duration: 200%
+
+			}
+
+			
+
+            Widowmaker
+            {
+                Ultimate Duration: 200%
+            }
+
+			Winston
+			{
+				Primal Rage Melee Knockback Scalar: 150%
+			}
+
+			disabled heroes
+			{
+			
+				Ashe
+			
+				Bastion
+				
+				Illari
+				Kiriko
+				Lifeweaver
+				Ramattra
+				
+			}
+		}
+	}
+
+	extensions
+	{
+		Spawn More Dummy Bots
+		Buff Status Effects
+		//Debuff Status Effects
+		Explosion Sounds
+		Kinetic Explosion Effects
+		Projectiles
+		Buff and Debuff Sounds
+	}
+}
