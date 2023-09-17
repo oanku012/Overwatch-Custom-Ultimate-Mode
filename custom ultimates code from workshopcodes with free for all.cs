@@ -34,7 +34,10 @@ settings
 			Game Mode Start: Manual
 		}
 
+		Team Deathmatch
+		{
 		
+		}
 
 		
 		
@@ -194,99 +197,100 @@ variables {
     29: EchoAimRayCast
     30: EchoDummyBots
     31: EchoEffects
-    32: V
-    33: HanzoDragonPos
-    34: UltTimer
-    35: UltTimerText
-    36: HanzoUltimateAmmo
-    37: HanzoDragonTargetPos
-    38: JunkerQueenInArena
-    39: JunkerQueenEnemyArray
-    40: JunkerQueenEnemyPositions
-    41: JunkerTeleportPos
-    42: JunkerReadyToTeleport
-    43: JunkerQueenPositions
-    44: JunkerDamageCounter
-    45: JunkerHealthBonus
-    46: JunkerHealthPool
-    47: JunkerScale
-    48: JunkerCDReduction
-    49: JunkerRageEffects
-    50: JunkerWinCounterText
-    51: JunkerWinCounter
-    52: JunkerArenaSphere
-    53: ExtraLife
-    54: JunkerKnifeThrowCD
-    55: JunkratBombPosition
-    56: JunkratBombOrb
-    57: JunkratExplosionRadius
-    58: JunkratRadiusRing
-    59: UltTimerAboveHead
-    60: UltTimerHUD
-    61: Q
-    62: UltHudTextObject
-    63: SigmaZeroGravBuff
-    64: R
-    65: LucioHealthPoolHealthAmount
-    66: LucioHealthPool
-    67: MeiZaWarudoSphere
-    68: MeiIcicleEffects
-    69: MeiIciclePositions
-    70: MeiIcicleDirections
-    71: TimeStopStunned
-    72: O
-    73: N
-    74: MercyExtraLifeText
-    75: ExtraLifeInWorldText
-    76: P
-    77: ReaperVariables
-    78: ReaperTPPos
-    79: SigmaMaleValues
-    80: SigmaHighGravDebuff
-    81: SojournLastRay
-    82: SojournRayArray
-    83: SojournBeamArray
-    84: SojournEyePosArray
-    85: SojournLastEyePos
-    86: SojournDamageRay
-    87: Soldier76Variables
-    88: SoldierAllKillStreaks
-    89: Soldier76KillStreaksEquipped
-    90: SoldierKillStreakTexts
-    91: Soldier76KillStreaksActive
-    92: LocalVariable
-    93: Soldier76CarepackLocation
-    94: SoldierCarePackAmmoIndex
-    95: Virus
-    96: VirusText
-    97: VirusEffects
-    98: HasDiedWithVirus
-    99: GreenPortal
-    100: YellowPortal
-    101: K
-    102: L
-    103: InPortalSpeed
-    104: PortalUsed
-    105: TorbTurret
-    106: TorbTurretLevel
-    107: TorbTurretLevelText
-    108: TorbCurrentTarget
-    109: WidowZoomedIn
-    110: WidowPlayersInViewAngleSorted
-    111: WidowRayCastForward
-    112: WidowRayCastStartPos
-    113: WidowRayCastEndPos
-    114: WidowRayCastBackward
-    115: WidowRayCastHeadForward
-    116: WidowRayCastHeadBackward
-    117: WidowFireBeam
-    118: WidowDamage
-    119: WidowAimBeam
-    120: WidowLastFacingDirection
-    121: WinstonGrabbing
-    122: WinstonDamageArray
-    123: WinstonRayCasts
-    124: ZaryaGravPos
+    32: EchoPlayer
+    33: V
+    34: HanzoDragonPos
+    35: UltTimer
+    36: UltTimerText
+    37: HanzoUltimateAmmo
+    38: HanzoDragonTargetPos
+    39: JunkerQueenInArena
+    40: JunkerQueenEnemyArray
+    41: JunkerQueenEnemyPositions
+    42: JunkerTeleportPos
+    43: JunkerReadyToTeleport
+    44: JunkerQueenPositions
+    45: JunkerDamageCounter
+    46: JunkerHealthBonus
+    47: JunkerHealthPool
+    48: JunkerScale
+    49: JunkerCDReduction
+    50: JunkerRageEffects
+    51: JunkerWinCounterText
+    52: JunkerWinCounter
+    53: JunkerArenaSphere
+    54: ExtraLife
+    55: JunkerKnifeThrowCD
+    56: JunkratBombPosition
+    57: JunkratBombOrb
+    58: JunkratExplosionRadius
+    59: JunkratRadiusRing
+    60: UltTimerAboveHead
+    61: UltTimerHUD
+    62: Q
+    63: UltHudTextObject
+    64: SigmaZeroGravBuff
+    65: R
+    66: LucioHealthPoolHealthAmount
+    67: LucioHealthPool
+    68: MeiZaWarudoSphere
+    69: MeiIcicleEffects
+    70: MeiIciclePositions
+    71: MeiIcicleDirections
+    72: TimeStopStunned
+    73: O
+    74: N
+    75: MercyExtraLifeText
+    76: ExtraLifeInWorldText
+    77: P
+    78: ReaperVariables
+    79: ReaperTPPos
+    80: SigmaMaleValues
+    81: SigmaHighGravDebuff
+    82: SojournLastRay
+    83: SojournRayArray
+    84: SojournBeamArray
+    85: SojournEyePosArray
+    86: SojournLastEyePos
+    87: SojournDamageRay
+    88: Soldier76Variables
+    89: SoldierAllKillStreaks
+    90: Soldier76KillStreaksEquipped
+    91: SoldierKillStreakTexts
+    92: Soldier76KillStreaksActive
+    93: LocalVariable
+    94: Soldier76CarepackLocation
+    95: SoldierCarePackAmmoIndex
+    96: Virus
+    97: VirusText
+    98: VirusEffects
+    99: HasDiedWithVirus
+    100: GreenPortal
+    101: YellowPortal
+    102: K
+    103: L
+    104: InPortalSpeed
+    105: PortalUsed
+    106: TorbTurret
+    107: TorbTurretLevel
+    108: TorbTurretLevelText
+    109: TorbCurrentTarget
+    110: WidowZoomedIn
+    111: WidowPlayersInViewAngleSorted
+    112: WidowRayCastForward
+    113: WidowRayCastStartPos
+    114: WidowRayCastEndPos
+    115: WidowRayCastBackward
+    116: WidowRayCastHeadForward
+    117: WidowRayCastHeadBackward
+    118: WidowFireBeam
+    119: WidowDamage
+    120: WidowAimBeam
+    121: WidowLastFacingDirection
+    122: WinstonGrabbing
+    123: WinstonDamageArray
+    124: WinstonRayCasts
+    125: ZaryaGravPos
 }
 
 
@@ -2322,12 +2326,11 @@ rule("Echo activate ultimate")
 	{
 		Event Player.B = Hero(Echo);
 		
-	
+		"Wait slightly before spawning so that we get the raycast aiming position first"
 		Wait(0.1, Ignore Condition);
 		Start Camera(Event Player, Update Every Frame(Eye Position(Event Player) - Facing Direction Of(Event Player) * 2 + Up*0.5), Update Every Frame(Eye Position(Event Player) + Facing Direction Of(Event Player) * 2 + Up*0.5), 0);
 		
-	
-	
+		"This checks for the first available slot that can't be occupied by a player."
 		If(Number of Players(Team Of(Event Player)) >= Number of Slots(Team Of(Event Player)));
 		Create Dummy Bot(Hero Being Duplicated(Event Player), Team Of(Event Player), -1, Event Player + Cross Product(Facing Direction Of(Event Player), Up), Direction Towards(Event Player + Cross Product(Facing Direction Of(Event Player), Up), Event Player.EchoAimRayCast));
 		Event Player.EchoDummyBots = Array(Last Created Entity);
@@ -2351,16 +2354,21 @@ rule("Echo activate ultimate")
 		End;
 		End;
 		End;
-	
-		
-	
-	
 		
 
 		Start Facing(Value In Array(Event Player.EchoDummyBots, 0), Direction Towards(Eye Position(Value In Array(Event Player.EchoDummyBots, 0)), Event Player.EchoAimRayCast), 1000, To World, Direction and Turn Rate);
 		Start Facing(Value In Array(Event Player.EchoDummyBots, 1), Direction Towards(Eye Position(Value In Array(Event Player.EchoDummyBots, 1)), Event Player.EchoAimRayCast), 1000, To World, Direction and Turn Rate);
 		Start Throttle In Direction(Value In Array(Event Player.EchoDummyBots, 0), Throttle Of(Event Player), 1, To Player, Replace Existing Throttle, Direction and Magnitude);
 		Start Throttle In Direction(Value In Array(Event Player.EchoDummyBots, 1), Throttle Of(Event Player), 1, To Player, Replace Existing Throttle, Direction and Magnitude);
+		
+		"This is for free for all so that the dummy bots and the player can't damage each other."
+		Start Damage Modification(Value In Array(Event Player.EchoDummyBots, 0), Event Player, 0, Receivers Damagers And Damage Percent);
+		Start Damage Modification(Value In Array(Event Player.EchoDummyBots, 1), Event Player, 0, Receivers Damagers And Damage Percent);
+		Start Damage Modification(Event Player, Value In Array(Event Player.EchoDummyBots, 0), 0, Receivers Damagers And Damage Percent);
+		Start Damage Modification(Event Player, Value In Array(Event Player.EchoDummyBots, 1), 0, Receivers Damagers And Damage Percent);
+		Start Damage Modification(Value In Array(Event Player.EchoDummyBots, 0),Value In Array(Event Player.EchoDummyBots, 1), 0, Receivers Damagers And Damage Percent);
+		Start Damage Modification(Value In Array(Event Player.EchoDummyBots, 1),Value In Array(Event Player.EchoDummyBots, 0), 0, Receivers Damagers And Damage Percent);
+		
 
 		Disable Movement Collision With Environment(Event Player.EchoDummyBots, false);
 		Disable Movement Collision With Players(Event Player.EchoDummyBots);
@@ -2373,15 +2381,11 @@ rule("Echo activate ultimate")
 		Create Effect(All Players(All Teams), Echo Cloning Effect, Team Of(Event Player), Value In Array(Event Player.EchoDummyBots, 1), 100, VISIBLE TO POSITION AND RADIUS);
 
 		Modify Player Variable(Event Player, EchoEffects, Append To Array, Last Created Entity);
-
-	
-	
-
-	
+		
+		Event Player.EchoDummyBots.EchoPlayer = Event Player;
 
 		Wait Until((Is Dead(Event Player) == true || Is Duplicating(Event Player) == false) == true, 9999);
 		Call Subroutine(ResetEcho);
-		
 	}
 }
 
@@ -2397,8 +2401,6 @@ rule("Resets everything with Echo after Ult is over or when changing hero.")
 
 	actions
 	{
-	
-	
 		Destroy Dummy Bot(Team Of(Event Player), Slot Of(Value In Array(Event Player.EchoDummyBots, 0)));
 		Destroy Dummy Bot(Team Of(Event Player), Slot Of(Value In Array(Event Player.EchoDummyBots, 1)));
 		Destroy Effect(Event Player.EchoEffects);
@@ -2784,6 +2786,32 @@ rule("Echo description")
 	actions
 	{
 		Event Player.UltDescription = Custom String("When duplicating, spawn 2 copies of the duplicated hero beside you that replicate all your moves.", Null, Null, Null);
+
+	}
+}
+
+
+
+rule("Echo give points to echo player when her dummy bot gets a kill, only applies for free for all.")
+{
+	event
+	{
+		Player Dealt Final Blow;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.EchoPlayer != Null;
+		(Current Game Mode != Game Mode(Deathmatch) || Current Game Mode != Game Mode(Bounty Hunter)) == True;
+		
+		Is Dummy Bot(Event Player) == True;
+	}
+
+	actions
+	{
+		Modify Player Score(Event Player.EchoPlayer, 1);
 
 	}
 }
