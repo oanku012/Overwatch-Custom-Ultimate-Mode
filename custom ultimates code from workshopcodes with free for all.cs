@@ -4747,7 +4747,7 @@ rule("McCree loop visual effect that mccree sees")
 
 
 
-rule("If sees McCree get damaged")
+rule("If sees McCree get damaged team-modes")
 {
 	event
 	{
@@ -4759,6 +4759,7 @@ rule("If sees McCree get damaged")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
+		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
 		Is Dummy Bot(Event Player) == False;
 		Is True For Any(All Players(Opposite Team Of(Team Of(Event Player))), Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block LOS)) == True;
 		
@@ -4767,6 +4768,8 @@ rule("If sees McCree get damaged")
 	actions
 	{
 		Wait(0.1, Ignore Condition);
+		
+		
 		
 		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player, 20))), 1);
 		
@@ -4782,7 +4785,7 @@ rule("If sees McCree get damaged")
 
 
 
-rule("If close to McCree get damaged")
+rule("If sees McCree get damaged FFA")
 {
 	event
 	{
@@ -4794,6 +4797,45 @@ rule("If close to McCree get damaged")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
+		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
+		Is Dummy Bot(Event Player) == False;
+		Is True For Any(Remove From Array(All Players(All Teams), Event Player), Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block LOS)) == True;
+		
+	}
+
+	actions
+	{
+		Wait(0.1, Ignore Condition);
+		
+		
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player, 20))), 1);
+		
+		Set Status(Value In Array(Filtered Array(Remove From Array(All Players(All Teams), Event Player), Is In View Angle(Current Array Element, Event Player, 20)), Event Player.ForLoopIndexPlayer), Event Player, Burning, 0.1);
+		
+		Damage(Value In Array(Filtered Array(Remove From Array(All Players(All Teams), Event Player),Is In View Angle(Current Array Element, Event Player, 20)), Event Player.ForLoopIndexPlayer), Event Player, 10);
+		
+		
+		End;
+		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("If close to McCree get damaged team-modes")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Cassidy;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
 		Is Dummy Bot(Event Player) == false;
 		Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers) != Empty Array;
 	}
@@ -4805,6 +4847,37 @@ rule("If close to McCree get damaged")
 		Set Status(Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, Burning, 0.1);
 		
 		Damage(Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, 20);
+		
+		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("If close to McCree get damaged FFA")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Cassidy;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
+		Is Dummy Bot(Event Player) == false;
+		Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers) != Empty Array;
+	}
+
+	actions
+	{
+		Wait(0.1, Ignore Condition);
+		
+		Set Status(Remove From Array(Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, Burning, 0.1);
+		
+		Damage(Remove From Array(Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, 20);
 		
 		Loop If Condition Is True;
 	}
@@ -4887,7 +4960,7 @@ rule("Mei: za warudo")
 	
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
-		Set Projectile Speed(All Players(All Teams), 0);
+		Set Projectile Speed(Remove From Array(All Players(All Teams), Players On Hero(Hero(Mei), All Teams)), 0);
 		Create Effect(All Players(All Teams), Sphere, Color(Aqua), Event Player, Event Player.S, Visible To Position and Radius);
 		Event Player.MeiZaWarudoSphere = Last Created Entity;
 		
@@ -4914,7 +4987,7 @@ rule("Mei: za warudo")
 		Event Player.MeiIciclePositions = Empty Array;
 		Event Player.MeiIcicleDirections = Empty Array;
 		
-		Set Secondary Fire Enabled(Event Player, False);
+	
 		
 	
 		Wait Until(Global.T == Null, Global.TimeStopTimer);
@@ -4943,6 +5016,7 @@ rule("Mei: create icicle effects in the air")
 
 	actions
 	{
+		Set Secondary Fire Enabled(Event Player, False);
 		Wait(0.4, Ignore Condition);
 		Abort If(Global.T == Null);
 		Cancel Primary Action(Event Player);
@@ -4983,7 +5057,7 @@ rule("Mei reset")
 		
 		Event Player.MeiZaWarudoSphere = Null;
 		
-		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
+	
 		Play Effect(All Players(All Teams), Debuff Impact Sound, Color(White), Event Player, 200);
 	
 		Set Ultimate Charge(Event Player, 0);
@@ -5027,10 +5101,13 @@ rule("Mei: freeze players and stop horizontal movement")
 		Global.T != Null;
 		Hero Of(Event Player) != Hero(Mei);
 		Is Alive(Event Player) == True;
+		Has Status(Event Player, Frozen) == False;
 	}
 
 	actions
 	{
+		"Set to loop so that it will freeze the player as soon as it is able to be frozen."
+		Wait(0.05, Ignore Condition);
 		Set Gravity(Event Player, 10);
 		Set Status(Event Player, Null, Frozen, 9999);
 		disabled Set Status(Event Player, Null, Rooted, 9999);
@@ -5048,6 +5125,7 @@ rule("Mei: freeze players and stop horizontal movement")
 		Event Player.M = Health(Event Player);
 		Disallow Button(Event Player, Button(Ultimate));
 		Event Player.TimeStopStunned = True;
+		Loop If Condition Is True;
 	}
 }
 
