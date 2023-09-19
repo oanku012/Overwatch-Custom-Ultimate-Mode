@@ -34,10 +34,7 @@ settings
 			Game Mode Start: Manual
 		}
 
-		Team Deathmatch
-		{
 		
-		}
 
 		
 		
@@ -219,78 +216,79 @@ variables {
     51: JunkerWinCounterText
     52: JunkerWinCounter
     53: JunkerArenaSphere
-    54: ExtraLife
-    55: JunkerKnifeThrowCD
-    56: JunkratBombPosition
-    57: JunkratBombOrb
-    58: JunkratExplosionRadius
-    59: JunkratRadiusRing
-    60: UltTimerAboveHead
-    61: UltTimerHUD
-    62: Q
-    63: UltHudTextObject
-    64: SigmaZeroGravBuff
-    65: R
-    66: LucioHealthPoolHealthAmount
-    67: LucioHealthPool
-    68: MeiZaWarudoSphere
-    69: MeiIcicleEffects
-    70: MeiIciclePositions
-    71: MeiIcicleDirections
-    72: TimeStopStunned
-    73: O
-    74: N
-    75: MercyExtraLifeText
-    76: ExtraLifeInWorldText
-    77: P
-    78: ReaperVariables
-    79: ReaperTPPos
-    80: SigmaMaleValues
-    81: SigmaHighGravDebuff
-    82: SojournLastRay
-    83: SojournRayArray
-    84: SojournBeamArray
-    85: SojournEyePosArray
-    86: SojournLastEyePos
-    87: SojournDamageRay
-    88: Soldier76Variables
-    89: SoldierAllKillStreaks
-    90: Soldier76KillStreaksEquipped
-    91: SoldierKillStreakTexts
-    92: Soldier76KillStreaksActive
-    93: LocalVariable
-    94: Soldier76CarepackLocation
-    95: SoldierCarePackAmmoIndex
-    96: Virus
-    97: VirusText
-    98: VirusEffects
-    99: HasDiedWithVirus
-    100: GreenPortal
-    101: YellowPortal
-    102: K
-    103: L
-    104: InPortalSpeed
-    105: PortalUsed
-    106: TorbTurret
-    107: TorbTurretLevel
-    108: TorbTurretLevelText
-    109: TorbCurrentTarget
-    110: WidowZoomedIn
-    111: WidowPlayersInViewAngleSorted
-    112: WidowRayCastForward
-    113: WidowRayCastStartPos
-    114: WidowRayCastEndPos
-    115: WidowRayCastBackward
-    116: WidowRayCastHeadForward
-    117: WidowRayCastHeadBackward
-    118: WidowFireBeam
-    119: WidowDamage
-    120: WidowAimBeam
-    121: WidowLastFacingDirection
-    122: WinstonGrabbing
-    123: WinstonDamageArray
-    124: WinstonRayCasts
-    125: ZaryaGravPos
+    54: JunkerFFADamageMod
+    55: ExtraLife
+    56: JunkerKnifeThrowCD
+    57: JunkratBombPosition
+    58: JunkratBombOrb
+    59: JunkratExplosionRadius
+    60: JunkratRadiusRing
+    61: UltTimerAboveHead
+    62: UltTimerHUD
+    63: Q
+    64: UltHudTextObject
+    65: SigmaZeroGravBuff
+    66: R
+    67: LucioHealthPoolHealthAmount
+    68: LucioHealthPool
+    69: MeiZaWarudoSphere
+    70: MeiIcicleEffects
+    71: MeiIciclePositions
+    72: MeiIcicleDirections
+    73: TimeStopStunned
+    74: O
+    75: N
+    76: MercyExtraLifeText
+    77: ExtraLifeInWorldText
+    78: P
+    79: ReaperVariables
+    80: ReaperTPPos
+    81: SigmaMaleValues
+    82: SigmaHighGravDebuff
+    83: SojournLastRay
+    84: SojournRayArray
+    85: SojournBeamArray
+    86: SojournEyePosArray
+    87: SojournLastEyePos
+    88: SojournDamageRay
+    89: Soldier76Variables
+    90: SoldierAllKillStreaks
+    91: Soldier76KillStreaksEquipped
+    92: SoldierKillStreakTexts
+    93: Soldier76KillStreaksActive
+    94: LocalVariable
+    95: Soldier76CarepackLocation
+    96: SoldierCarePackAmmoIndex
+    97: Virus
+    98: VirusText
+    99: VirusEffects
+    100: HasDiedWithVirus
+    101: GreenPortal
+    102: YellowPortal
+    103: K
+    104: L
+    105: InPortalSpeed
+    106: PortalUsed
+    107: TorbTurret
+    108: TorbTurretLevel
+    109: TorbTurretLevelText
+    110: TorbCurrentTarget
+    111: WidowZoomedIn
+    112: WidowPlayersInViewAngleSorted
+    113: WidowRayCastForward
+    114: WidowRayCastStartPos
+    115: WidowRayCastEndPos
+    116: WidowRayCastBackward
+    117: WidowRayCastHeadForward
+    118: WidowRayCastHeadBackward
+    119: WidowFireBeam
+    120: WidowDamage
+    121: WidowAimBeam
+    122: WidowLastFacingDirection
+    123: WinstonGrabbing
+    124: WinstonDamageArray
+    125: WinstonRayCasts
+    126: ZaryaGravPos
 }
 
 
@@ -3471,6 +3469,19 @@ rule("Junker queen Teleport JQ and chosen enemies and set buffs.")
 		
 		Press Button(Event Player, Button(Ability 1));
 		
+		If(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter));
+	
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerQueenEnemyArray), 1);
+		Start Damage Modification(Remove From Array(Event Player.JunkerQueenEnemyArray, Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer)),Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), 0, None);
+	
+		
+		Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer).JunkerFFADamageMod = Last Damage Modification ID;
+		
+		End;
+		
+		End;
+		
 		
 		Wait Until((Is Dead(Event Player) && Event Player.ExtraLife != True) || Event Player.JunkerQueenInArena != True, Global.JunkerArenaTimer);
 		
@@ -3760,9 +3771,19 @@ rule("If Junker queen lost, teleport enemies back to map and remove her buff.")
 
 	actions
 	{
+		
+		
+		If(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter));
 		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerQueenEnemyArray), 1);
 		Teleport(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Event Player.JunkerQueenEnemyPositions, Event Player.ForLoopIndexPlayer));
-		Set Gravity(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer).CurrentGravities, 0));	
+		Set Gravity(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer).CurrentGravities, 0));
+		Stop Damage Modification(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer).JunkerFFADamageMod);
+		End;
+		Else;
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerQueenEnemyArray), 1);
+		Teleport(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Event Player.JunkerQueenEnemyPositions, Event Player.ForLoopIndexPlayer));
+		Set Gravity(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer).CurrentGravities, 0));
+		End;
 		End;
 	
 		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
@@ -3906,15 +3927,23 @@ rule("If enemies lost/JQ won, teleport Junker Queen back to map and keep her buf
 		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
 		
 	
-		
+		If(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter));
 		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerQueenEnemyArray), 1);
 		Set Gravity(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer).CurrentGravities, 0));
+		Stop Damage Modification(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer).JunkerFFADamageMod);
+		End;
+		Else;
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerQueenEnemyArray), 1);
+		Set Gravity(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer).CurrentGravities, 0));
+		End;
 		End;
 		
 		Teleport(Event Player, Value In Array(Event Player.JunkerQueenPositions, 0));
 	
 		Set Knockback Dealt(Filtered Array(Event Player.JunkerQueenEnemyArray, Hero Of(Current Array Element) == Hero(Junker Queen)), 100);
 		Event Player.JunkerQueenEnemyArray.JunkerQueenInArena = Null;
+		Event Player.JunkerQueenEnemyArray.JunkerFFADamageMod = Null;
+		
 		Event Player.JunkerQueenInArena = Null;
 		Event Player.JunkerQueenEnemyArray = Null;
 		Set Ultimate Ability Enabled(Event Player, True);
@@ -3963,6 +3992,10 @@ rule("Teleport players out of the arena after timer runs out.")
 	{
 		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
 		
+		If(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter));
+		Stop Damage Modification(Event Player.JunkerFFADamageMod);
+		Event Player.JunkerFFADamageMod = Null;
+		End;
 	
 		If(Hero Of(Event Player) == Hero(Junker Queen));
 		Set Knockback Dealt(Event Player, 100);
@@ -4036,6 +4069,11 @@ rule("If enemy died in arena, take them out of the fight.")
 	actions
 	{
 		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+		If(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter));
+		
+		Stop Damage Modification(Event Player.JunkerFFADamageMod);
+		Event Player.JunkerFFADamageMod = Null;
+		End;
 		
 		Event Player.JunkerQueenInArena = Null;
 	
@@ -4421,7 +4459,14 @@ rule("Lucio: do stuff when the bass has dropped")
 		Event Player.S = 0;
 		Event Player.M = True;
 		Set Ultimate Ability Enabled(Event Player, False);
+		If(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter));
+		Heal(Event Player, Null, 10000);
+		Event Player.LucioHealthPoolHealthAmount = Event Player.Q;
+		Else;
+		Heal(Players Within Radius(Event Player, 30, Team Of(Event Player), Surfaces), Event Player, 10000);
 		Players Within Radius(Event Player, 30, Team Of(Event Player), Surfaces).LucioHealthPoolHealthAmount = Event Player.Q;
+		End;
+		
 		Chase Player Variable At Rate(Event Player, Q, 0, 125, Destination And Rate);
 	
 	
@@ -4445,8 +4490,13 @@ rule("Lucio: do stuff when the bass has dropped")
 		Play Effect(All Players(All Teams), Lúcio Sound Barrier Cast Sound, Color(white), Update Every Frame(Eye Position(Event Player)), 200);
 		End;
 		Wait(0.016, Ignore Condition);
-	
+		
+		"To remove the vanilla health pool"
+		If(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter));
+		Damage(Event Player, Null, 750);
+		Else;
 		Damage(Players Within Radius(Event Player, 30, Team Of(Event Player), Surfaces), Null, 750);
+		End;
 		
 	
 		
