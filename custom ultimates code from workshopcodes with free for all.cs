@@ -857,24 +857,6 @@ rule("ChooseMenuFinalizeChoice")
 
 
 
-rule("If dead disable all damage over time")
-{
-
-	event
-	{
-		Player Died;
-		All;
-		All;
-	}
-
-	actions
-	{
-		Stop All Damage Over Time(Event Player);
-	}
-}
-
-
-
 
 
 rule("ana: set variables for player boosted by ana")
@@ -2902,9 +2884,9 @@ rule("Start damage over time on players that were hit during Genji's ult after h
 		
 	
 	
-		Start Damage Over Time(Event Player, Event Player.V, 9999, 0.5 * Max Health(Event Player));
+		Start Damage Over Time(Event Player, Event Player.V, 10, 0.5 * Max Health(Event Player));
 		
-		Set Status(Event Player, Event Player.V, Stunned, 9999);
+		Set Status(Event Player, Event Player.V, Stunned, 10);
 		Create Effect(All Players(All Teams), Bad Aura Sound, Color(White), Event Player, 1000, Visible To Position and Radius);
 		disabled Wait(3, Ignore Condition);
 		disabled Event Player.V = Null;
@@ -7421,7 +7403,7 @@ rule("Sojourn update aim raycast")
 
 
 
-rule("Sojourn cause damage to enemies when they hit beams.")
+rule("Sojourn cause damage to enemies when they hit beams in team modes.")
 {
     event
 	{
@@ -7433,6 +7415,8 @@ rule("Sojourn cause damage to enemies when they hit beams.")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
+		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
+		
 	
         Event Player.SojournBeamArray != null;
 		Is Dummy Bot(Event Player) == false;
@@ -7453,6 +7437,55 @@ rule("Sojourn cause damage to enemies when they hit beams.")
        
         Skip if(Event Player.SojournDamageRay != null, 1);
         Event Player.SojournDamageRay = Ray Cast Hit Player(Value In Array(Event Player.SojournRayArray, Event Player.ForLoopIndexPlayer), Value In Array(Event Player.SojournEyePosArray, Event Player.ForLoopIndexPlayer), All Living Players(Opposite Team Of(Team Of(Event Player))), All Living Players(Team Of(Event Player)), false);
+
+        Damage(Event Player.SojournDamageRay, Event Player, 50);
+
+	
+
+       
+
+		End;
+
+        Loop If Condition Is True;
+	}
+}
+
+
+
+rule("Sojourn cause damage to enemies when they hit beams in FFA.")
+{
+    event
+	{
+		Ongoing - Each Player;
+		All;
+		Sojourn;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
+		
+	
+        Event Player.SojournBeamArray != null;
+		Is Dummy Bot(Event Player) == false;
+
+	}
+
+	actions
+	{
+        Wait(0.1, Abort When False);
+
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.SojournEyePosArray), 1);
+
+       
+       
+
+        Event Player.SojournDamageRay = Ray Cast Hit Player(Value In Array(Event Player.SojournEyePosArray, Event Player.ForLoopIndexPlayer), Value In Array(Event Player.SojournRayArray, Event Player.ForLoopIndexPlayer), All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
+
+       
+        Skip if(Event Player.SojournDamageRay != null, 1);
+        Event Player.SojournDamageRay = Ray Cast Hit Player(Value In Array(Event Player.SojournRayArray, Event Player.ForLoopIndexPlayer), Value In Array(Event Player.SojournEyePosArray, Event Player.ForLoopIndexPlayer), All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
 
         Damage(Event Player.SojournDamageRay, Event Player, 50);
 
@@ -8562,7 +8595,7 @@ rule("Sombra: If player has virus, create virus effect, text and set variables, 
 
 	conditions
 	{
-		Event Player.Virus == True;
+		Event Player.Virus != Null;
 	}
 
 	actions
@@ -8573,7 +8606,7 @@ rule("Sombra: If player has virus, create virus effect, text and set variables, 
 			"You've been infected by a computer virus. You take damage over time. Spreads to nearby teammates."), Null, Null, Right, 0,
 			Color(Purple), Color(Purple), Color(White), Visible To and String, Default Visibility);
 		Event Player.VirusText = Last Text ID;
-		Start Damage Over Time(Event Player, Null, 10, 30);
+		Start Damage Over Time(Event Player, Event Player.Virus, 10, 30);
 	
 		Event Player.VirusEffects = Empty Array;
 		Create Effect(All Players(All Teams), Sombra Hacked Sound, Team Of(Event Player), Event Player, 100, Visible To Position and Radius);
@@ -8605,21 +8638,22 @@ rule("Sombra: If player has virus, spread to nearby players")
 
 	conditions
 	{
-		Event Player.Virus == True;
-		Is In Spawn Room(Event Player) == False;
+		Event Player.Virus != Null;
+	
 	}
 
 	actions
 	{
-		Wait(1, Ignore Condition);
-		Remove From Array(Players Within Radius(Event Player, 7, Team Of(Event Player), Surfaces), Event Player).Virus = True;
+		Wait(1, Abort When False);
+		Filtered Array(Players Within Radius(Event Player, 7, Team Of(Event Player), Surfaces), Current Array Element != Event Player && Current Array Element != Event Player.Virus && Is Alive(Current Array Element) == True && Current Array Element.Virus == Null). Virus = Event Player.Virus;
+	
 		Loop If Condition Is True;
 	}
 }
 
 
 
-rule("Sombra spread virus to nearby enemies")
+rule("Sombra spread virus to nearby enemies in team modes")
 {
 	event
 	{
@@ -8631,16 +8665,49 @@ rule("Sombra spread virus to nearby enemies")
 	conditions
 	{
 		Event Player.UsingCustomUlt == True;
+		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
+		
 		Is Using Ability 1(Event Player) == False;
 		disabled Distance Between(Event Player, Closest Player To(Event Player, Opposite Team Of(Team Of(Event Player)))) <= 5;
 	}
 
 	actions
 	{
-		Wait(1, Ignore Condition);
+		Wait(1, Abort When False);
 	
 	
-		Players Within Radius(Event Player, 10, Opposite Team Of(Team Of(Event Player)), Surfaces).Virus = True;
+		Filtered Array(Players Within Radius(Event Player, 10, Opposite Team Of(Team Of(Event Player)), Surfaces), Is Alive(Current Array Element) == True && Current Array Element.Virus == Null).Virus = Event Player;
+		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("Sombra spread virus to nearby enemies in ffa")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Sombra;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
+		Is Using Ability 1(Event Player) == False;
+		disabled Distance Between(Event Player, Closest Player To(Event Player, Opposite Team Of(Team Of(Event Player)))) <= 5;
+	}
+
+	actions
+	{
+		Wait(1, Abort When False);
+	
+	
+		Filtered Array(Players Within Radius(Event Player, 10, Opposite Team Of(Team Of(Event Player)), Surfaces), Is Alive(Current Array Element) == True && Current Array Element != Event Player && Current Array Element.Virus == Null).Virus = Event Player;
+		
+	
 		Loop If Condition Is True;
 	}
 }
@@ -8658,7 +8725,7 @@ rule("Sombra: Disable virus if player has spawned and had virus before death")
 
 	conditions
 	{
-		Event Player.Virus == True;
+		Event Player.Virus != Null;
 		Event Player.HasDiedWithVirus == True;
 		Is Alive(Event Player) == True;
 	}
@@ -8671,7 +8738,7 @@ rule("Sombra: Disable virus if player has spawned and had virus before death")
 		Destroy HUD Text(Event Player.VirusText);
 		Event Player.VirusText = Null;
 		Event Player.HasDiedWithVirus = Null;
-		Set Healing Received(Event Player, 100);
+	
 		Event Player.Virus = Null;
 	}
 }
@@ -8682,15 +8749,15 @@ rule("Sombra: Check if player died with virus")
 {
 	event
 	{
-		Ongoing - Each Player;
+		Player Died;
 		All;
 		All;
 	}
 
 	conditions
 	{
-		Event Player.Virus == True;
-		Is Dead(Event Player) == True;
+		Event Player.Virus != Null;
+	
 	}
 
 	actions
