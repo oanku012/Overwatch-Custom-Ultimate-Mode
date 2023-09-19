@@ -5034,6 +5034,44 @@ rule("Mei: create icicle effects in the air")
 
 
 
+rule("Mei: fire icicles after time stop ends")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Mei;
+	}
+
+	conditions
+	{
+		Hero Of(Event Player) == Hero(Mei);
+	
+		Event Player.MeiIcicleEffects != Null;
+		Global.T == Null;
+	}
+
+	actions
+	{
+		If(Event Player.MeiIcicleEffects != Empty Array);
+		Destroy Effect(Event Player.MeiIcicleEffects);
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.MeiIciclePositions), 1);
+		Create Projectile(Mei Icicle, Event Player, Value In Array(Event Player.MeiIciclePositions, Event Player.ForLoopIndexPlayer), Value In Array(Event Player.MeiIcicleDirections, Event Player.ForLoopIndexPlayer), To World, Damage, Opposite Team Of(Team Of(Event Player)), 75, 2, 0, Bad Explosion, Explosion Sound, 0, 115, 5, 0, 0, 0);
+		
+		End;
+		End;
+		
+		
+		Event Player.MeiIcicleEffects = Null;
+		Event Player.MeiIciclePositions = Null;
+		Event Player.MeiIcicleDirections = Null;
+		
+		Set Secondary Fire Enabled(Event Player, True);
+	}
+}
+
+
+
 rule("Mei reset")
 {
 	event
@@ -5065,18 +5103,7 @@ rule("Mei reset")
 		
 	
 		
-		If(Event Player.MeiIcicleEffects != Empty Array);
-		Destroy Effect(Event Player.MeiIcicleEffects);
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.MeiIciclePositions), 1);
-		Create Projectile(Mei Icicle, Event Player, Value In Array(Event Player.MeiIciclePositions, Event Player.ForLoopIndexPlayer), Value In Array(Event Player.MeiIcicleDirections, Event Player.ForLoopIndexPlayer), To World, Damage, Opposite Team Of(Team Of(Event Player)), 75, 2, 0, Bad Explosion, Explosion Sound, 0, 115, 5, 0, 0, 0);
 		
-		End;
-		End;
-		
-		
-		Event Player.MeiIcicleEffects = Null;
-		Event Player.MeiIciclePositions = Null;
-		Event Player.MeiIcicleDirections = Null;
 		
 		Call Subroutine(StopUsingCustomUlt);
 	}
@@ -5107,7 +5134,7 @@ rule("Mei: freeze players and stop horizontal movement")
 	actions
 	{
 		"Set to loop so that it will freeze the player as soon as it is able to be frozen."
-		Wait(0.05, Ignore Condition);
+		Wait(0.05, Abort When False);
 		Set Gravity(Event Player, 10);
 		Set Status(Event Player, Null, Frozen, 9999);
 		disabled Set Status(Event Player, Null, Rooted, 9999);
@@ -5338,7 +5365,7 @@ rule("Mei description")
 
 
 
-rule("Mercy give extra life to herself during Ultimate")
+rule("Mercy give extra life to her team during Ultimate")
 {
    
 	event
@@ -5351,6 +5378,8 @@ rule("Mercy give extra life to herself during Ultimate")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
+		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
+		
 	
 		Is Dummy Bot(Event Player) == false;
 		Hero Of(Event Player) == Hero(Mercy);
@@ -5368,6 +5397,43 @@ rule("Mercy give extra life to herself during Ultimate")
 		Value In Array(All Players(Team Of(Event Player)), Event Player.ForLoopIndexPlayer).ExtraLifeInWorldText = Last Text ID;
 		End;
 		End;
+		
+	}
+}
+
+
+
+rule("Mercy give extra life to herself during Ultimate")
+{
+   
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Mercy;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
+		
+		Event Player.ExtraLife != True;
+		Is Dummy Bot(Event Player) == false;
+		Hero Of(Event Player) == Hero(Mercy);
+		
+	}
+
+	actions
+	{
+		
+		
+		Event Player.ExtraLife = True;
+		Create HUD Text(Event Player, Custom String("Mercy gave you an extra life. Resurrect upon death."), Null, Null, Top, 0, Color( Yellow), Color(White), Color(White), None, Default Visibility);
+		Event Player.MercyExtraLifeText = Last Text ID;
+		Create In-World Text(All Players(All Teams), Custom String("Extra life"), Event Player, 1, Clip Against Surfaces, None, Color(Yellow), Default Visibility);
+		Event Player.ExtraLifeInWorldText = Last Text ID;
+		
 		
 	}
 }
@@ -6913,6 +6979,17 @@ rule("Sigma zero/high gravity")
 		Modify Player Variable(Event Player, SigmaMaleValues, Append To Array, Last Created Entity);
 
 		Chase Player Variable At Rate(Event Player, UltTimer, 0, 1, Destination and Rate);
+		
+		
+		If((Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)));
+		Event Player.SigmaZeroGravBuff = True;
+		
+		Value In Array(Event Player.CurrentGravities, 0) -= 100;
+		Value In Array(Event Player.CurrentGravities, 1) -= 100;
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+		Set Projectile Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 1));
+		End;
+		
 		Wait Until(Is Dead(Event Player) == true, Event Player.UltTimer);
 		Call Subroutine(ResetSigma);
 	}
@@ -6945,7 +7022,7 @@ rule("Reset Sigma")
 
 
 
-rule("Sigma set zero grav buff to true")
+rule("Sigma set zero grav buff to true in team modes")
 {
 	event
 	{
@@ -6957,6 +7034,7 @@ rule("Sigma set zero grav buff to true")
 	conditions
 	{
 		Event Player.SigmaZeroGravBuff == Null;
+		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
 		(Remove From Array(Global.UltingSigmas, All Players(Opposite Team Of(Team Of(Event Player)))) != Empty Array && Remove From Array(Global.UltingSigmas, Opposite Team Of(Team Of(Event Player))) != Null) == True;
 		Is True For Any(Remove From Array(Global.UltingSigmas, All Players(Opposite Team Of(Team Of(Event Player)))), Distance Between(Current Array Element, Event Player) <= 20) == true;
 
@@ -7022,7 +7100,7 @@ rule("Sigma set zero grav buff to false and stop acceleration")
 
 
 
-rule("Sigma set high grav debuff to true and increase gravity and speed values when close to enemy sigma")
+rule("Sigma set high grav debuff to true and increase gravity and speed values when close to enemy sigma in team modes")
 {
 	event
 	{
@@ -7034,8 +7112,54 @@ rule("Sigma set high grav debuff to true and increase gravity and speed values w
 	conditions
 	{
 		Event Player.SigmaHighGravDebuff == null;
-		(Remove From Array(Global.UltingSigmas, All Players(Team Of(Event Player))) != Empty Array && Remove From Array(Global.UltingSigmas, Team Of(Event Player)) != Null) == True; 
+		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
+		(Remove From Array(Global.UltingSigmas, All Players(Team Of(Event Player))) != Empty Array && Remove From Array(Global.UltingSigmas, All Players(Team Of(Event Player))) != Null) == True; 
 		Is True For Any(Remove From Array(Global.UltingSigmas, All Players(Team Of(Event Player))), Distance Between(Current Array Element, Event Player) <= 20) == True;
+	}
+
+	actions
+	{
+	
+		Event Player.SigmaHighGravDebuff = True;
+
+		Value In Array(Event Player.CurrentGravities, 0) += 400;
+		Value In Array(Event Player.CurrentGravities, 1) += 400;
+		Value In Array(Event Player.CurrentSpeeds, 0) -= 80;
+		Value In Array(Event Player.CurrentSpeeds, 2) -= 80;
+
+		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
+		Set Projectile Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 1));
+		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
+		Set Projectile Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 2));
+
+	
+	
+	
+	
+
+	
+
+	
+	}
+}
+
+
+
+rule("Sigma set high grav debuff to true and increase gravity and speed values when close to enemy sigma in ffa")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Event Player.SigmaHighGravDebuff == null;
+		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
+		(Remove From Array(Global.UltingSigmas,Event Player) != Empty Array && Remove From Array(Global.UltingSigmas, Event Player) != Null) == True; 
+		Is True For Any(Remove From Array(Global.UltingSigmas, Event Player), Distance Between(Current Array Element, Event Player) <= 20) == True;
 	}
 
 	actions
