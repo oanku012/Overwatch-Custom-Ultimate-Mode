@@ -21,7 +21,7 @@ good luck with your mode!*/
 
 	main
 	{
-		Description: "Overpowered custom-made ultimates for each hero. Currently only supports team-based modes and 1 of each hero per team. Press Crouch+Interact to see the ultimate description for your hero."
+		Description: "Overpowered custom-made ultimates for each hero. Currently only supports team-based modes and 1 of each hero per team. Press Crouch+Interact to see the ultimate description for your hero. Made by Ouvervats on Workshop.codes. Use code 52DFR for the latest version."
 
 		Mode Name: "Overpowered ultimates"
 		

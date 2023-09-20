@@ -148,18 +148,20 @@ variables {
     11: ForLoopIndexGlobal
     12: NukePosition
     13: NukeRadius
-    14: BluePortal
-    15: RedPortal
-    16: BluePortalRaycast
-    17: RedPortalRaycast
-    18: GreenPortal
-    19: YellowPortal
-    20: YellowPortalRaycast
-    21: GreenPortalRaycast
-    22: SymmetraBluePNormal
-    23: SymmetraRedPNormal
-    24: SymmetraYellowPNormal
-    25: SymmetraGreenPNormal
+    14: Team1PortalTimer
+    15: Team2PortalTimer
+    16: BluePortal
+    17: RedPortal
+    18: BluePortalRaycast
+    19: RedPortalRaycast
+    20: GreenPortal
+    21: YellowPortal
+    22: YellowPortalRaycast
+    23: GreenPortalRaycast
+    24: SymmetraBluePNormal
+    25: SymmetraRedPNormal
+    26: SymmetraYellowPNormal
+    27: SymmetraGreenPNormal
 
   player:
     0: B
@@ -263,32 +265,30 @@ variables {
     98: VirusEffects
     99: VirusText
     100: HasDiedWithVirus
-    101: GreenPortal
-    102: YellowPortal
-    103: K
-    104: L
-    105: InPortalSpeed
-    106: PortalUsed
-    107: TorbTurret
-    108: TorbTurretLevel
-    109: TorbTurretLevelText
-    110: TorbCurrentTarget
-    111: WidowZoomedIn
-    112: WidowPlayersInViewAngleSorted
-    113: WidowRayCastForward
-    114: WidowRayCastStartPos
-    115: WidowRayCastEndPos
-    116: WidowRayCastBackward
-    117: WidowRayCastHeadForward
-    118: WidowRayCastHeadBackward
-    119: WidowFireBeam
-    120: WidowDamage
-    121: WidowAimBeam
-    122: WidowLastFacingDirection
-    123: WinstonGrabbing
-    124: WinstonDamageArray
-    125: WinstonRayCasts
-    126: ZaryaGravPos
+    101: K
+    102: L
+    103: InPortalSpeed
+    104: PortalUsed
+    105: TorbTurret
+    106: TorbTurretLevel
+    107: TorbTurretLevelText
+    108: TorbCurrentTarget
+    109: WidowZoomedIn
+    110: WidowPlayersInViewAngleSorted
+    111: WidowRayCastForward
+    112: WidowRayCastStartPos
+    113: WidowRayCastEndPos
+    114: WidowRayCastBackward
+    115: WidowRayCastHeadForward
+    116: WidowRayCastHeadBackward
+    117: WidowFireBeam
+    118: WidowDamage
+    119: WidowAimBeam
+    120: WidowLastFacingDirection
+    121: WinstonGrabbing
+    122: WinstonDamageArray
+    123: WinstonRayCasts
+    124: ZaryaGravPos
 }
 
 
@@ -8849,12 +8849,80 @@ rule("Symmetra ultimate activate and deactivate")
 	
 		Set Primary Fire Enabled(Event Player, False);
 		Set Secondary Fire Enabled(Event Player, False);
+		If(Team Of(Event Player) == Team 1 || Team Of(Event Player) == All Teams);
+		Global.Team1PortalTimer = 20;
+		Else;
+		Global.Team2PortalTimer = 20;
+		End;
+		
 		Wait Until(Is Dead(Event Player) == True, Event Player.UltTimer);
-		If(Team Of(Event Player) == Team 1);
+		If(Team Of(Event Player) == Team 1 || Team Of(Event Player) == All Teams);
 		Call Subroutine(ResetSymmetraTeam1);
 		Else;
 		Call Subroutine(ResetSymmetraTeam2);
 		End;
+		
+	}
+}
+
+
+
+rule("Symmetra destroy team 1 and ffa portals after some time")
+{
+    
+	event
+	{
+		Ongoing - Global;
+		
+	}
+
+	conditions
+	{
+		Global.Team1PortalTimer != Null;
+		
+	}
+
+	actions
+	{
+		Wait(Global.Team1PortalTimer, Abort When False);
+		Destroy Effect(Global.BluePortal);
+		Global.BluePortal = Null;
+		Destroy Effect(Global.RedPortal);
+		Global.RedPortal = Null;
+		Global.BluePortalRaycast = Null;
+		Global.RedPortalRaycast = Null;
+		Global.Team1PortalTimer = Null;
+	}
+}
+
+
+
+rule("Symmetra destroy team 2 portals after some time")
+{
+    
+	event
+	{
+		Ongoing - Global;
+		
+	}
+
+	conditions
+	{
+		Global.Team2PortalTimer != Null;
+		
+	}
+
+	actions
+	{
+		Wait(Global.Team2PortalTimer, Abort When False);
+		Destroy Effect(Global.GreenPortal);
+		Global.GreenPortal = Null;
+		Destroy Effect(Global.YellowPortal);
+		Global.YellowPortal = Null;
+		
+		Global.YellowPortalRaycast = Null;
+		Global.GreenPortalRaycast = Null;
+		Global.Team2PortalTimer = Null;
 		
 	}
 }
@@ -8879,6 +8947,8 @@ rule("Symmetra reset")
 		Global.RedPortal = Null;
 		Global.BluePortalRaycast = Null;
 		Global.RedPortalRaycast = Null;
+		Global.Team1PortalTimer = Null;
+		
 		
 		Set Ultimate Charge(Event Player, 0);
 		Stop Chasing Player Variable(Event Player, UltTimer);
@@ -8908,12 +8978,15 @@ rule("Symmetra reset")
 		
 		
 		Destroy Effect(Global.GreenPortal);
-		Event Player.GreenPortal = Null;
+		Global.GreenPortal = Null;
 		Destroy Effect(Global.YellowPortal);
-		Event Player.YellowPortal = Null;
+		Global.YellowPortal = Null;
 		
 		Global.YellowPortalRaycast = Null;
 		Global.GreenPortalRaycast = Null;
+		Global.Team2PortalTimer = Null;
+		
+		
 		Set Ultimate Charge(Event Player, 0);
 		Stop Chasing Player Variable(Event Player, UltTimer);
 		Event Player.UltTimer = Null;
@@ -8927,19 +9000,21 @@ rule("Symmetra reset")
 
 
 
-rule("Symmetra team 1 create blue portal")
+rule("Symmetra FFA create blue portal")
 {
 
 	event
 	{
 		Ongoing - Each Player;
-		Team 1;
+		ALL;
 		Symmetra;
 	}
 
 	conditions
 	{
 		Is Button Held(Event Player, Button(Primary Fire)) == True;
+		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
+		
 	
 		Event Player.UsingCustomUlt == True;
 	}
@@ -8980,7 +9055,7 @@ rule("Symmetra team 1 create blue portal")
 
 
 
-rule("Symmetra team 1 create red portal")
+rule("Symmetra ffa create red portal")
 {
 	event
 	{
@@ -9589,7 +9664,9 @@ rule("torb: reset torb")
 
 		Event Player.TorbTurret = Null;
 		Event Player.B = Null;
-		
+		If(Event Player.UsingCustomUlt == True || Event Player.CustomUltReadyToUse == True);
+		Call Subroutine(StopUsingCustomUlt);
+		End;
 	}
 }
 
@@ -9604,7 +9681,7 @@ rule("torb: overload turret to level 2")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Torbjörn;
 	}
 
 	conditions
@@ -9686,7 +9763,7 @@ rule("torb: repeat abilities while at level 2 or 3 and reload gun automatically"
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Torbjörn;
 	}
 
 	conditions
@@ -9716,18 +9793,19 @@ rule("torb: repeat abilities while at level 2 or 3 and reload gun automatically"
 
 
 
-rule("torb: torb turret, fire at enemies")
+rule("torb: torb turret, fire at enemies in team modes")
 {
 	event
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Torbjörn;
 	}
 
 	conditions
 	{
 		Event Player.TorbTurret != Null;
+		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
 		Filtered Array(All Living Players(Opposite Team Of(Team Of(Event Player.TorbTurret))), Is In Line Of Sight(Event Player.TorbTurret, Current Array Element, BARRIERS DO NOT BLOCK LOS) == true && Distance Between(Event Player.TorbTurret, Current Array Element) < 40) != Empty Array;
 	}
 
@@ -9735,7 +9813,45 @@ rule("torb: torb turret, fire at enemies")
 	{
 		Wait(0.1, Abort When False);
 
-		Event Player.TorbCurrentTarget = Value In Array(Sorted Array(Filtered Array(All Living Players(Opposite Team Of(Team Of(Event Player.TorbTurret))), Is In Line Of Sight(Event Player.TorbTurret, Current Array Element, BARRIERS DO NOT BLOCK LOS) == true && Distance Between(Event Player.TorbTurret, Current Array Element) < 40 && Is Alive(Current Array Element) == true && Has Spawned(Current Array Element) == true), Distance Between(Event Player, Current Array Element)), 0);
+		
+		Event Player.TorbCurrentTarget = Value In Array(Sorted Array(Filtered Array(All Living Players(Opposite Team Of(Team Of(Event Player.TorbTurret))), Is In Line Of Sight(Event Player.TorbTurret, Current Array Element, BARRIERS DO NOT BLOCK LOS) == true && Distance Between(Event Player.TorbTurret, Current Array Element) < 40 && Is Alive(Current Array Element) == true && Has Spawned(Current Array Element) == true), Distance Between(Event Player.TorbTurret, Current Array Element)), 0);
+		
+
+		Start Facing(Event Player.TorbTurret, Update Every Frame(Direction Towards(Eye Position(Event Player.TorbTurret), Event Player.TorbCurrentTarget + Up*0.7)), 1000, To World, DIRECTION AND TURN RATE);
+		
+		If(Distance Between(Event Player.TorbCurrentTarget, Event Player.TorbTurret) > 7);
+		Press Button(Event Player.TorbTurret, Button(Primary Fire));
+		Else If(Distance Between(Event Player.TorbCurrentTarget, Event Player.TorbTurret) < 7 && Distance Between(Event Player.TorbCurrentTarget, Event Player.TorbTurret) != 0 && Is Using Ultimate(Event Player.TorbTurret) == false);
+		Press Button(Event Player.TorbTurret, Button(Secondary Fire));
+		End;
+		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("torb: torb turret, fire at enemies in ffa")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Torbjörn;
+	}
+
+	conditions
+	{
+		Event Player.TorbTurret != Null;
+		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
+		Filtered Array(All Living Players(All Teams), Is In Line Of Sight(Event Player.TorbTurret, Current Array Element, BARRIERS DO NOT BLOCK LOS) == true && Distance Between(Event Player.TorbTurret, Current Array Element) < 40  && Current Array Element != Event Player && Current Array Element != Event Player.TorbTurret) != Empty Array;
+	}
+
+	actions
+	{
+		Wait(0.1, Abort When False);
+
+		
+		Event Player.TorbCurrentTarget = Value In Array(Sorted Array(Filtered Array(All Living Players(All Teams), Is In Line Of Sight(Event Player.TorbTurret, Current Array Element, BARRIERS DO NOT BLOCK LOS) == true && Distance Between(Event Player.TorbTurret, Current Array Element) < 40 && Is Alive(Current Array Element) == true && Has Spawned(Current Array Element) == true && Current Array Element != Event Player && Current Array Element != Event Player.TorbTurret), Distance Between(Event Player.TorbTurret, Current Array Element)), 0);
 
 		Start Facing(Event Player.TorbTurret, Update Every Frame(Direction Towards(Eye Position(Event Player.TorbTurret), Event Player.TorbCurrentTarget + Up*0.7)), 1000, To World, DIRECTION AND TURN RATE);
 		
@@ -9756,7 +9872,7 @@ rule("torb: torb turret, heal from hammer")
 	{
 		Ongoing - Each Player;
 		All;
-		All;
+		Torbjörn;
 	}
 
 	conditions
@@ -9953,7 +10069,7 @@ rule("Tracer damage players when running at them")
 		Hero Of(Event Player) == Hero(Tracer);
 		Event Player.UsingCustomUlt == True;
 		Event Player.CustomUltReadyToUse == True;
-		Filtered Array(Players Within Radius(Update Every Frame(Event Player), 1.9, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Is Alive(Current Array Element) == True)  != Empty Array;
+		Filtered Array(Update Every Frame(Players Within Radius(Update Every Frame(Event Player), 1.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers)), Is Alive(Current Array Element) == True && Current Array Element != Event Player)  != Empty Array;
 	
 		Is Dummy Bot(Event Player) == False;
 	
@@ -9961,9 +10077,10 @@ rule("Tracer damage players when running at them")
 
 	actions
 	{
-		Damage(Filtered Array(Players Within Radius(Update Every Frame(Event Player), 1.9, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Is Alive(Current Array Element) == True), Event Player, 500);
 	
-		
+		Damage(Filtered Array(Update Every Frame(Players Within Radius(Update Every Frame(Event Player), 1.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers)), Is Alive(Current Array Element) == True && Current Array Element != Event Player), Event Player, 500);
+	
+	
 	}
 }
 
@@ -10555,16 +10672,19 @@ rule("winston: when winston hits someone, set root status and get direction and 
 {
 	event
 	{
-		Player Dealt Damage;
+		Player Took Damage;
 		All;
-		Winston;
+		All;
 	}
 
 	conditions
 	{
-		Is Using Ultimate(Event Player) == True;
+		Is Using Ultimate(Attacker) == True;
+		
+		Hero Of(Attacker) == Hero(Winston);
 	
 		Victim.WinstonDamageArray == Null;
+		Is Duplicating(Attacker) == False;
 	}
 
 	actions
@@ -10573,7 +10693,7 @@ rule("winston: when winston hits someone, set root status and get direction and 
 		Wait(0.1, Abort When False);
 		
 	
-		Victim.WinstonDamageArray = Array(Event Player, Direction Towards(Position Of(Event Player), Victim));
+		Victim.WinstonDamageArray = Array(Attacker, Direction Towards(Position Of(Attacker), Victim));
 		
 	
 		
@@ -10588,7 +10708,7 @@ rule("winston: when winston hits someone, set root status and get direction and 
 	
 	
 		
-		Set Status(Victim, Event Player, Rooted, 1);
+		Set Status(Victim, Attacker, Rooted, 1);
 	
 
 	}
