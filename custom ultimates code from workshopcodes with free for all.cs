@@ -289,6 +289,7 @@ variables {
     122: WinstonDamageArray
     123: WinstonRayCasts
     124: ZaryaGravPos
+    125: PossessingZen
 }
 
 
@@ -11300,6 +11301,7 @@ rule("Zenyatta possess a player")
 		Disallow Button(Event Player.P, Button(Ability 1));
 		Disallow Button(Event Player.P, Button(Ability 2));
 		Start Throttle In Direction(Event Player.P, Throttle Of(Event Player), 1, To Player, Replace existing throttle, Direction and Magnitude);
+		Victim.PossessingZen = Event Player;
 
 	
 		
@@ -11312,11 +11314,37 @@ rule("Zenyatta possess a player")
 	
 		Set Move Speed(Event Player, 1);
 
+		
+
+       
+       
+       
+
+	}
+}
 
 
-       
-       
-       
+
+rule("Zenyatta give kills from possessed player to Zen")
+{
+	event
+	{
+		Player Earned Elimination;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
+		Event Player.PossessingZen != Null;
+		
+	}
+
+	actions
+	{
+		Modify Player Score(Event Player.PossessingZen, 1);
+		Modify Player Score(Event Player, -1);
 
 	}
 }
@@ -11349,6 +11377,8 @@ rule("Zenyatta reset")
 		End;
 		Stop Forcing Throttle(Event Player.P);
 		Stop Camera(Event Player);
+		Event Player.P.PossessingZen = Null;
+		
 		Event Player.P = Null;
 		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
 		Clear Status(Event Player, Phased Out);
