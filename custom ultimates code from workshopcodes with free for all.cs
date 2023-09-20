@@ -260,8 +260,8 @@ variables {
     95: Soldier76CarepackLocation
     96: SoldierCarePackAmmoIndex
     97: Virus
-    98: VirusText
-    99: VirusEffects
+    98: VirusEffects
+    99: VirusText
     100: HasDiedWithVirus
     101: GreenPortal
     102: YellowPortal
@@ -683,7 +683,7 @@ rule("Test dummy")
 	{
 	
 		Create Dummy Bot(All Heroes, Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
-	
+		Create Dummy Bot(All Heroes, Team Of(Event Player), -1, Event Player, Vector(0, 0, 0));
 	
 		
 	
@@ -5752,20 +5752,18 @@ rule("Reset Pharah stuff.")
 
 	actions
 	{
-		Event Player.UsingCustomUlt = 0;
-		Event Player.CustomUltReadyToUse = 0;
+		
 	
+		If(Event Player.UsingCustomUlt == True);
 		Value In Array(Event Player.CurrentGravities, 0) += 100;
 		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
-		Set Ultimate Ability Enabled(Event Player, True);
 	
-		Set Ability 1 Enabled(Event Player, True);
-		Allow Button(Event Player, Button(Jump));
-		Allow Button(Event Player, Button(Secondary Fire));
+		
 	
 	
 		Destroy HUD Text(Last Text ID);
 		Destroy Effect(Event Player.P);
+	
 		Event Player.M = Null;
 		Event Player.G = Null;
 		Event Player.P = Null;
@@ -5778,10 +5776,20 @@ rule("Reset Pharah stuff.")
 		
 		Stop Damage Over Time(Last Damage Over Time ID);
 		Clear Status(Event Player, Burning);
+		End;
+		
+		Set Ability 1 Enabled(Event Player, True);
+		Allow Button(Event Player, Button(Jump));
+		Allow Button(Event Player, Button(Secondary Fire));
+		Set Ultimate Ability Enabled(Event Player, True);
+		
 		
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
 		Event Player.B = Null;
+		
+		Event Player.UsingCustomUlt = 0;
+		Event Player.CustomUltReadyToUse = 0;
 		
 	}
 }
@@ -6058,6 +6066,7 @@ rule("Reaper reset stuff.")
 
     actions
     {   
+		If(Event Player.UsingCustomUlt != Null);
 		Set Primary Fire Enabled(Event Player, True);
 		Destroy Effect(Value In Array(Event Player.ReaperVariables, 0));
 		Destroy Hud Text(Value In Array(Event Player.ReaperVariables, 2));
@@ -6074,6 +6083,7 @@ rule("Reaper reset stuff.")
 		Event Player.ReaperVariables = Null;
 		
 		Event Player.TeleportBackInBounds = True;
+		End;
 		
         Call Subroutine(StopUsingCustomUlt);
 		Event Player.B = Null;
@@ -8596,6 +8606,7 @@ rule("Sombra: If player has virus, create virus effect, text and set variables, 
 	conditions
 	{
 		Event Player.Virus != Null;
+		Event Player.VirusEffects == Null;
 	}
 
 	actions
@@ -8911,6 +8922,119 @@ rule("Symmetra reset")
 		Event Player.B = Null;
 		
 		Call Subroutine(StopUsingCustomUlt);
+	}
+}
+
+
+
+rule("Symmetra team 1 create blue portal")
+{
+
+	event
+	{
+		Ongoing - Each Player;
+		Team 1;
+		Symmetra;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Primary Fire)) == True;
+	
+		Event Player.UsingCustomUlt == True;
+	}
+
+	actions
+	{
+		Skip If(Global.BluePortal == Null, 2);
+		Destroy Effect(Global.BluePortal);
+		Global.BluePortal = 0;
+	
+		Global.BluePortalRaycast = Ray Cast Hit Position(Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(All Teams), Event Player, True);
+	
+		Global.SymmetraBluePNormal = Ray Cast Hit Normal(Event Player, Global.BluePortalRaycast, All Players(All Teams), Event Player, True);
+		Log To Inspector(Global.SymmetraBluePNormal);
+		Log To Inspector(Direction Towards(Global.BluePortalRaycast, Eye Position(Event Player)));
+		
+	
+		If(Distance Between(Eye Position(Event Player), Global.BluePortalRaycast) < Distance Between(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000));
+	
+		Global.BluePortalRaycast -= Facing Direction Of(Event Player);
+		
+	
+	
+		Play Effect(All Players(All Teams), Good Explosion, Color(Blue), Global.BluePortalRaycast, 3);
+		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Global.BluePortalRaycast, 20);
+		Wait(0.200, Ignore Condition);
+		Create Effect(All Players(All Teams), Ring, Color(Blue), Global.BluePortalRaycast, 2, Visible To Position and Radius);
+		disabled Event Player.UsingCustomUlt += 1;
+		Global.BluePortal = Last Created Entity;
+		Wait(0.500, Ignore Condition);
+		
+		Else;
+		Global.BluePortalRaycast = Null;
+		Global.SymmetraBluePNormal = Null;
+		End;
+	}
+}
+
+
+
+rule("Symmetra team 1 create red portal")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Symmetra;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+		Is Button Held(Event Player, Button(Secondary Fire)) == True;
+		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
+		
+	
+	}
+
+	actions
+	{
+		Skip If(Global.RedPortal == Null, 2);
+		Destroy Effect(Global.RedPortal);
+		Global.RedPortal = 0;
+	
+		
+		
+	
+		Global.RedPortalRaycast = Ray Cast Hit Position(Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(All Teams), Event Player, True);
+		
+		
+		Global.SymmetraRedPNormal = Ray Cast Hit Normal(Event Player, Global.RedPortalRaycast, All Players(All Teams), Event Player, True);
+		Log To Inspector(Global.SymmetraRedPNormal);
+		Log To Inspector(Direction Towards(Global.RedPortalRaycast, Eye Position(Event Player)));
+		
+	
+		If(Distance Between(Eye Position(Event Player), Global.RedPortalRaycast) < Distance Between(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000));
+	
+		Global.RedPortalRaycast -= Facing Direction Of(Event Player);
+		
+		
+	
+	
+		Play Effect(All Players(All Teams), Good Explosion, Color(Red), Global.RedPortalRaycast, 3);
+		Play Effect(All Players(All Teams), Ring Explosion Sound, Color(White), Global.RedPortalRaycast, 20);
+		Wait(0.200, Ignore Condition);
+		Create Effect(All Players(All Teams), Ring, Color(Red), Global.RedPortalRaycast, 2, Visible To Position and Radius);
+		disabled Event Player.UsingCustomUlt += 1;
+		Global.RedPortal= Last Created Entity;
+		Wait(0.500, Ignore Condition);
+		Else;
+		
+		Global.RedPortalRaycast = Null;
+		Global.SymmetraRedPNormal = Null;
+		End;
+		
 	}
 }
 
@@ -9736,6 +9860,7 @@ rule("Tracer reset")
 
 	actions
 	{
+		If(Event Player.UsingCustomUlt == True);
 		Value In Array(Event Player.CurrentSpeeds, 0) -= 4900;
 		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
 		Event Player.CustomUltReadyToUse = False;
@@ -9747,6 +9872,7 @@ rule("Tracer reset")
 		Set Slow Motion(100);
 		Event Player.B = Null;
 		Enable Movement Collision With Players(Event Player);
+		End;
 		
 		Call Subroutine(StopUsingCustomUlt);
 	}
@@ -9904,11 +10030,11 @@ rule("Widowmaker fire through wall")
 
         
 
-        Event Player.WidowRayCastForward = Ray Cast Hit Player(Event Player.WidowRayCastStartPos, Event Player.WidowRayCastEndPos, All Living Players(Opposite Team Of(Team Of(Event Player))), All Living Players(Team Of(Event Player)), false);
-        Event Player.WidowRayCastBackward = Ray Cast Hit Player(Event Player.WidowRayCastEndPos, Event Player.WidowRayCastStartPos, All Living Players(Opposite Team Of(Team Of(Event Player))), All Living Players(Team Of(Event Player)), false);
+        Event Player.WidowRayCastForward = Ray Cast Hit Player(Event Player.WidowRayCastStartPos, Event Player.WidowRayCastEndPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
+        Event Player.WidowRayCastBackward = Ray Cast Hit Player(Event Player.WidowRayCastEndPos, Event Player.WidowRayCastStartPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
 
-        Event Player.WidowRayCastHeadForward = Ray Cast Hit Position(Event Player.WidowRayCastStartPos, Event Player.WidowRayCastEndPos, All Living Players(Opposite Team Of(Team Of(Event Player))), All Living Players(Team Of(Event Player)), false);
-        Event Player.WidowRayCastHeadBackward = Ray Cast Hit Position(Event Player.WidowRayCastEndPos, Event Player.WidowRayCastStartPos, All Living Players(Opposite Team Of(Team Of(Event Player))), All Living Players(Team Of(Event Player)), false);
+        Event Player.WidowRayCastHeadForward = Ray Cast Hit Position(Event Player.WidowRayCastStartPos, Event Player.WidowRayCastEndPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
+        Event Player.WidowRayCastHeadBackward = Ray Cast Hit Position(Event Player.WidowRayCastEndPos, Event Player.WidowRayCastStartPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
 
         
         
@@ -10451,7 +10577,7 @@ rule("winston: when winston hits someone, set root status and get direction and 
 		
 	
 		
-
+		Log To Inspector(Victim);
 	
 	
 		
@@ -10655,7 +10781,7 @@ rule("Wrecking ball kill nearby enemies while using ultimate")
 		Event Player.UsingCustomUlt == true;
 		Hero Of(Event Player) == Hero(Wrecking Ball);
         Players Within Radius(Event Player, 10, Opposite Team of(Team Of(Event Player)), Surfaces) != null;
-        Is True For Any(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces), Is Alive(current array element)) == true;
+        Is True For Any(Remove From Array(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces), Event Player), Is Alive(current array element)) == true;
         Is Moving(Event Player) == true;
        
        
@@ -10665,10 +10791,10 @@ rule("Wrecking ball kill nearby enemies while using ultimate")
     {
        
        
-       
-        Damage(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces), Event Player, 400);
-        Apply Impulse(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces), Position Of(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces)) - Event Player, 50, To World, Cancel Contrary Motion);
-       
+        Wait(0.1, Abort When False);
+        Damage(Remove From Array(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces), Event Player), Event Player, 400);
+        Apply Impulse(Remove From Array(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces), Event Player), Position Of(Remove From Array(Players Within Radius(Event Player, 4, Opposite Team of(Team Of(Event Player)), Surfaces), Event Player)) - Event Player, 50, To World, Cancel Contrary Motion);
+        Loop If Condition Is True;
     }
 }
 
@@ -10897,7 +11023,8 @@ rule("zarya: pull enemies to grav")
 	conditions
 	{
 		Event Player.UsingCustomUlt == True;
-		Distance Between(Event Player.ZaryaGravPos, Closest Player To(Event Player.ZaryaGravPos, Opposite Team Of(Team Of(Event Player)))) <= 10;
+		Count Of(Remove From Array(Players Within Radius(Event Player.ZaryaGravPos, 10, Opposite Team Of(Team Of(Event Player)), Off), Event Player)) > 0;
+	
 	}
 
 	actions
@@ -10905,8 +11032,8 @@ rule("zarya: pull enemies to grav")
 		Wait(0.016, Ignore Condition);
 	
 		
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Players Within Radius(Event Player.ZaryaGravPos, 10, Opposite Team Of(Team Of(Event Player)), Off)), 1);
-		Apply Impulse(Value In Array(Players Within Radius(Event Player.ZaryaGravPos, 10, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Vector Towards(Value In Array(Players Within Radius(Event Player.ZaryaGravPos, 10, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Event Player.ZaryaGravPos), Distance Between(Value In Array(Players Within Radius(Event Player.ZaryaGravPos, 10, Opposite Team Of(Team Of(Event Player)), Off), Event Player.ForLoopIndexPlayer), Event Player.ZaryaGravPos), To World, Cancel Contrary Motion);
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Remove From Array(Players Within Radius(Event Player.ZaryaGravPos, 10, Opposite Team Of(Team Of(Event Player)), Off), Event Player)), 1);
+		Apply Impulse(Value In Array(Remove From Array(Players Within Radius(Event Player.ZaryaGravPos, 10, Opposite Team Of(Team Of(Event Player)), Off), Event Player), Event Player.ForLoopIndexPlayer), Vector Towards(Value In Array(Remove From Array(Players Within Radius(Event Player.ZaryaGravPos, 10, Opposite Team Of(Team Of(Event Player)), Off), Event Player), Event Player.ForLoopIndexPlayer), Event Player.ZaryaGravPos), Distance Between(Value In Array(Remove From Array(Players Within Radius(Event Player.ZaryaGravPos, 10, Opposite Team Of(Team Of(Event Player)), Off), Event Player), Event Player.ForLoopIndexPlayer), Event Player.ZaryaGravPos), To World, Cancel Contrary Motion);
 		End;
 		Loop If Condition Is True;
 	}
