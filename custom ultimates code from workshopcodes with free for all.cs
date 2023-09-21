@@ -344,13 +344,13 @@ rule("Disable inspector for better performance")
 
 	conditions
 	{
-		Current Game Mode == Game Mode(Deathmatch);
+		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
 	}
 
 	actions
 	{
 		Set Player Allowed Heroes(Event Player, Remove From Array(Allowed Heroes(Event Player), Hero(Baptiste)));
-		Set Player Allowed Heroes(Event Player, Remove From Array(Allowed Heroes(Event Player), Hero(Brigitte)));
+	
 	}
 }
 
@@ -1347,8 +1347,11 @@ rule("Brigitte: Increase shield size when using ultimate")
 		Stop Forcing Player To Be Hero(Event Player);
 		
 		
-
+		If(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter));
+		Wait(1, Ignore Condition);
+		Else;
 		Wait(0.016, Ignore Condition);
+		End;
 		
 
 		Start Holding Button(Event Player, Button(Secondary Fire));
@@ -1447,6 +1450,8 @@ rule("Brigitte: Big shield bash knockback.")
 
 	conditions
 	{
+		Event Player != Event Player.D;
+		
 		Event Player.D.UsingCustomUlt == True;
 		Hero Of(Event Player.D) == Hero(Brigitte);
 		Is Button Held(Event Player.D, Button(Secondary Fire)) == True;
@@ -1481,6 +1486,8 @@ rule("Brigitte: Apply shield knockback and damage to players in front of the shi
 
 	conditions
 	{
+		Event Player != Event Player.D;
+		
 		Event Player.D.UsingCustomUlt == True;
 		Hero Of(Event Player.D) == Hero(Brigitte);
 		Is Button Held(Event Player.D, Button(Secondary Fire)) == True;
@@ -1489,7 +1496,7 @@ rule("Brigitte: Apply shield knockback and damage to players in front of the shi
 		(Horizontal Angle Towards(Event Player.D, Event Player) <= 35 && Horizontal Angle Towards(Event Player.D, Event Player) >= -35) == true;
 		Distance Between(Event Player, Event Player.D) < 6;
 		Event Player.BrigitteKnockedBack == Null;
-
+		
 	}
 
 	actions
@@ -1589,7 +1596,7 @@ rule("Doomfist loop meteor strikes")
 	{
 		Wait(0.016, Ignore Condition);
 		Event Player.S = 8;
-		If(Current Game Mode != Game Mode(Deathmatch));
+		If(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter));
 		Event Player.G = Nearest Walkable Position(Random Value In Array(All Living Players(Opposite Team Of(Team Of(Event Player))))
 			+ Vector(Random Real(-15, 15), 0, Random Real(-15, 15)));
 		Else;
@@ -1612,7 +1619,7 @@ rule("Doomfist loop meteor strikes")
 
 		
 
-		If(Current Game Mode != Game Mode(Deathmatch));
+		If(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter));
 		Damage(Players Within Radius(Event Player.G, 8, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
 			Event Player, 20);
 		Damage(Players Within Radius(Event Player.G, 6, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
@@ -2887,12 +2894,18 @@ rule("Start damage over time on players that were hit during Genji's ult after h
 		
 	
 	
-		Start Damage Over Time(Event Player, Event Player.V, 10, 0.5 * Max Health(Event Player));
+		Start Damage Over Time(Event Player, Event Player.V, 10, 100);
 		
 		Set Status(Event Player, Event Player.V, Stunned, 10);
 		Create Effect(All Players(All Teams), Bad Aura Sound, Color(White), Event Player, 1000, Visible To Position and Radius);
-		disabled Wait(3, Ignore Condition);
-		disabled Event Player.V = Null;
+		Wait Until(Is Dead(Event Player) == True, 10);
+		Destroy Effect(Last Created Entity);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Red), Event Player, 3);
+		Stop All Damage Over Time(Event Player);
+		Clear Status(Event Player, Stunned);
+		Event Player.V = Null;
+		Play Effect(All Players(All Teams), Explosion Sound, Color(White), Event Player, 100);
+		
 		Else;
 		Event Player.V = Null;
 		Big Message(Event Player, String("{0}: {1}", Hero Icon String(Hero(Genji)), Custom String("Forgive me master. I was too weak.")));
@@ -2939,33 +2952,6 @@ rule("Reset Genji stuff")
 		Set Damage Dealt(Event Player, 100);
 		Event Player.Y = 0;
 		Event Player.B = Null;
-	}
-}
-
-
-
-rule("Stop damage over time on death on players hit by Genji")
-{
-	event
-	{
-		Player Died;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.V != Null;
-	}
-
-	actions
-	{
-		Destroy Effect(Last Created Entity);
-		Play Effect(All Players(All Teams), Bad Explosion, Color(Red), Event Player, 3);
-		Stop All Damage Over Time(Event Player);
-		Clear Status(Event Player, Stunned);
-		Event Player.V = Null;
-		Play Effect(All Players(All Teams), Explosion Sound, Color(White), Event Player, 100);
 	}
 }
 
@@ -3760,13 +3746,13 @@ rule("If Junker queen lost, teleport enemies back to map and remove her buff.")
 		
 		If(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter));
 		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerQueenEnemyArray), 1);
-		Teleport(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Event Player.JunkerQueenEnemyPositions, Event Player.ForLoopIndexPlayer));
+		Teleport(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Nearest Walkable Position(Value In Array(Event Player.JunkerQueenEnemyPositions, Event Player.ForLoopIndexPlayer)));
 		Set Gravity(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer).CurrentGravities, 0));
 		Stop Damage Modification(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer).JunkerFFADamageMod);
 		End;
 		Else;
 		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.JunkerQueenEnemyArray), 1);
-		Teleport(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Event Player.JunkerQueenEnemyPositions, Event Player.ForLoopIndexPlayer));
+		Teleport(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Nearest Walkable Position(Value In Array(Event Player.JunkerQueenEnemyPositions, Event Player.ForLoopIndexPlayer)));
 		Set Gravity(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer), Value In Array(Value In Array(Event Player.JunkerQueenEnemyArray, Event Player.ForLoopIndexPlayer).CurrentGravities, 0));
 		End;
 		End;
@@ -3813,8 +3799,9 @@ rule("If Junker queen dies after being buffed and not in arena, remove buffs.")
 
 	conditions
 	{
-		Event Player.JunkerDamageCounter != Null;
-		Event Player.JunkerHealthBonus != Null;
+		
+		(Event Player.JunkerDamageCounter != Null || Event Player.JunkerQueenEnemyArray != Null) == True;
+	
 	
 	
 		Event Player.JunkerQueenInArena != true;
@@ -3923,7 +3910,7 @@ rule("If enemies lost/JQ won, teleport Junker Queen back to map and keep her buf
 		End;
 		End;
 		
-		Teleport(Event Player, Value In Array(Event Player.JunkerQueenPositions, 0));
+		Teleport(Event Player, Nearest Walkable Position(Value In Array(Event Player.JunkerQueenPositions, 0)));
 	
 		Set Knockback Dealt(Filtered Array(Event Player.JunkerQueenEnemyArray, Hero Of(Current Array Element) == Hero(Junker Queen)), 100);
 		Event Player.JunkerQueenEnemyArray.JunkerQueenInArena = Null;
@@ -3986,7 +3973,7 @@ rule("Teleport players out of the arena after timer runs out.")
 		Set Knockback Dealt(Event Player, 100);
 		End;
 		
-		Teleport(Event Player, Event Player.JunkerTeleportPos);
+		Teleport(Event Player, Nearest Walkable Position(Event Player.JunkerTeleportPos));
 		
 	
 		
@@ -4172,11 +4159,7 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 		Chase Player Variable At Rate(Event Player, UltTimer, 0, 1, None);
 		Wait(Event Player.UltTimer, Ignore Condition);
 		
-	
 		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Event Player.JunkratBombPosition, Down, To World, Damage, Opposite Team Of(Team Of(Event Player)), 800, 0.5, Event Player.JunkratExplosionRadius, Junkrat RIP Tire Explosion Effect, Junkrat RIP Tire Explosion Sound, 1, 10, 1, 30, 0, 100);
-	
-	
-	
 		
 	
 		
@@ -5576,7 +5559,7 @@ rule("moira: coalescence X 100 loop effects")
 		
 		End;	
 		
-		If(Current Game Mode != Game Mode(Deathmatch) && Distance Between(Event Player.M, Event Player) <= 10);
+		If(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter) && Distance Between(Event Player.M, Event Player) <= 10);
 		Apply Impulse(Event Player,  Direction Towards(Event Player.M, Event Player + Up), 10, To World, Cancel Contrary Motion);
 		End;
 		
@@ -5584,7 +5567,7 @@ rule("moira: coalescence X 100 loop effects")
 		Damage(Players Within Radius(Event Player.M, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers),
 			Event Player, 50);
 		
-		If(Current Game Mode != Game Mode(Deathmatch));
+		If(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter));
 		Heal(Players Within Radius(Event Player.M, 10, Team Of(Event Player), Surfaces),
 			Event Player, 50);	
 		Else;
@@ -11368,6 +11351,15 @@ rule("Zenyatta reset")
 		Allow Button(Event Player.P, Button(Ultimate));
 		Allow Button(Event Player.P, Button(Jump));
 		Allow Button(Event Player.P, Button(Crouch));
+		Stop Holding Button(Event Player.P, Button(Primary Fire));
+		Stop Holding Button(Event Player.P, Button(Secondary Fire));
+		Stop Holding Button(Event Player.P, Button(Ability 1));
+		Stop Holding Button(Event Player.P, Button(Ability 2));
+		Stop Holding Button(Event Player.P, Button(Ultimate));
+		Stop Holding Button(Event Player.P, Button(Jump));
+		Stop Holding Button(Event Player.P, Button(Crouch));
+	
+		
 		Stop Facing(Event Player.P);
 		Teleport(Event Player, Event Player.P + Facing Direction Of(Event Player.P) * -1);
 		If(Is Alive(Event Player.P));
