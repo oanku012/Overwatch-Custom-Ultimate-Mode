@@ -218,78 +218,79 @@ variables {
     51: JunkerWinCounterText
     52: JunkerWinCounter
     53: JunkerArenaSphere
-    54: JunkerFFADamageMod
-    55: ExtraLife
-    56: JunkerKnifeThrowCD
+    54: ExtraLife
+    55: JunkerKnifeThrowCD
+    56: JunkerFFADamageMod
     57: JunkratBombPosition
     58: JunkratBombOrb
     59: JunkratExplosionRadius
     60: JunkratRadiusRing
     61: UltTimerAboveHead
     62: UltTimerHUD
-    63: Q
-    64: UltHudTextObject
-    65: SigmaZeroGravBuff
-    66: R
-    67: LucioHealthPoolHealthAmount
-    68: LucioHealthPool
-    69: MeiZaWarudoSphere
-    70: MeiIcicleEffects
-    71: MeiIciclePositions
-    72: MeiIcicleDirections
-    73: TimeStopStunned
-    74: O
-    75: N
-    76: MercyExtraLifeText
-    77: ExtraLifeInWorldText
-    78: P
-    79: ReaperVariables
-    80: ReaperTPPos
-    81: SigmaMaleValues
-    82: SigmaHighGravDebuff
-    83: SojournLastRay
-    84: SojournRayArray
-    85: SojournBeamArray
-    86: SojournEyePosArray
-    87: SojournLastEyePos
-    88: SojournDamageRay
-    89: Soldier76Variables
-    90: SoldierAllKillStreaks
-    91: Soldier76KillStreaksEquipped
-    92: SoldierKillStreakTexts
-    93: Soldier76KillStreaksActive
-    94: LocalVariable
-    95: Soldier76CarepackLocation
-    96: SoldierCarePackAmmoIndex
-    97: Virus
-    98: VirusEffects
-    99: VirusText
-    100: HasDiedWithVirus
-    101: K
-    102: L
-    103: InPortalSpeed
-    104: PortalUsed
-    105: TorbTurret
-    106: TorbTurretLevel
-    107: TorbTurretLevelText
-    108: TorbCurrentTarget
-    109: WidowZoomedIn
-    110: WidowPlayersInViewAngleSorted
-    111: WidowRayCastForward
-    112: WidowRayCastStartPos
-    113: WidowRayCastEndPos
-    114: WidowRayCastBackward
-    115: WidowRayCastHeadForward
-    116: WidowRayCastHeadBackward
-    117: WidowFireBeam
-    118: WidowDamage
-    119: WidowAimBeam
-    120: WidowLastFacingDirection
-    121: WinstonGrabbing
-    122: WinstonDamageArray
-    123: WinstonRayCasts
-    124: ZaryaGravPos
-    125: PossessingZen
+    63: JunkratBombDroppedPosition
+    64: Q
+    65: UltHudTextObject
+    66: SigmaZeroGravBuff
+    67: R
+    68: LucioHealthPoolHealthAmount
+    69: LucioHealthPool
+    70: MeiZaWarudoSphere
+    71: MeiIcicleEffects
+    72: MeiIciclePositions
+    73: MeiIcicleDirections
+    74: TimeStopStunned
+    75: O
+    76: N
+    77: MercyExtraLifeText
+    78: ExtraLifeInWorldText
+    79: P
+    80: ReaperVariables
+    81: ReaperTPPos
+    82: SigmaMaleValues
+    83: SigmaHighGravDebuff
+    84: SojournLastRay
+    85: SojournRayArray
+    86: SojournBeamArray
+    87: SojournEyePosArray
+    88: SojournLastEyePos
+    89: SojournDamageRay
+    90: Soldier76Variables
+    91: SoldierAllKillStreaks
+    92: Soldier76KillStreaksEquipped
+    93: SoldierKillStreakTexts
+    94: Soldier76KillStreaksActive
+    95: LocalVariable
+    96: Soldier76CarepackLocation
+    97: SoldierCarePackAmmoIndex
+    98: Virus
+    99: VirusEffects
+    100: VirusText
+    101: HasDiedWithVirus
+    102: K
+    103: L
+    104: InPortalSpeed
+    105: PortalUsed
+    106: TorbTurret
+    107: TorbTurretLevel
+    108: TorbTurretLevelText
+    109: TorbCurrentTarget
+    110: WidowZoomedIn
+    111: WidowPlayersInViewAngleSorted
+    112: WidowRayCastForward
+    113: WidowRayCastStartPos
+    114: WidowRayCastEndPos
+    115: WidowRayCastBackward
+    116: WidowRayCastHeadForward
+    117: WidowRayCastHeadBackward
+    118: WidowFireBeam
+    119: WidowDamage
+    120: WidowAimBeam
+    121: WidowLastFacingDirection
+    122: WinstonGrabbing
+    123: WinstonDamageArray
+    124: WinstonRayCasts
+    125: ZaryaGravPos
+    126: PossessingZen
 }
 
 
@@ -1662,6 +1663,7 @@ rule("Reset Doomfist stuff")
 		disabled Destroy Effect(Event Player.UsingCustomUlt);
 		Event Player.M = Null;
 		Event Player.Y = Null;
+		Stop Chasing Player Variable(Event Player, S);
 		Event Player.S = Null;
 		Event Player.G = Null;
 		disabled Event Player.UsingCustomUlt = Null;
@@ -4162,7 +4164,7 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 		Event Player.JunkratExplosionRadius = 30;
 		Create Effect(All Players(All Teams), Ring, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius, Position And Radius);
 		Event Player.JunkratRadiusRing = Last Created Entity;
-		Event Player.UltTimer = 20;
+		Event Player.UltTimer = 10;
 		Create Hud Text(Event Player, Event Player.UltTimer, null, null, Top, 0, Color(Orange), Color(Orange), Color(Orange), String, Default Visibility);
 		Event Player.UltTimerText = Last Text Id;
 		Create In-World Text(All Players(All Teams), Event Player.UltTimer, Event Player.JunkratBombPosition + Up * 2, 10, Clip Against Surfaces, Visible To Position and String, Color(Orange), Default Visibility);
@@ -4170,11 +4172,13 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 		Chase Player Variable At Rate(Event Player, UltTimer, 0, 1, None);
 		Wait(Event Player.UltTimer, Ignore Condition);
 		
-		If(Current Game Mode != Game Mode(Deathmatch));
-		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Event Player.JunkratBombPosition, Down, To World, Damage, Opposite Team Of(Team Of(Event Player)), 800, 0.5, Event Player.JunkratExplosionRadius, Junkrat RIP Tire Explosion Effect, Junkrat RIP Tire Explosion Sound, 1, 100, 0, 30, 0, 0);
-		Else;
-		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Event Player.JunkratBombPosition, Down, To World, Damage, All Teams, 800, 0.5, Event Player.JunkratExplosionRadius, Junkrat RIP Tire Explosion Effect, Junkrat RIP Tire Explosion Sound, 1, 100, 0, 30, 0, 0);
-		End;
+	
+		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Event Player.JunkratBombPosition, Down, To World, Damage, Opposite Team Of(Team Of(Event Player)), 800, 0.5, Event Player.JunkratExplosionRadius, Junkrat RIP Tire Explosion Effect, Junkrat RIP Tire Explosion Sound, 1, 10, 1, 30, 0, 100);
+	
+	
+	
+		
+	
 		
 		If(Distance Between(Event Player, Event Player.JunkratBombPosition) < Event Player.JunkratExplosionRadius && Is In Line of Sight(Event Player, Event Player.JunkratBombPosition, All Barriers Block LOS));
 		Damage(Event Player, Event Player, 800);
@@ -4225,6 +4229,12 @@ rule("Junkrat reset")
 		Event Player.UltTimerAboveHead = Null;
 		Destroy Effect(Event Player.JunkratRadiusRing);
 		Event Player.JunkratRadiusRing = Null;
+		Stop Chasing Player Variable(Event Player, JunkratBombPosition);
+		
+		Event Player.JunkratBombDroppedPosition = Null;
+		Event Player.JunkratBombPosition = Null;
+		Event Player.JunkratExplosionRadius = Null;
+		
 	
 		Wait(0.01, Ignore Condition);
 		Skip if(Event Player.UsingCustomUlt != true, 1);
@@ -4281,7 +4291,16 @@ rule("Junkrat drop bomb on death.")
 
 	actions
 	{
-		Event Player.JunkratBombPosition = Position Of(Event Player);
+		Event Player.JunkratBombPosition = Position Of(Event Player) + Up;
+		Event Player.JunkratBombDroppedPosition = Ray Cast Hit Position(Event Player.JunkratBombPosition, Event Player.JunkratBombPosition + Down * 1000, Null, Event Player, False);
+		Event Player.JunkratBombDroppedPosition += Up*0.5;
+		
+		Chase Player Variable At Rate(Event Player, JunkratBombPosition, Event Player.JunkratBombDroppedPosition, 10, Destination And Rate);
+		Wait Until(Event Player.JunkratBombPosition == Event Player.JunkratBombDroppedPosition, 20);
+		Stop Chasing Player Variable(Event Player, JunkratBombPosition);
+		
+		Event Player.JunkratBombPosition = Event Player.JunkratBombDroppedPosition;
+		Event Player.JunkratBombDroppedPosition = Null;
 	
 	}
 }
@@ -5081,12 +5100,14 @@ rule("Mei reset")
 	
 		Play Effect(All Players(All Teams), Debuff Impact Sound, Color(White), Event Player, 200);
 	
-		Set Ultimate Charge(Event Player, 0);
 		Event Player.B = Null;
 		
 	
 		
 		
+		"Slight delay so that the player won't gain ult charge from the icicles used during the ult."
+		Wait(1, Ignore Condition);
+		Set Ultimate Charge(Event Player, 0);
 		
 		Call Subroutine(StopUsingCustomUlt);
 	}
@@ -6631,7 +6652,10 @@ rule("reinhardt: increase buffs in the air")
 		
 		Set Damage Received(Event Player, Event Player.P);
 		Loop If Condition Is True;
-		
+	
+	
+	
+	
 	}
 }
 
@@ -6728,7 +6752,7 @@ rule("Reinhardt: Start burning when power up is over 8 secs")
 		
 
 
-rule("Reinhardt disable power up if ult hasn't been used and player is on ground")
+rule("Reinhardt disable power up if ult hasn't been used and player is on ground or dead")
 {
 
 	event
@@ -6740,7 +6764,7 @@ rule("Reinhardt disable power up if ult hasn't been used and player is on ground
 
 	conditions
 	{
-		Is On Ground(Event Player) == True;
+		(Is On Ground(Event Player) == True || Is Dead(Event Player) == True) == True;
 		Event Player.M != True;
 		Event Player.S == True;
 	}
@@ -6850,6 +6874,7 @@ rule("Roadhog reset")
 		
 		Destroy HUD Text(Event Player.UltReadyText);
 		Event Player.UltReadyText = Null;
+		Stop Chasing Player Variable(Event Player, Y);
 	}
 }
 
@@ -8583,7 +8608,7 @@ rule("Reset Ult modifications on Sombra.")
 
     actions
     {
-        
+        Stop Chasing Player Variable(Event Player, P);
 		Event Player.P = Null;
 		Event Player.B = Null;
 		Destroy HUD Text(Event Player.UltDescription);
@@ -8626,12 +8651,12 @@ rule("Sombra: If player has virus, create virus effect, text and set variables, 
 	
 		Create Effect(All Players(All Teams), Cloud, Color(Purple), Event Player, 1, Visible To Position and Radius);
 		Modify Player Variable(Event Player, VirusEffects, Append To Array, Last Created Entity);
-		Wait(10, Abort When False);
+		Wait Until(Is Alive(Event Player) == True && Event Player.HasDiedWithVirus == True, 10);
 		Destroy Effect(Event Player.VirusEffects);
 		Event Player.VirusEffects = Null;
 		Destroy HUD Text(Event Player.VirusText);
 		Event Player.VirusText = Null;
-		
+		Event Player.HasDiedWithVirus = Null;
 	
 		Event Player.Virus = Null;
 	}
@@ -8721,37 +8746,6 @@ rule("Sombra spread virus to nearby enemies in ffa")
 		
 	
 		Loop If Condition Is True;
-	}
-}
-
-
-
-rule("Sombra: Disable virus if player has spawned and had virus before death")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Event Player.Virus != Null;
-		Event Player.HasDiedWithVirus == True;
-		Is Alive(Event Player) == True;
-	}
-
-	actions
-	{
-		Destroy Effect(Event Player.VirusEffects);
-		Event Player.VirusEffects = Null;
-		Stop All Damage Over Time(Event Player);
-		Destroy HUD Text(Event Player.VirusText);
-		Event Player.VirusText = Null;
-		Event Player.HasDiedWithVirus = Null;
-	
-		Event Player.Virus = Null;
 	}
 }
 
@@ -9628,8 +9622,12 @@ rule("torb: spawn torb turret")
 		Event Player.TorbTurret.TorbTurretLevel = 1;
 		
 		Disable Movement Collision With Players(Event Player.TorbTurret);
+		"To prevent the player and turret from damaging each other in free for all."
+		Start Damage Modification(Event Player, Event Player.TorbTurret, 0, Receivers Damagers And Damage Percent);
+		Start Damage Modification(Event Player.TorbTurret, Event Player, 0, Receivers Damagers And Damage Percent);
 		
 		Wait(0.5, Ignore Condition);
+		
 		
 		Create In-World Text(All Players(All Teams), Custom String("Turretbjörn Lvl 1"), Event Player.TorbTurret + Up*2, 1, Clip Against Surfaces, Visible to and String, Team Of(Event Player), Default Visibility);
 		Event Player.TorbTurret.TorbTurretLevelText = Last Text Id;
@@ -9820,7 +9818,7 @@ rule("torb: torb turret, fire at enemies in team modes")
 
 		Start Facing(Event Player.TorbTurret, Update Every Frame(Direction Towards(Eye Position(Event Player.TorbTurret), Event Player.TorbCurrentTarget + Up*0.7)), 1000, To World, DIRECTION AND TURN RATE);
 		
-		If(Distance Between(Event Player.TorbCurrentTarget, Event Player.TorbTurret) > 7);
+		If(Distance Between(Event Player.TorbCurrentTarget, Event Player.TorbTurret) > 7 || Is Using Ultimate(Event Player.TorbTurret) == True);
 		Press Button(Event Player.TorbTurret, Button(Primary Fire));
 		Else If(Distance Between(Event Player.TorbCurrentTarget, Event Player.TorbTurret) < 7 && Distance Between(Event Player.TorbCurrentTarget, Event Player.TorbTurret) != 0 && Is Using Ultimate(Event Player.TorbTurret) == false);
 		Press Button(Event Player.TorbTurret, Button(Secondary Fire));
@@ -9856,7 +9854,7 @@ rule("torb: torb turret, fire at enemies in ffa")
 
 		Start Facing(Event Player.TorbTurret, Update Every Frame(Direction Towards(Eye Position(Event Player.TorbTurret), Event Player.TorbCurrentTarget + Up*0.7)), 1000, To World, DIRECTION AND TURN RATE);
 		
-		If(Distance Between(Event Player.TorbCurrentTarget, Event Player.TorbTurret) > 7);
+		If(Distance Between(Event Player.TorbCurrentTarget, Event Player.TorbTurret) > 7  || Is Using Ultimate(Event Player.TorbTurret) == True);
 		Press Button(Event Player.TorbTurret, Button(Primary Fire));
 		Else If(Distance Between(Event Player.TorbCurrentTarget, Event Player.TorbTurret) < 7 && Distance Between(Event Player.TorbCurrentTarget, Event Player.TorbTurret) != 0 && Is Using Ultimate(Event Player.TorbTurret) == false);
 		Press Button(Event Player.TorbTurret, Button(Secondary Fire));
@@ -10070,7 +10068,7 @@ rule("Tracer damage players when running at them")
 		Hero Of(Event Player) == Hero(Tracer);
 		Event Player.UsingCustomUlt == True;
 		Event Player.CustomUltReadyToUse == True;
-		Filtered Array(Update Every Frame(Players Within Radius(Update Every Frame(Event Player), 1.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers)), Is Alive(Current Array Element) == True && Current Array Element != Event Player)  != Empty Array;
+		Filtered Array(Update Every Frame(Players Within Radius(Update Every Frame(Event Player), 2, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers)), Is Alive(Current Array Element) == True && Current Array Element != Event Player)  != Empty Array;
 	
 		Is Dummy Bot(Event Player) == False;
 	
@@ -10079,7 +10077,7 @@ rule("Tracer damage players when running at them")
 	actions
 	{
 	
-		Damage(Filtered Array(Update Every Frame(Players Within Radius(Update Every Frame(Event Player), 1.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers)), Is Alive(Current Array Element) == True && Current Array Element != Event Player), Event Player, 500);
+		Damage(Filtered Array(Update Every Frame(Players Within Radius(Update Every Frame(Event Player), 2, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers)), Is Alive(Current Array Element) == True && Current Array Element != Event Player), Event Player, 500);
 	
 	
 	}
