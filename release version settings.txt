@@ -32,6 +32,7 @@ good luck with your mode!*/
 	{
 		Max Team 1 Players: 4
 		Max Team 2 Players: 4
+		Max FFA Players: 8
 	}
 
 	
@@ -86,36 +87,21 @@ good luck with your mode!*/
 		{
 		
 		}
+
+		Deathmatch
+		{
+		
+		}
 	}
 
 	heroes
 	{
-		Team 1
-		{
-			Ultimate Generation: 200%
-			//Ultimate Generation - Combat: 500%
-			//Ultimate Generation - Passive: 500%
-            //Health: 500%
-			//Movement Speed: 300%
-            //Spawn With Ultimate Ready: On
-            //Ultimate Duration: 200%
-			//Infinite Ultimate Duration: On
-		}
-
-		Team 2
-		{
-			Ultimate Generation: 200%
-			//Ultimate Generation - Combat: 500%
-			//Ultimate Generation - Passive: 500%
-            //Spawn With Ultimate Ready: On
-
-			//Ultimate Ability: Off
-            //Health: 500%
-			//Damage Received: 10%
-		}
+		
 
 		General
 		{
+
+			Ultimate Generation: 200%
 			Ashe
 			{
 				Infinite Ultimate Duration: On

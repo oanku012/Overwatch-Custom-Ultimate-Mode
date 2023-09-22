@@ -31,29 +31,19 @@ settings
 			Respawn Time Scalar: 50%
 
 			Hero Limit: 1 Per Team
-			Game Mode Start: Manual
+			
 		}
 
 		
 
-		
-		
-		Deathmatch
-		{
-			enabled maps
-			{
-				Workshop Island
-			}
-		}
-		
 		Skirmish
 		{
-			enabled maps
-			{
-				Workshop Island
-			}
+			
 		}
 
+		Deathmatch
+		{
+		}
 	
 	}
 
@@ -272,25 +262,26 @@ variables {
     105: PortalUsed
     106: TorbTurret
     107: TorbTurretLevel
-    108: TorbTurretLevelText
-    109: TorbCurrentTarget
-    110: WidowZoomedIn
-    111: WidowPlayersInViewAngleSorted
-    112: WidowRayCastForward
-    113: WidowRayCastStartPos
-    114: WidowRayCastEndPos
-    115: WidowRayCastBackward
-    116: WidowRayCastHeadForward
-    117: WidowRayCastHeadBackward
-    118: WidowFireBeam
-    119: WidowDamage
-    120: WidowAimBeam
-    121: WidowLastFacingDirection
-    122: WinstonGrabbing
-    123: WinstonDamageArray
-    124: WinstonRayCasts
-    125: ZaryaGravPos
-    126: PossessingZen
+    108: TorbTurretMaster
+    109: TorbTurretLevelText
+    110: TorbCurrentTarget
+    111: WidowZoomedIn
+    112: WidowPlayersInViewAngleSorted
+    113: WidowRayCastForward
+    114: WidowRayCastStartPos
+    115: WidowRayCastEndPos
+    116: WidowRayCastBackward
+    117: WidowRayCastHeadForward
+    118: WidowRayCastHeadBackward
+    119: WidowFireBeam
+    120: WidowDamage
+    121: WidowAimBeam
+    122: WidowLastFacingDirection
+    123: WinstonGrabbing
+    124: WinstonDamageArray
+    125: WinstonRayCasts
+    126: ZaryaGravPos
+    127: PossessingZen
 }
 
 
@@ -685,7 +676,7 @@ rule("Test dummy")
 	{
 	
 		Create Dummy Bot(All Heroes, Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
-		Create Dummy Bot(All Heroes, Team Of(Event Player), -1, Event Player, Vector(0, 0, 0));
+	
 	
 		
 	
@@ -4159,7 +4150,7 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 		Chase Player Variable At Rate(Event Player, UltTimer, 0, 1, None);
 		Wait(Event Player.UltTimer, Ignore Condition);
 		
-		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Event Player.JunkratBombPosition, Down, To World, Damage, Opposite Team Of(Team Of(Event Player)), 800, 0.5, Event Player.JunkratExplosionRadius, Junkrat RIP Tire Explosion Effect, Junkrat RIP Tire Explosion Sound, 1, 10, 1, 30, 0, 100);
+		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Event Player.JunkratBombPosition + Up, Down, To World, Damage, Opposite Team Of(Team Of(Event Player)), 800, 0.5, Event Player.JunkratExplosionRadius, Junkrat RIP Tire Explosion Effect, Junkrat RIP Tire Explosion Sound, 1, 0, 0, 30, 0, 0);
 		
 	
 		
@@ -7628,7 +7619,7 @@ rule("soldier 76 initialize kill streaks and streak counting")
 
 
 
-		Event Player.SoldierAllKillStreaks = Array(Array(3, Custom String("UAV Recon")), Array(5, Custom String("Care Package")), Array(8, Custom String("Tactical Visor")), Array(20, Custom String("Tactical Nuke")), Array(13, Custom String("AC-130")));
+		Event Player.SoldierAllKillStreaks = Array(Array(3, Custom String("UAV Recon")), Array(5, Custom String("Care Package")), Array(8, Custom String("Tactical Visor")), Array(20, Custom String("Tactical Nuke")), Array(1, Custom String("AC-130")));
 
 	
 		Event Player.Soldier76KillStreaksEquipped = Array(Value In Array(Event Player.SoldierAllKillStreaks, 0), Value In Array(Event Player.SoldierAllKillStreaks, 1), Value In Array(Event Player.SoldierAllKillStreaks, 2), Value In Array(Event Player.SoldierAllKillStreaks, 4), Value In Array(Event Player.SoldierAllKillStreaks, 3));
@@ -8339,7 +8330,7 @@ rule("soldier 76 AC-130")
 		Set Ability 1 Enabled(Event Player, False);
 		Set Ability 2 Enabled(Event Player, False);
 
-		Value In Array(Event Player.Soldier76Variables, 6) = Position Of(Event Player + Up * 80);
+		Value In Array(Event Player.Soldier76Variables, 6) = Position Of(Event Player + Up * 80) + Right * 30;
 
 
 	
@@ -8351,10 +8342,12 @@ rule("soldier 76 AC-130")
 		For Player Variable(Event Player, ForLoopIndexPlayer, Number of Slots(Team Of(Event Player)), 11, 1);
 		If(Players In Slot(Event Player.ForLoopIndexPlayer, Team Of(Event Player)) == Null);
 		Create Dummy Bot(Hero(Wrecking Ball), Team Of(Event Player), Event Player.ForLoopIndexPlayer, Value In Array(Event Player.Soldier76Variables, 6), Forward);
+		Log To Inspector(Custom String("HUUUUH", Null, Null, Null));
 		Break;
 		End;
 		End;
 		End;
+		
 		
 		Value In Array(Event Player.Soldier76Variables, 7) = Last Created Entity;
 
@@ -8487,8 +8480,11 @@ rule("soldier 76 AC-130 shoot bombs")
 
 		Value In Array(Event Player.Soldier76Variables, 8) = Position Of(Value In Array(Event Player.Soldier76Variables, 7)) + Down + Facing Direction Of(Event Player);
 
-		Create Projectile(Pharah Rocket, Event Player, Value In Array(Event Player.Soldier76Variables, 8), Value In Array(Event Player.Soldier76Variables, 7) + Down + Facing Direction Of(Event Player)*1000, To World, Damage, Opposite Team Of(Team Of(Event Player)), 500, 0.5, 5, Junkrat RIP Tire Explosion Effect, Ashe Dynamite Explosion Sound, 0.1, 100, 10, 10, 0, 0);
+	
+		Create Projectile(Pharah Rocket, Event Player, Value In Array(Event Player.Soldier76Variables, 8), Ray Cast Hit Position(Value In Array(Event Player.Soldier76Variables, 7) + Down, Value In Array(Event Player.Soldier76Variables, 7) + Down + Facing Direction Of(Event Player) * 1000, null, Value In Array(Event Player.Soldier76Variables, 7), TRUE) -  Value In Array(Event Player.Soldier76Variables, 8), To World, Damage, Opposite Team Of(Team Of(Event Player)), 500, 0.5, 5, Junkrat RIP Tire Explosion Effect, Ashe Dynamite Explosion Sound, 0.1, 100, 10, 10, 0, 0);
 
+	
+		
 	
 		
 
@@ -9566,6 +9562,10 @@ rule("torb: spawn torb turret")
 
 	actions
 	{
+		
+		
+		
+		
 		Event Player.B = Hero Of(Event Player);
 		
 		Call Subroutine(UseCustomUlt);
@@ -9574,10 +9574,13 @@ rule("torb: spawn torb turret")
 		
 		If(Number of Players(Team Of(Event Player)) >= Number of Slots(Team Of(Event Player)));
 		Create Dummy Bot(Hero(Torbjörn), Team Of(Event Player), -1, Event Player + Facing Direction Of(Event Player), Facing Direction Of(Event Player));
+		Log To Inspector(Custom String("hit this shit", Null, Null, Null));
 		
 		Else If(Number of Players(Team Of(Event Player)) < Number of Slots(Team Of(Event Player)));
 		For Player Variable(Event Player, ForLoopIndexPlayer, Number of Slots(Team Of(Event Player)), 11, 1);
 		If(Players In Slot(Event Player.ForLoopIndexPlayer, Team Of(Event Player)) == Null);
+	
+		
 		Create Dummy Bot(Hero(Torbjörn), Team Of(Event Player), Event Player.ForLoopIndexPlayer, Event Player + Facing Direction Of(Event Player), Facing Direction Of(Event Player));
 		Break;
 		End;
@@ -9603,6 +9606,7 @@ rule("torb: spawn torb turret")
 		Set Gravity(Event Player.TorbTurret, Value In Array(Event Player.TorbTurret.CurrentGravities, 0));
 		Set Knockback Received(Event Player.TorbTurret, 0);
 		Event Player.TorbTurret.TorbTurretLevel = 1;
+		Event Player.TorbTurret.TorbTurretMaster = Event Player;
 		
 		Disable Movement Collision With Players(Event Player.TorbTurret);
 		"To prevent the player and turret from damaging each other in free for all."
@@ -9645,10 +9649,13 @@ rule("torb: reset torb")
 		Destroy Dummy Bot(Team Of(Event Player), Slot Of(Event Player.TorbTurret));
 
 		Event Player.TorbTurret = Null;
-		Event Player.B = Null;
-		If(Event Player.UsingCustomUlt == True || Event Player.CustomUltReadyToUse == True);
+		If((Event Player.UsingCustomUlt == True || Event Player.CustomUltReadyToUse == True) && Event Player.B != Hero Of(Event Player));
 		Call Subroutine(StopUsingCustomUlt);
+		
 		End;
+		Event Player.B = Null;
+		
+		
 	}
 }
 
@@ -9843,6 +9850,29 @@ rule("torb: torb turret, fire at enemies in ffa")
 		Press Button(Event Player.TorbTurret, Button(Secondary Fire));
 		End;
 		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("torb: torb turret gained a kill, give score to master")
+{
+	event
+	{
+		Player Earned Elimination;
+		All;
+		Torbjörn;
+	}
+
+	conditions
+	{
+		Event Player.TorbTurretLevel != Null;
+		Event Player.TorbTurretMaster != Null;
+	}
+
+	actions
+	{
+		Modify Player Score(Event Player.TorbTurretMaster, 1);
 	}
 }
 
