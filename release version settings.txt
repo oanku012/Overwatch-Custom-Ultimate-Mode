@@ -30,9 +30,11 @@ good luck with your mode!*/
 
 	lobby
 	{
+		Return To Lobby: Never
 		Max Team 1 Players: 4
 		Max Team 2 Players: 4
 		Max FFA Players: 8
+		Allow Players Who Are In Queue: Yes
 	}
 
 	
@@ -101,7 +103,7 @@ good luck with your mode!*/
 		General
 		{
 
-			Ultimate Generation: 200%
+			Ultimate Generation: 300%
 			Ashe
 			{
 				Infinite Ultimate Duration: On

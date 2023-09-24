@@ -330,6 +330,24 @@ rule("Disable inspector for better performance")
 {
 	event
 	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+		
+	}
+
+	actions
+	{
+		Disable Inspector Recording;
+	}
+}
+
+rule("Disable inspector for better performance")
+{
+	event
+	{
 		Ongoing - Each Player;
 		All;
 		All;
@@ -658,46 +676,6 @@ rule("Teleport back in bounds if standing out of bounds")
 	}
 }
 
-
-
-
-
-
-rule("Test dummy")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Is Button Held(Event Player, Button(Interact)) == True;
-	
-	}
-
-	actions
-	{
-	
-		Create Dummy Bot(All Heroes, Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
-	
-	
-		
-	
-	
-		
-	
-		
-	
-		
-	
-	
-	
-		
-	}
-}
 
 
 
@@ -2912,11 +2890,11 @@ rule("Start damage over time on players that were hit during Genji's ult after h
 		
 	
 	
-		Start Damage Over Time(Event Player, Event Player.V, 10, 100);
+		Start Damage Over Time(Event Player, Event Player.V, 5, 200);
 		
-		Set Status(Event Player, Event Player.V, Stunned, 10);
+		Set Status(Event Player, Event Player.V, Stunned, 5);
 		Create Effect(All Players(All Teams), Bad Aura Sound, Color(White), Event Player, 1000, Visible To Position and Radius);
-		Wait Until(Is Dead(Event Player) == True, 10);
+		Wait Until(Is Dead(Event Player) == True, 5);
 		Destroy Effect(Last Created Entity);
 		Play Effect(All Players(All Teams), Bad Explosion, Color(Red), Event Player, 3);
 		Stop All Damage Over Time(Event Player);
@@ -4784,11 +4762,11 @@ rule("If sees McCree get damaged team-modes")
 		
 		
 		
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player, 20))), 1);
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player, 20) && Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block Los))), 1);
 		
-		Set Status(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player, 20)), Event Player.ForLoopIndexPlayer), Event Player, Burning, 0.1);
+		Set Status(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player, 20) && Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, Burning, 0.1);
 		
-		Damage(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element, Event Player, 20)), Event Player.ForLoopIndexPlayer), Event Player, 10);
+		Damage(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element, Event Player, 20) && Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, 10);
 		
 		
 		End;
@@ -4822,11 +4800,11 @@ rule("If sees McCree get damaged FFA")
 		
 		
 		
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player, 20))), 1);
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player, 20) && Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block Los))), 1);
 		
-		Set Status(Value In Array(Filtered Array(Remove From Array(All Players(All Teams), Event Player), Is In View Angle(Current Array Element, Event Player, 20)), Event Player.ForLoopIndexPlayer), Event Player, Burning, 0.1);
+		Set Status(Value In Array(Filtered Array(Remove From Array(All Players(All Teams), Event Player), Is In View Angle(Current Array Element, Event Player, 20) && Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, Burning, 0.1);
 		
-		Damage(Value In Array(Filtered Array(Remove From Array(All Players(All Teams), Event Player),Is In View Angle(Current Array Element, Event Player, 20)), Event Player.ForLoopIndexPlayer), Event Player, 10);
+		Damage(Value In Array(Filtered Array(Remove From Array(All Players(All Teams), Event Player), Is In View Angle(Current Array Element, Event Player, 20) && Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, 10);
 		
 		
 		End;
@@ -6689,8 +6667,7 @@ rule("reinhardt: increase buffs in the air")
 	
 	
 		
-	
-		Event Player.Y += 1;
+		Event Player.Y += 1.5;
 		Event Player.R += 30;
 		Event Player.Q += 0.300;
 		Set Damage Dealt(Event Player, Event Player.R);
@@ -6771,7 +6748,8 @@ rule("reinhardt: do stuff when earthshatter has landed")
 		Set Ultimate Ability Enabled(Event Player, False);
 	
 	
-		Wait Until(Is Dead(Event Player) == True, Event Player.Y);
+	
+		Wait Until(Is Dead(Event Player) == True || Event Player.Y <= 0, Event Player.Y + 2);
 		Call Subroutine(ResetReinhardt);
 	}
 }
