@@ -100,7 +100,7 @@ settings
 			
 				Ashe
 			
-				Bastion
+			
 				
 				Illari
 				Kiriko
@@ -267,22 +267,21 @@ variables {
     109: TorbCurrentTarget
     110: WidowZoomedIn
     111: WidowPlayersInViewAngleSorted
-    112: WidowRayCastForward
+    112: WidowRayCastForwardPlayer
     113: WidowRayCastStartPos
     114: WidowRayCastEndPos
-    115: WidowRayCastBackward
-    116: WidowRayCastHeadForward
-    117: WidowRayCastHeadBackward
+    115: WidowRayCastBackwardPlayer
+    116: WidowRayCastForwardPos
+    117: WidowRayCastBackwardPos
     118: WidowFireBeam
     119: WidowDamage
     120: WidowAimBeam
-    121: WidowLastFacingDirection
-    122: WinstonGrabbing
-    123: WinstonDamageArray
-    124: WinstonRayCasts
-    125: ZaryaGravPos
-    126: PossessingZenArray
-    127: PossessingZen
+    121: WinstonGrabbing
+    122: WinstonDamageArray
+    123: WinstonRayCasts
+    124: ZaryaGravPos
+    125: PossessingZenArray
+    126: PossessingZen
 }
 
 
@@ -290,59 +289,42 @@ subroutines {
     0: UseCustomUlt
     1: StopUsingCustomUlt
     2: CreateMenu
-    3: ResetBaptiste
-    4: ResetBrigitte
-    5: ResetDoomfist
-    6: ResetDVa
-    7: ResetEcho
-    8: ResetGenji
-    9: ResetHanzo
-    10: ResetJQ
-    11: ResetJunkrat
-    12: ResetLucio
-    13: ResetCassidy
-    14: ResetMei
-    15: ResetMoira
-    16: ResetPharah
-    17: ResetReaper
-    18: ResetReinhardt
-    19: ResetRoadhog
-    20: ResetSigma
-    21: ResetSojourn
-    22: ResetSoldier
-    23: ResetSombra
-    24: ResetSymmetraTeam1
-    25: ResetSymmetraTeam2
-    26: ResetTorb
-    27: ResetTracer
-    28: ResetWidow
-    29: ResetWinston
-    30: ResetWB
-    31: ResetZarya
-    32: ResetZenyatta
-    33: StopPossessing
-    34: StopPossessingFromPossessedSide
+    3: ResetBastion
+    4: ResetBaptiste
+    5: ResetBrigitte
+    6: ResetDoomfist
+    7: ResetDVa
+    8: ResetEcho
+    9: ResetGenji
+    10: ResetHanzo
+    11: ResetJQ
+    12: ResetJunkrat
+    13: ResetLucio
+    14: ResetCassidy
+    15: ResetMei
+    16: ResetMoira
+    17: ResetPharah
+    18: ResetReaper
+    19: ResetReinhardt
+    20: ResetRoadhog
+    21: ResetSigma
+    22: ResetSojourn
+    23: ResetSoldier
+    24: ResetSombra
+    25: ResetSymmetraTeam1
+    26: ResetSymmetraTeam2
+    27: ResetTorb
+    28: ResetTracer
+    29: ResetWidow
+    30: ResetWinston
+    31: ResetWB
+    32: ResetZarya
+    33: ResetZenyatta
+    34: StopPossessing
+    35: StopPossessingFromPossessedSide
 }
 
 
-
-rule("Disable inspector for better performance")
-{
-	event
-	{
-		Ongoing - Global;
-	}
-
-	conditions
-	{
-		
-	}
-
-	actions
-	{
-		Disable Inspector Recording;
-	}
-}
 
 rule("Disable inspector for better performance")
 {
@@ -406,8 +388,9 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 	
 	
 		
-		
-		If(Event Player.B == Hero(Baptiste));
+		If(Event Player.B == Hero(Bastion));
+		Call Subroutine(ResetBastion);
+		Else If(Event Player.B == Hero(Baptiste));
 		Call Subroutine(ResetBaptiste);
 		Else If(Event Player.B == Hero(Cassidy));
 		Call Subroutine(ResetCassidy);
@@ -494,7 +477,7 @@ rule("Set custom ultimate ready when charge is full")
 
 	conditions
 	{
-		(Hero Of(Event Player) == Hero(Mei) || Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Bastion) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)) == true;
+		(Hero Of(Event Player) == Hero(Mei) || Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)) == true;
 		Ultimate Charge Percent(Event Player) >= 100;
 		Event Player.CustomUltReadyToUse != True;
 		Is Dummy Bot(Event Player) == false;
@@ -678,6 +661,67 @@ rule("Teleport back in bounds if standing out of bounds")
 
 
 
+
+
+
+rule("Test dummy")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Interact)) == True;
+	
+	}
+
+	actions
+	{
+	
+		Create Dummy Bot(Hero(Winston), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
+	
+		Wait(1, Ignore Condition);
+		
+	
+	
+		
+	
+		
+	
+		
+	
+	
+		Start Holding Button(Last Created Entity, Button(Ability 2));
+	
+		
+	}
+}
+
+
+
+rule("Log number of entities")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+
+	}
+
+	actions
+	{
+		Wait(1, Ignore Condition);
+		Log To Inspector(Entity Count);
+		Loop;
+	}
+}
 
 
 
@@ -996,6 +1040,137 @@ rule("Ana description")
 	{
 		Event Player.UltDescription = Custom String("Nanoboosted player gains a speed boost, increased jump height, 0 cooldowns and ultimate charge generation.", Null, Null, Null);
 
+	}
+}
+
+
+
+
+
+rule("Bastion activate ultimate.")
+{
+  
+    event
+	{
+		Ongoing - Each Player;
+		All;
+		Bastion;
+	}
+
+    conditions{
+        
+		Is Using Ultimate(Event Player) == True;
+    }
+
+    actions
+    {
+		Cancel Primary Action(Event Player);
+		Set Ultimate Charge(Event Player, 0);
+		Set Ultimate Ability Enabled(Event Player, False);
+		
+        Call Subroutine(UseCustomUlt);
+        Set Ability Cooldown(Event Player, Button(Ability 1), 0);
+		
+		Press Button(Event Player, Button(Ability 1));
+		
+	
+		
+		Wait(1, Ignore Condition);
+
+		Wait Until(Is Dead(Event Player) == True && Is In Alternate Form(Event Player) == False, 6);
+		Call Subroutine(ResetBastion);
+
+    }
+}
+
+
+
+rule("Bastion fire projectiles in tank form")
+{
+  
+    event
+	{
+		Ongoing - Each Player;
+		All;
+		Bastion;
+	}
+
+    conditions{
+        
+		Event Player.UsingCustomUlt == True;
+		Is In Alternate Form(Event Player) == True;
+		(Is Firing Primary(Event Player) == True || Is Firing Secondary(Event Player) == True) == True;
+    }
+
+    actions
+    {
+        Wait(0.1, Abort When False);
+		
+		Create Homing Projectile(Pharah Rocket, Event Player, Null, Facing Direction Of(Event Player) + Vector(Random Real(-0.2, 0.2), Random Real(-0.2, 0.2), Random Real(-0.2, 0.2)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 50, 25, 2.5, Pharah Rocket Launcher Explosion Effect, Pharah Rocket Launcher Explosion Sound, 0, 35, 5, 4, Player Closest To Reticle(Event Player, Opposite Team Of(Team Of(Event Player))), 0.5);
+		
+		
+	
+		
+	
+		
+		Loop If Condition Is True;
+		
+		
+		
+	
+		
+	
+		
+
+	
+		
+
+    }
+}
+
+
+
+rule("Bastion reset secondary fire cooldown")
+{
+  
+    event
+	{
+		Ongoing - Each Player;
+		All;
+		Bastion;
+	}
+
+    conditions{
+        
+		Event Player.UsingCustomUlt == True;
+		Is In Alternate Form(Event Player) == True;
+		Ability Cooldown(Event Player, Button(Secondary Fire)) > 0;
+    }
+
+    actions
+    {
+        Set Ability Cooldown(Event Player, Button(Secondary Fire), 0);
+
+    }
+}
+
+
+
+rule("Reset Bastion stuff")
+{
+	event
+	{
+		Subroutine;
+		ResetBastion;
+	}
+
+	actions
+	{
+		Call Subroutine(StopUsingCustomUlt);
+		Set Ultimate Ability Enabled(Event Player, True);
+		
+	
+		
 	}
 }
 
@@ -2895,6 +3070,7 @@ rule("Start damage over time on players that were hit during Genji's ult after h
 		Set Status(Event Player, Event Player.V, Stunned, 5);
 		Create Effect(All Players(All Teams), Bad Aura Sound, Color(White), Event Player, 1000, Visible To Position and Radius);
 		Wait Until(Is Dead(Event Player) == True, 5);
+	
 		Destroy Effect(Last Created Entity);
 		Play Effect(All Players(All Teams), Bad Explosion, Color(Red), Event Player, 3);
 		Stop All Damage Over Time(Event Player);
@@ -5211,7 +5387,7 @@ rule("Mei: clear frozen status after time stop is over and damage players")
 
 	actions
 	{
-		Skip If((Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Bastion) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)), 1);
+		Skip If((Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)), 1);
 		Allow Button(Event Player, Button(Ultimate));
 		
 		Clear Status(Event Player, Frozen);
@@ -10244,7 +10420,7 @@ rule("Widowmaker fire through wall")
         Event Player.WidowZoomedIn == true;
        
        
-        Is In Line Of Sight(Event Player, First Of(Event Player.WidowPlayersInViewAngleSorted), Barriers Do Not Block LOS) != true;
+        Is In Line Of Sight(Event Player, First Of(Event Player.WidowPlayersInViewAngleSorted), Enemy Barriers Block LOS) != true;
 		Is Dummy Bot(Event Player) == false;
 
 	}
@@ -10255,13 +10431,20 @@ rule("Widowmaker fire through wall")
        
        
 
-        
+       
+       
 
-        Event Player.WidowRayCastForward = Ray Cast Hit Player(Event Player.WidowRayCastStartPos, Event Player.WidowRayCastEndPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
-        Event Player.WidowRayCastBackward = Ray Cast Hit Player(Event Player.WidowRayCastEndPos, Event Player.WidowRayCastStartPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
+       
+		
+	
 
-        Event Player.WidowRayCastHeadForward = Ray Cast Hit Position(Event Player.WidowRayCastStartPos, Event Player.WidowRayCastEndPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
-        Event Player.WidowRayCastHeadBackward = Ray Cast Hit Position(Event Player.WidowRayCastEndPos, Event Player.WidowRayCastStartPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
+	
+
+        Event Player.WidowRayCastForwardPlayer = Ray Cast Hit Player(Event Player.WidowRayCastStartPos, Event Player.WidowRayCastEndPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
+        Event Player.WidowRayCastBackwardPlayer = Ray Cast Hit Player(Event Player.WidowRayCastEndPos, Event Player.WidowRayCastStartPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
+
+        Event Player.WidowRayCastForwardPos = Ray Cast Hit Position(Event Player.WidowRayCastStartPos, Event Player.WidowRayCastEndPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
+        Event Player.WidowRayCastBackwardPos = Ray Cast Hit Position(Event Player.WidowRayCastEndPos, Event Player.WidowRayCastStartPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
 
         
         
@@ -10272,39 +10455,46 @@ rule("Widowmaker fire through wall")
        
 
        
-       
-
+		
+		
+		
        
         Create Beam Effect(Remove From Array(All Players(All Teams), Event Player), Good Beam, Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, Team Of(Event Player), None);
         Event Player.WidowFireBeam = Last Created Entity;
 
         
+		
+       
+		
+
+        If(Event Player.WidowRayCastForwardPlayer != null);
+        Create Projectile(Genji Shuriken, Event Player, Event Player.WidowRayCastForwardPos, Direction Towards(Event Player.WidowRayCastForwardPos, Event Player.WidowRayCastEndPos), To World, Damage, Opposite Team Of(Team Of(Event Player)), Event Player.WidowDamage, 2.5, 0, Bad Explosion, Explosion Sound, 0, 1000000, 0, 0, 0, 0);
+       
+	
+	
+       
+		Log To Inspector(Custom String("Forwardraycast"));
+		Else If(Event Player.WidowRayCastBackwardPlayer != null && Event Player.WidowRayCastForwardPlayer == null);
+        Create Projectile(Genji Shuriken, Event Player, Event Player.WidowRayCastBackwardPos, Direction Towards(Event Player.WidowRayCastBackwardPos, Event Player.WidowRayCastStartPos), To World, Damage, Opposite Team Of(Team Of(Event Player)), Event Player.WidowDamage, 2.5, 0, Bad Explosion, Explosion Sound, 0, 1000000, 0, 0, 0, 0);
+       
+	
+	
         
-
-       
-       
-
-        Skip If(Distance Between(Event Player.WidowRayCastHeadForward, Update Every Frame(Eye Position(Event Player.WidowRayCastForward))) > 0.3 && Distance Between(Event Player.WidowRayCastHeadBackward, Update Every Frame(Eye Position(Event Player.WidowRayCastBackward))) > 0.3, 4);
-       
-        Skip If(Event Player.WidowRayCastForward == null && Event Player.WidowRayCastBackward == null, 3);
-       
-        Skip If((Event Player.WidowRayCastForward == null && Distance Between(Event Player.WidowRayCastHeadBackward, Update Every Frame(Eye Position(Event Player.WidowRayCastBackward))) > 0.3) || (Event Player.WidowRayCastBackward == null && Distance Between(Event Player.WidowRayCastHeadForward, Update Every Frame(Eye Position(Event Player.WidowRayCastForward))) > 0.3), 2);
-       
-        Event Player.WidowDamage *= 2.5;
-        Play Effect(Event Player, Buff Impact Sound, Color(White), Event Player, 100);
-
-        Skip If(Event Player.WidowRayCastForward == null, 1);
-        Damage(Event Player.WidowRayCastForward, Event Player, Event Player.WidowDamage); 
-       
-        Skip If(Event Player.WidowRayCastBackward == null || Event Player.WidowRayCastForward != null, 1);
-        Damage(Event Player.WidowRayCastBackward, Event Player, Event Player.WidowDamage); 
+	
+		Log To Inspector(Custom String("Backwardraycast"));
+        
+		Else;
+        Create Projectile(Genji Shuriken, Event Player, Event Player.WidowRayCastStartPos, Direction Towards(Event Player.WidowRayCastStartPos, Event Player.WidowRayCastEndPos), To World, Damage, Opposite Team Of(Team Of(Event Player)), Event Player.WidowDamage, 2.5, 0, Bad Explosion, Explosion Sound, 0, 10000000, 0.1, 0, 0, 0);
+	
+        
+	
+		Log To Inspector(Custom String("Raycast missed"));
+		
+		End;
        
         Event Player.WidowDamage = 12;
 
         Stop Chasing Player Variable(Event Player, WidowDamage);
-
-       
-       
 
         Wait(0.2, Ignore Condition);
         Destroy Effect(Event Player.WidowFireBeam);
@@ -10333,7 +10523,7 @@ rule("Widowmaker fired, start recharging gun.")
        
         Event Player.WidowZoomedIn == true;
         Is Reloading(Event Player) != true;
-        Is In Line Of Sight(Event Player, First Of(Event Player.WidowPlayersInViewAngleSorted), Barriers Do Not Block LOS) != true;
+        Is In Line Of Sight(Event Player, First Of(Event Player.WidowPlayersInViewAngleSorted), Enemy Barriers Block LOS) != true;
 		Is Dummy Bot(Event Player) == false;
 
 	
@@ -10437,7 +10627,7 @@ rule("Widowmaker update aim raycast")
 
         Event Player.WidowRayCastEndPos = Event Player.WidowRayCastStartPos + Update Every Frame(Facing Direction Of(Event Player))  * 2; 
 
-        Event Player.WidowLastFacingDirection = Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000;
+       
 
         Loop If Condition Is True;
         
@@ -10470,7 +10660,7 @@ rule("Widowmaker update player closest to reticle, detects only living players")
     actions
     {
         
-        Wait(0.064, Ignore Condition);
+        Wait(0.016, Ignore Condition);
         Event Player.WidowPlayersInViewAngleSorted = Sorted Array(All Living Players(Opposite Team Of(Team Of(Event Player))), Absolute Value(Angle Difference(Horizontal Facing Angle Of(Event Player) + Vertical Facing Angle Of(Event Player), Horizontal Angle From Direction(Direction Towards(Event Player, Current Array Element)) + Vertical Angle From Direction(Direction Towards(Event Player, Current Array Element)))));
 	
 	
