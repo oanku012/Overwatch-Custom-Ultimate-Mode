@@ -103,7 +103,7 @@ settings
 			
 				
 				Illari
-				Kiriko
+			
 				Lifeweaver
 				Ramattra
 				
@@ -703,26 +703,6 @@ rule("Test dummy")
 
 
 
-rule("Log number of entities")
-{
-	event
-	{
-		Ongoing - Global;
-	}
-
-	conditions
-	{
-
-	}
-
-	actions
-	{
-		Wait(1, Ignore Condition);
-		Log To Inspector(Entity Count);
-		Loop;
-	}
-}
-
 
 
 rule("CreateMenu")
@@ -895,9 +875,10 @@ rule("ana: set variables for player boosted by ana")
 
 	conditions
 	{
+		Hero Of(Event Player) == Hero(Ana);
+		
 		Event Ability() == Button(Ultimate);
 		Is Dummy Bot(Event Player) == false;
-	
 	
 	}
 
@@ -908,7 +889,7 @@ rule("ana: set variables for player boosted by ana")
 		Healee.Nanoboosted = True;
 	
 		
-		Value In Array(Healee.CurrentSpeeds, 0) += 200;
+		Value In Array(Healee.CurrentSpeeds, 0) += 100;
 		Value In Array(Healee.CurrentSpeeds, 1) += 200;
 		Set Move Speed(Healee, Value In Array(Healee.CurrentSpeeds, 0));
 		Set Jump Vertical Speed(Healee, Value In Array(Healee.CurrentSpeeds, 1));
@@ -935,9 +916,10 @@ rule("ana: damage all team mates by a very small amount so that they can be heal
 
 	conditions
 	{
+		Hero Of(Event Player) == Hero(Ana);
+		
 		Is Using Ultimate(Event Player) == True;
 		Is Dummy Bot(Event Player) == false;
-	
 	
 	}
 
@@ -947,6 +929,9 @@ rule("ana: damage all team mates by a very small amount so that they can be heal
 		Damage(All Players(Team Of(Event Player)), Null, 0.016);
 		Start Healing Modification(All Players(Team Of(Event Player)), Remove From Array(All Players(Team Of(Event Player)), Event Player), 0, Receivers Healers And Healing Percent);
 		Event Player.AnaHealMod = Last Healing Modification ID;
+		Wait(0.2, Ignore Condition);
+		Stop Healing Modification(Event Player.AnaHealMod);
+		Event Player.AnaHealMod = Null;
 	}
 }
 
@@ -972,7 +957,7 @@ rule("Ana: Disable nanoboost effects after some time or when dead")
 	{
 		Wait Until(Is Dead(Event Player) == True, 8);
 		Event Player.Nanoboosted = Null;
-		Value In Array(Event Player.CurrentSpeeds, 0) -= 200;
+		Value In Array(Event Player.CurrentSpeeds, 0) -= 100;
 		Value In Array(Event Player.CurrentSpeeds, 1) -= 200;
 		Set Move Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 0));
 		Set Jump Vertical Speed(Event Player, Value In Array(Event Player.CurrentSpeeds, 1));
@@ -1032,6 +1017,7 @@ rule("Ana description")
 	conditions
 	{
 	
+		Hero Of(Event Player) == Hero(Ana);
 		
 
 	}
@@ -1040,6 +1026,8 @@ rule("Ana description")
 	{
 		Event Player.UltDescription = Custom String("Nanoboosted player gains a speed boost, increased jump height, 0 cooldowns and ultimate charge generation.", Null, Null, Null);
 
+		Allow Button(Event Player, Button(Ultimate));
+		
 	}
 }
 
@@ -1064,6 +1052,7 @@ rule("Bastion activate ultimate.")
 
     actions
     {
+		Event Player.B == Hero Of(Event Player);
 		Cancel Primary Action(Event Player);
 		Set Ultimate Charge(Event Player, 0);
 		Set Ultimate Ability Enabled(Event Player, False);
@@ -1106,7 +1095,7 @@ rule("Bastion fire projectiles in tank form")
     {
         Wait(0.1, Abort When False);
 		
-		Create Homing Projectile(Pharah Rocket, Event Player, Null, Facing Direction Of(Event Player) + Vector(Random Real(-0.2, 0.2), Random Real(-0.2, 0.2), Random Real(-0.2, 0.2)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 50, 25, 2.5, Pharah Rocket Launcher Explosion Effect, Pharah Rocket Launcher Explosion Sound, 0, 35, 5, 4, Player Closest To Reticle(Event Player, Opposite Team Of(Team Of(Event Player))), 0.5);
+		Create Homing Projectile(Pharah Rocket, Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player), Facing Direction Of(Event Player) + Vector(Random Real(-0.2, 0.2), Random Real(-0.2, 0.2), Random Real(-0.2, 0.2)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 50, 25, 2.5, Pharah Rocket Launcher Explosion Effect, Pharah Rocket Launcher Explosion Sound, 0, 35, 5, 4, Value In Array(Sorted Array(All Living Players(Opposite Team Of(Team Of(Event Player))), Absolute Value(Angle Difference(Horizontal Facing Angle Of(Event Player) + Vertical Facing Angle Of(Event Player), Horizontal Angle From Direction(Direction Towards(Event Player, Current Array Element)) + Vertical Angle From Direction(Direction Towards(Event Player, Current Array Element))))), 0), 0.7);
 		
 		
 	
@@ -1130,32 +1119,6 @@ rule("Bastion fire projectiles in tank form")
 
 
 
-rule("Bastion reset secondary fire cooldown")
-{
-  
-    event
-	{
-		Ongoing - Each Player;
-		All;
-		Bastion;
-	}
-
-    conditions{
-        
-		Event Player.UsingCustomUlt == True;
-		Is In Alternate Form(Event Player) == True;
-		Ability Cooldown(Event Player, Button(Secondary Fire)) > 0;
-    }
-
-    actions
-    {
-        Set Ability Cooldown(Event Player, Button(Secondary Fire), 0);
-
-    }
-}
-
-
-
 rule("Reset Bastion stuff")
 {
 	event
@@ -1168,8 +1131,36 @@ rule("Reset Bastion stuff")
 	{
 		Call Subroutine(StopUsingCustomUlt);
 		Set Ultimate Ability Enabled(Event Player, True);
+		Event Player.B == Null;
 		
 	
+		
+	}
+}
+
+
+
+rule("Bastion description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Bastion;
+	}
+
+	conditions
+	{
+	
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Turn into sentry mode and fire numerous homing missiles from your minigun.", Null, Null, Null);
+
+		Allow Button(Event Player, Button(Ultimate));
 		
 	}
 }
@@ -1218,9 +1209,14 @@ rule("Start aiming baptiste ult")
 		Wait Until(Is Button Held(Event Player, Button(Ultimate)) == False || Is Dead(Event Player) == True, 10);
 		If(Is Alive(Event Player) == True);
 		Event Player.BaptisteShieldReadyToPlant = True;
+		Wait Until(Is Dead(Event Player) == True, 15);
+		If(Event Player.BaptisteShieldReadyToPlant == True);
+		Call Subroutine(ResetBaptiste);
+		End;
 		Else;
 		Call Subroutine(ResetBaptiste);
 		End;
+		
 		
 		
 	}
@@ -1256,6 +1252,7 @@ rule("Baptiste plant down shield")
 	
 		
 		Destroy Effect(Event Player.BaptisteShieldAimSphere);
+		Event Player.BaptisteShieldAimSphere = Null;
 		
 		
 		If(Number of Players(Team Of(Event Player)) >= Number of Slots(Team Of(Event Player)));
@@ -1271,7 +1268,7 @@ rule("Baptiste plant down shield")
 		End;
 		End;
 		
-		
+		Event Player.BaptisteShieldReadyToPlant = False;
 		
 		Event Player.BaptisteShieldBot = Last Created Entity;
 		
@@ -1346,14 +1343,17 @@ rule("Reset everything with baptiste.")
     actions
     {
 		Call Subroutine(StopUsingCustomUlt);
+		If(Event Player.BaptisteShieldAimSphere != Null);
+		Destroy Effect(Event Player.BaptisteShieldAimSphere);
+		Event Player.BaptisteShieldAimSphere = Null;
 		
+		End;
 		If(Event Player.BaptisteShieldBot != Null);
 		Destroy Dummy Bot(Team Of(Event Player), Slot Of(Event Player.BaptisteShieldBot));
 		Event Player.BaptisteShieldBot = Null;
 		End;
 		
 		Event Player.BaptisteShieldPos = Null;
-		Event Player.BaptisteShieldAimSphere = Null;
 		Event Player.BaptisteShieldReadyToPlant = Null;
 		
 	
@@ -1891,13 +1891,13 @@ rule("D.Va increase upgrade counter when using ult as baby D.VA, just used so th
 
 	conditions
 	{
+		Hero Of(Event Player) == Hero(D.Va);
 		Is In Alternate Form(Event Player) == True;
 		Is Dummy Bot(Event Player) == false;
 	
 		Is Using Ultimate(Event Player) == True;
 	
 		Event Player.DVAVariables != Null;
-	
 
 	}
 
@@ -1930,7 +1930,7 @@ rule("D.VA Has spawned with no upgrades, set hud and initial damage+max health")
 		Has Spawned(Event Player) == True;
 		Is Dummy Bot(Event Player) == false;
 		Event Player.DVAVariables == Null; 
-	
+		Hero Of(Event Player) == Hero(D.Va);
 	
 
 	}
@@ -2065,7 +2065,7 @@ rule("D.VA has chosen a new upgrade")
 		Has Spawned(Event Player) == True;
 	
 		Is Dummy Bot(Event Player) == false;
-	
+		Hero Of(Event Player) == Hero(D.Va);
 	
 		Event Player.MenuChosenOption != Null;
 		Event Player.DVAVariables != Null;
@@ -2181,7 +2181,7 @@ rule("D.VA reduce ability 1 and secondary fire cooldown after obtaining cooldown
 		Has Spawned(Event Player) == True;
 	
 		Is Dummy Bot(Event Player) == false;
-	
+		Hero Of(Event Player) == Hero(D.Va);
 		Event Player.DVAVariables != Null;
 		Value In Array(Event Player.G, 2) >= 2;
 		(Ability Cooldown(Event Player, Button(Ability 1)) > 0 || Ability Cooldown(Event Player, Button(Ability 2)) > 0 || Ability Cooldown(Event Player, Button(Secondary Fire)) > 0) == True;
@@ -2233,7 +2233,7 @@ rule("D.VA reduce ability 2 cooldown after obtaining cooldown upgrade")
 		Has Spawned(Event Player) == True;
 	
 		Is Dummy Bot(Event Player) == false;
-	
+		Hero Of(Event Player) == Hero(D.Va);
 		Event Player.DVAVariables != Null;
 		Value In Array(Event Player.G, 2) >= 2;
 		Is Using Ability 2(Event Player) == True;
@@ -2273,7 +2273,7 @@ rule("D.VA regen defense matrix when it's upgraded")
 		Has Spawned(Event Player) == True;
 	
 		Is Dummy Bot(Event Player) == false;
-	
+		Hero Of(Event Player) == Hero(D.Va);
 		Event Player.DVAVariables != Null;
 		Value In Array(Event Player.G, 3) == True;
 		Ability Resource(Event Player, Button(Secondary Fire)) < 100;
@@ -2303,7 +2303,7 @@ rule("D.VA reset health and damage when dying and remove upgrades")
 
 	conditions
 	{
-	
+		Hero Of(Event Player) == Hero(D.Va);
 	
 		Is Dummy Bot(Event Player) == false;
 		Event Player.DVAVariables != Null;
@@ -2379,6 +2379,7 @@ rule("D.Va reset damage and health when in baby form.")
 		(Value In Array(Event Player.DVAVariables, 2) != Null || Value In Array(Event Player.DVAVariables, 3) != Null || Value In Array(Event Player.DVAVariables, 4) != Null || Value In Array(Event Player.G, 5) != Null) == True;
 	
 		Value In Array(Event Player.DVAVariables, 5) ==  False;
+		Hero Of(Event Player) == Hero(D.Va);
 		
 	}
 
@@ -2441,6 +2442,7 @@ rule("D.Va description")
 	conditions
 	{
 	
+		Hero Of(Event Player) == Hero(D.Va);
 		
 
 	}
@@ -4326,12 +4328,23 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 		Create Projectile Effect(All Players(All Teams), Bastion A-36 Tactical Grenade, All PLayers(Team Of(Event Player)), Event Player.JunkratBombPosition, Null, 0.5, Visible To Position Direction and Size);
 		Event Player.JunkratBombOrb = Last Created Entity;
 		Event Player.JunkratExplosionRadius = 30;
+		If((Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True);
+		Create Effect(All Players(All Teams), Ring, Team Of(Event Player), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius, Position And Radius);
+		Else;
 		Create Effect(All Players(All Teams), Ring, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius, Position And Radius);
+		End;
+		
 		Event Player.JunkratRadiusRing = Last Created Entity;
 		Event Player.UltTimer = 10;
 		Create Hud Text(Event Player, Event Player.UltTimer, null, null, Top, 0, Color(Orange), Color(Orange), Color(Orange), String, Default Visibility);
 		Event Player.UltTimerText = Last Text Id;
+		If((Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True);
+		Create In-World Text(All Players(All Teams), Event Player.UltTimer, Event Player.JunkratBombPosition + Up * 2, 10, Clip Against Surfaces, Visible To Position and String, Team Of(Event Player), Default Visibility);
+		Else;
 		Create In-World Text(All Players(All Teams), Event Player.UltTimer, Event Player.JunkratBombPosition + Up * 2, 10, Clip Against Surfaces, Visible To Position and String, Color(Orange), Default Visibility);
+		End;
+		
+		
 		Event Player.UltTimerAboveHead = Last Text Id;
 		Chase Player Variable At Rate(Event Player, UltTimer, 0, 1, None);
 		Wait(Event Player.UltTimer, Ignore Condition);
@@ -4588,6 +4601,8 @@ rule("Lucio: increase buffs in the air")
 		Event Player.S == True;
 		Is Dummy Bot(Event Player) == false;
 		Event Player.SigmaZeroGravBuff == False;
+		Event Player.JunkerQueenInArena != True;
+		
 	}
 
 	actions
@@ -6834,6 +6849,7 @@ rule("reinhardt: increase buffs in the air")
 		Event Player.S == True;
 		Is Dummy Bot(Event Player) == false;
 		Event Player.SigmaZeroGravBuff == False;
+		Event Player.JunkerQueenInArena != True;
 	}
 
 	actions
@@ -10230,6 +10246,7 @@ rule("Activate Tracer's super speed ultimate")
 	
 	
 		Create Effect(All Players(All Teams), Energy Sound, Color(White), Event Player, 200, Visible To Position and Radius);
+		Event Player.UltEffect = Last Created Entity;
 		Event Player.UsingCustomUlt = True;
 		Set Slow Motion(1);
 	
@@ -10267,7 +10284,8 @@ rule("Tracer reset")
 		Set Ultimate Charge(Event Player, 0);
 		Stop Forcing Throttle(Event Player);
 		Event Player.UsingCustomUlt = False;
-		Destroy Effect(Last Created Entity);
+		Destroy Effect(Event Player.UltEffect);
+		Event Player.UltEffect = Null;
 		Set Slow Motion(100);
 	
 		Enable Movement Collision With Players(Event Player);
@@ -11049,9 +11067,9 @@ rule("winston: check for wall with ray cast.")
 		
 		If(Is On Ground(Event Player) == False);
 		
-		Set Status(Event Player, Null, Stunned, 1.5);
+		Set Status(Event Player, Null, Stunned, 1);
 
-		Damage(Event Player, Value In Array(Event Player.WinstonDamageArray, 0), 150);
+		Damage(Event Player, Value In Array(Event Player.WinstonDamageArray, 0), 100);
 		
 		Wait(1.5, Ignore Condition);
 		Event Player.WinstonDamageArray = Null;
