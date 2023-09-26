@@ -103,7 +103,7 @@ settings
 			
 				
 				Illari
-			
+				Kiriko
 				Lifeweaver
 				Ramattra
 				
@@ -682,20 +682,20 @@ rule("Test dummy")
 	actions
 	{
 	
-		Create Dummy Bot(Hero(Winston), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
-	
-		Wait(1, Ignore Condition);
-		
+		Create Dummy Bot(Hero(Zarya), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
 	
 	
 		
 	
+	
+		
+	
 		
 	
 		
 	
 	
-		Start Holding Button(Last Created Entity, Button(Ability 2));
+	
 	
 		
 	}
@@ -1047,12 +1047,14 @@ rule("Bastion activate ultimate.")
 
     conditions{
         
+		Hero Of(Event Player) == Hero(Bastion);
+		
 		Is Using Ultimate(Event Player) == True;
     }
 
     actions
     {
-		Event Player.B == Hero Of(Event Player);
+		Event Player.B = Hero Of(Event Player);
 		Cancel Primary Action(Event Player);
 		Set Ultimate Charge(Event Player, 0);
 		Set Ultimate Ability Enabled(Event Player, False);
@@ -1064,10 +1066,19 @@ rule("Bastion activate ultimate.")
 		
 	
 		
+	
+	
+		
 		Wait(1, Ignore Condition);
-
-		Wait Until(Is Dead(Event Player) == True && Is In Alternate Form(Event Player) == False, 6);
-		Call Subroutine(ResetBastion);
+        Set Ability Cooldown(Event Player, Button(Ability 1), 0);
+		
+		Wait Until(Is Dead(Event Player) == True && Is In Alternate Form(Event Player) == False, 5.9);
+		Set Status(Event Player, Null, Stunned, 0.1);
+		Wait(0.1, Ignore Condition);
+        Set Ability Cooldown(Event Player, Button(Ability 1), 0);
+		
+		Press Button(Event Player, Button(Ability 1));
+	
 
     }
 }
@@ -1088,19 +1099,18 @@ rule("Bastion fire projectiles in tank form")
         
 		Event Player.UsingCustomUlt == True;
 		Is In Alternate Form(Event Player) == True;
-		(Is Firing Primary(Event Player) == True || Is Firing Secondary(Event Player) == True) == True;
+		Is Firing Primary(Event Player) == True;
     }
 
     actions
     {
-        Wait(0.1, Abort When False);
+        Wait(0.1, Ignore Condition);
 		
-		Create Homing Projectile(Pharah Rocket, Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player), Facing Direction Of(Event Player) + Vector(Random Real(-0.2, 0.2), Random Real(-0.2, 0.2), Random Real(-0.2, 0.2)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 50, 25, 2.5, Pharah Rocket Launcher Explosion Effect, Pharah Rocket Launcher Explosion Sound, 0, 35, 5, 4, Value In Array(Sorted Array(All Living Players(Opposite Team Of(Team Of(Event Player))), Absolute Value(Angle Difference(Horizontal Facing Angle Of(Event Player) + Vertical Facing Angle Of(Event Player), Horizontal Angle From Direction(Direction Towards(Event Player, Current Array Element)) + Vertical Angle From Direction(Direction Towards(Event Player, Current Array Element))))), 0), 0.7);
+		Create Homing Projectile(Pharah Rocket, Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player), Facing Direction Of(Event Player) + Vector(Random Real(-0.2, 0.2), Random Real(-0.2, 0.2), Random Real(-0.2, 0.2)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 80, 0.5, 2.5, Pharah Rocket Launcher Explosion Effect, Pharah Rocket Launcher Explosion Sound, 0, 35, 5, 4, Value In Array(Sorted Array(All Living Players(Opposite Team Of(Team Of(Event Player))), Absolute Value(Angle Difference(Horizontal Facing Angle Of(Event Player) + Vertical Facing Angle Of(Event Player), Horizontal Angle From Direction(Direction Towards(Event Player, Current Array Element)) + Vertical Angle From Direction(Direction Towards(Event Player, Current Array Element))))), 0), 0.9);
 		
+		Wait(0.1, Ignore Condition);
 		
-	
-		
-	
+		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player), Facing Direction Of(Event Player) + Vector(Random Real(-0.2, 0.2), Random Real(-0.2, 0.2), Random Real(-0.2, 0.2)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 100, 0.5, 4.5, Bastion Tank Cannon Explosion Effect, Bastion Tank Cannon Explosion Sound, 0, 40, 5, 10, 3, 30);
 		
 		Loop If Condition Is True;
 		
@@ -1112,6 +1122,34 @@ rule("Bastion fire projectiles in tank form")
 		
 
 	
+		
+
+    }
+}
+
+
+
+rule("Bastion slow down minigun rate of fire.")
+{
+  
+    event
+	{
+		Ongoing - Each Player;
+		All;
+		Bastion;
+	}
+
+    conditions{
+        
+		Event Player.UsingCustomUlt == True;
+		Is In Alternate Form(Event Player) == True;
+		Is Firing Primary(Event Player) == True;
+    }
+
+    actions
+    {
+		Cancel Primary Action(Event Player);
+        
 		
 
     }
@@ -1131,8 +1169,10 @@ rule("Reset Bastion stuff")
 	{
 		Call Subroutine(StopUsingCustomUlt);
 		Set Ultimate Ability Enabled(Event Player, True);
-		Event Player.B == Null;
-		
+		Event Player.B = Null;
+	
+	
+	
 	
 		
 	}

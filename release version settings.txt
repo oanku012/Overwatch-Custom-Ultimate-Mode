@@ -154,7 +154,7 @@ good luck with your mode!*/
 				//Ana
 				Ashe
 				//Baptiste
-				Bastion
+				//Bastion
 				//Hanzo
 				Illari
 				Kiriko

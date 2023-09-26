@@ -120,7 +120,7 @@ good luck with your mode!*/
 			
 				Ashe
 			
-				Bastion
+				//Bastion
 				
 				Illari
 				Kiriko
