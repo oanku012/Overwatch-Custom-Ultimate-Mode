@@ -110,11 +110,6 @@ good luck with your mode!*/
 				Ultimate Duration: 500%
 			}
 
-			Bastion
-			{
-				//Configuration: Tank Weapon Knockback Scalar: 400%
-				Ultimate Duration: 300%
-			}
 
 			Doomfist
 			{

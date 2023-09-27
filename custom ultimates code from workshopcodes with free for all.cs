@@ -7,7 +7,7 @@ settings
 
 	main
 	{
-		Description: "Overpowered custom-made ultimates for each hero. Currently only supports team-based modes and 1 of each hero per team. Press Crouch+Interact to see the ultimate description for your hero."
+		Description: "Overpowered custom-made ultimates for each hero. Currently only supports up to 8 players and 1 of each hero per team. Press Crouch+Interact to see the ultimate description for your hero. Made by Ouvervats on Workshop.codes. Use code 52DFR for the latest version."
 
 		Mode Name: "Overpowered ultimates"
 		
@@ -16,9 +16,11 @@ settings
 
 	lobby
 	{
+		Return To Lobby: Never
 		Max Team 1 Players: 4
 		Max Team 2 Players: 4
 		Max FFA Players: 8
+		Allow Players Who Are In Queue: Yes
 	}
 
 	
@@ -28,47 +30,72 @@ settings
 	{
 		General
 		{
-			Respawn Time Scalar: 50%
-
+		
+		
 			Hero Limit: 1 Per Team
 			
 		}
 
+		Team Deathmatch
+		{
 		
-
-		Skirmish
+		}
+		
+		Assault
+		{
+		
+		}
+		
+		Push
+		{
+		
+		}
+		
+		Control
 		{
 			
+		}
+		
+		Escort
+		{
+		
+		}
+		
+		Flashpoint
+		{
+		
+		}
+		
+		Hybrid
+		{
+		
+		}
+		
+		Capture The Flag
+		{
+		
 		}
 
 		Deathmatch
 		{
+		
 		}
-	
 	}
 
 	heroes
 	{
+		
 
 		General
 		{
 
-			Ultimate Generation: 500%
-			Ultimate Generation - Combat: 500%
-			Ultimate Generation - Passive: 500%
-			Spawn With Ultimate Ready: On
-
+			Ultimate Generation: 300%
 			Ashe
 			{
 				Infinite Ultimate Duration: On
 				Ultimate Duration: 500%
 			}
 
-			Bastion
-			{
-			
-				Ultimate Duration: 300%
-			}
 
 			Doomfist
 			{
@@ -101,7 +128,7 @@ settings
 				Ashe
 			
 			
-				
+			
 				Illari
 				Kiriko
 				Lifeweaver
@@ -325,6 +352,24 @@ subroutines {
 }
 
 
+
+rule("Disable inspector for better performance")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+		
+	}
+
+	actions
+	{
+		Disable Inspector Recording;
+	}
+}
 
 rule("Disable inspector for better performance")
 {
@@ -659,47 +704,6 @@ rule("Teleport back in bounds if standing out of bounds")
 	}
 }
 
-
-
-
-
-
-rule("Test dummy")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Is Button Held(Event Player, Button(Interact)) == True;
-	
-	}
-
-	actions
-	{
-	
-		Create Dummy Bot(Hero(Zarya), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
-	
-	
-		
-	
-	
-		
-	
-		
-	
-		
-	
-	
-	
-	
-		
-	}
-}
 
 
 
@@ -1048,7 +1052,7 @@ rule("Bastion activate ultimate.")
     conditions{
         
 		Hero Of(Event Player) == Hero(Bastion);
-		
+		Is Dummy Bot(Event Player) == False;
 		Is Using Ultimate(Event Player) == True;
     }
 
@@ -1070,15 +1074,21 @@ rule("Bastion activate ultimate.")
 	
 		
 		Wait(1, Ignore Condition);
-        Set Ability Cooldown(Event Player, Button(Ability 1), 0);
 		
-		Wait Until(Is Dead(Event Player) == True && Is In Alternate Form(Event Player) == False, 5.9);
-		Set Status(Event Player, Null, Stunned, 0.1);
-		Wait(0.1, Ignore Condition);
-        Set Ability Cooldown(Event Player, Button(Ability 1), 0);
 		
-		Press Button(Event Player, Button(Ability 1));
+		
 	
+		
+	
+		
+		
+		Wait Until(Is Dead(Event Player) == True && Is In Alternate Form(Event Player) == False, 6);
+	
+	
+       
+		
+	
+		Call Subroutine(ResetBastion);
 
     }
 }
@@ -1100,19 +1110,69 @@ rule("Bastion fire projectiles in tank form")
 		Event Player.UsingCustomUlt == True;
 		Is In Alternate Form(Event Player) == True;
 		Is Firing Primary(Event Player) == True;
+		Is Dummy Bot(Event Player) == False;
+		
     }
 
     actions
     {
         Wait(0.1, Ignore Condition);
 		
-		Create Homing Projectile(Pharah Rocket, Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player), Facing Direction Of(Event Player) + Vector(Random Real(-0.2, 0.2), Random Real(-0.2, 0.2), Random Real(-0.2, 0.2)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 80, 0.5, 2.5, Pharah Rocket Launcher Explosion Effect, Pharah Rocket Launcher Explosion Sound, 0, 35, 5, 4, Value In Array(Sorted Array(All Living Players(Opposite Team Of(Team Of(Event Player))), Absolute Value(Angle Difference(Horizontal Facing Angle Of(Event Player) + Vertical Facing Angle Of(Event Player), Horizontal Angle From Direction(Direction Towards(Event Player, Current Array Element)) + Vertical Angle From Direction(Direction Towards(Event Player, Current Array Element))))), 0), 0.9);
+		Create Homing Projectile(Pharah Rocket, Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player), Facing Direction Of(Event Player) + Vector(Random Real(-0.2, 0.2), Random Real(-0.2, 0.2), Random Real(-0.2, 0.2)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 80, 0.5, 2.5, Pharah Rocket Launcher Explosion Effect, Pharah Rocket Launcher Explosion Sound, 0, 35, 5, 4, Value In Array(Sorted Array(All Living Players(Opposite Team Of(Team Of(Event Player))), Absolute Value(Angle Difference(Horizontal Facing Angle Of(Event Player) + Vertical Facing Angle Of(Event Player), Horizontal Angle From Direction(Direction Towards(Event Player, Current Array Element)) + Vertical Angle From Direction(Direction Towards(Event Player, Current Array Element))))), 0), 1);
 		
-		Wait(0.1, Ignore Condition);
+	
 		
-		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player), Facing Direction Of(Event Player) + Vector(Random Real(-0.2, 0.2), Random Real(-0.2, 0.2), Random Real(-0.2, 0.2)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 100, 0.5, 4.5, Bastion Tank Cannon Explosion Effect, Bastion Tank Cannon Explosion Sound, 0, 40, 5, 10, 3, 30);
 		
 		Loop If Condition Is True;
+		
+		
+		
+	
+		
+	
+		
+
+	
+		
+
+    }
+}
+
+
+
+rule("Bastion fire bouncy bombs in tank form")
+{
+  
+    event
+	{
+		Ongoing - Each Player;
+		All;
+		Bastion;
+	}
+
+    conditions{
+        
+		Event Player.UsingCustomUlt == True;
+		Is In Alternate Form(Event Player) == True;
+		Is Firing Secondary(Event Player) == True;
+		Is Dummy Bot(Event Player) == False;
+		
+    }
+
+    actions
+    {
+       
+	
+	
+	
+		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player),  Facing Direction Of(Event Player) + Vector(Random Real(-0.1, 0.1), Random Real(-0.1, 0.1), Random Real(-0.1, 0.1)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 100, 0.5, 4.5, Bastion Tank Cannon Explosion Effect, Bastion Tank Cannon Explosion Sound, 0, 40, 5, 10, 3, 30);
+		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player),  Facing Direction Of(Event Player) + Vector(Random Real(-0.1, 0.1), Random Real(-0.1, 0.1), Random Real(-0.1, 0.1)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 100, 0.5, 4.5, Bastion Tank Cannon Explosion Effect, Bastion Tank Cannon Explosion Sound, 0, 40, 5, 10, 3, 30);
+		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player),  Facing Direction Of(Event Player) + Vector(Random Real(-0.1, 0.1), Random Real(-0.1, 0.1), Random Real(-0.1, 0.1)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 100, 0.5, 4.5, Bastion Tank Cannon Explosion Effect, Bastion Tank Cannon Explosion Sound, 0, 40, 5, 10, 3, 30);
+		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Eye Position(Event Player) + Facing Direction Of(Event Player),  Facing Direction Of(Event Player) + Vector(Random Real(-0.1, 0.1), Random Real(-0.1, 0.1), Random Real(-0.1, 0.1)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 100, 0.5, 4.5, Bastion Tank Cannon Explosion Effect, Bastion Tank Cannon Explosion Sound, 0, 40, 5, 10, 3, 30);
+	
+		
+		
+	
 		
 		
 		
@@ -1144,6 +1204,8 @@ rule("Bastion slow down minigun rate of fire.")
 		Event Player.UsingCustomUlt == True;
 		Is In Alternate Form(Event Player) == True;
 		Is Firing Primary(Event Player) == True;
+		Is Dummy Bot(Event Player) == False;
+		
     }
 
     actions
@@ -1151,6 +1213,34 @@ rule("Bastion slow down minigun rate of fire.")
 		Cancel Primary Action(Event Player);
         
 		
+
+    }
+}
+
+
+
+rule("Bastion reset secondary fire cooldown")
+{
+  
+    event
+	{
+		Ongoing - Each Player;
+		All;
+		Bastion;
+	}
+
+    conditions{
+        
+		Event Player.UsingCustomUlt == True;
+		Is In Alternate Form(Event Player) == True;
+		Ability Cooldown(Event Player, Button(Secondary Fire)) > 0;
+		Is Dummy Bot(Event Player) == False;
+		
+    }
+
+    actions
+    {
+        Set Ability Cooldown(Event Player, Button(Secondary Fire), 0);
 
     }
 }
@@ -1198,7 +1288,8 @@ rule("Bastion description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Turn into sentry mode and fire numerous homing missiles from your minigun.", Null, Null, Null);
+		Event Player.UltDescription = Custom String("Turn into assault mode and use primary fire to shoot homing missiles at enemies.{0}", Custom String("
+		Use secondary fire to shoot bouncing bombs."), Null, Null);
 
 		Allow Button(Event Player, Button(Ultimate));
 		
@@ -6441,7 +6532,7 @@ rule("Reaper pass through walls in wraith form and set gravity to 0.")
     {
 	
 	
-        Disable Movement Collision With Environment(Event Player, false);
+        Disable Movement Collision With Environment(Event Player, False);
 		Value In Array(Event Player.CurrentGravities, 0) -= 100;
 		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
 	
@@ -7098,14 +7189,15 @@ rule("Roadhog activate and deactivate ultimate")
 		Event Player.B = Hero Of(Event Player);
 	
 	
-		Event Player.P = Remove From Array(All Players(All Teams), Event Player);
+	
+	
 		Event Player.Y = 20;
 		Chase Player Variable At Rate(Event Player, Y, 0, 1, Destination and Rate);
 		Create HUD Text(Event Player, String("{0} {1}", Custom String("Reflect damage and healing.
 		Ultimate Duration: "), Event Player.Y), Null, Null, Top, 5, Color(White), Color(White), Color(White), Visible To and String, Default Visibility);
 		Event Player.UltHudTextObject = Last Text Id;
 		Event Player.UsingCustomUlt = True;
-		Create Effect(Event Player.P, Sphere, Color(White), Event Player, 2, Visible To Position and Radius);
+		Create Effect(Remove From Array(All Players(All Teams), Event Player), Sphere, Color(White), Event Player, 2, Visible To Position and Radius);
 	
 		Wait Until(Is Dead(Event Player) == True, Event Player.Y);
 	
@@ -7135,7 +7227,7 @@ rule("Roadhog reset")
 		Destroy HUD Text(Event Player.UltHudTextObject);
 		Event Player.UltHudTextObject = Null;
 		Event Player.Y = Null;
-		Event Player.P = Null;
+	
 		
 	
 	
@@ -11768,7 +11860,7 @@ rule("Zenyatta stop possessing")
 		Allow Button(Event Player.P, Button(Ability 1));
 		Allow Button(Event Player.P, Button(Ability 2));
 		
-		Skip If((Hero Of(Event Player.P) == Hero(Mei) || Hero Of(Event Player.P) == Hero(Zenyatta) || Hero Of(Event Player.P) == Hero(Zarya) || Hero Of(Event Player.P) == Hero(Baptiste) || Hero Of(Event Player.P) == Hero(Pharah) || Hero Of(Event Player.P) == Hero(Roadhog) || Hero Of(Event Player.P) == Hero(Sombra) || Hero Of(Event Player.P) == Hero(Symmetra) || Hero Of(Event Player.P) == Hero(Tracer) || Hero Of(Event Player.P) == Hero(Bastion) || Hero Of(Event Player.P) == Hero(Wrecking Ball) || Hero Of(Event Player.P) == Hero(Junkrat) || Hero Of(Event Player.P) == Hero(Torbjörn) || Hero Of(Event Player.P) == Hero(Sigma) || Hero Of(Event Player.P) == Hero(Reaper)), 1);
+		Skip If((Hero Of(Event Player.P) == Hero(Mei) || Hero Of(Event Player.P) == Hero(Zenyatta) || Hero Of(Event Player.P) == Hero(Zarya) || Hero Of(Event Player.P) == Hero(Baptiste) || Hero Of(Event Player.P) == Hero(Pharah) || Hero Of(Event Player.P) == Hero(Roadhog) || Hero Of(Event Player.P) == Hero(Sombra) || Hero Of(Event Player.P) == Hero(Symmetra) || Hero Of(Event Player.P) == Hero(Tracer) || Hero Of(Event Player.P) == Hero(Wrecking Ball) || Hero Of(Event Player.P) == Hero(Junkrat) || Hero Of(Event Player.P) == Hero(Torbjörn) || Hero Of(Event Player.P) == Hero(Sigma) || Hero Of(Event Player.P) == Hero(Reaper)), 1);
 		Allow Button(Event Player.P, Button(Ultimate));
 		
 		Allow Button(Event Player.P, Button(Jump));
@@ -11823,7 +11915,7 @@ rule("Zenyatta stop possessing from possessed side if possessing zen leaves")
 		Allow Button(Event Player, Button(Ability 1));
 		Allow Button(Event Player, Button(Ability 2));
 		
-		Skip If((Hero Of(Event Player) == Hero(Mei) || Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Bastion) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)), 1);
+		Skip If((Hero Of(Event Player) == Hero(Mei) || Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)), 1);
 		Allow Button(Event Player, Button(Ultimate));
 		
 		Allow Button(Event Player, Button(Jump));
