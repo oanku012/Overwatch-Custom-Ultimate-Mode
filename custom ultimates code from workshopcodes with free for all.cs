@@ -7,7 +7,7 @@ settings
 
 	main
 	{
-		Description: "Overpowered custom-made ultimates for each hero. Currently only supports up to 8 players and 1 of each hero per team. Press Crouch+Interact to see the ultimate description for your hero. Made by Ouvervats on Workshop.codes. Use code 52DFR for the latest version."
+		Description: "Overpowered custom-made ultimates for each hero. Currently only supports team-based modes and 1 of each hero per team. Press Crouch+Interact to see the ultimate description for your hero."
 
 		Mode Name: "Overpowered ultimates"
 		
@@ -16,11 +16,9 @@ settings
 
 	lobby
 	{
-		Return To Lobby: Never
 		Max Team 1 Players: 4
 		Max Team 2 Players: 4
 		Max FFA Players: 8
-		Allow Players Who Are In Queue: Yes
 	}
 
 	
@@ -30,72 +28,47 @@ settings
 	{
 		General
 		{
-		
-		
+			Respawn Time Scalar: 50%
+
 			Hero Limit: 1 Per Team
 			
 		}
 
-		Team Deathmatch
-		{
 		
-		}
-		
-		Assault
-		{
-		
-		}
-		
-		Push
-		{
-		
-		}
-		
-		Control
+
+		Skirmish
 		{
 			
-		}
-		
-		Escort
-		{
-		
-		}
-		
-		Flashpoint
-		{
-		
-		}
-		
-		Hybrid
-		{
-		
-		}
-		
-		Capture The Flag
-		{
-		
 		}
 
 		Deathmatch
 		{
-		
 		}
+	
 	}
 
 	heroes
 	{
-		
 
 		General
 		{
 
-			Ultimate Generation: 300%
+			Ultimate Generation: 500%
+			Ultimate Generation - Combat: 500%
+			Ultimate Generation - Passive: 500%
+			Spawn With Ultimate Ready: On
+
 			Ashe
 			{
 				Infinite Ultimate Duration: On
 				Ultimate Duration: 500%
 			}
 
+			Bastion
+			{
+			
+				Ultimate Duration: 300%
+			}
 
 			Doomfist
 			{
@@ -128,7 +101,7 @@ settings
 				Ashe
 			
 			
-			
+				
 				Illari
 				Kiriko
 				Lifeweaver
@@ -352,24 +325,6 @@ subroutines {
 }
 
 
-
-rule("Disable inspector for better performance")
-{
-	event
-	{
-		Ongoing - Global;
-	}
-
-	conditions
-	{
-		
-	}
-
-	actions
-	{
-		Disable Inspector Recording;
-	}
-}
 
 rule("Disable inspector for better performance")
 {
@@ -706,6 +661,136 @@ rule("Teleport back in bounds if standing out of bounds")
 
 
 
+
+
+
+rule("Test dummy")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Interact)) == True;
+	
+	}
+
+	actions
+	{
+	
+		Create Dummy Bot(Hero(Zarya), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
+	
+	
+		
+	
+	
+		
+	
+		
+	
+		
+	
+		Start Holding Button(Last Created Entity, Button(Primary Fire));
+	
+	
+		
+	}
+}
+
+
+
+rule("Current serverLoad")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+
+	}
+
+	actions
+	{
+		Wait(0.1, Ignore Condition);
+		
+		Log To Inspector(Server Load);
+		
+		Loop If Condition Is True;
+	
+	}
+}
+
+rule("Server Load Average")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+
+	}
+
+	actions
+	{
+		Wait(3, Ignore Condition);
+		
+		Log To Inspector(Custom String("Server Load Average: {0}", Server Load Average, Null, Null));
+		
+		Loop If Condition Is True;
+	
+	}
+}
+
+rule("Server Load Peak")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+
+	}
+
+	actions
+	{
+		Wait(3, Ignore Condition);
+		
+		Log To Inspector(Custom String("Server Load Peak: {0}", Server Load Peak, Null, Null));
+		
+		Loop If Condition Is True;
+	
+	}
+}
+
+rule("Log number of entities")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+
+	}
+
+	actions
+	{
+		Wait(1, Ignore Condition);
+		Log To Inspector(Entity Count);
+		Loop;
+	}
+}
 
 
 
@@ -5782,10 +5867,25 @@ rule("Mercy: Resurrect player upon death if they have an extra life.")
 	conditions
 	{
 		Event Player.ExtraLife == True;
+		
 	}
 
 	actions
 	{
+		If(Current Game Mode == Game Mode(Deathmatch));
+		If(Attacker != Event Player);
+		Modify Player Score(Attacker, -1);
+		Else;
+		Modify Player Score(Event Player, 1);
+		End;
+		Else If(Current Game Mode == Game Mode(Team Deathmatch));
+		If(Attacker != Event Player);
+		Modify Team Score(Team Of(Attacker), -1);
+		Else;
+		Modify Team Score(Team Of(Event Player), 1);
+		End;
+		End;
+		
 		Wait(2, Ignore Condition);
 		Teleport(Event Player, Nearest Walkable Position(Event Player));
 		Resurrect(Event Player);
@@ -5795,6 +5895,8 @@ rule("Mercy: Resurrect player upon death if they have an extra life.")
 		Event Player.MercyExtraLifeText = Null;
 		Destroy In-World Text(Event Player.ExtraLifeInWorldText);
 		Event Player.ExtraLifeInWorldText = Null;
+		
+		
 		Wait(0.1, Ignore Condition);
 		Event Player.ExtraLife = Null;
 
@@ -5820,7 +5922,8 @@ rule("Mercy description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Regular ultimate except you also give your whole team an extra life.");
+		Event Player.UltDescription = Custom String("Regular ultimate except you also give your whole team an extra life. {0}" , Custom String("
+		Extra life resurrects you shortly after death and negates any score earned or lost from the elimination."));
 
 		Allow Button(Event Player, Button(Ultimate));
 		
@@ -8245,9 +8348,16 @@ rule("soldier 76 UAV")
 		Value In Array(Event Player.Soldier76Variables, 2) = Empty Array;
 
 	
+		If(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter));
 		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(All Players(Opposite Team Of(Team Of(Event Player)))), 1);
 		Create Icon(All Players(Team Of(Event Player)), Value In Array(All Players(Opposite Team Of(Team Of(Event Player))), Event Player.ForLoopIndexPlayer), Skull, Visible To, Color(Red), false);
 		Value In Array(Event Player.Soldier76Variables, 2) = Append To Array(Value In Array(Event Player.Soldier76Variables, 2), Last Created Entity);
+		End;
+		Else;
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(All Players(Opposite Team Of(Team Of(Event Player)))), 1);
+		Create Icon(Event Player, Value In Array(All Players(Opposite Team Of(Team Of(Event Player))), Event Player.ForLoopIndexPlayer), Skull, Visible To, Color(Red), false);
+		Value In Array(Event Player.Soldier76Variables, 2) = Append To Array(Value In Array(Event Player.Soldier76Variables, 2), Last Created Entity);
+		End;
 		End;
 
 		Value In Array(Event Player.Soldier76KillStreaksActive, Index Of Array Value(Event Player.Soldier76KillStreaksEquipped, Value In Array(Event Player.SoldierAllKillStreaks, 0)) / 2) = False;
@@ -8321,7 +8431,7 @@ rule("soldier 76 care package")
 		Destroy Hud Text(Value In Array(Event Player.SoldierKillStreakTexts, Index Of Array Value(Event Player.Soldier76KillStreaksEquipped, Value In Array(Event Player.SoldierAllKillStreaks, 1)) / 2));
 
 
-		Wait(15, Ignore Condition);
+		Wait(10, Ignore Condition);
 		Stop Chasing Player Variable(Event Player, Soldier76CarepackLocation);
 
 	
@@ -8332,7 +8442,7 @@ rule("soldier 76 care package")
 		Create Effect(All Players(All Teams), Ring, Team Of(Event Player), Event Player.Soldier76CarepackLocation, 7, None);
 		Value In Array(Event Player.Soldier76Variables, 5) = Last Created Entity;
 
-		Wait(30, Ignore Condition);
+		Wait(60, Ignore Condition);
 		Destroy Effect(Value In Array(Event Player.Soldier76Variables, 5));
 		Destroy Effect(Value In Array(Event Player.Soldier76Variables, 4));
 		Value In Array(Event Player.Soldier76Variables, 3) = null;
