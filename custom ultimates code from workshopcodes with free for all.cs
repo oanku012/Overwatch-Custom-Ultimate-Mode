@@ -98,12 +98,12 @@ settings
 			disabled heroes
 			{
 			
-				Ashe
+			
 			
 			
 				
 				Illari
-				Kiriko
+			
 				Lifeweaver
 				Ramattra
 				
@@ -218,70 +218,68 @@ variables {
     60: UltTimerAboveHead
     61: UltTimerHUD
     62: JunkratBombDroppedPosition
-    63: Q
-    64: UltHudTextObject
-    65: SigmaZeroGravBuff
-    66: R
-    67: LucioHealthPoolHealthAmount
-    68: LucioHealthPool
-    69: MeiZaWarudoSphere
-    70: MeiIcicleEffects
-    71: MeiIciclePositions
-    72: MeiIcicleDirections
-    73: TimeStopStunned
-    74: O
-    75: N
-    76: MercyExtraLifeText
-    77: ExtraLifeInWorldText
-    78: P
-    79: ReaperVariables
-    80: ReaperTPPos
-    81: SigmaMaleValues
-    82: SigmaHighGravDebuff
-    83: SojournLastRay
-    84: SojournRayArray
-    85: SojournBeamArray
-    86: SojournEyePosArray
-    87: SojournLastEyePos
-    88: SojournDamageRay
-    89: Soldier76Variables
-    90: SoldierAllKillStreaks
-    91: Soldier76KillStreaksEquipped
-    92: SoldierKillStreakTexts
-    93: Soldier76KillStreaksActive
-    94: LocalVariable
-    95: Soldier76CarepackLocation
-    96: SoldierCarePackAmmoIndex
-    97: Virus
-    98: VirusEffects
-    99: VirusText
-    100: HasDiedWithVirus
-    101: K
-    102: L
-    103: InPortalSpeed
-    104: PortalUsed
-    105: TorbTurret
-    106: TorbTurretLevel
-    107: TorbTurretMaster
-    108: TorbTurretLevelText
-    109: TorbCurrentTarget
-    110: WidowZoomedIn
-    111: WidowPlayersInViewAngleSorted
-    112: WidowRayCastForwardPlayer
-    113: WidowRayCastStartPos
-    114: WidowRayCastEndPos
-    115: WidowRayCastBackwardPlayer
-    116: WidowRayCastForwardPos
-    117: WidowRayCastBackwardPos
-    118: WidowFireBeam
-    119: WidowDamage
-    120: WidowAimBeam
-    121: WinstonGrabbing
-    122: WinstonDamageArray
-    123: WinstonRayCasts
-    124: ZaryaGravPos
-    125: PossessingZenArray
-    126: PossessingZen
+    63: KirikoAffectedPlayers
+    64: Q
+    65: UltHudTextObject
+    66: SigmaZeroGravBuff
+    67: R
+    68: LucioHealthPoolHealthAmount
+    69: LucioHealthPool
+    70: MeiZaWarudoSphere
+    71: MeiIcicleEffects
+    72: MeiIciclePositions
+    73: MeiIcicleDirections
+    74: TimeStopStunned
+    75: O
+    76: N
+    77: MercyExtraLifeText
+    78: ExtraLifeInWorldText
+    79: P
+    80: ReaperVariables
+    81: ReaperTPPos
+    82: SigmaMaleValues
+    83: SigmaHighGravDebuff
+    84: SojournLastRay
+    85: SojournRayArray
+    86: SojournBeamArray
+    87: SojournEyePosArray
+    88: SojournLastEyePos
+    89: SojournDamageRay
+    90: Soldier76Variables
+    91: SoldierAllKillStreaks
+    92: Soldier76KillStreaksEquipped
+    93: SoldierKillStreakTexts
+    94: Soldier76KillStreaksActive
+    95: LocalVariable
+    96: Soldier76CarepackLocation
+    97: SoldierCarePackAmmoIndex
+    98: Virus
+    99: VirusEffects
+    100: VirusText
+    101: HasDiedWithVirus
+    102: K
+    103: L
+    104: InPortalSpeed
+    105: PortalUsed
+    106: TorbTurret
+    107: TorbTurretLevel
+    108: TorbTurretMaster
+    109: TorbTurretLevelText
+    110: TorbCurrentTarget
+    111: WidowZoomedIn
+    112: WidowPlayersInViewAngleSorted
+    113: WidowRayCasts
+    114: WidowRayCastStartPos
+    115: WidowRayCastEndPos
+    116: WidowFireBeam
+    117: WidowDamage
+    118: WidowAimBeam
+    119: WinstonGrabbing
+    120: WinstonDamageArray
+    121: WinstonRayCasts
+    122: ZaryaGravPos
+    123: PossessingZenArray
+    124: PossessingZen
 }
 
 
@@ -299,34 +297,35 @@ subroutines {
     10: ResetHanzo
     11: ResetJQ
     12: ResetJunkrat
-    13: ResetLucio
-    14: ResetCassidy
-    15: ResetMei
-    16: ResetMoira
-    17: ResetPharah
-    18: ResetReaper
-    19: ResetReinhardt
-    20: ResetRoadhog
-    21: ResetSigma
-    22: ResetSojourn
-    23: ResetSoldier
-    24: ResetSombra
-    25: ResetSymmetraTeam1
-    26: ResetSymmetraTeam2
-    27: ResetTorb
-    28: ResetTracer
-    29: ResetWidow
-    30: ResetWinston
-    31: ResetWB
-    32: ResetZarya
-    33: ResetZenyatta
-    34: StopPossessing
-    35: StopPossessingFromPossessedSide
+    13: ResetKiriko
+    14: ResetLucio
+    15: ResetCassidy
+    16: ResetMei
+    17: ResetMoira
+    18: ResetPharah
+    19: ResetReaper
+    20: ResetReinhardt
+    21: ResetRoadhog
+    22: ResetSigma
+    23: ResetSojourn
+    24: ResetSoldier
+    25: ResetSombra
+    26: ResetSymmetraTeam1
+    27: ResetSymmetraTeam2
+    28: ResetTorb
+    29: ResetTracer
+    30: ResetWidow
+    31: ResetWinston
+    32: ResetWB
+    33: ResetZarya
+    34: ResetZenyatta
+    35: StopPossessing
+    36: StopPossessingFromPossessedSide
 }
 
 
 
-rule("Disable inspector for better performance")
+rule("Disable certain heroes for free for all")
 {
 	event
 	{
@@ -408,6 +407,8 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		Call Subroutine(ResetJQ);
 		Else If(Event Player.B == Hero(Junkrat));
 		Call Subroutine(ResetJunkrat);
+		Else If(Event Player.B == Hero(Kiriko));
+		Call Subroutine(ResetKiriko);
 		Else If(Event Player.B == Hero(Lúcio));
 		Call Subroutine(ResetLucio);
 		Else If(Event Player.B == Hero(Mei));
@@ -477,7 +478,7 @@ rule("Set custom ultimate ready when charge is full")
 
 	conditions
 	{
-		(Hero Of(Event Player) == Hero(Mei) || Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)) == true;
+		(Hero Of(Event Player) == Hero(Mei) || Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Kiriko) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)) == true;
 		Ultimate Charge Percent(Event Player) >= 100;
 		Event Player.CustomUltReadyToUse != True;
 		Is Dummy Bot(Event Player) == false;
@@ -654,6 +655,7 @@ rule("Teleport back in bounds if standing out of bounds")
 
 	actions
 	{
+		Wait(1, Abort When False);
 		Teleport(Event Player, Nearest Walkable Position(Position Of(Event Player)));
 		Event Player.TeleportBackInBounds = False;
 	}
@@ -682,115 +684,26 @@ rule("Test dummy")
 	actions
 	{
 	
-		Create Dummy Bot(Hero(Zarya), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
+		Create Dummy Bot(Hero(Ashe), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
 	
-	
-		
-	
-	
-		
-	
-		
-	
-		
-	
-		Start Holding Button(Last Created Entity, Button(Primary Fire));
-	
-	
-		
-	}
-}
-
-
-
-rule("Current serverLoad")
-{
-	event
-	{
-		Ongoing - Global;
-	}
-
-	conditions
-	{
-
-	}
-
-	actions
-	{
-		Wait(0.1, Ignore Condition);
-		
-		Log To Inspector(Server Load);
-		
-		Loop If Condition Is True;
-	
-	}
-}
-
-rule("Server Load Average")
-{
-	event
-	{
-		Ongoing - Global;
-	}
-
-	conditions
-	{
-
-	}
-
-	actions
-	{
-		Wait(3, Ignore Condition);
-		
-		Log To Inspector(Custom String("Server Load Average: {0}", Server Load Average, Null, Null));
-		
-		Loop If Condition Is True;
-	
-	}
-}
-
-rule("Server Load Peak")
-{
-	event
-	{
-		Ongoing - Global;
-	}
-
-	conditions
-	{
-
-	}
-
-	actions
-	{
-		Wait(3, Ignore Condition);
-		
-		Log To Inspector(Custom String("Server Load Peak: {0}", Server Load Peak, Null, Null));
-		
-		Loop If Condition Is True;
-	
-	}
-}
-
-rule("Log number of entities")
-{
-	event
-	{
-		Ongoing - Global;
-	}
-
-	conditions
-	{
-
-	}
-
-	actions
-	{
 		Wait(1, Ignore Condition);
-		Log To Inspector(Entity Count);
-		Loop;
+		
+	
+	
+		
+		Set Ultimate Charge(Last Created Entity, 100);
+		
+	
+		
+		Start Holding Button(Last Created Entity, Button(Ultimate));
+	
+	
+	
+		
 	}
 }
+
+
 
 
 
@@ -953,6 +866,8 @@ rule("ChooseMenuFinalizeChoice")
 
 
 
+
+
 rule("ana: set variables for player boosted by ana")
 {
 	event
@@ -1055,6 +970,30 @@ rule("Ana: Disable nanoboost effects after some time or when dead")
 
 
 
+rule("Ana: Disable nanoboost effects after some time or when dead")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		All;
+	}
+
+	conditions
+	{
+		
+		
+
+	}
+
+	actions
+	{
+		
+	}
+}
+
+
+
 rule("Set cooldowns to 0 for nanoboosted player on a loop for when checking ability cooldown doesn't work")
 {
 
@@ -1101,6 +1040,34 @@ rule("Ana description")
 		Ongoing - Each Player;
 		All;
 		Ana;
+	}
+
+	conditions
+	{
+	
+		Hero Of(Event Player) == Hero(Ana);
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Nanoboosted player gains a speed boost, increased jump height, 0 cooldowns and ultimate charge generation.", Null, Null, Null);
+
+		Allow Button(Event Player, Button(Ultimate));
+		
+	}
+}
+
+
+
+rule("Ashe description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Ashe;
 	}
 
 	conditions
@@ -4732,6 +4699,115 @@ rule("Junkrat description and disable vanilla ult")
 
 
 
+rule("Kiriko activate ultimate")
+{
+
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Kiriko;
+	}
+
+	conditions
+	{
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		Hero Of(Event Player) == Hero(Kiriko);
+		Event Player.CustomUltReadyToUse == True;
+		Has Status(Event Player, Hacked) == False;
+		Event Player.UsingCustomUlt == Null;
+		Is Dummy Bot(Event Player) == False;
+		Is Alive(Event Player) == True;
+	}
+
+	actions
+	{
+		Call Subroutine(UseCustomUlt);
+		
+	
+		Set Ultimate Charge(Event Player, 0);
+		Set Ultimate Ability Enabled(Event Player, False);
+		
+		
+		
+	
+		
+		If(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter));
+		Event Player.KirikoAffectedPlayers = Filtered Array(Players Within Radius(Event Player, 30, Team Of(Event Player), Surfaces), (Hero Of(Current Array Element) != Hero(Wrecking Ball) && Hero Of(Current Array Element) != Hero(Winston)) || (Current Array Element.UsingCustomUlt != True && Is Using Ultimate(Current Array Element) != True));
+		Start Scaling Player(Event Player.KirikoAffectedPlayers, 0.1, False);
+		Start Modifying Hero Voice Lines(Event Player.KirikoAffectedPlayers, 1.5, False);
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.KirikoAffectedPlayers), 1);
+	
+	
+		Play Effect(All Players(All Teams), Cassidy Flashbang Explosion Sound, Color(white), Position Of(Value In Array(Event Player.KirikoAffectedPlayers, Event Player.ForLoopIndexPlayer)), 100);
+		Play Effect(All Players(All Teams), Good Explosion, Team Of(Event Player), Position Of(Value In Array(Event Player.KirikoAffectedPlayers, Event Player.ForLoopIndexPlayer)), 2);
+		End;
+		
+		Else;
+		Start Scaling Player(Event Player, 0.1, False);
+	
+	
+		Play Effect(All Players(All Teams), Cassidy Flashbang Explosion Sound, Color(white), Position Of(Event Player), 100);
+		Play Effect(All Players(All Teams), Good Explosion, Team Of(Event Player), Position Of(Event Player), 2);
+		End;
+		
+		Wait Until(Is Dead(Event Player), 10);
+		Call Subroutine(ResetKiriko);
+	}
+}
+
+
+
+rule("Kiriko reset")
+{
+	event
+	{
+		Subroutine;
+		ResetKiriko;
+	}
+
+	actions
+	{
+		Stop Scaling Player(Event Player.KirikoAffectedPlayers);
+		Stop Modifying Hero Voice Lines(Event Player.KirikoAffectedPlayers);
+	
+		Call Subroutine(StopUsingCustomUlt);
+		
+	}
+}
+
+
+
+rule("Kiriko description and disable vanilla ult")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Kiriko;
+	}
+
+	conditions
+	{
+	
+		Is Dummy Bot(Event Player) == False;
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Turn you and your team mates in a 30 meter radius really small and difficult to hit for 10 seconds.");
+
+		Event Player.B = Hero Of(Event Player);
+		Disallow Button(Event Player, Button(Ultimate));
+	}
+}
+
+
+
+
+
 rule("Lucio: ult ready")
 {
 	event
@@ -4743,7 +4819,7 @@ rule("Lucio: ult ready")
 
 	conditions
 	{
-		Ultimate Charge Percent(Event Player) > 99.900;
+		Ultimate Charge Percent(Event Player) >= 100;
 		Is Dummy Bot(Event Player) == false;
 		Hero Of(Event Player) == Hero(Lúcio);
 		
@@ -4753,7 +4829,7 @@ rule("Lucio: ult ready")
 	{
 		Event Player.CustomUltReadyToUse = True;
 		Event Player.B = Hero Of(Event Player);
-		
+	
 	}
 }
 
@@ -5045,7 +5121,8 @@ rule("Lucio description")
 	{
 		Event Player.UltDescription = Custom String("Increase the amount of bonus health from Lucio's ultimate based on how long you stay in the air.", Null);
 
-		Allow Button(Event Player, Button(Ultimate));
+		Event Player.B = Hero Of(Event Player);
+	
 		
 	}
 }
@@ -10116,11 +10193,15 @@ rule("torb: spawn torb turret")
 	
 		
 	
-		Wait(0.016, Ignore Condition);
+		Wait(0.032, Ignore Condition);
 		
 		
 		Event Player.TorbTurret.CurrentGravities = Array(1000, 0);
 		Event Player.TorbTurret.CurrentSpeeds = Array(100, 100, 1000);
+		
+		If(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter));
+		Start Forcing Player Outlines(Event Player.TorbTurret, Event Player, True, Color(Blue), Default);
+		End;
 		
 		
 		Set Projectile Gravity(Event Player.TorbTurret, Value In Array(Event Player.TorbTurret.CurrentGravities, 1));
@@ -10139,8 +10220,11 @@ rule("torb: spawn torb turret")
 		
 		Wait(0.5, Ignore Condition);
 		
-		
+		If(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter));
+		Create In-World Text(All Players(All Teams), Custom String("Turretbjörn Lvl 1"), Event Player.TorbTurret + Up*2, 1, Clip Against Surfaces, Visible to Position and String, Color(Red), Default Visibility);
+		Else;
 		Create In-World Text(All Players(All Teams), Custom String("Turretbjörn Lvl 1"), Event Player.TorbTurret + Up*2, 1, Clip Against Surfaces, Visible to Position and String, Team Of(Event Player), Default Visibility);
+		End;
 		Event Player.TorbTurret.TorbTurretLevelText = Last Text Id;
 	
 		Call Subroutine(StopUsingCustomUlt);
@@ -10218,7 +10302,13 @@ rule("torb: overload turret to level 2")
 		Press Button(Event Player.TorbTurret, Button(Ability 2));
 		Set Ability Cooldown(Event Player.TorbTurret, Button(Ability 2), 0);
 		Destroy In-World Text(Event Player.TorbTurret.TorbTurretLevelText);
-		Create In-World Text(All Players(All Teams), Custom String("Turretbjörn Lvl 2"), Event Player.TorbTurret + Up*2, 1, Clip Against Surfaces, Visible to and String, Team Of(Event Player), Default Visibility);
+	
+		If(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter));
+		Create In-World Text(All Players(All Teams), Custom String("Turretbjörn Lvl 2"), Event Player.TorbTurret + Up*2, 1, Clip Against Surfaces, Visible to Position and String, Color(Red), Default Visibility);
+		Else;
+		Create In-World Text(All Players(All Teams), Custom String("Turretbjörn Lvl 2"), Event Player.TorbTurret + Up*2, 1, Clip Against Surfaces, Visible to Position and String, Team Of(Event Player), Default Visibility);
+		End;
+		
 		Event Player.TorbTurret.TorbTurretLevelText = Last Text Id;
 		Wait(1, Ignore Condition);
 		Call Subroutine(StopUsingCustomUlt);
@@ -10259,7 +10349,13 @@ rule("torb: level 3 turret")
 		Wait(0.1, Ignore Condition);
 		Press Button(Event Player.TorbTurret, Button(Ultimate));
 		Destroy In-World Text(Event Player.TorbTurret.TorbTurretLevelText);
-		Create In-World Text(All Players(All Teams), Custom String("Turretbjörn Lvl 3"), Event Player.TorbTurret + Up*2, 1, Clip Against Surfaces, Visible to and String, Team Of(Event Player), Default Visibility);
+	
+		If(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter));
+		Create In-World Text(All Players(All Teams), Custom String("Turretbjörn Lvl 3"), Event Player.TorbTurret + Up*2, 1, Clip Against Surfaces, Visible to Position and String, Color(Red), Default Visibility);
+		Else;
+		Create In-World Text(All Players(All Teams), Custom String("Turretbjörn Lvl 3"), Event Player.TorbTurret + Up*2, 1, Clip Against Surfaces, Visible to Position and String, Team Of(Event Player), Default Visibility);
+		End;
+		
 		Event Player.TorbTurret.TorbTurretLevelText = Last Text Id;
 		Start Holding Button(Event Player.TorbTurret, Button(Ultimate));
 		Wait(1, Ignore Condition);
@@ -10699,13 +10795,16 @@ rule("Widowmaker fire through wall")
 	
 
 	
-
-        Event Player.WidowRayCastForwardPlayer = Ray Cast Hit Player(Event Player.WidowRayCastStartPos, Event Player.WidowRayCastEndPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
-        Event Player.WidowRayCastBackwardPlayer = Ray Cast Hit Player(Event Player.WidowRayCastEndPos, Event Player.WidowRayCastStartPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
-
-        Event Player.WidowRayCastForwardPos = Ray Cast Hit Position(Event Player.WidowRayCastStartPos, Event Player.WidowRayCastEndPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
-        Event Player.WidowRayCastBackwardPos = Ray Cast Hit Position(Event Player.WidowRayCastEndPos, Event Player.WidowRayCastStartPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false);
-
+		
+		
+		
+        Event Player.WidowRayCasts = Array(Ray Cast Hit Player(Event Player.WidowRayCastStartPos, Event Player.WidowRayCastEndPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false));
+		Modify Player Variable(Event Player, WidowRayCasts, Append To Array, Ray Cast Hit Player(Event Player.WidowRayCastEndPos, Event Player.WidowRayCastStartPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false));
+		Modify Player Variable(Event Player, WidowRayCasts, Append To Array, Ray Cast Hit Position(Event Player.WidowRayCastStartPos, Event Player.WidowRayCastEndPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false));
+		Modify Player Variable(Event Player, WidowRayCasts, Append To Array,Ray Cast Hit Position(Event Player.WidowRayCastEndPos, Event Player.WidowRayCastStartPos, All Living Players(Opposite Team Of(Team Of(Event Player))), Event Player, false));
+		
+		
+        
         
         
 
@@ -10727,15 +10826,15 @@ rule("Widowmaker fire through wall")
        
 		
 
-        If(Event Player.WidowRayCastForwardPlayer != null);
-        Create Projectile(Genji Shuriken, Event Player, Event Player.WidowRayCastForwardPos, Direction Towards(Event Player.WidowRayCastForwardPos, Event Player.WidowRayCastEndPos), To World, Damage, Opposite Team Of(Team Of(Event Player)), Event Player.WidowDamage, 2.5, 0, Bad Explosion, Explosion Sound, 0, 1000000, 0, 0, 0, 0);
+        If(First Of(Event Player.WidowRayCasts) != null);
+        Create Projectile(Genji Shuriken, Event Player, Value In Array(Event Player.WidowRayCasts, 2), Direction Towards(Value In Array(Event Player.WidowRayCasts, 2), Event Player.WidowRayCastEndPos), To World, Damage, Opposite Team Of(Team Of(Event Player)), Event Player.WidowDamage, 2.5, 0, Bad Explosion, Explosion Sound, 0, 1000000, 0, 0, 0, 0);
        
 	
 	
        
 		Log To Inspector(Custom String("Forwardraycast"));
-		Else If(Event Player.WidowRayCastBackwardPlayer != null && Event Player.WidowRayCastForwardPlayer == null);
-        Create Projectile(Genji Shuriken, Event Player, Event Player.WidowRayCastBackwardPos, Direction Towards(Event Player.WidowRayCastBackwardPos, Event Player.WidowRayCastStartPos), To World, Damage, Opposite Team Of(Team Of(Event Player)), Event Player.WidowDamage, 2.5, 0, Bad Explosion, Explosion Sound, 0, 1000000, 0, 0, 0, 0);
+		Else If(Value In Array(Event Player.WidowRayCasts, 1) != null && First Of(Event Player.WidowRayCasts) == null);
+        Create Projectile(Genji Shuriken, Event Player, Value In Array(Event Player.WidowRayCasts, 3), Direction Towards(Value In Array(Event Player.WidowRayCasts, 3), Event Player.WidowRayCastStartPos), To World, Damage, Opposite Team Of(Team Of(Event Player)), Event Player.WidowDamage, 2.5, 0, Bad Explosion, Explosion Sound, 0, 1000000, 0, 0, 0, 0);
        
 	
 	
