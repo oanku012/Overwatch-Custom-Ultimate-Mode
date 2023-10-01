@@ -143,20 +143,21 @@ variables {
     12: ForLoopIndexGlobal
     13: NukePosition
     14: NukeRadius
-    15: Team1PortalTimer
-    16: Team2PortalTimer
-    17: BluePortal
-    18: RedPortal
-    19: BluePortalRaycast
-    20: RedPortalRaycast
-    21: GreenPortal
-    22: YellowPortal
-    23: YellowPortalRaycast
-    24: GreenPortalRaycast
-    25: SymmetraBluePNormal
-    26: SymmetraRedPNormal
-    27: SymmetraYellowPNormal
-    28: SymmetraGreenPNormal
+    15: SombraVirusVariables
+    16: Team1PortalTimer
+    17: Team2PortalTimer
+    18: BluePortal
+    19: RedPortal
+    20: BluePortalRaycast
+    21: RedPortalRaycast
+    22: GreenPortal
+    23: YellowPortal
+    24: YellowPortalRaycast
+    25: GreenPortalRaycast
+    26: SymmetraBluePNormal
+    27: SymmetraRedPNormal
+    28: SymmetraYellowPNormal
+    29: SymmetraGreenPNormal
 
   player:
     0: B
@@ -262,29 +263,30 @@ variables {
     100: VirusEffects
     101: VirusText
     102: HasDiedWithVirus
-    103: K
-    104: L
-    105: InPortalSpeed
-    106: PortalUsed
-    107: TorbTurret
-    108: TorbTurretLevel
-    109: TorbTurretMaster
-    110: TorbTurretLevelText
-    111: TorbCurrentTarget
-    112: WidowZoomedIn
-    113: WidowPlayersInViewAngleSorted
-    114: WidowRayCasts
-    115: WidowRayCastStartPos
-    116: WidowRayCastEndPos
-    117: WidowFireBeam
-    118: WidowDamage
-    119: WidowAimBeam
-    120: WinstonGrabbing
-    121: WinstonDamageArray
-    122: WinstonRayCasts
-    123: ZaryaGravPos
-    124: PossessingZenArray
-    125: PossessingZen
+    103: RandomNumber
+    104: K
+    105: L
+    106: InPortalSpeed
+    107: PortalUsed
+    108: TorbTurret
+    109: TorbTurretLevel
+    110: TorbTurretMaster
+    111: TorbTurretLevelText
+    112: TorbCurrentTarget
+    113: WidowZoomedIn
+    114: WidowPlayersInViewAngleSorted
+    115: WidowRayCasts
+    116: WidowRayCastStartPos
+    117: WidowRayCastEndPos
+    118: WidowFireBeam
+    119: WidowDamage
+    120: WidowAimBeam
+    121: WinstonGrabbing
+    122: WinstonDamageArray
+    123: WinstonRayCasts
+    124: ZaryaGravPos
+    125: PossessingZenArray
+    126: PossessingZen
 }
 
 
@@ -632,6 +634,9 @@ rule("Set default gravities and speeds for player")
 		Event Player.CurrentSpeeds = Array(100, 100, 100);
 	
 	
+		
+	
+	
 
 	}
 }
@@ -694,14 +699,14 @@ rule("Test dummy")
 	
 		Create Dummy Bot(Hero(Illari), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
 	
-		Wait(1, Ignore Condition);
+	
 		
 	
 	
 		
 		Set Ultimate Charge(Last Created Entity, 100);
 		
-	
+		Wait(0.5, Ignore Condition);
 		
 		Start Holding Button(Last Created Entity, Button(Ultimate));
 	
@@ -3542,7 +3547,7 @@ rule("Illari enable ult")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-		Is Dummy Bot(Event Player) == false;
+	
 		Hero Of(Event Player) == Hero(Illari);
 		
 	}
@@ -3554,11 +3559,15 @@ rule("Illari enable ult")
 		Event Player.IllariSunPosition = Event Player;
 		Event Player.B = Hero Of(Event Player);
 		Set Status(Event Player, Event Player, Burning, 5.2);
+		
+		Start Forcing Player Outlines(Event Player, All Players(All Teams), False, Color(white), Default);
+		
 		Wait Until(Is Dead(Event Player) == True || Is Button Held(Event Player, Button(Primary Fire)) == True, 5.2);
 		If(Event Player.IllariSunPosition == Event Player || Is Button Held(Event Player, Button(Primary Fire)) == True);
 		Event Player.IllariSunPosition = Eye Position(Event Player);
 		Chase Player Variable At Rate(Event Player, IllariSunPosition, Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, Null, Event Player, True), 32.5, None);
-		
+		Create Effect(All Players(All Teams), Wrecking Ball Piledriver Fire Sound, Color(white), Event Player.IllariSunPosition, 200, Visible To Position And Radius);
+		Event Player.UltEffect = Last Created Entity;
 		End;
 		
 		Wait(3, Ignore Condition);
@@ -3575,7 +3584,7 @@ rule("Illari enable ult")
 
 
 
-rule("Illari loop visual effect that enemies see")
+rule("Illari loop visual effect")
 {
 	event
 	{
@@ -3589,13 +3598,13 @@ rule("Illari loop visual effect that enemies see")
 		Event Player.UsingCustomUlt == True;
 	
 		
-		Is Dummy Bot(Event Player) == false;
+	
 	}
 
 	actions
 	{
 	
-		Wait(0.023, Abort When False);
+		Wait(0.032, Abort When False);
 		Play Effect(All Players(All Teams), Good Explosion, Color(Yellow), Event Player.IllariSunPosition, 6);
 		Play Effect(All Players(All Teams), Ashe Dynamite Explosion Effect, Team Of(Event Player), Event Player.IllariSunPosition, 7.500);
 	
@@ -3608,7 +3617,7 @@ rule("Illari loop visual effect that enemies see")
 
 
 
-rule("If sees Illari get damaged team-modes")
+rule("Blind enemies that see Illari's ultimate")
 {
 	event
 	{
@@ -3623,65 +3632,22 @@ rule("If sees Illari get damaged team-modes")
 	
 		
 		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
-		Is Dummy Bot(Event Player) == False;
+	
 		Is True For Any(All Players(Opposite Team Of(Team Of(Event Player))), Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block LOS)) == True;
 		
 	}
 
 	actions
 	{
-		Wait(0.1, Ignore Condition);
+		Wait(0.032, Abort When False);
 		
 		
 		
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los))), 1);
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True) ), 1);
 		
-		Set Status(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, Burning, 0.1);
 		
-		Damage(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, 5);
+		Play Effect(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer), Baptiste Biotic Launcher Explosion Effect, Team Of(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer)), Update Every Frame(Eye Position(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element,  Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer))) + Update Every Frame(Facing Direction Of(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element,  Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer)))*3, 10);
 	
-		
-		
-		End;
-		Loop If Condition Is True;
-	}
-}
-
-
-
-rule("If sees Illari get damaged FFA")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Illari;
-	}
-
-	conditions
-	{
-		Event Player.UsingCustomUlt == True;
-	
-		
-		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
-		Is Dummy Bot(Event Player) == False;
-		Is True For Any(Remove From Array(All Players(All Teams), Event Player), Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block LOS)) == True;
-		
-	}
-
-	actions
-	{
-		Wait(0.1, Ignore Condition);
-		
-		
-		
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los))), 1);
-		
-		Set Status(Value In Array(Filtered Array(Remove From Array(All Players(All Teams), Event Player), Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, Burning, 0.1);
-		
-		Damage(Value In Array(Filtered Array(Remove From Array(All Players(All Teams), Event Player), Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, 5);
-	
-		
 		
 		End;
 		Loop If Condition Is True;
@@ -3705,7 +3671,7 @@ rule("If close to Illari get damaged team-modes")
 	
 		
 		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
-		Is Dummy Bot(Event Player) == false;
+	
 		Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers) != Empty Array;
 	}
 
@@ -3715,7 +3681,7 @@ rule("If close to Illari get damaged team-modes")
 		
 		Set Status(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, Burning, 0.1);
 		
-		Damage(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, 20);
+		Damage(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, 100);
 		
 		Loop If Condition Is True;
 	}
@@ -3738,7 +3704,7 @@ rule("If close to Illari get damaged FFA")
 	
 		
 		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
-		Is Dummy Bot(Event Player) == false;
+	
 		Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers) != Empty Array;
 	}
 
@@ -3748,7 +3714,7 @@ rule("If close to Illari get damaged FFA")
 		
 		Set Status(Remove From Array(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, Burning, 0.1);
 		
-		Damage(Remove From Array(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, 20);
+		Damage(Remove From Array(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, 100);
 		
 		Loop If Condition Is True;
 	}
@@ -3773,6 +3739,11 @@ rule("Reset Illari.")
 		Event Player.B = Null;
 		Clear Status(Event Player, Burning);
 		Stop Chasing Player Variable(Event Player, IllariSunPosition);
+		Stop Forcing Player Outlines(Event Player, All Players(All Teams));
+		
+		Destroy Effect(Event Player.UltEffect);
+		Event Player.UltEffect = Null;
+		
 		Wait(0.064, Ignore Condition);
 		Event Player.IllariSunPosition = Null;
 	
@@ -4988,7 +4959,7 @@ rule("Kiriko activate ultimate")
 		Play Effect(All Players(All Teams), Good Explosion, Team Of(Event Player), Position Of(Event Player), 2);
 		End;
 		
-		Wait Until(Is Dead(Event Player), 10);
+		Wait Until(Is Dead(Event Player), 12);
 		Call Subroutine(ResetKiriko);
 	}
 }
@@ -5365,235 +5336,6 @@ rule("Lucio description")
 }
 
 
-
-
-
-rule("McCree enable ult")
-{
-	
-
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Cassidy;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-		Is Dummy Bot(Event Player) == false;
-		Hero Of(Event Player) == Hero(Cassidy);
-		
-	}
-
-	actions
-	{
-	
-	
-		Event Player.B = Hero Of(Event Player);
-		Set Status(Event Player, Event Player, Burning, 7);
-		Wait Until(Is Dead(Event Player) == True || Is Using Ultimate(Event Player) == false, 7);
-		Call Subroutine(ResetCassidy);
-	}
-}
-
-
-
-rule("McCree loop visual effect that enemies see")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Cassidy;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-		Is Dummy Bot(Event Player) == false;
-	}
-
-	actions
-	{
-	
-		Wait(0.023, Ignore Condition);
-	
-	
-		Play Effect(Remove From Array(All Players(All Teams), Event Player), Ashe Dynamite Explosion Effect, Team Of(Event Player), Eye Position(Event Player), 7.500);
-	
-		
-		Loop If Condition Is True;
-	}
-}
-
-
-
-rule("McCree loop visual effect that mccree sees")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Cassidy;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-		Is Dummy Bot(Event Player) == false;
-	}
-
-	actions
-	{
-		Wait(0.1, Ignore Condition);
-	
-	
-		Play Effect(Event Player, Ashe Dynamite Explosion Effect, Team Of(Event Player), Eye Position(Event Player) - Facing Direction Of(Event Player), 7.500);
-	
-		
-		Loop If Condition Is True;
-	}
-}
-
-
-
-rule("If sees McCree get damaged team-modes")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Cassidy;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
-		Is Dummy Bot(Event Player) == False;
-		Is True For Any(All Players(Opposite Team Of(Team Of(Event Player))), Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block LOS)) == True;
-		
-	}
-
-	actions
-	{
-		Wait(0.1, Ignore Condition);
-		
-		
-		
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player, 20) && Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block Los))), 1);
-		
-		Set Status(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player, 20) && Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, Burning, 0.1);
-		
-		Damage(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element, Event Player, 20) && Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, 10);
-		
-		
-		End;
-		Loop If Condition Is True;
-	}
-}
-
-
-
-rule("If sees McCree get damaged FFA")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Cassidy;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
-		Is Dummy Bot(Event Player) == False;
-		Is True For Any(Remove From Array(All Players(All Teams), Event Player), Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block LOS)) == True;
-		
-	}
-
-	actions
-	{
-		Wait(0.1, Ignore Condition);
-		
-		
-		
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player, 20) && Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block Los))), 1);
-		
-		Set Status(Value In Array(Filtered Array(Remove From Array(All Players(All Teams), Event Player), Is In View Angle(Current Array Element, Event Player, 20) && Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, Burning, 0.1);
-		
-		Damage(Value In Array(Filtered Array(Remove From Array(All Players(All Teams), Event Player), Is In View Angle(Current Array Element, Event Player, 20) && Is In Line of Sight(Current Array Element, Event Player, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, 10);
-		
-		
-		End;
-		Loop If Condition Is True;
-	}
-}
-
-
-
-rule("If close to McCree get damaged team-modes")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Cassidy;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
-		Is Dummy Bot(Event Player) == false;
-		Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers) != Empty Array;
-	}
-
-	actions
-	{
-		Wait(0.1, Ignore Condition);
-		
-		Set Status(Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, Burning, 0.1);
-		
-		Damage(Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, 20);
-		
-		Loop If Condition Is True;
-	}
-}
-
-
-
-rule("If close to McCree get damaged FFA")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Cassidy;
-	}
-
-	conditions
-	{
-		Is Using Ultimate(Event Player) == True;
-		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
-		Is Dummy Bot(Event Player) == false;
-		Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers) != Empty Array;
-	}
-
-	actions
-	{
-		Wait(0.1, Ignore Condition);
-		
-		Set Status(Remove From Array(Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, Burning, 0.1);
-		
-		Damage(Remove From Array(Players Within Radius(Event Player, 5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, 20);
-		
-		Loop If Condition Is True;
-	}
-}
 
 
 
@@ -9398,6 +9140,9 @@ rule("Sombra activate ultimate")
 		Chase Player Variable At Rate(Event Player, P, 0, 1, Destination and Rate);
 	
 	
+		"Max infection distance, random number threshold for infection, infection check frequency"
+		Global.SombraVirusVariables = Array(20, 3, 2);
+		
 		Wait(Event Player.P, Ignore Condition);
 		Call Subroutine(ResetSombra);
 	}
@@ -9454,11 +9199,14 @@ rule("Sombra: If player has virus, create virus effect, text and set variables, 
 		Start Damage Over Time(Event Player, Event Player.Virus, 10, 30);
 	
 		Event Player.VirusEffects = Empty Array;
-		Create Effect(All Players(All Teams), Sombra Hacked Sound, Team Of(Event Player), Event Player, 100, Visible To Position and Radius);
-		Modify Player Variable(Event Player, VirusEffects, Append To Array, Last Created Entity);
+	
+	
 	
 		Create Effect(All Players(All Teams), Cloud, Color(Purple), Event Player, 1, Visible To Position and Radius);
 		Modify Player Variable(Event Player, VirusEffects, Append To Array, Last Created Entity);
+		Set Status(Event Player, Event Player.Virus, Hacked, 3);
+		
+		
 		Wait Until(Is Alive(Event Player) == True && Event Player.HasDiedWithVirus == True, 10);
 		Destroy Effect(Event Player.VirusEffects);
 		Event Player.VirusEffects = Null;
@@ -9466,6 +9214,8 @@ rule("Sombra: If player has virus, create virus effect, text and set variables, 
 		Event Player.VirusText = Null;
 		Event Player.HasDiedWithVirus = Null;
 	
+		
+		
 		Event Player.Virus = Null;
 	}
 }
@@ -9485,12 +9235,23 @@ rule("Sombra: If player has virus, spread to nearby players")
 	{
 		Event Player.Virus != Null;
 	
+		Filtered Array(Players Within Radius(Event Player, Value In Array(Global.SombraVirusVariables, 0), Team Of(Event Player), Surfaces), Current Array Element != Event Player && Current Array Element != Event Player.Virus && Is Alive(Current Array Element) == True && Current Array Element.Virus == Null) != Empty Array;
 	}
 
 	actions
 	{
-		Wait(1, Abort When False);
-		Filtered Array(Players Within Radius(Event Player, 7, Team Of(Event Player), Surfaces), Current Array Element != Event Player && Current Array Element != Event Player.Virus && Is Alive(Current Array Element) == True && Current Array Element.Virus == Null). Virus = Event Player.Virus;
+		Wait(Value In Array(Global.SombraVirusVariables, 2), Abort When False);
+	
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(Players Within Radius(Event Player, Value In Array(Global.SombraVirusVariables, 0), Team Of(Event Player), Surfaces), Current Array Element != Event Player && Current Array Element != Event Player.Virus && Is Alive(Current Array Element) == True && Current Array Element.Virus == Null)), 1);
+		If(Random Integer(0, Round To Integer(Distance Between(Event Player, Value In Array(Filtered Array(Players Within Radius(Event Player, Value In Array(Global.SombraVirusVariables, 0), Team Of(Event Player), Surfaces), Current Array Element != Event Player && Current Array Element != Event Player.Virus && Is Alive(Current Array Element) == True && Current Array Element.Virus == Null), Event Player.ForLoopIndexPlayer)), Up)) <= Value In Array(Global.SombraVirusVariables, 1));
+		
+		 Value In Array(Filtered Array(Players Within Radius(Event Player, Value In Array(Global.SombraVirusVariables, 0), Team Of(Event Player), Surfaces), Current Array Element != Event Player && Current Array Element != Event Player.Virus && Is Alive(Current Array Element) == True && Current Array Element.Virus == Null), Event Player.ForLoopIndexPlayer).Virus = Event Player.Virus;
+		
+		End;
+		
+		End;
+		
 	
 		Loop If Condition Is True;
 	}
@@ -9513,15 +9274,25 @@ rule("Sombra spread virus to nearby enemies in team modes")
 		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
 		
 		Is Using Ability 1(Event Player) == False;
-		disabled Distance Between(Event Player, Closest Player To(Event Player, Opposite Team Of(Team Of(Event Player)))) <= 5;
 	}
 
 	actions
 	{
-		Wait(1, Abort When False);
+		Wait(Value In Array(Global.SombraVirusVariables, 2), Abort When False);
 	
 	
-		Filtered Array(Players Within Radius(Event Player, 10, Opposite Team Of(Team Of(Event Player)), Surfaces), Is Alive(Current Array Element) == True && Current Array Element.Virus == Null).Virus = Event Player;
+	
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(Players Within Radius(Event Player, Value In Array(Global.SombraVirusVariables, 0), Opposite Team Of(Team Of(Event Player)), Surfaces), Is Alive(Current Array Element) == True && Current Array Element.Virus == Null)), 1);
+		
+		Event Player.RandomNumber = Random Integer(0, Round To Integer(Distance Between(Event Player, Value In Array(Filtered Array(Players Within Radius(Event Player, Value In Array(Global.SombraVirusVariables, 0), Opposite Team Of(Team Of(Event Player)), Surfaces), Is Alive(Current Array Element) == True && Current Array Element.Virus == Null), Event Player.ForLoopIndexPlayer)), Up));
+		
+		Log To Inspector(Event Player.RandomNumber);
+		
+		If(Event Player.RandomNumber <= Value In Array(Global.SombraVirusVariables, 1));
+		Value In Array(Filtered Array(Players Within Radius(Event Player, Value In Array(Global.SombraVirusVariables, 0), Opposite Team Of(Team Of(Event Player)), Surfaces), Is Alive(Current Array Element) == True && Current Array Element.Virus == Null), Event Player.ForLoopIndexPlayer).Virus = Event Player;
+		End;
+		End;
 		Loop If Condition Is True;
 	}
 }
@@ -9547,12 +9318,17 @@ rule("Sombra spread virus to nearby enemies in ffa")
 
 	actions
 	{
-		Wait(1, Abort When False);
+		Wait(Value In Array(Global.SombraVirusVariables, 2), Abort When False);
 	
 	
-		Filtered Array(Players Within Radius(Event Player, 10, Opposite Team Of(Team Of(Event Player)), Surfaces), Is Alive(Current Array Element) == True && Current Array Element != Event Player && Current Array Element.Virus == Null).Virus = Event Player;
+	
 		
-	
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(Players Within Radius(Event Player, Value In Array(Global.SombraVirusVariables, 0), Opposite Team Of(Team Of(Event Player)), Surfaces), Current Array Element != Event Player && Is Alive(Current Array Element) == True && Current Array Element.Virus == Null)), 1);
+		If(Random Integer(0, Round To Integer(Distance Between(Event Player, Value In Array(Filtered Array(Players Within Radius(Event Player, Value In Array(Global.SombraVirusVariables, 0), Opposite Team Of(Team Of(Event Player)), Surfaces), Current Array Element != Event Player && Is Alive(Current Array Element) == True && Current Array Element.Virus == Null), Event Player.ForLoopIndexPlayer)), Up)) <= Value In Array(Global.SombraVirusVariables, 1));
+		Value In Array(Filtered Array(Players Within Radius(Event Player, Value In Array(Global.SombraVirusVariables, 0), Opposite Team Of(Team Of(Event Player)), Surfaces), Current Array Element != Event Player && Is Alive(Current Array Element) == True && Current Array Element.Virus == Null), Event Player.ForLoopIndexPlayer).Virus = Event Player;
+		End;
+		End;
+		
 		Loop If Condition Is True;
 	}
 }
