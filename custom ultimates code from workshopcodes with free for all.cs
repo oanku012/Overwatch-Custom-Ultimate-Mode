@@ -38,12 +38,16 @@ settings
 
 		Skirmish
 		{
+			enabled maps
+			{
+				Workshop Expanse
+				
 			
+			
+			}
 		}
 
-		Deathmatch
-		{
-		}
+		
 	
 	}
 
@@ -98,11 +102,11 @@ settings
 			disabled heroes
 			{
 			
-			
+				Ashe
 			
 			
 				
-				Illari
+			
 			
 				Lifeweaver
 				Ramattra
@@ -193,93 +197,94 @@ variables {
     35: UltTimerText
     36: HanzoUltimateAmmo
     37: HanzoDragonTargetPos
-    38: JunkerQueenInArena
-    39: JunkerQueenEnemyArray
-    40: JunkerQueenEnemyPositions
-    41: JunkerTeleportPos
-    42: JunkerReadyToTeleport
-    43: JunkerQueenPositions
-    44: JunkerDamageCounter
-    45: JunkerHealthBonus
-    46: JunkerHealthPool
-    47: JunkerScale
-    48: JunkerCDReduction
-    49: JunkerRageEffects
-    50: JunkerWinCounterText
-    51: JunkerWinCounter
-    52: JunkerArenaSphere
-    53: ExtraLife
-    54: JunkerKnifeThrowCD
-    55: JunkerFFADamageMod
-    56: JunkratBombPosition
-    57: JunkratBombOrb
-    58: JunkratExplosionRadius
-    59: JunkratRadiusRing
-    60: UltTimerAboveHead
-    61: UltTimerHUD
-    62: JunkratBombDroppedPosition
-    63: KirikoAffectedPlayers
-    64: Q
-    65: UltHudTextObject
-    66: SigmaZeroGravBuff
-    67: R
-    68: LucioHealthPoolHealthAmount
-    69: LucioHealthPool
-    70: MeiZaWarudoSphere
-    71: MeiIcicleEffects
-    72: MeiIciclePositions
-    73: MeiIcicleDirections
-    74: TimeStopStunned
-    75: O
-    76: N
-    77: MercyExtraLifeText
-    78: ExtraLifeInWorldText
-    79: P
-    80: ReaperVariables
-    81: ReaperTPPos
-    82: SigmaMaleValues
-    83: SigmaHighGravDebuff
-    84: SojournLastRay
-    85: SojournRayArray
-    86: SojournBeamArray
-    87: SojournEyePosArray
-    88: SojournLastEyePos
-    89: SojournDamageRay
-    90: Soldier76Variables
-    91: SoldierAllKillStreaks
-    92: Soldier76KillStreaksEquipped
-    93: SoldierKillStreakTexts
-    94: Soldier76KillStreaksActive
-    95: LocalVariable
-    96: Soldier76CarepackLocation
-    97: SoldierCarePackAmmoIndex
-    98: Virus
-    99: VirusEffects
-    100: VirusText
-    101: HasDiedWithVirus
-    102: K
-    103: L
-    104: InPortalSpeed
-    105: PortalUsed
-    106: TorbTurret
-    107: TorbTurretLevel
-    108: TorbTurretMaster
-    109: TorbTurretLevelText
-    110: TorbCurrentTarget
-    111: WidowZoomedIn
-    112: WidowPlayersInViewAngleSorted
-    113: WidowRayCasts
-    114: WidowRayCastStartPos
-    115: WidowRayCastEndPos
-    116: WidowFireBeam
-    117: WidowDamage
-    118: WidowAimBeam
-    119: WinstonGrabbing
-    120: WinstonDamageArray
-    121: WinstonRayCasts
-    122: ZaryaGravPos
-    123: PossessingZenArray
-    124: PossessingZen
+    38: IllariSunPosition
+    39: JunkerQueenInArena
+    40: JunkerQueenEnemyArray
+    41: JunkerQueenEnemyPositions
+    42: JunkerTeleportPos
+    43: JunkerReadyToTeleport
+    44: JunkerQueenPositions
+    45: JunkerDamageCounter
+    46: JunkerHealthBonus
+    47: JunkerHealthPool
+    48: JunkerScale
+    49: JunkerCDReduction
+    50: JunkerRageEffects
+    51: JunkerWinCounterText
+    52: JunkerWinCounter
+    53: JunkerArenaSphere
+    54: ExtraLife
+    55: JunkerKnifeThrowCD
+    56: JunkerFFADamageMod
+    57: JunkratBombPosition
+    58: JunkratBombOrb
+    59: JunkratExplosionRadius
+    60: JunkratRadiusRing
+    61: UltTimerAboveHead
+    62: UltTimerHUD
+    63: JunkratBombDroppedPosition
+    64: KirikoAffectedPlayers
+    65: Q
+    66: UltHudTextObject
+    67: SigmaZeroGravBuff
+    68: R
+    69: LucioHealthPoolHealthAmount
+    70: LucioHealthPool
+    71: MeiZaWarudoSphere
+    72: MeiIcicleEffects
+    73: MeiIciclePositions
+    74: MeiIcicleDirections
+    75: TimeStopStunned
+    76: O
+    77: N
+    78: MercyExtraLifeText
+    79: ExtraLifeInWorldText
+    80: P
+    81: ReaperVariables
+    82: ReaperTPPos
+    83: SigmaMaleValues
+    84: SigmaHighGravDebuff
+    85: SojournLastRay
+    86: SojournRayArray
+    87: SojournBeamArray
+    88: SojournEyePosArray
+    89: SojournLastEyePos
+    90: SojournDamageRay
+    91: Soldier76Variables
+    92: SoldierAllKillStreaks
+    93: Soldier76KillStreaksEquipped
+    94: SoldierKillStreakTexts
+    95: Soldier76KillStreaksActive
+    96: LocalVariable
+    97: Soldier76CarepackLocation
+    98: SoldierCarePackAmmoIndex
+    99: Virus
+    100: VirusEffects
+    101: VirusText
+    102: HasDiedWithVirus
+    103: K
+    104: L
+    105: InPortalSpeed
+    106: PortalUsed
+    107: TorbTurret
+    108: TorbTurretLevel
+    109: TorbTurretMaster
+    110: TorbTurretLevelText
+    111: TorbCurrentTarget
+    112: WidowZoomedIn
+    113: WidowPlayersInViewAngleSorted
+    114: WidowRayCasts
+    115: WidowRayCastStartPos
+    116: WidowRayCastEndPos
+    117: WidowFireBeam
+    118: WidowDamage
+    119: WidowAimBeam
+    120: WinstonGrabbing
+    121: WinstonDamageArray
+    122: WinstonRayCasts
+    123: ZaryaGravPos
+    124: PossessingZenArray
+    125: PossessingZen
 }
 
 
@@ -295,32 +300,33 @@ subroutines {
     8: ResetEcho
     9: ResetGenji
     10: ResetHanzo
-    11: ResetJQ
-    12: ResetJunkrat
-    13: ResetKiriko
-    14: ResetLucio
-    15: ResetCassidy
-    16: ResetMei
-    17: ResetMoira
-    18: ResetPharah
-    19: ResetReaper
-    20: ResetReinhardt
-    21: ResetRoadhog
-    22: ResetSigma
-    23: ResetSojourn
-    24: ResetSoldier
-    25: ResetSombra
-    26: ResetSymmetraTeam1
-    27: ResetSymmetraTeam2
-    28: ResetTorb
-    29: ResetTracer
-    30: ResetWidow
-    31: ResetWinston
-    32: ResetWB
-    33: ResetZarya
-    34: ResetZenyatta
-    35: StopPossessing
-    36: StopPossessingFromPossessedSide
+    11: ResetIllari
+    12: ResetJQ
+    13: ResetJunkrat
+    14: ResetKiriko
+    15: ResetLucio
+    16: ResetCassidy
+    17: ResetMei
+    18: ResetMoira
+    19: ResetPharah
+    20: ResetReaper
+    21: ResetReinhardt
+    22: ResetRoadhog
+    23: ResetSigma
+    24: ResetSojourn
+    25: ResetSoldier
+    26: ResetSombra
+    27: ResetSymmetraTeam1
+    28: ResetSymmetraTeam2
+    29: ResetTorb
+    30: ResetTracer
+    31: ResetWidow
+    32: ResetWinston
+    33: ResetWB
+    34: ResetZarya
+    35: ResetZenyatta
+    36: StopPossessing
+    37: StopPossessingFromPossessedSide
 }
 
 
@@ -403,6 +409,8 @@ rule("RESET STUFF WHEN SWITCHING HERO")
 		Call Subroutine(ResetGenji);
 		Else If(Event Player.B == Hero(Hanzo));
 		Call Subroutine(ResetHanzo);
+		Else If(Event Player.B == Hero(Illari));
+		Call Subroutine(ResetIllari);
 		Else If(Event Player.B == Hero(Junker Queen));
 		Call Subroutine(ResetJQ);
 		Else If(Event Player.B == Hero(Junkrat));
@@ -684,7 +692,7 @@ rule("Test dummy")
 	actions
 	{
 	
-		Create Dummy Bot(Hero(Ashe), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
+		Create Dummy Bot(Hero(Illari), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
 	
 		Wait(1, Ignore Condition);
 		
@@ -866,8 +874,6 @@ rule("ChooseMenuFinalizeChoice")
 
 
 
-
-
 rule("ana: set variables for player boosted by ana")
 {
 	event
@@ -970,30 +976,6 @@ rule("Ana: Disable nanoboost effects after some time or when dead")
 
 
 
-rule("Ana: Disable nanoboost effects after some time or when dead")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		
-		
-
-	}
-
-	actions
-	{
-		
-	}
-}
-
-
-
 rule("Set cooldowns to 0 for nanoboosted player on a loop for when checking ability cooldown doesn't work")
 {
 
@@ -1040,34 +1022,6 @@ rule("Ana description")
 		Ongoing - Each Player;
 		All;
 		Ana;
-	}
-
-	conditions
-	{
-	
-		Hero Of(Event Player) == Hero(Ana);
-		
-
-	}
-
-	actions
-	{
-		Event Player.UltDescription = Custom String("Nanoboosted player gains a speed boost, increased jump height, 0 cooldowns and ultimate charge generation.", Null, Null, Null);
-
-		Allow Button(Event Player, Button(Ultimate));
-		
-	}
-}
-
-
-
-rule("Ashe description")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		Ashe;
 	}
 
 	conditions
@@ -3564,6 +3518,289 @@ rule("Hanzo description")
 		
 		Event Player.UltDescription = Custom String("Ride your dragons after firing them. You can use the ultimate 3 times in a row and change direction.{0}", Custom String("
 		You pass through walls while riding the dragon. Press jump to hop off the dragon."));
+
+		Allow Button(Event Player, Button(Ultimate));
+		
+	}
+}
+
+
+
+
+
+rule("Illari enable ult")
+{
+	
+
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Illari;
+	}
+
+	conditions
+	{
+		Is Using Ultimate(Event Player) == True;
+		Is Dummy Bot(Event Player) == false;
+		Hero Of(Event Player) == Hero(Illari);
+		
+	}
+
+	actions
+	{
+		
+		Event Player.UsingCustomUlt = True;
+		Event Player.IllariSunPosition = Event Player;
+		Event Player.B = Hero Of(Event Player);
+		Set Status(Event Player, Event Player, Burning, 5.2);
+		Wait Until(Is Dead(Event Player) == True || Is Button Held(Event Player, Button(Primary Fire)) == True, 5.2);
+		If(Event Player.IllariSunPosition == Event Player || Is Button Held(Event Player, Button(Primary Fire)) == True);
+		Event Player.IllariSunPosition = Eye Position(Event Player);
+		Chase Player Variable At Rate(Event Player, IllariSunPosition, Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, Null, Event Player, True), 32.5, None);
+		
+		End;
+		
+		Wait(3, Ignore Condition);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Yellow), Event Player.IllariSunPosition, 10);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Yellow), Event Player.IllariSunPosition, 10);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Yellow), Event Player.IllariSunPosition, 10);
+		Play Effect(All Players(All Teams), Reinhardt Fire Strike Target Impact Sound, Color(Yellow), Event Player.IllariSunPosition, 200);
+		Damage(Remove From Array(Players Within Radius(Event Player.IllariSunPosition, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, 100);
+		
+		Call Subroutine(ResetIllari);
+		
+	}
+}
+
+
+
+rule("Illari loop visual effect that enemies see")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Illari;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+	
+		
+		Is Dummy Bot(Event Player) == false;
+	}
+
+	actions
+	{
+	
+		Wait(0.023, Abort When False);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Yellow), Event Player.IllariSunPosition, 6);
+		Play Effect(All Players(All Teams), Ashe Dynamite Explosion Effect, Team Of(Event Player), Event Player.IllariSunPosition, 7.500);
+	
+	
+	
+		
+		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("If sees Illari get damaged team-modes")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Illari;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+	
+		
+		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
+		Is Dummy Bot(Event Player) == False;
+		Is True For Any(All Players(Opposite Team Of(Team Of(Event Player))), Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block LOS)) == True;
+		
+	}
+
+	actions
+	{
+		Wait(0.1, Ignore Condition);
+		
+		
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los))), 1);
+		
+		Set Status(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, Burning, 0.1);
+		
+		Damage(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, 5);
+	
+		
+		
+		End;
+		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("If sees Illari get damaged FFA")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Illari;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+	
+		
+		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
+		Is Dummy Bot(Event Player) == False;
+		Is True For Any(Remove From Array(All Players(All Teams), Event Player), Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block LOS)) == True;
+		
+	}
+
+	actions
+	{
+		Wait(0.1, Ignore Condition);
+		
+		
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los))), 1);
+		
+		Set Status(Value In Array(Filtered Array(Remove From Array(All Players(All Teams), Event Player), Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, Burning, 0.1);
+		
+		Damage(Value In Array(Filtered Array(Remove From Array(All Players(All Teams), Event Player), Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los)), Event Player.ForLoopIndexPlayer), Event Player, 5);
+	
+		
+		
+		End;
+		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("If close to Illari get damaged team-modes")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Illari;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+	
+		
+		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
+		Is Dummy Bot(Event Player) == false;
+		Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers) != Empty Array;
+	}
+
+	actions
+	{
+		Wait(0.1, Ignore Condition);
+		
+		Set Status(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, Burning, 0.1);
+		
+		Damage(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, 20);
+		
+		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("If close to Illari get damaged FFA")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Illari;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+	
+		
+		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
+		Is Dummy Bot(Event Player) == false;
+		Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers) != Empty Array;
+	}
+
+	actions
+	{
+		Wait(0.1, Ignore Condition);
+		
+		Set Status(Remove From Array(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, Burning, 0.1);
+		
+		Damage(Remove From Array(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, 20);
+		
+		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("Reset Illari.")
+{
+	event
+	{
+		Subroutine;
+		ResetIllari;
+	}
+
+	actions
+	{
+	
+	
+		Event Player.UsingCustomUlt = Null;
+		
+		Event Player.B = Null;
+		Clear Status(Event Player, Burning);
+		Stop Chasing Player Variable(Event Player, IllariSunPosition);
+		Wait(0.064, Ignore Condition);
+		Event Player.IllariSunPosition = Null;
+	
+	}
+}
+
+
+
+rule("Illari description")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Illari;
+	}
+
+	conditions
+	{
+	
+		
+
+	}
+
+	actions
+	{
+		Event Player.UltDescription = Custom String("Turn into a bright burning sun that damages enemies who look at you or get too close.{0}", Custom String("
+		Using primary fire will shoot the sun where you're aiming. The sun explodes for additional damage when it expires.", Null));
 
 		Allow Button(Event Player, Button(Ultimate));
 		
