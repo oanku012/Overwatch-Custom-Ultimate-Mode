@@ -47,7 +47,9 @@ settings
 			}
 		}
 
-		
+		Deathmatch
+		{
+		}
 	
 	}
 
@@ -3554,7 +3556,7 @@ rule("Illari enable ult")
 
 	actions
 	{
-		
+		Wait(1.2, Abort When False);
 		Event Player.UsingCustomUlt = True;
 		Event Player.IllariSunPosition = Event Player;
 		Event Player.B = Hero Of(Event Player);
@@ -3568,6 +3570,7 @@ rule("Illari enable ult")
 		Chase Player Variable At Rate(Event Player, IllariSunPosition, Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, Null, Event Player, True), 32.5, None);
 		Create Effect(All Players(All Teams), Wrecking Ball Piledriver Fire Sound, Color(white), Event Player.IllariSunPosition, 200, Visible To Position And Radius);
 		Event Player.UltEffect = Last Created Entity;
+		Clear Status(Event Player, Burning);
 		End;
 		
 		Wait(3, Ignore Condition);
@@ -3631,7 +3634,7 @@ rule("Blind enemies that see Illari's ultimate")
 		Event Player.UsingCustomUlt == True;
 	
 		
-		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
+	
 	
 		Is True For Any(All Players(Opposite Team Of(Team Of(Event Player))), Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block LOS)) == True;
 		
@@ -3643,10 +3646,10 @@ rule("Blind enemies that see Illari's ultimate")
 		
 		
 		
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True) ), 1);
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True && Current Array Element != Event Player) ), 1);
 		
 		
-		Play Effect(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer), Baptiste Biotic Launcher Explosion Effect, Team Of(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer)), Update Every Frame(Eye Position(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element,  Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer))) + Update Every Frame(Facing Direction Of(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element,  Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer)))*3, 10);
+		Play Effect(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Current Array Element != Event Player && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer), Baptiste Biotic Launcher Explosion Effect, Opposite Team Of(Team Of(Event Player)), Update Every Frame(Eye Position(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Current Array Element != Event Player && Is In Line of Sight(Current Array Element,  Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer))) + Update Every Frame(Facing Direction Of(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Current Array Element != Event Player && Is In Line of Sight(Current Array Element,  Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer)))*3, 10);
 	
 		
 		End;
@@ -3714,7 +3717,7 @@ rule("If close to Illari get damaged FFA")
 		
 		Set Status(Remove From Array(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, Burning, 0.1);
 		
-		Damage(Remove From Array(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, 100);
+		Damage(Remove From Array(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, 50);
 		
 		Loop If Condition Is True;
 	}
