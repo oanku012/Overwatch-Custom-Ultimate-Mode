@@ -47,9 +47,7 @@ settings
 			}
 		}
 
-		Deathmatch
-		{
-		}
+		
 	
 	}
 
@@ -180,115 +178,112 @@ variables {
     15: MenuChosenOption
     16: Nanoboosted
     17: AnaHealMod
-    18: BaptisteShieldAimSphere
-    19: BaptisteShieldPos
-    20: BaptisteShieldReadyToPlant
-    21: BaptisteShieldBot
-    22: D
-    23: BrigitteKnockedBack
-    24: S
-    25: Y
-    26: M
-    27: DVAVariables
-    28: EchoAimRayCast
-    29: EchoDummyBots
-    30: EchoEffects
-    31: EchoPlayer
-    32: V
-    33: HanzoDragonPos
-    34: UltTimer
-    35: UltTimerText
-    36: HanzoUltimateAmmo
-    37: HanzoDragonTargetPos
-    38: IllariSunPosition
-    39: JunkerQueenInArena
-    40: JunkerQueenEnemyArray
-    41: JunkerQueenEnemyPositions
-    42: JunkerTeleportPos
-    43: JunkerReadyToTeleport
-    44: JunkerQueenPositions
-    45: JunkerDamageCounter
-    46: JunkerHealthBonus
-    47: JunkerHealthPool
-    48: JunkerScale
-    49: JunkerCDReduction
-    50: JunkerRageEffects
-    51: JunkerWinCounterText
-    52: JunkerWinCounter
-    53: JunkerArenaSphere
-    54: ExtraLife
-    55: JunkerKnifeThrowCD
-    56: JunkerFFADamageMod
+    18: BaptisteShieldPos
+    19: BaptisteShieldReadyToPlant
+    20: BaptisteShieldBot
+    21: D
+    22: BrigitteKnockedBack
+    23: S
+    24: Y
+    25: M
+    26: DVAVariables
+    27: EchoAimRayCast
+    28: EchoDummyBots
+    29: EchoEffects
+    30: EchoPlayer
+    31: V
+    32: HanzoDragonPos
+    33: UltTimer
+    34: UltTimerText
+    35: HanzoUltimateAmmo
+    36: HanzoDragonTargetPos
+    37: IllariSunPosition
+    38: JunkerQueenInArena
+    39: JunkerQueenEnemyArray
+    40: JunkerQueenEnemyPositions
+    41: JunkerTeleportPos
+    42: JunkerReadyToTeleport
+    43: JunkerQueenPositions
+    44: JunkerDamageCounter
+    45: JunkerHealthBonus
+    46: JunkerHealthPool
+    47: JunkerScale
+    48: JunkerCDReduction
+    49: JunkerRageEffects
+    50: JunkerWinCounterText
+    51: JunkerWinCounter
+    52: JunkerArenaSphere
+    53: ExtraLife
+    54: JunkerKnifeThrowCD
+    55: JunkerFFADamageMod
+    56: JunkratVariables
     57: JunkratBombPosition
-    58: JunkratBombOrb
-    59: JunkratExplosionRadius
-    60: JunkratRadiusRing
-    61: UltTimerAboveHead
-    62: UltTimerHUD
-    63: JunkratBombDroppedPosition
-    64: KirikoAffectedPlayers
-    65: Q
-    66: UltHudTextObject
-    67: SigmaZeroGravBuff
-    68: R
-    69: LucioHealthPoolHealthAmount
-    70: LucioHealthPool
-    71: MeiZaWarudoSphere
-    72: MeiIcicleEffects
-    73: MeiIciclePositions
-    74: MeiIcicleDirections
-    75: TimeStopStunned
-    76: O
-    77: N
-    78: MercyExtraLifeText
-    79: ExtraLifeInWorldText
-    80: P
-    81: ReaperVariables
-    82: ReaperTPPos
-    83: SigmaMaleValues
-    84: SigmaHighGravDebuff
-    85: SojournLastRay
-    86: SojournRayArray
-    87: SojournBeamArray
-    88: SojournEyePosArray
-    89: SojournLastEyePos
-    90: SojournDamageRay
-    91: Soldier76Variables
-    92: SoldierAllKillStreaks
-    93: Soldier76KillStreaksEquipped
-    94: SoldierKillStreakTexts
-    95: Soldier76KillStreaksActive
-    96: LocalVariable
-    97: Soldier76CarepackLocation
-    98: SoldierCarePackAmmoIndex
-    99: Virus
-    100: VirusEffects
-    101: VirusText
-    102: HasDiedWithVirus
-    103: RandomNumber
-    104: K
-    105: L
-    106: InPortalSpeed
-    107: PortalUsed
-    108: TorbTurret
-    109: TorbTurretLevel
-    110: TorbTurretMaster
-    111: TorbTurretLevelText
-    112: TorbCurrentTarget
-    113: WidowZoomedIn
-    114: WidowPlayersInViewAngleSorted
-    115: WidowRayCasts
-    116: WidowRayCastStartPos
-    117: WidowRayCastEndPos
-    118: WidowFireBeam
-    119: WidowDamage
-    120: WidowAimBeam
-    121: WinstonGrabbing
-    122: WinstonDamageArray
-    123: WinstonRayCasts
-    124: ZaryaGravPos
-    125: PossessingZenArray
-    126: PossessingZen
+    58: UltTimerAboveHead
+    59: UltTimerHUD
+    60: KirikoAffectedPlayers
+    61: Q
+    62: UltHudTextObject
+    63: SigmaZeroGravBuff
+    64: R
+    65: LucioHealthPoolHealthAmount
+    66: LucioHealthPool
+    67: CassidyPaintedTargets
+    68: MeiZaWarudoSphere
+    69: MeiIcicleEffects
+    70: MeiIciclePositions
+    71: MeiIcicleDirections
+    72: TimeStopStunned
+    73: O
+    74: N
+    75: MercyExtraLifeText
+    76: ExtraLifeInWorldText
+    77: P
+    78: ReaperVariables
+    79: ReaperTPPos
+    80: SigmaMaleValues
+    81: SigmaHighGravDebuff
+    82: SojournLastRay
+    83: SojournRayArray
+    84: SojournBeamArray
+    85: SojournEyePosArray
+    86: SojournLastEyePos
+    87: SojournDamageRay
+    88: Soldier76Variables
+    89: SoldierAllKillStreaks
+    90: Soldier76KillStreaksEquipped
+    91: SoldierKillStreakTexts
+    92: Soldier76KillStreaksActive
+    93: LocalVariable
+    94: Soldier76CarepackLocation
+    95: SoldierCarePackAmmoIndex
+    96: Virus
+    97: VirusEffects
+    98: VirusText
+    99: HasDiedWithVirus
+    100: RandomNumber
+    101: K
+    102: L
+    103: InPortalSpeed
+    104: PortalUsed
+    105: TorbTurret
+    106: TorbTurretLevel
+    107: TorbTurretMaster
+    108: TorbTurretLevelText
+    109: TorbCurrentTarget
+    110: WidowZoomedIn
+    111: WidowPlayersInViewAngleSorted
+    112: WidowRayCasts
+    113: WidowRayCastStartPos
+    114: WidowRayCastEndPos
+    115: WidowFireBeam
+    116: WidowDamage
+    117: WidowAimBeam
+    118: WinstonGrabbing
+    119: WinstonDamageArray
+    120: WinstonRayCasts
+    121: ZaryaGravPos
+    122: PossessingZenArray
+    123: PossessingZen
 }
 
 
@@ -490,7 +485,7 @@ rule("Set custom ultimate ready when charge is full")
 
 	conditions
 	{
-		(Hero Of(Event Player) == Hero(Mei) || Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Kiriko) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)) == true;
+		(Hero Of(Event Player) == Hero(Mei) || Hero Of(Event Player) == Hero(Cassidy) || Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Kiriko) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)) == true;
 		Ultimate Charge Percent(Event Player) >= 100;
 		Event Player.CustomUltReadyToUse != True;
 		Is Dummy Bot(Event Player) == false;
@@ -706,11 +701,11 @@ rule("Test dummy")
 	
 	
 		
-		Set Ultimate Charge(Last Created Entity, 100);
+	
 		
-		Wait(0.5, Ignore Condition);
+	
 		
-		Start Holding Button(Last Created Entity, Button(Ultimate));
+	
 	
 	
 	
@@ -1329,7 +1324,7 @@ rule("Start aiming baptiste ult")
 		Has Status(Event Player, Hacked) == False;
 		Event Player.UsingCustomUlt == Null;
 		Is Dummy Bot(Event Player) == False;
-		Event Player.BaptisteShieldAimSphere == Null;
+		Event Player.UltEffect == Null;
 		Is Alive(Event Player) == True;
 		
 	}
@@ -1347,7 +1342,7 @@ rule("Start aiming baptiste ult")
 		
 		Create Effect(Event Player, Sphere, Color(Blue), Event Player.BaptisteShieldPos, 5, Position and Radius);
 		
-		Event Player.BaptisteShieldAimSphere = Last Created Entity;
+		Event Player.UltEffect = Last Created Entity;
 		Event Player.B = Hero Of(Event Player);
 		
 		Wait Until(Is Button Held(Event Player, Button(Ultimate)) == False || Is Dead(Event Player) == True, 10);
@@ -1395,8 +1390,8 @@ rule("Baptiste plant down shield")
 		
 	
 		
-		Destroy Effect(Event Player.BaptisteShieldAimSphere);
-		Event Player.BaptisteShieldAimSphere = Null;
+		Destroy Effect(Event Player.UltEffect);
+		Event Player.UltEffect = Null;
 		
 		
 		If(Number of Players(Team Of(Event Player)) >= Number of Slots(Team Of(Event Player)));
@@ -1458,7 +1453,7 @@ rule("Set baptiste's shield aim position to where player is looking")
 
 	conditions
 	{
-		Event Player.BaptisteShieldAimSphere != Null;
+		Event Player.UltEffect != Null;
 	
 	
 		Event Player.BaptisteShieldBot == Null;
@@ -1487,9 +1482,9 @@ rule("Reset everything with baptiste.")
     actions
     {
 		Call Subroutine(StopUsingCustomUlt);
-		If(Event Player.BaptisteShieldAimSphere != Null);
-		Destroy Effect(Event Player.BaptisteShieldAimSphere);
-		Event Player.BaptisteShieldAimSphere = Null;
+		If(Event Player.UltEffect != Null);
+		Destroy Effect(Event Player.UltEffect);
+		Event Player.UltEffect = Null;
 		
 		End;
 		If(Event Player.BaptisteShieldBot != Null);
@@ -3549,7 +3544,7 @@ rule("Illari enable ult")
 	conditions
 	{
 		Is Using Ultimate(Event Player) == True;
-	
+		Is Dummy Bot(Event Player) == false;
 		Hero Of(Event Player) == Hero(Illari);
 		
 	}
@@ -3560,11 +3555,11 @@ rule("Illari enable ult")
 		Event Player.UsingCustomUlt = True;
 		Event Player.IllariSunPosition = Event Player;
 		Event Player.B = Hero Of(Event Player);
-		Set Status(Event Player, Event Player, Burning, 5.2);
+		Set Status(Event Player, Event Player, Burning, 4);
 		
 		Start Forcing Player Outlines(Event Player, All Players(All Teams), False, Color(white), Default);
 		
-		Wait Until(Is Dead(Event Player) == True || Is Button Held(Event Player, Button(Primary Fire)) == True, 5.2);
+		Wait Until(Is Dead(Event Player) == True || Is Button Held(Event Player, Button(Primary Fire)) == True, 4);
 		If(Event Player.IllariSunPosition == Event Player || Is Button Held(Event Player, Button(Primary Fire)) == True);
 		Event Player.IllariSunPosition = Eye Position(Event Player);
 		Chase Player Variable At Rate(Event Player, IllariSunPosition, Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, Null, Event Player, True), 32.5, None);
@@ -3578,7 +3573,7 @@ rule("Illari enable ult")
 		Play Effect(All Players(All Teams), Bad Explosion, Color(Yellow), Event Player.IllariSunPosition, 10);
 		Play Effect(All Players(All Teams), Bad Explosion, Color(Yellow), Event Player.IllariSunPosition, 10);
 		Play Effect(All Players(All Teams), Reinhardt Fire Strike Target Impact Sound, Color(Yellow), Event Player.IllariSunPosition, 200);
-		Damage(Remove From Array(Players Within Radius(Event Player.IllariSunPosition, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, 100);
+		Damage(Remove From Array(Players Within Radius(Event Player.IllariSunPosition, 12, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, 100);
 		
 		Call Subroutine(ResetIllari);
 		
@@ -3601,7 +3596,7 @@ rule("Illari loop visual effect")
 		Event Player.UsingCustomUlt == True;
 	
 		
-	
+		Is Dummy Bot(Event Player) == false;
 	}
 
 	actions
@@ -3635,7 +3630,7 @@ rule("Blind enemies that see Illari's ultimate")
 	
 		
 	
-	
+		Is Dummy Bot(Event Player) == False;
 		Is True For Any(All Players(Opposite Team Of(Team Of(Event Player))), Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block LOS)) == True;
 		
 	}
@@ -3674,7 +3669,7 @@ rule("If close to Illari get damaged team-modes")
 	
 		
 		(Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True;
-	
+		Is Dummy Bot(Event Player) == false;
 		Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers) != Empty Array;
 	}
 
@@ -3707,7 +3702,7 @@ rule("If close to Illari get damaged FFA")
 	
 		
 		(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter)) == True;
-	
+		Is Dummy Bot(Event Player) == false;
 		Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers) != Empty Array;
 	}
 
@@ -3773,7 +3768,7 @@ rule("Illari description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Turn into a bright burning sun that damages enemies who look at you or get too close.{0}", Custom String("
+		Event Player.UltDescription = Custom String("Turn into a bright burning sun that damages enemies and blinds them when they look directly at it.{0}", Custom String("
 		Using primary fire will shoot the sun where you're aiming. The sun explodes for additional damage when it expires.", Null));
 
 		Allow Button(Event Player, Button(Ultimate));
@@ -4715,20 +4710,23 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 		Set Ultimate Charge(Event Player, 0);
 		Set Ultimate Ability Enabled(Event Player, False);
 	
+		"JunkratBombOrb, JunkratBombDroppedPosition, JunkratExplosionRadius, JunkratRadiusRing"
+		Event Player.JunkratVariables = Array(Null, Null, Null, Null);
+		
 		Event Player.B = Hero Of(Event Player);
 		Call Subroutine(UseCustomUlt);
 		Event Player.JunkratBombPosition = Event Player;
 	
 		Create Projectile Effect(All Players(All Teams), Bastion A-36 Tactical Grenade, All PLayers(Team Of(Event Player)), Event Player.JunkratBombPosition, Null, 0.5, Visible To Position Direction and Size);
-		Event Player.JunkratBombOrb = Last Created Entity;
-		Event Player.JunkratExplosionRadius = 30;
+		Value In Array(Event Player.JunkratVariables, 0) = Last Created Entity;
+		Value In Array(Event Player.JunkratVariables, 2) = 30;
 		If((Current Game Mode != Game Mode(Deathmatch) && Current Game Mode != Game Mode(Bounty Hunter)) == True);
-		Create Effect(All Players(All Teams), Ring, Team Of(Event Player), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius, Position And Radius);
+		Create Effect(All Players(All Teams), Ring, Team Of(Event Player), Event Player.JunkratBombPosition, Value In Array(Event Player.JunkratVariables, 2), Position And Radius);
 		Else;
-		Create Effect(All Players(All Teams), Ring, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius, Position And Radius);
+		Create Effect(All Players(All Teams), Ring, Color(Orange), Event Player.JunkratBombPosition, Value In Array(Event Player.JunkratVariables, 2), Position And Radius);
 		End;
 		
-		Event Player.JunkratRadiusRing = Last Created Entity;
+		Value In Array(Event Player.JunkratVariables, 3) = Last Created Entity;
 		Event Player.UltTimer = 10;
 		Create Hud Text(Event Player, Event Player.UltTimer, null, null, Top, 0, Color(Orange), Color(Orange), Color(Orange), String, Default Visibility);
 		Event Player.UltTimerText = Last Text Id;
@@ -4743,30 +4741,30 @@ rule("Junkrat activate ultimate ability. Set up suicide bomb.")
 		Chase Player Variable At Rate(Event Player, UltTimer, 0, 1, None);
 		Wait(Event Player.UltTimer, Ignore Condition);
 		
-		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Event Player.JunkratBombPosition + Up, Down, To World, Damage, Opposite Team Of(Team Of(Event Player)), 800, 0.5, Event Player.JunkratExplosionRadius, Junkrat RIP Tire Explosion Effect, Junkrat RIP Tire Explosion Sound, 1, 0, 0, 30, 0, 0);
+		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Event Player.JunkratBombPosition + Up, Down, To World, Damage, Opposite Team Of(Team Of(Event Player)), 800, 0.5, Value In Array(Event Player.JunkratVariables, 2), Junkrat RIP Tire Explosion Effect, Junkrat RIP Tire Explosion Sound, 1, 0, 0, 30, 0, 0);
 		
 	
 		
-		If(Distance Between(Event Player, Event Player.JunkratBombPosition) < Event Player.JunkratExplosionRadius && Is In Line of Sight(Event Player, Event Player.JunkratBombPosition, All Barriers Block LOS));
+		If(Distance Between(Event Player, Event Player.JunkratBombPosition) < Value In Array(Event Player.JunkratVariables, 2) && Is In Line of Sight(Event Player, Event Player.JunkratBombPosition, All Barriers Block LOS));
 		Damage(Event Player, Event Player, 800);
 		End;
 		
-		Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
-		Play Effect(All Players(All Teams), Good Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Event Player.JunkratBombPosition, Value In Array(Event Player.JunkratVariables, 2) * 1.5);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Orange), Event Player.JunkratBombPosition, Value In Array(Event Player.JunkratVariables, 2) * 1.5);
 		Play Effect(All Players(All Teams), Ashe Dynamite Explosion Sound, Color(Orange), Event Player.JunkratBombPosition, 200);
 		Wait(0.05, Ignore Condition);
-		Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
-		Play Effect(All Players(All Teams), Good Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Event Player.JunkratBombPosition, Value In Array(Event Player.JunkratVariables, 2) * 1.5);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Orange), Event Player.JunkratBombPosition, Value In Array(Event Player.JunkratVariables, 2) * 1.5);
 		Play Effect(All Players(All Teams), Junkrat RIP Tire Explosion Sound, Color(Orange), Event Player.JunkratBombPosition,200);
 		
 		Wait(0.05, Ignore Condition);
-		Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
-		Play Effect(All Players(All Teams), Good Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Event Player.JunkratBombPosition, Value In Array(Event Player.JunkratVariables, 2) * 1.5);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Orange), Event Player.JunkratBombPosition, Value In Array(Event Player.JunkratVariables, 2) * 1.5);
 		Play Effect(All Players(All Teams),Pharah Rocket Launcher Explosion Sound, Color(Orange), Event Player.JunkratBombPosition, 200);
 		
 		Wait(0.05, Ignore Condition);
-		Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
-		Play Effect(All Players(All Teams), Good Explosion, Color(Orange), Event Player.JunkratBombPosition, Event Player.JunkratExplosionRadius * 1.5);
+		Play Effect(All Players(All Teams), Bad Explosion, Color(Orange), Event Player.JunkratBombPosition, Value In Array(Event Player.JunkratVariables, 2) * 1.5);
+		Play Effect(All Players(All Teams), Good Explosion, Color(Orange), Event Player.JunkratBombPosition, Value In Array(Event Player.JunkratVariables, 2) * 1.5);
 		Play Effect(All Players(All Teams),Reinhardt Fire Strike Target Impact Sound, Color(Orange), Event Player.JunkratBombPosition, 200);
 		
 	
@@ -4788,19 +4786,19 @@ rule("Junkrat reset")
 
 	actions
 	{
-		Destroy Effect(Event Player.JunkratBombOrb);
-		Event Player.JunkratBombOrb = null;
+		Destroy Effect(Value In Array(Event Player.JunkratVariables, 0));
+		Value In Array(Event Player.JunkratVariables, 0) = null;
 		Destroy Hud Text(Event Player.UltTimerText);
 		Event Player.UltTimerHUD = Null;
 		Destroy In-World Text(Event Player.UltTimerAboveHead);
 		Event Player.UltTimerAboveHead = Null;
-		Destroy Effect(Event Player.JunkratRadiusRing);
-		Event Player.JunkratRadiusRing = Null;
+		Destroy Effect(Value In Array(Event Player.JunkratVariables, 3));
+		Value In Array(Event Player.JunkratVariables, 3) = Null;
 		Stop Chasing Player Variable(Event Player, JunkratBombPosition);
 		
-		Event Player.JunkratBombDroppedPosition = Null;
+		Value In Array(Event Player.JunkratVariables, 1) = Null;
 		Event Player.JunkratBombPosition = Null;
-		Event Player.JunkratExplosionRadius = Null;
+		Value In Array(Event Player.JunkratVariables, 2) = Null;
 		
 	
 		Wait(0.01, Ignore Condition);
@@ -4859,15 +4857,15 @@ rule("Junkrat drop bomb on death.")
 	actions
 	{
 		Event Player.JunkratBombPosition = Position Of(Event Player) + Up;
-		Event Player.JunkratBombDroppedPosition = Ray Cast Hit Position(Event Player.JunkratBombPosition, Event Player.JunkratBombPosition + Down * 1000, Null, Event Player, False);
-		Event Player.JunkratBombDroppedPosition += Up*0.5;
+		Value In Array(Event Player.JunkratVariables, 1) = Ray Cast Hit Position(Event Player.JunkratBombPosition, Event Player.JunkratBombPosition + Down * 1000, Null, Event Player, False);
+		Value In Array(Event Player.JunkratVariables, 1) += Up*0.5;
 		
-		Chase Player Variable At Rate(Event Player, JunkratBombPosition, Event Player.JunkratBombDroppedPosition, 10, Destination And Rate);
-		Wait Until(Event Player.JunkratBombPosition == Event Player.JunkratBombDroppedPosition, 20);
+		Chase Player Variable At Rate(Event Player, JunkratBombPosition, Value In Array(Event Player.JunkratVariables, 1), 10, Destination And Rate);
+		Wait Until(Event Player.JunkratBombPosition == Value In Array(Event Player.JunkratVariables, 1), 20);
 		Stop Chasing Player Variable(Event Player, JunkratBombPosition);
 		
-		Event Player.JunkratBombPosition = Event Player.JunkratBombDroppedPosition;
-		Event Player.JunkratBombDroppedPosition = Null;
+		Event Player.JunkratBombPosition = Value In Array(Event Player.JunkratVariables, 1);
+		Value In Array(Event Player.JunkratVariables, 1) = Null;
 	
 	}
 }
@@ -5342,6 +5340,126 @@ rule("Lucio description")
 
 
 
+rule("Roll ability")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Cassidy;
+	}
+
+	conditions
+	{
+	
+		Is Button Held(Event Player, Button(Ultimate)) == True;
+		Hero Of(Event Player) == Hero(Cassidy);
+		Event Player.CustomUltReadyToUse == True;
+		Has Status(Event Player, Hacked) == False;
+		Event Player.UsingCustomUlt == Null;
+		Is Dummy Bot(Event Player) == False;
+		Is Alive(Event Player) == True;
+	
+	}
+
+	actions
+	{
+		Set Slow Motion(30);
+	
+		Call Subroutine(UseCustomUlt);
+		Set Primary Fire Enabled(Event Player, False);
+		Set Secondary Fire Enabled(Event Player, False);
+		
+		Set Ability 1 Enabled(Event Player, False);
+		Set Ability 2 Enabled(Event Player, False);
+		
+		Wait Until(Is Dead(Event Player) || Count Of(Event Player.CassidyPaintedTargets) >= 17, 3);
+		
+		Set Slow Motion(100);
+		
+	
+		Set Secondary Fire Enabled(Event Player, True);
+		Set Ammo(Event Player, 0, Count Of(Event Player.CassidyPaintedTargets) / 3);
+		
+		Press Button(Event Player, Button(Secondary Fire));
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.CassidyPaintedTargets), 1);
+		
+		Set Facing(Event Player, Direction Towards(Eye Position(Event Player), Value In Array(Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer), 1)), To World);
+	
+		Create Projectile(Genji Shuriken, Event Player, Value In Array(Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer), 1), Null, To World, Damage, Opposite Team Of(Team Of(Event Player)), 200, 2, 0, Bad Explosion, Explosion Sound, 0, 0, 0, 0, 0, 0);
+		Wait(0.112, Ignore Condition);
+		End;
+		
+		
+		
+		
+		Call Subroutine(ResetCassidy);
+	
+	
+	}
+}
+
+
+
+rule("Roll ability")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Cassidy;
+	}
+
+	conditions
+	{
+	
+		Is Button Held(Event Player, Button(Primary Fire)) == True;
+		
+		Ray Cast Hit Player(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(Opposite Team Of(Team Of(Event Player))), Event Player, True) != Null;
+		
+		Hero Of(Event Player) == Hero(Cassidy);
+		Event Player.UsingCustomUlt == True;
+		Is Dummy Bot(Event Player) == False;
+		Is Alive(Event Player) == True;
+		Count Of(Event Player.CassidyPaintedTargets) < 18;
+	
+	}
+
+	actions
+	{
+		"Could probably make this work by having the position updated manually on a loop on the side of the player that is targeted. Might need to make that into an array as well in case of multiple Cassidy players??"
+		If(Event Player.CassidyPaintedTargets == Null);
+		Event Player.CassidyPaintedTargets = Empty Array;
+	
+		End;
+		
+		
+		
+	
+		
+	
+		
+		
+		
+	
+	
+	
+		
+		
+	
+		
+		
+		
+		
+		
+	
+		
+	}
+}
+
+
+
 rule("Reset McCree.")
 {
 	event
@@ -5352,10 +5470,16 @@ rule("Reset McCree.")
 
 	actions
 	{
-	
-	
-		Event Player.B = Null;
-		Clear Status(Event Player, Burning);
+		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets, 1));
+		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets,	4));
+		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets, 7));
+		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets, 10));
+		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets, 13));
+		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets, 16));
+		
+		Call Subroutine(StopUsingCustomUlt);
+		
+		Event Player.CassidyPaintedTargets = Null;
 	}
 }
 
@@ -5382,7 +5506,7 @@ rule("McCree description")
 		Event Player.UltDescription = Custom String("It's literally high noon. While high nooning, {0}", Custom String("
 		 Cassidy turns into a ball of fire that damages and burns enemies that look upon him directly or get too close.", Null));
 
-		Allow Button(Event Player, Button(Ultimate));
+		Disallow Button(Event Player, Button(Ultimate));
 		
 	}
 }
@@ -10182,6 +10306,7 @@ rule("torb: spawn torb turret")
 		Set Ultimate Charge(Event Player, 0);
 		Set Ultimate Ability Enabled(Event Player, False);
 	
+		
 		
 		Event Player.B = Hero Of(Event Player);
 		
