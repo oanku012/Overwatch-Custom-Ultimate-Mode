@@ -122,8 +122,8 @@ good luck with your mode!*/
 			
 				//Bastion
 				
-				Illari
-				Kiriko
+				//Illari
+				//Kiriko
 				Lifeweaver
 				Ramattra
 				

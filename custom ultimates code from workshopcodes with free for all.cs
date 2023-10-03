@@ -38,16 +38,12 @@ settings
 
 		Skirmish
 		{
-			enabled maps
-			{
-				Workshop Expanse
-				
 			
-			
-			}
 		}
 
-		
+		Deathmatch
+		{
+		}
 	
 	}
 
@@ -330,6 +326,24 @@ subroutines {
 
 
 
+rule("Disable inspector for better performance")
+{
+	event
+	{
+		Ongoing - Global;
+	}
+
+	conditions
+	{
+		
+	}
+
+	actions
+	{
+		Disable Inspector Recording;
+	}
+}
+
 rule("Disable certain heroes for free for all")
 {
 	event
@@ -605,8 +619,6 @@ rule("Spawn ultimate description")
 
 rule("Set default gravities and speeds for player")
 {
-   
-   
 
 	event
 	{
@@ -617,7 +629,7 @@ rule("Set default gravities and speeds for player")
 
 	conditions
 	{
-	
+		Is Alive(Event Player) == True;
 	
 	}
 
@@ -627,8 +639,13 @@ rule("Set default gravities and speeds for player")
 		
 	
 		Event Player.CurrentGravities = Array(100, 100);
+		Set Gravity(Event Player, 100);
+		Set Projectile Gravity(Event Player, 100);
 	
 		Event Player.CurrentSpeeds = Array(100, 100, 100);
+		Set Move Speed(Event Player, 100);
+		Set Projectile Speed(Event Player, 100);
+		Set Jump Vertical Speed(Event Player, 100);
 	
 	
 		
@@ -671,47 +688,6 @@ rule("Teleport back in bounds if standing out of bounds")
 	}
 }
 
-
-
-
-
-
-rule("Test dummy")
-{
-	event
-	{
-		Ongoing - Each Player;
-		All;
-		All;
-	}
-
-	conditions
-	{
-		Is Button Held(Event Player, Button(Interact)) == True;
-	
-	}
-
-	actions
-	{
-	
-		Create Dummy Bot(Hero(Illari), Opposite Team Of(Team Of(Event Player)), -1, Event Player, Vector(0, 0, 0));
-	
-	
-		
-	
-	
-		
-	
-		
-	
-		
-	
-	
-	
-	
-		
-	}
-}
 
 
 
@@ -1031,7 +1007,8 @@ rule("Ana description")
 	
 		Hero Of(Event Player) == Hero(Ana);
 		
-
+		Is Dummy Bot(Event Player) == False;
+		
 	}
 
 	actions
@@ -1290,6 +1267,7 @@ rule("Bastion description")
 	conditions
 	{
 	
+		Is Dummy Bot(Event Player) == False;
 		
 
 	}
@@ -1832,6 +1810,7 @@ rule("Brigitte description")
 	conditions
 	{
 	
+		Is Dummy Bot(Event Player) == False;
 		
 
 	}
@@ -2002,7 +1981,8 @@ rule("Doomfist description")
 	{
 	
 		
-
+		Is Dummy Bot(Event Player) == False;
+		
 	}
 
 	actions
@@ -2583,7 +2563,8 @@ rule("D.Va description")
 	
 		Hero Of(Event Player) == Hero(D.Va);
 		
-
+		Is Dummy Bot(Event Player) == False;
+		
 	}
 
 	actions
@@ -3080,7 +3061,8 @@ rule("Echo description")
 	{
 	
 		
-
+		Is Dummy Bot(Event Player) == False;
+		
 	}
 
 	actions
@@ -3282,6 +3264,7 @@ rule("Genji description")
 	conditions
 	{
 	
+		Is Dummy Bot(Event Player) == False;
 		
 
 	}
@@ -3511,6 +3494,7 @@ rule("Hanzo description")
 	conditions
 	{
 	
+		Is Dummy Bot(Event Player) == False;
 		
 
 	}
@@ -3573,7 +3557,9 @@ rule("Illari enable ult")
 		Play Effect(All Players(All Teams), Bad Explosion, Color(Yellow), Event Player.IllariSunPosition, 10);
 		Play Effect(All Players(All Teams), Bad Explosion, Color(Yellow), Event Player.IllariSunPosition, 10);
 		Play Effect(All Players(All Teams), Reinhardt Fire Strike Target Impact Sound, Color(Yellow), Event Player.IllariSunPosition, 200);
-		Damage(Remove From Array(Players Within Radius(Event Player.IllariSunPosition, 12, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, 100);
+		Damage(Remove From Array(Players Within Radius(Event Player.IllariSunPosition, 10, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player), Event Player, 150);
+		
+	
 		
 		Call Subroutine(ResetIllari);
 		
@@ -3582,7 +3568,7 @@ rule("Illari enable ult")
 
 
 
-rule("Illari loop visual effect")
+rule("Illari loop visual effect for everyone except Illari")
 {
 	event
 	{
@@ -3594,6 +3580,8 @@ rule("Illari loop visual effect")
 	conditions
 	{
 		Event Player.UsingCustomUlt == True;
+		Event Player.IllariSunPosition == Event Player;
+		
 	
 		
 		Is Dummy Bot(Event Player) == false;
@@ -3602,13 +3590,165 @@ rule("Illari loop visual effect")
 	actions
 	{
 	
-		Wait(0.032, Abort When False);
+		Wait(0.05, Abort When False);
+	
+	
+		Play Effect(Remove From Array(All Players(All Teams), Event Player), Ashe Dynamite Explosion Effect, Team Of(Event Player), Event Player.IllariSunPosition, 7.500);
+		Play Effect(Remove From Array(All Players(All Teams), Event Player), Good Explosion, Color(Yellow), Event Player.IllariSunPosition, 6);
+		
+		
+		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("Illari loop visual effect for everyone when she's not inside it")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Illari;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+		Event Player.IllariSunPosition != Event Player;
+		
+	
+		
+		Is Dummy Bot(Event Player) == false;
+	}
+
+	actions
+	{
+	
+		Wait(0.05, Abort When False);
 		Play Effect(All Players(All Teams), Good Explosion, Color(Yellow), Event Player.IllariSunPosition, 6);
 		Play Effect(All Players(All Teams), Ashe Dynamite Explosion Effect, Team Of(Event Player), Event Player.IllariSunPosition, 7.500);
 	
 	
+		
+		
+		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("Illari loop visual effect that Illari sees when she's inside it and not moving forward or backward")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Illari;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+		Event Player.IllariSunPosition == Event Player;
+	
 	
 		
+		Z Component Of(Throttle Of(Event Player)) == 0;
+	
+		
+		
+		Is Dummy Bot(Event Player) == false;
+	}
+
+	actions
+	{
+		Wait(0.1, Abort When False);
+	
+	
+		
+		Play Effect(Event Player, Ashe Dynamite Explosion Effect, Team Of(Event Player), Eye Position(Event Player) - Facing Direction Of(Event Player) * 3, 7.500);
+	
+	
+	
+		Log To Inspector(Custom String("Still", Null, Null, Null));
+		
+		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("Illari loop visual effect that Illari sees when she's inside it and moving forward")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Illari;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+		Event Player.IllariSunPosition == Event Player;
+	
+	
+		
+		Z Component Of(Throttle Of(Event Player)) > 0;
+		
+		Is Dummy Bot(Event Player) == false;
+	}
+
+	actions
+	{
+		Wait(0.1, Abort When False);
+	
+	
+		
+		Play Effect(Event Player, Ashe Dynamite Explosion Effect, Team Of(Event Player), Eye Position(Event Player) - Facing Direction Of(Event Player), 7.500);
+	
+	
+	
+		Log To Inspector(Custom String("Forward", Null, Null, Null));
+		
+		Loop If Condition Is True;
+	}
+}
+
+
+
+rule("Illari loop visual effect that Illari sees when she's inside it and moving backward")
+{
+	event
+	{
+		Ongoing - Each Player;
+		All;
+		Illari;
+	}
+
+	conditions
+	{
+		Event Player.UsingCustomUlt == True;
+		Event Player.IllariSunPosition == Event Player;
+	
+	
+		Z Component Of(Throttle Of(Event Player)) < 0;
+		
+		Is Dummy Bot(Event Player) == false;
+	}
+
+	actions
+	{
+		Wait(0.1, Abort When False);
+	
+	
+		
+		Play Effect(Event Player, Ashe Dynamite Explosion Effect, Team Of(Event Player), Eye Position(Event Player) - Facing Direction Of(Event Player) * 6, 7.500);
+	
+	
+	
+		Log To Inspector(Custom String("Backward", Null, Null, Null));
 		Loop If Condition Is True;
 	}
 }
@@ -3644,7 +3784,7 @@ rule("Blind enemies that see Illari's ultimate")
 		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))), Is In View Angle(Current Array Element, Event Player.IllariSunPosition, 20) && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True && Current Array Element != Event Player) ), 1);
 		
 		
-		Play Effect(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Current Array Element != Event Player && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer), Baptiste Biotic Launcher Explosion Effect, Opposite Team Of(Team Of(Event Player)), Update Every Frame(Eye Position(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Current Array Element != Event Player && Is In Line of Sight(Current Array Element,  Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer))) + Update Every Frame(Facing Direction Of(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Current Array Element != Event Player && Is In Line of Sight(Current Array Element,  Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer)))*3, 10);
+		Play Effect(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Current Array Element != Event Player && Is In Line of Sight(Current Array Element, Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer), Ana Biotic Grenade Explosion Effect, Opposite Team Of(Team Of(Event Player)), Update Every Frame(Eye Position(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Current Array Element != Event Player && Is In Line of Sight(Current Array Element,  Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer))) + Update Every Frame(Facing Direction Of(Value In Array(Filtered Array(All Players(Opposite Team Of(Team Of(Event Player))),Is In View Angle(Current Array Element,  Event Player.IllariSunPosition, 20) && Current Array Element != Event Player && Is In Line of Sight(Current Array Element,  Event Player.IllariSunPosition, Barriers Do Not Block Los) && Is Alive(Current Array Element) == True), Event Player.ForLoopIndexPlayer)))*1.2, 20);
 	
 		
 		End;
@@ -3654,7 +3794,7 @@ rule("Blind enemies that see Illari's ultimate")
 
 
 
-rule("If close to Illari get damaged team-modes")
+rule("If close to Sun get damaged team-modes")
 {
 	event
 	{
@@ -3679,7 +3819,7 @@ rule("If close to Illari get damaged team-modes")
 		
 		Set Status(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, Burning, 0.1);
 		
-		Damage(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, 100);
+		Damage(Players Within Radius(Event Player.IllariSunPosition, 7.5, Opposite Team Of(Team Of(Event Player)), Surfaces And Enemy Barriers), Event Player, 50);
 		
 		Loop If Condition Is True;
 	}
@@ -3687,7 +3827,7 @@ rule("If close to Illari get damaged team-modes")
 
 
 
-rule("If close to Illari get damaged FFA")
+rule("If close to Sun get damaged FFA")
 {
 	event
 	{
@@ -3762,7 +3902,7 @@ rule("Illari description")
 	conditions
 	{
 	
-		
+		Is Dummy Bot(Event Player) == False;
 
 	}
 
@@ -4660,7 +4800,8 @@ rule("Junker Queen description")
 	{
 	
 		
-
+		Is Dummy Bot(Event Player) == False;
+		
 	}
 
 	actions
@@ -5322,6 +5463,7 @@ rule("Lucio description")
 	conditions
 	{
 	
+		Is Dummy Bot(Event Player) == False;
 		
 
 	}
@@ -5364,8 +5506,12 @@ rule("Cassidy ultimate activate and fire shots")
 
 	actions
 	{
+		Big Message(All Players(All Teams), Hero Icon String(Hero(Cassidy)));
 		Set Slow Motion(30);
 		Call Subroutine(UseCustomUlt);
+		Set Ultimate Ability Enabled(Event Player, False);
+		Set Ultimate Charge(Event Player, 0);
+		
 		Set Primary Fire Enabled(Event Player, False);
 		Set Secondary Fire Enabled(Event Player, False);
 		
@@ -5375,24 +5521,33 @@ rule("Cassidy ultimate activate and fire shots")
 		Create Effect(All Players(All Teams), Winston Primal Rage Effect, Team Of(Event Player), Event Player, 1, Visible To Position And Radius);
 		Event Player.UltEffect = Last Created Entity;
 		
-		Wait Until(Is Dead(Event Player) || Count Of(Event Player.CassidyPaintedTargets) >= 17 || Is Button Held(Event Player, Button(Secondary Fire)), 3);
+		Wait Until(Is Dead(Event Player) || Count Of(Event Player.CassidyPaintedTargets) >= 17 || Is Button Held(Event Player, Button(Secondary Fire)), 2.5);
+		
+		If(Is Alive(Event Player) && Count Of(Event Player.CassidyPaintedTargets) > 0);
 		
 		Set Slow Motion(100);
 		
-		Set Secondary Fire Enabled(Event Player, True);
 		Set Ammo(Event Player, 0, Count Of(Event Player.CassidyPaintedTargets) / 3);
+		
+		
+		Event Player.ForLoopIndexPlayer = 0;
+		
+		Start Facing(Event Player, Direction Towards(Eye Position(Event Player), Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1)), 1500, To World, Direction And Turn Rate);
+		Wait(0.1, Ignore Condition);
+		Set Secondary Fire Enabled(Event Player, True);
 		
 		Press Button(Event Player, Button(Secondary Fire));
 		
 		
 		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.CassidyPaintedTargets), 3);
 		
-		Set Facing(Event Player, Direction Towards(Eye Position(Event Player), Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1)), To World);
+		
+	
 		
 		If(Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) != Vector(0, 0, 0));
-		Create Projectile(Genji Shuriken, Event Player, Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1), Direction Towards(Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1), Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 200, 2, 0, Bad Explosion, Explosion Sound, 0, 1000, 0, 0, 0, 0);
+		Create Projectile(Genji Shuriken, Event Player, Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1), Direction Towards(Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1), Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 250, 2, 0, Bad Explosion, Explosion Sound, 0, 1000, 0.1, 0, 0, 0);
 		Else;
-		Create Projectile(Genji Shuriken, Event Player, Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1), Null, To World, Damage, Opposite Team Of(Team Of(Event Player)), 200, 2, 0, Bad Explosion, Explosion Sound, 0, 0, 0, 0, 0, 0);
+		Create Projectile(Genji Shuriken, Event Player, Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1), Null, To World, Damage, Opposite Team Of(Team Of(Event Player)), 250, 2, 0, Bad Explosion, Explosion Sound, 0, 0, 0, 0, 0, 0);
 		
 	
 		End;
@@ -5400,6 +5555,7 @@ rule("Cassidy ultimate activate and fire shots")
 		Wait(0.112, Ignore Condition);
 		End;
 		
+		End;
 		
 		Call Subroutine(ResetCassidy);
 	}
@@ -5505,7 +5661,10 @@ rule("Reset McCree.")
 		Set Ability 1 Enabled(Event Player, True);
 		Set Ability 2 Enabled(Event Player, True);
 		
+		Set Slow Motion(100);
 		
+		
+		Stop Facing(Event Player);
 		
 	}
 }
@@ -5524,14 +5683,14 @@ rule("McCree description")
 	conditions
 	{
 	
-		
+		Is Dummy Bot(Event Player) == False;
 
 	}
 
 	actions
 	{
 		Event Player.UltDescription = Custom String("RDR-style deadeye. Go into slow motion and paint targets manually with primary fire. {0}", Custom String("
-		 After 6 seconds or after you've painted 6 targets, shoot a bullet at each target for 200 damage or 400 on a headshot. {0}", Custom String("
+		After you've painted 6 targets, shoot a bullet at each target for 250 damage or 500 on a headshot. {0}", Custom String("
 		You can also use secondary fire to fire the shots early.", Null, Null, Null)));
 
 		Event Player.B = Hero Of(Event Player);
@@ -5830,7 +5989,7 @@ rule("Mei: clear frozen status after time stop is over and damage players")
 
 	actions
 	{
-		Skip If((Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)), 1);
+		Skip If((Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Cassidy) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)), 1);
 		Allow Button(Event Player, Button(Ultimate));
 		
 		Clear Status(Event Player, Frozen);
@@ -6128,6 +6287,7 @@ rule("Mercy description")
 
 	conditions
 	{
+		Is Dummy Bot(Event Player) == False;
 		
 
 	}
@@ -6278,7 +6438,8 @@ rule("Moira description")
 	{
 	
 		
-
+		Is Dummy Bot(Event Player) == False;
+		
 	}
 
 	actions
@@ -6343,7 +6504,8 @@ rule("Orisa description")
 	{
 	
 		
-
+		Is Dummy Bot(Event Player) == False;
+		
 	}
 
 	actions
@@ -6394,13 +6556,13 @@ rule("Pharah activate ultimate when button is pressed")
 		Set Primary Fire Enabled(Event Player, False);
 		Event Player.R = 20;
 		Chase Player Variable At Rate(Event Player, R, 0, 1, Destination and Rate);
-		Create HUD Text(Event Player, String("{0} {1}", Custom String("Crouch to drop bombs."), Custom String("Ability 1 to activate top-down camera.")), String("{0}: {1}", Custom String("Bomb Cooldown: "), Event Player.S), String("{0}: {1}", Custom String("Ultimate Duration: "), Event Player.R), Right, 1, Color(Blue), Color(Blue), Color( White), Visible To and String, Default Visibility);
+		Create HUD Text(Event Player, String("{0} {1}", Custom String("Crouch to drop bombs."), Custom String("F or interact to activate top-down camera.")), String("{0}: {1}", Custom String("Bomb Cooldown: "), Event Player.S), String("{0}: {1}", Custom String("Ultimate Duration: "), Event Player.R), Right, 1, Color(Blue), Color(Blue), Color( White), Visible To and String, Default Visibility);
 		Event Player.UltHudTextObject = Last Text ID;
 	
 	
-		Set Ability 1 Enabled(Event Player, False);
-		Disallow Button(Event Player, Button(Jump));
-		Disallow Button(Event Player, Button(Secondary Fire));
+	
+	
+	
 		
 		Value In Array(Event Player.CurrentGravities, 0) -= 100;
 		Set Gravity(Event Player, Value In Array(Event Player.CurrentGravities, 0));
@@ -6444,6 +6606,10 @@ rule("Reset Pharah stuff.")
 	
 		Event Player.Q = Null;
 		Event Player.R = Null;
+		
+		Stop Chasing Player Variable(Event Player, S);
+		Event Player.S = Null;
+		
 		Stop Camera(Event Player);
 		Set Primary Fire Enabled(Event Player, True);
 	
@@ -6452,9 +6618,9 @@ rule("Reset Pharah stuff.")
 		Clear Status(Event Player, Burning);
 		End;
 		
-		Set Ability 1 Enabled(Event Player, True);
-		Allow Button(Event Player, Button(Jump));
-		Allow Button(Event Player, Button(Secondary Fire));
+	
+	
+	
 		Set Ultimate Ability Enabled(Event Player, True);
 		
 		
@@ -6493,9 +6659,11 @@ rule("Pharah drop bomb")
 	actions
 	{
 		Create Projectile(Bastion A-36 Tactical Grenade, Event Player, Position Of(Event Player), Down, To World, Damage, Opposite Team Of(Team Of(Event Player)), 300, 0.5, 5, Bastion Tank Cannon Explosion Effect, Ashe Dynamite Explosion Sound, 0, 0, 10, 10, 0, 100);
-		
+		Event Player.S = 3;
+		Chase Player Variable At Rate(Event Player, S, 0, 1, Destination And Rate);
 	
 		Wait(3, Ignore Condition);
+		Stop Chasing Player Variable(Event Player, S);
 	}
 }
 
@@ -6544,7 +6712,7 @@ rule("Pharah tacticool camera on")
 
 	conditions
 	{
-		Is Button Held(Event Player, Button(Ability 1)) == True;
+		Is Button Held(Event Player, Button(Interact)) == True;
 		Event Player.UsingCustomUlt == True;
 		Event Player.Q != True;
 	}
@@ -6570,7 +6738,7 @@ rule("Pharah tacticool camera off")
 
 	conditions
 	{
-		Is Button Held(Event Player, Button(Ability 1)) == True;
+		Is Button Held(Event Player, Button(Interact)) == True;
 		Event Player.UsingCustomUlt == True;
 		Event Player.Q == True;
 	}
@@ -7457,6 +7625,7 @@ rule("Reinhardt description")
 	conditions
 	{
 		
+		Is Dummy Bot(Event Player) == False;
 		
 
 	}
@@ -8287,6 +8456,7 @@ rule("Sojourn description")
 	conditions
 	{
 		
+		Is Dummy Bot(Event Player) == False;
 		
 
 	}
@@ -9234,6 +9404,7 @@ rule("Soldier description")
 	conditions
 	{
 		
+		Is Dummy Bot(Event Player) == False;
 		
 
 	}
@@ -11325,6 +11496,7 @@ rule("Widow description")
 
 	conditions
 	{
+		Is Dummy Bot(Event Player) == False;
 		
 		
 
@@ -11614,6 +11786,7 @@ rule("Winston description")
 	conditions
 	{
 		
+		Is Dummy Bot(Event Player) == False;
 		
 
 	}
@@ -12239,7 +12412,7 @@ rule("Zenyatta stop possessing")
 		Allow Button(Event Player.P, Button(Ability 1));
 		Allow Button(Event Player.P, Button(Ability 2));
 		
-		Skip If((Hero Of(Event Player.P) == Hero(Mei) || Hero Of(Event Player.P) == Hero(Zenyatta) || Hero Of(Event Player.P) == Hero(Zarya) || Hero Of(Event Player.P) == Hero(Baptiste) || Hero Of(Event Player.P) == Hero(Pharah) || Hero Of(Event Player.P) == Hero(Roadhog) || Hero Of(Event Player.P) == Hero(Sombra) || Hero Of(Event Player.P) == Hero(Symmetra) || Hero Of(Event Player.P) == Hero(Tracer) || Hero Of(Event Player.P) == Hero(Wrecking Ball) || Hero Of(Event Player.P) == Hero(Junkrat) || Hero Of(Event Player.P) == Hero(Torbjörn) || Hero Of(Event Player.P) == Hero(Sigma) || Hero Of(Event Player.P) == Hero(Reaper)), 1);
+		Skip If((Hero Of(Event Player.P) == Hero(Mei) || Hero Of(Event Player.P) == Hero(Cassidy) ||  Hero Of(Event Player.P) == Hero(Zenyatta) || Hero Of(Event Player.P) == Hero(Zarya) || Hero Of(Event Player.P) == Hero(Baptiste) || Hero Of(Event Player.P) == Hero(Pharah) || Hero Of(Event Player.P) == Hero(Roadhog) || Hero Of(Event Player.P) == Hero(Sombra) || Hero Of(Event Player.P) == Hero(Symmetra) || Hero Of(Event Player.P) == Hero(Tracer) || Hero Of(Event Player.P) == Hero(Wrecking Ball) || Hero Of(Event Player.P) == Hero(Junkrat) || Hero Of(Event Player.P) == Hero(Torbjörn) || Hero Of(Event Player.P) == Hero(Sigma) || Hero Of(Event Player.P) == Hero(Reaper)), 1);
 		Allow Button(Event Player.P, Button(Ultimate));
 		
 		Allow Button(Event Player.P, Button(Jump));
@@ -12294,7 +12467,7 @@ rule("Zenyatta stop possessing from possessed side if possessing zen leaves")
 		Allow Button(Event Player, Button(Ability 1));
 		Allow Button(Event Player, Button(Ability 2));
 		
-		Skip If((Hero Of(Event Player) == Hero(Mei) || Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)), 1);
+		Skip If((Hero Of(Event Player) == Hero(Mei) || Hero Of(Event Player) == Hero(Cassidy) || Hero Of(Event Player) == Hero(Zenyatta) || Hero Of(Event Player) == Hero(Zarya) || Hero Of(Event Player) == Hero(Baptiste) || Hero Of(Event Player) == Hero(Pharah) || Hero Of(Event Player) == Hero(Roadhog) || Hero Of(Event Player) == Hero(Sombra) || Hero Of(Event Player) == Hero(Symmetra) || Hero Of(Event Player) == Hero(Tracer) || Hero Of(Event Player) == Hero(Wrecking Ball) || Hero Of(Event Player) == Hero(Junkrat) || Hero Of(Event Player) == Hero(Torbjörn) || Hero Of(Event Player) == Hero(Sigma) || Hero Of(Event Player) == Hero(Reaper)), 1);
 		Allow Button(Event Player, Button(Ultimate));
 		
 		Allow Button(Event Player, Button(Jump));
