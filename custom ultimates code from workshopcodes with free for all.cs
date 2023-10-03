@@ -5340,7 +5340,7 @@ rule("Lucio description")
 
 
 
-rule("Roll ability")
+rule("Cassidy ultimate activate and fire shots")
 {
 	event
 	{
@@ -5365,7 +5365,6 @@ rule("Roll ability")
 	actions
 	{
 		Set Slow Motion(30);
-	
 		Call Subroutine(UseCustomUlt);
 		Set Primary Fire Enabled(Event Player, False);
 		Set Secondary Fire Enabled(Event Player, False);
@@ -5373,39 +5372,42 @@ rule("Roll ability")
 		Set Ability 1 Enabled(Event Player, False);
 		Set Ability 2 Enabled(Event Player, False);
 		
+		Create Effect(All Players(All Teams), Winston Primal Rage Effect, Team Of(Event Player), Event Player, 1, Visible To Position And Radius);
+		Event Player.UltEffect = Last Created Entity;
+		
 		Wait Until(Is Dead(Event Player) || Count Of(Event Player.CassidyPaintedTargets) >= 17 || Is Button Held(Event Player, Button(Secondary Fire)), 3);
 		
 		Set Slow Motion(100);
 		
-	
 		Set Secondary Fire Enabled(Event Player, True);
 		Set Ammo(Event Player, 0, Count Of(Event Player.CassidyPaintedTargets) / 3);
 		
 		Press Button(Event Player, Button(Secondary Fire));
 		
 		
-		
 		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.CassidyPaintedTargets), 3);
 		
 		Set Facing(Event Player, Direction Towards(Eye Position(Event Player), Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1)), To World);
-	
-		Create Projectile(Genji Shuriken, Event Player, Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1), Direction Towards(Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1), Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 200, 2, 0, Bad Explosion, Explosion Sound, 0, 1000, 0, 0, 0, 0);
-	
 		
+		If(Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) != Vector(0, 0, 0));
+		Create Projectile(Genji Shuriken, Event Player, Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1), Direction Towards(Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1), Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 200, 2, 0, Bad Explosion, Explosion Sound, 0, 1000, 0, 0, 0, 0);
+		Else;
+		Create Projectile(Genji Shuriken, Event Player, Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1), Null, To World, Damage, Opposite Team Of(Team Of(Event Player)), 200, 2, 0, Bad Explosion, Explosion Sound, 0, 0, 0, 0, 0, 0);
+		
+	
+		End;
 		
 		Wait(0.112, Ignore Condition);
 		End;
 		
 		
 		Call Subroutine(ResetCassidy);
-	
-	
 	}
 }
 
 
 
-rule("Roll ability")
+rule("Cassidy Ultimate paint targets")
 {
 	event
 	{
@@ -5419,7 +5421,6 @@ rule("Roll ability")
 	
 		Is Button Held(Event Player, Button(Primary Fire)) == True;
 		
-	
 		(Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(Opposite Team Of(Team Of(Event Player))), Event Player, True) != Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(Opposite Team Of(Team Of(Event Player))), Event Player, False) || Ray Cast Hit Player(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(Opposite Team Of(Team Of(Event Player))), Event Player, True) != Null) == True;
 		
 		Hero Of(Event Player) == Hero(Cassidy);
@@ -5504,6 +5505,8 @@ rule("Reset McCree.")
 		Set Ability 1 Enabled(Event Player, True);
 		Set Ability 2 Enabled(Event Player, True);
 		
+		
+		
 	}
 }
 
@@ -5527,9 +5530,11 @@ rule("McCree description")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("It's literally high noon. While high nooning, {0}", Custom String("
-		 Cassidy turns into a ball of fire that damages and burns enemies that look upon him directly or get too close.", Null));
+		Event Player.UltDescription = Custom String("RDR-style deadeye. Go into slow motion and paint targets manually with primary fire. {0}", Custom String("
+		 After 6 seconds or after you've painted 6 targets, shoot a bullet at each target for 200 damage or 400 on a headshot. {0}", Custom String("
+		You can also use secondary fire to fire the shots early.", Null, Null, Null)));
 
+		Event Player.B = Hero Of(Event Player);
 		Disallow Button(Event Player, Button(Ultimate));
 		
 	}
