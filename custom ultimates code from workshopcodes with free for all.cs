@@ -5373,7 +5373,7 @@ rule("Roll ability")
 		Set Ability 1 Enabled(Event Player, False);
 		Set Ability 2 Enabled(Event Player, False);
 		
-		Wait Until(Is Dead(Event Player) || Count Of(Event Player.CassidyPaintedTargets) >= 17, 3);
+		Wait Until(Is Dead(Event Player) || Count Of(Event Player.CassidyPaintedTargets) >= 17 || Is Button Held(Event Player, Button(Secondary Fire)), 3);
 		
 		Set Slow Motion(100);
 		
@@ -5383,15 +5383,18 @@ rule("Roll ability")
 		
 		Press Button(Event Player, Button(Secondary Fire));
 		
-		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.CassidyPaintedTargets), 1);
 		
-		Set Facing(Event Player, Direction Towards(Eye Position(Event Player), Value In Array(Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer), 1)), To World);
+		
+		For Player Variable(Event Player, ForLoopIndexPlayer, 0, Count Of(Event Player.CassidyPaintedTargets), 3);
+		
+		Set Facing(Event Player, Direction Towards(Eye Position(Event Player), Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1)), To World);
 	
-		Create Projectile(Genji Shuriken, Event Player, Value In Array(Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer), 1), Null, To World, Damage, Opposite Team Of(Team Of(Event Player)), 200, 2, 0, Bad Explosion, Explosion Sound, 0, 0, 0, 0, 0, 0);
+		Create Projectile(Genji Shuriken, Event Player, Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1), Direction Towards(Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer) + Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer + 1), Value In Array(Event Player.CassidyPaintedTargets, Event Player.ForLoopIndexPlayer)), To World, Damage, Opposite Team Of(Team Of(Event Player)), 200, 2, 0, Bad Explosion, Explosion Sound, 0, 1000, 0, 0, 0, 0);
+	
+		
+		
 		Wait(0.112, Ignore Condition);
 		End;
-		
-		
 		
 		
 		Call Subroutine(ResetCassidy);
@@ -5416,7 +5419,8 @@ rule("Roll ability")
 	
 		Is Button Held(Event Player, Button(Primary Fire)) == True;
 		
-		Ray Cast Hit Player(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(Opposite Team Of(Team Of(Event Player))), Event Player, True) != Null;
+	
+		(Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(Opposite Team Of(Team Of(Event Player))), Event Player, True) != Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(Opposite Team Of(Team Of(Event Player))), Event Player, False) || Ray Cast Hit Player(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(Opposite Team Of(Team Of(Event Player))), Event Player, True) != Null) == True;
 		
 		Hero Of(Event Player) == Hero(Cassidy);
 		Event Player.UsingCustomUlt == True;
@@ -5428,32 +5432,45 @@ rule("Roll ability")
 
 	actions
 	{
-		"Could probably make this work by having the position updated manually on a loop on the side of the player that is targeted. Might need to make that into an array as well in case of multiple Cassidy players??"
+		
 		If(Event Player.CassidyPaintedTargets == Null);
 		Event Player.CassidyPaintedTargets = Empty Array;
 	
 		End;
 		
-		
-		
 	
 		
-	
+		If(Ray Cast Hit Player(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(Opposite Team Of(Team Of(Event Player))), Event Player, True) != Null);
+		Modify Player Variable(Event Player, CassidyPaintedTargets, Append To Array, Ray Cast Hit Player(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(Opposite Team Of(Team Of(Event Player))), Event Player, True));
+		Modify Player Variable(Event Player, CassidyPaintedTargets, Append To Array, Vector Towards(Ray Cast Hit Player(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(Opposite Team Of(Team Of(Event Player))), Event Player, True), Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(Opposite Team Of(Team Of(Event Player))), Event Player, True)));
+		Else;
+		Modify Player Variable(Event Player, CassidyPaintedTargets, Append To Array, Vector(0, 0, 0));
 		
-		
-		
-	
-	
-	
-		
-		
-	
-		
+		Modify Player Variable(Event Player, CassidyPaintedTargets, Append To Array, Ray Cast Hit Position(Eye Position(Event Player), Eye Position(Event Player) + Facing Direction Of(Event Player) * 1000, All Players(Opposite Team Of(Team Of(Event Player))), Event Player, True));
+		End;
 		
 		
 		
 		
-	
+		
+		If(Count Of(Event Player.CassidyPaintedTargets) < 3);
+		Create Icon(Event Player, Value In Array(Event Player.CassidyPaintedTargets, 0) + Value In Array(Event Player.CassidyPaintedTargets, 1) + Down * Distance Between(Eye Position(Event Player), Value In Array(Event Player.CassidyPaintedTargets, 0) + Value In Array(Event Player.CassidyPaintedTargets, 1)) * 0.075, X, Position, Color(Red), False);
+		Else If(Count Of(Event Player.CassidyPaintedTargets) < 6);
+		Create Icon(Event Player, Value In Array(Event Player.CassidyPaintedTargets, 3) + Value In Array(Event Player.CassidyPaintedTargets, 4) + Down * Distance Between(Eye Position(Event Player), Value In Array(Event Player.CassidyPaintedTargets, 3) + Value In Array(Event Player.CassidyPaintedTargets, 4)) * 0.075, X, Position, Color(Red), False);
+		Else If(Count Of(Event Player.CassidyPaintedTargets) < 9);
+		Create Icon(Event Player, Value In Array(Event Player.CassidyPaintedTargets, 6) + Value In Array(Event Player.CassidyPaintedTargets, 7) + Down * Distance Between(Eye Position(Event Player), Value In Array(Event Player.CassidyPaintedTargets, 6) + Value In Array(Event Player.CassidyPaintedTargets, 7)) * 0.075, X, Position, Color(Red), False);
+		Else If(Count Of(Event Player.CassidyPaintedTargets) < 12);
+		Create Icon(Event Player, Value In Array(Event Player.CassidyPaintedTargets, 9) + Value In Array(Event Player.CassidyPaintedTargets, 10) + Down * Distance Between(Eye Position(Event Player), Value In Array(Event Player.CassidyPaintedTargets, 9) + Value In Array(Event Player.CassidyPaintedTargets, 10)) * 0.075, X, Position, Color(Red), False);
+		Else If(Count Of(Event Player.CassidyPaintedTargets) < 15);
+		Create Icon(Event Player, Value In Array(Event Player.CassidyPaintedTargets, 12) + Value In Array(Event Player.CassidyPaintedTargets, 13) + Down * Distance Between(Eye Position(Event Player), Value In Array(Event Player.CassidyPaintedTargets, 12) + Value In Array(Event Player.CassidyPaintedTargets, 13)) * 0.075, X, Position, Color(Red), False);
+		Else If(Count Of(Event Player.CassidyPaintedTargets) < 18);
+		Create Icon(Event Player, Value In Array(Event Player.CassidyPaintedTargets, 15) + Value In Array(Event Player.CassidyPaintedTargets, 16) + Down * Distance Between(Eye Position(Event Player), Value In Array(Event Player.CassidyPaintedTargets, 15) + Value In Array(Event Player.CassidyPaintedTargets, 16)) * 0.075, X, Position, Color(Red), False);
+		End;
+		
+		Modify Player Variable(Event Player, CassidyPaintedTargets, Append To Array, Last Created Entity);
+		Play Effect(Event Player, DVa Micro Missiles Explosion Sound, Color(white), Eye Position(Event Player), 200);
+		
+		
 		
 	}
 }
@@ -5470,16 +5487,23 @@ rule("Reset McCree.")
 
 	actions
 	{
-		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets, 1));
-		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets,	4));
-		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets, 7));
-		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets, 10));
-		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets, 13));
-		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets, 16));
+		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets, 2));
+		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets,	5));
+		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets, 8));
+		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets, 11));
+		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets, 14));
+		Destroy Icon(Value In Array(Event Player.CassidyPaintedTargets, 17));
 		
 		Call Subroutine(StopUsingCustomUlt);
 		
 		Event Player.CassidyPaintedTargets = Null;
+		
+		Set Primary Fire Enabled(Event Player, True);
+		Set Secondary Fire Enabled(Event Player, True);
+		
+		Set Ability 1 Enabled(Event Player, True);
+		Set Ability 2 Enabled(Event Player, True);
+		
 	}
 }
 
