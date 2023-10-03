@@ -5147,7 +5147,7 @@ rule("Kiriko description and disable vanilla ult")
 
 	actions
 	{
-		Event Player.UltDescription = Custom String("Turn you and your team mates in a 30 meter radius really small and difficult to hit for 10 seconds.");
+		Event Player.UltDescription = Custom String("Turn you and your team mates in a 30 meter radius really small and difficult to hit for 12 seconds.");
 
 		Event Player.B = Hero Of(Event Player);
 		Disallow Button(Event Player, Button(Ultimate));
@@ -5282,10 +5282,15 @@ rule("Lucio: do stuff when the bass has dropped")
 		Event Player.M = True;
 		Set Ultimate Ability Enabled(Event Player, False);
 		If(Current Game Mode == Game Mode(Deathmatch) || Current Game Mode == Game Mode(Bounty Hunter));
-		Heal(Event Player, Null, 10000);
+	
+		Set Player Health(Event Player, 100000);
+		
 		Event Player.LucioHealthPoolHealthAmount = Event Player.Q;
 		Else;
-		Heal(Players Within Radius(Event Player, 30, Team Of(Event Player), Surfaces), Event Player, 10000);
+	
+		
+		Set Player Health(Players Within Radius(Event Player, 30, Team Of(Event Player), Surfaces), 100000);
+		
 		Players Within Radius(Event Player, 30, Team Of(Event Player), Surfaces).LucioHealthPoolHealthAmount = Event Player.Q;
 		End;
 		
@@ -7675,7 +7680,7 @@ rule("Roadhog activate and deactivate ultimate")
 	
 	
 	
-		Event Player.Y = 20;
+		Event Player.Y = 12;
 		Chase Player Variable At Rate(Event Player, Y, 0, 1, Destination and Rate);
 		Create HUD Text(Event Player, String("{0} {1}", Custom String("Reflect damage and healing.
 		Ultimate Duration: "), Event Player.Y), Null, Null, Top, 5, Color(White), Color(White), Color(White), Visible To and String, Default Visibility);
@@ -8806,7 +8811,7 @@ rule("soldier 76 care package")
 
 		Value In Array(Event Player.Soldier76Variables, 5) = Position Of(Event Player);
 
-		Chase Player Variable Over Time(Event Player, Soldier76CarepackLocation, Value In Array(Event Player.Soldier76Variables, 5), 15, None);
+		Chase Player Variable Over Time(Event Player, Soldier76CarepackLocation, Value In Array(Event Player.Soldier76Variables, 5), 10, None);
 
 		Value In Array(Event Player.Soldier76KillStreaksActive, Index Of Array Value(Event Player.Soldier76KillStreaksEquipped, Value In Array(Event Player.SoldierAllKillStreaks, 1)) / 2) = False;
 
